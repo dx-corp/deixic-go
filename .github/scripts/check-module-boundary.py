@@ -43,12 +43,12 @@ def verify(root: Path, expected_module: str) -> None:
     if offending := next((path for path in declared if is_private(path)), None):
         raise ValueError(f"Private module in go.mod: {offending}")
 
-    # go list parses Go imports, including imports whose package cannot resolve.
-    # The -e flag preserves those paths for the boundary check instead of
-    # attempting a private network fetch before we identify the dependency.
+    # go list parses runtime and test imports, including imports whose package
+    # cannot resolve. -e preserves those paths for the boundary check instead
+    # of attempting a private network fetch before we identify the dependency.
     imports = run(
         root,
-        "go", "list", "-e", "-deps", "-f", r'{{join .Imports "\n"}}', "./...",
+        "go", "list", "-test", "-e", "-deps", "-f", r'{{join .Imports "\n"}}', "./...",
     )
     if offending := next((path for path in imports.splitlines() if is_private(path)), None):
         raise ValueError(f"Private Go package import: {offending}")
