@@ -2360,6 +2360,451 @@ func (x *UpdateResponse) GetMemory() *Memory {
 	return nil
 }
 
+// ReviewedLearningImpact is the aggregate, content-free output of the
+// dex-core reviewed-learning decision. MemoryService verifies that the
+// candidate digest still matches the proposed row before activation.
+type ReviewedLearningImpact struct {
+	state                             protoimpl.MessageState `protogen:"open.v1"`
+	CandidateDigestSha256             string                 `protobuf:"bytes,1,opt,name=candidate_digest_sha256,json=candidateDigestSha256,proto3" json:"candidate_digest_sha256,omitempty"`
+	ReviewId                          string                 `protobuf:"bytes,2,opt,name=review_id,json=reviewId,proto3" json:"review_id,omitempty"`
+	ReviewerId                        string                 `protobuf:"bytes,3,opt,name=reviewer_id,json=reviewerId,proto3" json:"reviewer_id,omitempty"`
+	EvaluationId                      string                 `protobuf:"bytes,4,opt,name=evaluation_id,json=evaluationId,proto3" json:"evaluation_id,omitempty"`
+	EvaluatorId                       string                 `protobuf:"bytes,5,opt,name=evaluator_id,json=evaluatorId,proto3" json:"evaluator_id,omitempty"`
+	EvaluationSuiteId                 string                 `protobuf:"bytes,6,opt,name=evaluation_suite_id,json=evaluationSuiteId,proto3" json:"evaluation_suite_id,omitempty"`
+	EvaluationSuiteVersion            string                 `protobuf:"bytes,7,opt,name=evaluation_suite_version,json=evaluationSuiteVersion,proto3" json:"evaluation_suite_version,omitempty"`
+	TaskSetDigestSha256               string                 `protobuf:"bytes,8,opt,name=task_set_digest_sha256,json=taskSetDigestSha256,proto3" json:"task_set_digest_sha256,omitempty"`
+	BaselinePlannerVersion            string                 `protobuf:"bytes,9,opt,name=baseline_planner_version,json=baselinePlannerVersion,proto3" json:"baseline_planner_version,omitempty"`
+	TreatmentPlannerVersion           string                 `protobuf:"bytes,10,opt,name=treatment_planner_version,json=treatmentPlannerVersion,proto3" json:"treatment_planner_version,omitempty"`
+	SampleCount                       uint32                 `protobuf:"varint,11,opt,name=sample_count,json=sampleCount,proto3" json:"sample_count,omitempty"`
+	BaselineScoreBasisPoints          int32                  `protobuf:"varint,12,opt,name=baseline_score_basis_points,json=baselineScoreBasisPoints,proto3" json:"baseline_score_basis_points,omitempty"`
+	TreatmentScoreBasisPoints         int32                  `protobuf:"varint,13,opt,name=treatment_score_basis_points,json=treatmentScoreBasisPoints,proto3" json:"treatment_score_basis_points,omitempty"`
+	ConfidenceLowerBoundBasisPoints   int32                  `protobuf:"varint,14,opt,name=confidence_lower_bound_basis_points,json=confidenceLowerBoundBasisPoints,proto3" json:"confidence_lower_bound_basis_points,omitempty"`
+	GuardrailRegressionCount          uint32                 `protobuf:"varint,15,opt,name=guardrail_regression_count,json=guardrailRegressionCount,proto3" json:"guardrail_regression_count,omitempty"`
+	SourceReplayArtifactDigestsSha256 []string               `protobuf:"bytes,16,rep,name=source_replay_artifact_digests_sha256,json=sourceReplayArtifactDigestsSha256,proto3" json:"source_replay_artifact_digests_sha256,omitempty"`
+	EvidenceRefs                      []string               `protobuf:"bytes,17,rep,name=evidence_refs,json=evidenceRefs,proto3" json:"evidence_refs,omitempty"`
+	unknownFields                     protoimpl.UnknownFields
+	sizeCache                         protoimpl.SizeCache
+}
+
+func (x *ReviewedLearningImpact) Reset() {
+	*x = ReviewedLearningImpact{}
+	mi := &file_memory_v1_memory_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReviewedLearningImpact) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReviewedLearningImpact) ProtoMessage() {}
+
+func (x *ReviewedLearningImpact) ProtoReflect() protoreflect.Message {
+	mi := &file_memory_v1_memory_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReviewedLearningImpact.ProtoReflect.Descriptor instead.
+func (*ReviewedLearningImpact) Descriptor() ([]byte, []int) {
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *ReviewedLearningImpact) GetCandidateDigestSha256() string {
+	if x != nil {
+		return x.CandidateDigestSha256
+	}
+	return ""
+}
+
+func (x *ReviewedLearningImpact) GetReviewId() string {
+	if x != nil {
+		return x.ReviewId
+	}
+	return ""
+}
+
+func (x *ReviewedLearningImpact) GetReviewerId() string {
+	if x != nil {
+		return x.ReviewerId
+	}
+	return ""
+}
+
+func (x *ReviewedLearningImpact) GetEvaluationId() string {
+	if x != nil {
+		return x.EvaluationId
+	}
+	return ""
+}
+
+func (x *ReviewedLearningImpact) GetEvaluatorId() string {
+	if x != nil {
+		return x.EvaluatorId
+	}
+	return ""
+}
+
+func (x *ReviewedLearningImpact) GetEvaluationSuiteId() string {
+	if x != nil {
+		return x.EvaluationSuiteId
+	}
+	return ""
+}
+
+func (x *ReviewedLearningImpact) GetEvaluationSuiteVersion() string {
+	if x != nil {
+		return x.EvaluationSuiteVersion
+	}
+	return ""
+}
+
+func (x *ReviewedLearningImpact) GetTaskSetDigestSha256() string {
+	if x != nil {
+		return x.TaskSetDigestSha256
+	}
+	return ""
+}
+
+func (x *ReviewedLearningImpact) GetBaselinePlannerVersion() string {
+	if x != nil {
+		return x.BaselinePlannerVersion
+	}
+	return ""
+}
+
+func (x *ReviewedLearningImpact) GetTreatmentPlannerVersion() string {
+	if x != nil {
+		return x.TreatmentPlannerVersion
+	}
+	return ""
+}
+
+func (x *ReviewedLearningImpact) GetSampleCount() uint32 {
+	if x != nil {
+		return x.SampleCount
+	}
+	return 0
+}
+
+func (x *ReviewedLearningImpact) GetBaselineScoreBasisPoints() int32 {
+	if x != nil {
+		return x.BaselineScoreBasisPoints
+	}
+	return 0
+}
+
+func (x *ReviewedLearningImpact) GetTreatmentScoreBasisPoints() int32 {
+	if x != nil {
+		return x.TreatmentScoreBasisPoints
+	}
+	return 0
+}
+
+func (x *ReviewedLearningImpact) GetConfidenceLowerBoundBasisPoints() int32 {
+	if x != nil {
+		return x.ConfidenceLowerBoundBasisPoints
+	}
+	return 0
+}
+
+func (x *ReviewedLearningImpact) GetGuardrailRegressionCount() uint32 {
+	if x != nil {
+		return x.GuardrailRegressionCount
+	}
+	return 0
+}
+
+func (x *ReviewedLearningImpact) GetSourceReplayArtifactDigestsSha256() []string {
+	if x != nil {
+		return x.SourceReplayArtifactDigestsSha256
+	}
+	return nil
+}
+
+func (x *ReviewedLearningImpact) GetEvidenceRefs() []string {
+	if x != nil {
+		return x.EvidenceRefs
+	}
+	return nil
+}
+
+type PromoteReviewedLearningRequest struct {
+	state            protoimpl.MessageState  `protogen:"open.v1"`
+	MemoryId         string                  `protobuf:"bytes,1,opt,name=memory_id,json=memoryId,proto3" json:"memory_id,omitempty"`
+	ExpectedRevision *int64                  `protobuf:"varint,2,opt,name=expected_revision,json=expectedRevision,proto3,oneof" json:"expected_revision,omitempty"`
+	IdempotencyKey   string                  `protobuf:"bytes,3,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
+	ActorId          string                  `protobuf:"bytes,4,opt,name=actor_id,json=actorId,proto3" json:"actor_id,omitempty"`
+	PolicyRef        string                  `protobuf:"bytes,5,opt,name=policy_ref,json=policyRef,proto3" json:"policy_ref,omitempty"`
+	ProvenanceRef    string                  `protobuf:"bytes,6,opt,name=provenance_ref,json=provenanceRef,proto3" json:"provenance_ref,omitempty"`
+	UseReason        string                  `protobuf:"bytes,7,opt,name=use_reason,json=useReason,proto3" json:"use_reason,omitempty"`
+	Impact           *ReviewedLearningImpact `protobuf:"bytes,8,opt,name=impact,proto3" json:"impact,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *PromoteReviewedLearningRequest) Reset() {
+	*x = PromoteReviewedLearningRequest{}
+	mi := &file_memory_v1_memory_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PromoteReviewedLearningRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PromoteReviewedLearningRequest) ProtoMessage() {}
+
+func (x *PromoteReviewedLearningRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_memory_v1_memory_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PromoteReviewedLearningRequest.ProtoReflect.Descriptor instead.
+func (*PromoteReviewedLearningRequest) Descriptor() ([]byte, []int) {
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *PromoteReviewedLearningRequest) GetMemoryId() string {
+	if x != nil {
+		return x.MemoryId
+	}
+	return ""
+}
+
+func (x *PromoteReviewedLearningRequest) GetExpectedRevision() int64 {
+	if x != nil && x.ExpectedRevision != nil {
+		return *x.ExpectedRevision
+	}
+	return 0
+}
+
+func (x *PromoteReviewedLearningRequest) GetIdempotencyKey() string {
+	if x != nil {
+		return x.IdempotencyKey
+	}
+	return ""
+}
+
+func (x *PromoteReviewedLearningRequest) GetActorId() string {
+	if x != nil {
+		return x.ActorId
+	}
+	return ""
+}
+
+func (x *PromoteReviewedLearningRequest) GetPolicyRef() string {
+	if x != nil {
+		return x.PolicyRef
+	}
+	return ""
+}
+
+func (x *PromoteReviewedLearningRequest) GetProvenanceRef() string {
+	if x != nil {
+		return x.ProvenanceRef
+	}
+	return ""
+}
+
+func (x *PromoteReviewedLearningRequest) GetUseReason() string {
+	if x != nil {
+		return x.UseReason
+	}
+	return ""
+}
+
+func (x *PromoteReviewedLearningRequest) GetImpact() *ReviewedLearningImpact {
+	if x != nil {
+		return x.Impact
+	}
+	return nil
+}
+
+// ReviewedLearningPromotionReceipt is immutable evidence that one exact
+// proposal revision became recallable under one measured planner evaluation.
+type ReviewedLearningPromotionReceipt struct {
+	state            protoimpl.MessageState  `protogen:"open.v1"`
+	ReceiptId        string                  `protobuf:"bytes,1,opt,name=receipt_id,json=receiptId,proto3" json:"receipt_id,omitempty"`
+	MemoryId         string                  `protobuf:"bytes,2,opt,name=memory_id,json=memoryId,proto3" json:"memory_id,omitempty"`
+	MemoryRevision   int64                   `protobuf:"varint,3,opt,name=memory_revision,json=memoryRevision,proto3" json:"memory_revision,omitempty"`
+	LifecycleEventId string                  `protobuf:"bytes,4,opt,name=lifecycle_event_id,json=lifecycleEventId,proto3" json:"lifecycle_event_id,omitempty"`
+	Impact           *ReviewedLearningImpact `protobuf:"bytes,5,opt,name=impact,proto3" json:"impact,omitempty"`
+	ActorId          string                  `protobuf:"bytes,6,opt,name=actor_id,json=actorId,proto3" json:"actor_id,omitempty"`
+	PolicyRef        string                  `protobuf:"bytes,7,opt,name=policy_ref,json=policyRef,proto3" json:"policy_ref,omitempty"`
+	ProvenanceRef    string                  `protobuf:"bytes,8,opt,name=provenance_ref,json=provenanceRef,proto3" json:"provenance_ref,omitempty"`
+	UseReason        string                  `protobuf:"bytes,9,opt,name=use_reason,json=useReason,proto3" json:"use_reason,omitempty"`
+	RecordedAt       *timestamppb.Timestamp  `protobuf:"bytes,10,opt,name=recorded_at,json=recordedAt,proto3" json:"recorded_at,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *ReviewedLearningPromotionReceipt) Reset() {
+	*x = ReviewedLearningPromotionReceipt{}
+	mi := &file_memory_v1_memory_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReviewedLearningPromotionReceipt) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReviewedLearningPromotionReceipt) ProtoMessage() {}
+
+func (x *ReviewedLearningPromotionReceipt) ProtoReflect() protoreflect.Message {
+	mi := &file_memory_v1_memory_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReviewedLearningPromotionReceipt.ProtoReflect.Descriptor instead.
+func (*ReviewedLearningPromotionReceipt) Descriptor() ([]byte, []int) {
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ReviewedLearningPromotionReceipt) GetReceiptId() string {
+	if x != nil {
+		return x.ReceiptId
+	}
+	return ""
+}
+
+func (x *ReviewedLearningPromotionReceipt) GetMemoryId() string {
+	if x != nil {
+		return x.MemoryId
+	}
+	return ""
+}
+
+func (x *ReviewedLearningPromotionReceipt) GetMemoryRevision() int64 {
+	if x != nil {
+		return x.MemoryRevision
+	}
+	return 0
+}
+
+func (x *ReviewedLearningPromotionReceipt) GetLifecycleEventId() string {
+	if x != nil {
+		return x.LifecycleEventId
+	}
+	return ""
+}
+
+func (x *ReviewedLearningPromotionReceipt) GetImpact() *ReviewedLearningImpact {
+	if x != nil {
+		return x.Impact
+	}
+	return nil
+}
+
+func (x *ReviewedLearningPromotionReceipt) GetActorId() string {
+	if x != nil {
+		return x.ActorId
+	}
+	return ""
+}
+
+func (x *ReviewedLearningPromotionReceipt) GetPolicyRef() string {
+	if x != nil {
+		return x.PolicyRef
+	}
+	return ""
+}
+
+func (x *ReviewedLearningPromotionReceipt) GetProvenanceRef() string {
+	if x != nil {
+		return x.ProvenanceRef
+	}
+	return ""
+}
+
+func (x *ReviewedLearningPromotionReceipt) GetUseReason() string {
+	if x != nil {
+		return x.UseReason
+	}
+	return ""
+}
+
+func (x *ReviewedLearningPromotionReceipt) GetRecordedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RecordedAt
+	}
+	return nil
+}
+
+type PromoteReviewedLearningResponse struct {
+	state         protoimpl.MessageState            `protogen:"open.v1"`
+	Memory        *Memory                           `protobuf:"bytes,1,opt,name=memory,proto3" json:"memory,omitempty"`
+	Receipt       *ReviewedLearningPromotionReceipt `protobuf:"bytes,2,opt,name=receipt,proto3" json:"receipt,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PromoteReviewedLearningResponse) Reset() {
+	*x = PromoteReviewedLearningResponse{}
+	mi := &file_memory_v1_memory_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PromoteReviewedLearningResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PromoteReviewedLearningResponse) ProtoMessage() {}
+
+func (x *PromoteReviewedLearningResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_memory_v1_memory_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PromoteReviewedLearningResponse.ProtoReflect.Descriptor instead.
+func (*PromoteReviewedLearningResponse) Descriptor() ([]byte, []int) {
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *PromoteReviewedLearningResponse) GetMemory() *Memory {
+	if x != nil {
+		return x.Memory
+	}
+	return nil
+}
+
+func (x *PromoteReviewedLearningResponse) GetReceipt() *ReviewedLearningPromotionReceipt {
+	if x != nil {
+		return x.Receipt
+	}
+	return nil
+}
+
 type DeleteRequest struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	Id               string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -2375,7 +2820,7 @@ type DeleteRequest struct {
 
 func (x *DeleteRequest) Reset() {
 	*x = DeleteRequest{}
-	mi := &file_memory_v1_memory_proto_msgTypes[23]
+	mi := &file_memory_v1_memory_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2387,7 +2832,7 @@ func (x *DeleteRequest) String() string {
 func (*DeleteRequest) ProtoMessage() {}
 
 func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[23]
+	mi := &file_memory_v1_memory_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2400,7 +2845,7 @@ func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{23}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *DeleteRequest) GetId() string {
@@ -2460,7 +2905,7 @@ type DeleteResponse struct {
 
 func (x *DeleteResponse) Reset() {
 	*x = DeleteResponse{}
-	mi := &file_memory_v1_memory_proto_msgTypes[24]
+	mi := &file_memory_v1_memory_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2472,7 +2917,7 @@ func (x *DeleteResponse) String() string {
 func (*DeleteResponse) ProtoMessage() {}
 
 func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[24]
+	mi := &file_memory_v1_memory_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2485,7 +2930,7 @@ func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{24}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{28}
 }
 
 type ListRequest struct {
@@ -2510,7 +2955,7 @@ type ListRequest struct {
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_memory_v1_memory_proto_msgTypes[25]
+	mi := &file_memory_v1_memory_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2522,7 +2967,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[25]
+	mi := &file_memory_v1_memory_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2535,7 +2980,7 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{25}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *ListRequest) GetScope() Scope {
@@ -2651,7 +3096,7 @@ type LinkMemoriesRequest struct {
 
 func (x *LinkMemoriesRequest) Reset() {
 	*x = LinkMemoriesRequest{}
-	mi := &file_memory_v1_memory_proto_msgTypes[26]
+	mi := &file_memory_v1_memory_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2663,7 +3108,7 @@ func (x *LinkMemoriesRequest) String() string {
 func (*LinkMemoriesRequest) ProtoMessage() {}
 
 func (x *LinkMemoriesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[26]
+	mi := &file_memory_v1_memory_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2676,7 +3121,7 @@ func (x *LinkMemoriesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LinkMemoriesRequest.ProtoReflect.Descriptor instead.
 func (*LinkMemoriesRequest) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{26}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *LinkMemoriesRequest) GetSourceMemoryId() string {
@@ -2737,7 +3182,7 @@ type LinkMemoriesResponse struct {
 
 func (x *LinkMemoriesResponse) Reset() {
 	*x = LinkMemoriesResponse{}
-	mi := &file_memory_v1_memory_proto_msgTypes[27]
+	mi := &file_memory_v1_memory_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2749,7 +3194,7 @@ func (x *LinkMemoriesResponse) String() string {
 func (*LinkMemoriesResponse) ProtoMessage() {}
 
 func (x *LinkMemoriesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[27]
+	mi := &file_memory_v1_memory_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2762,7 +3207,7 @@ func (x *LinkMemoriesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LinkMemoriesResponse.ProtoReflect.Descriptor instead.
 func (*LinkMemoriesResponse) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{27}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *LinkMemoriesResponse) GetRelationship() *MemoryRelationship {
@@ -2787,7 +3232,7 @@ type ListMemoryRelationshipsRequest struct {
 
 func (x *ListMemoryRelationshipsRequest) Reset() {
 	*x = ListMemoryRelationshipsRequest{}
-	mi := &file_memory_v1_memory_proto_msgTypes[28]
+	mi := &file_memory_v1_memory_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2799,7 +3244,7 @@ func (x *ListMemoryRelationshipsRequest) String() string {
 func (*ListMemoryRelationshipsRequest) ProtoMessage() {}
 
 func (x *ListMemoryRelationshipsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[28]
+	mi := &file_memory_v1_memory_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2812,7 +3257,7 @@ func (x *ListMemoryRelationshipsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMemoryRelationshipsRequest.ProtoReflect.Descriptor instead.
 func (*ListMemoryRelationshipsRequest) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{28}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *ListMemoryRelationshipsRequest) GetMemoryId() string {
@@ -2875,7 +3320,7 @@ type ListMemoryRelationshipsResponse struct {
 
 func (x *ListMemoryRelationshipsResponse) Reset() {
 	*x = ListMemoryRelationshipsResponse{}
-	mi := &file_memory_v1_memory_proto_msgTypes[29]
+	mi := &file_memory_v1_memory_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2887,7 +3332,7 @@ func (x *ListMemoryRelationshipsResponse) String() string {
 func (*ListMemoryRelationshipsResponse) ProtoMessage() {}
 
 func (x *ListMemoryRelationshipsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[29]
+	mi := &file_memory_v1_memory_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2900,7 +3345,7 @@ func (x *ListMemoryRelationshipsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMemoryRelationshipsResponse.ProtoReflect.Descriptor instead.
 func (*ListMemoryRelationshipsResponse) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{29}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *ListMemoryRelationshipsResponse) GetRelationships() []*MemoryRelationship {
@@ -2933,7 +3378,7 @@ type DeleteMemoryRelationshipRequest struct {
 
 func (x *DeleteMemoryRelationshipRequest) Reset() {
 	*x = DeleteMemoryRelationshipRequest{}
-	mi := &file_memory_v1_memory_proto_msgTypes[30]
+	mi := &file_memory_v1_memory_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2945,7 +3390,7 @@ func (x *DeleteMemoryRelationshipRequest) String() string {
 func (*DeleteMemoryRelationshipRequest) ProtoMessage() {}
 
 func (x *DeleteMemoryRelationshipRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[30]
+	mi := &file_memory_v1_memory_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2958,7 +3403,7 @@ func (x *DeleteMemoryRelationshipRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteMemoryRelationshipRequest.ProtoReflect.Descriptor instead.
 func (*DeleteMemoryRelationshipRequest) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{30}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *DeleteMemoryRelationshipRequest) GetId() string {
@@ -2976,7 +3421,7 @@ type DeleteMemoryRelationshipResponse struct {
 
 func (x *DeleteMemoryRelationshipResponse) Reset() {
 	*x = DeleteMemoryRelationshipResponse{}
-	mi := &file_memory_v1_memory_proto_msgTypes[31]
+	mi := &file_memory_v1_memory_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2988,7 +3433,7 @@ func (x *DeleteMemoryRelationshipResponse) String() string {
 func (*DeleteMemoryRelationshipResponse) ProtoMessage() {}
 
 func (x *DeleteMemoryRelationshipResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[31]
+	mi := &file_memory_v1_memory_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3001,7 +3446,7 @@ func (x *DeleteMemoryRelationshipResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteMemoryRelationshipResponse.ProtoReflect.Descriptor instead.
 func (*DeleteMemoryRelationshipResponse) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{31}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{35}
 }
 
 type GetOperatingRulesRequest struct {
@@ -3022,7 +3467,7 @@ type GetOperatingRulesRequest struct {
 
 func (x *GetOperatingRulesRequest) Reset() {
 	*x = GetOperatingRulesRequest{}
-	mi := &file_memory_v1_memory_proto_msgTypes[32]
+	mi := &file_memory_v1_memory_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3034,7 +3479,7 @@ func (x *GetOperatingRulesRequest) String() string {
 func (*GetOperatingRulesRequest) ProtoMessage() {}
 
 func (x *GetOperatingRulesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[32]
+	mi := &file_memory_v1_memory_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3047,7 +3492,7 @@ func (x *GetOperatingRulesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOperatingRulesRequest.ProtoReflect.Descriptor instead.
 func (*GetOperatingRulesRequest) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{32}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *GetOperatingRulesRequest) GetScope() Scope {
@@ -3131,7 +3576,7 @@ type ListResponse struct {
 
 func (x *ListResponse) Reset() {
 	*x = ListResponse{}
-	mi := &file_memory_v1_memory_proto_msgTypes[33]
+	mi := &file_memory_v1_memory_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3143,7 +3588,7 @@ func (x *ListResponse) String() string {
 func (*ListResponse) ProtoMessage() {}
 
 func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[33]
+	mi := &file_memory_v1_memory_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3156,7 +3601,7 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
 func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{33}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *ListResponse) GetMemories() []*Memory {
@@ -3191,7 +3636,7 @@ type GetOperatingRulesResponse struct {
 
 func (x *GetOperatingRulesResponse) Reset() {
 	*x = GetOperatingRulesResponse{}
-	mi := &file_memory_v1_memory_proto_msgTypes[34]
+	mi := &file_memory_v1_memory_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3203,7 +3648,7 @@ func (x *GetOperatingRulesResponse) String() string {
 func (*GetOperatingRulesResponse) ProtoMessage() {}
 
 func (x *GetOperatingRulesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[34]
+	mi := &file_memory_v1_memory_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3216,7 +3661,7 @@ func (x *GetOperatingRulesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOperatingRulesResponse.ProtoReflect.Descriptor instead.
 func (*GetOperatingRulesResponse) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{34}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *GetOperatingRulesResponse) GetMemories() []*Memory {
@@ -3252,7 +3697,7 @@ type ConsolidateRequest struct {
 
 func (x *ConsolidateRequest) Reset() {
 	*x = ConsolidateRequest{}
-	mi := &file_memory_v1_memory_proto_msgTypes[35]
+	mi := &file_memory_v1_memory_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3264,7 +3709,7 @@ func (x *ConsolidateRequest) String() string {
 func (*ConsolidateRequest) ProtoMessage() {}
 
 func (x *ConsolidateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[35]
+	mi := &file_memory_v1_memory_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3277,7 +3722,7 @@ func (x *ConsolidateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsolidateRequest.ProtoReflect.Descriptor instead.
 func (*ConsolidateRequest) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{35}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *ConsolidateRequest) GetScope() Scope {
@@ -3318,7 +3763,7 @@ type ConsolidateResponse struct {
 
 func (x *ConsolidateResponse) Reset() {
 	*x = ConsolidateResponse{}
-	mi := &file_memory_v1_memory_proto_msgTypes[36]
+	mi := &file_memory_v1_memory_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3330,7 +3775,7 @@ func (x *ConsolidateResponse) String() string {
 func (*ConsolidateResponse) ProtoMessage() {}
 
 func (x *ConsolidateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_memory_v1_memory_proto_msgTypes[36]
+	mi := &file_memory_v1_memory_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3343,7 +3788,7 @@ func (x *ConsolidateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsolidateResponse.ProtoReflect.Descriptor instead.
 func (*ConsolidateResponse) Descriptor() ([]byte, []int) {
-	return file_memory_v1_memory_proto_rawDescGZIP(), []int{36}
+	return file_memory_v1_memory_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *ConsolidateResponse) GetMerged() int32 {
@@ -3610,7 +4055,60 @@ const file_memory_v1_memory_proto_rawDesc = "" +
 	"use_reason\x18\x14 \x01(\tR\tuseReasonB\x14\n" +
 	"\x12_expected_revision\";\n" +
 	"\x0eUpdateResponse\x12)\n" +
-	"\x06memory\x18\x01 \x01(\v2\x11.memory.v1.MemoryR\x06memory\"\xa2\x02\n" +
+	"\x06memory\x18\x01 \x01(\v2\x11.memory.v1.MemoryR\x06memory\"\xd1\b\n" +
+	"\x16ReviewedLearningImpact\x12M\n" +
+	"\x17candidate_digest_sha256\x18\x01 \x01(\tB\x15\xbaH\x12r\x102\x0e^[0-9a-f]{64}$R\x15candidateDigestSha256\x12$\n" +
+	"\treview_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\breviewId\x12(\n" +
+	"\vreviewer_id\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\n" +
+	"reviewerId\x12,\n" +
+	"\revaluation_id\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\fevaluationId\x12*\n" +
+	"\fevaluator_id\x18\x05 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vevaluatorId\x127\n" +
+	"\x13evaluation_suite_id\x18\x06 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x11evaluationSuiteId\x12A\n" +
+	"\x18evaluation_suite_version\x18\a \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x16evaluationSuiteVersion\x12J\n" +
+	"\x16task_set_digest_sha256\x18\b \x01(\tB\x15\xbaH\x12r\x102\x0e^[0-9a-f]{64}$R\x13taskSetDigestSha256\x12A\n" +
+	"\x18baseline_planner_version\x18\t \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x16baselinePlannerVersion\x12C\n" +
+	"\x19treatment_planner_version\x18\n" +
+	" \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x17treatmentPlannerVersion\x12*\n" +
+	"\fsample_count\x18\v \x01(\rB\a\xbaH\x04*\x02(\x01R\vsampleCount\x12I\n" +
+	"\x1bbaseline_score_basis_points\x18\f \x01(\x05B\n" +
+	"\xbaH\a\x1a\x05\x18\x90N(\x00R\x18baselineScoreBasisPoints\x12K\n" +
+	"\x1ctreatment_score_basis_points\x18\r \x01(\x05B\n" +
+	"\xbaH\a\x1a\x05\x18\x90N(\x00R\x19treatmentScoreBasisPoints\x12a\n" +
+	"#confidence_lower_bound_basis_points\x18\x0e \x01(\x05B\x13\xbaH\x10\x1a\x0e\x18\x90N(\xf0\xb1\xff\xff\xff\xff\xff\xff\xff\x01R\x1fconfidenceLowerBoundBasisPoints\x12<\n" +
+	"\x1aguardrail_regression_count\x18\x0f \x01(\rR\x18guardrailRegressionCount\x12Z\n" +
+	"%source_replay_artifact_digests_sha256\x18\x10 \x03(\tB\b\xbaH\x05\x92\x01\x02\b\x01R!sourceReplayArtifactDigestsSha256\x12-\n" +
+	"\revidence_refs\x18\x11 \x03(\tB\b\xbaH\x05\x92\x01\x02\b\x01R\fevidenceRefs\"\xb0\x03\n" +
+	"\x1ePromoteReviewedLearningRequest\x12$\n" +
+	"\tmemory_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bmemoryId\x129\n" +
+	"\x11expected_revision\x18\x02 \x01(\x03B\a\xbaH\x04\"\x02(\x01H\x00R\x10expectedRevision\x88\x01\x01\x120\n" +
+	"\x0fidempotency_key\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0eidempotencyKey\x12\"\n" +
+	"\bactor_id\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\aactorId\x12&\n" +
+	"\n" +
+	"policy_ref\x18\x05 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\tpolicyRef\x12.\n" +
+	"\x0eprovenance_ref\x18\x06 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\rprovenanceRef\x12&\n" +
+	"\n" +
+	"use_reason\x18\a \x01(\tB\a\xbaH\x04r\x02\x10\x01R\tuseReason\x12A\n" +
+	"\x06impact\x18\b \x01(\v2!.memory.v1.ReviewedLearningImpactB\x06\xbaH\x03\xc8\x01\x01R\x06impactB\x14\n" +
+	"\x12_expected_revision\"\xad\x03\n" +
+	" ReviewedLearningPromotionReceipt\x12\x1d\n" +
+	"\n" +
+	"receipt_id\x18\x01 \x01(\tR\treceiptId\x12\x1b\n" +
+	"\tmemory_id\x18\x02 \x01(\tR\bmemoryId\x12'\n" +
+	"\x0fmemory_revision\x18\x03 \x01(\x03R\x0ememoryRevision\x12,\n" +
+	"\x12lifecycle_event_id\x18\x04 \x01(\tR\x10lifecycleEventId\x129\n" +
+	"\x06impact\x18\x05 \x01(\v2!.memory.v1.ReviewedLearningImpactR\x06impact\x12\x19\n" +
+	"\bactor_id\x18\x06 \x01(\tR\aactorId\x12\x1d\n" +
+	"\n" +
+	"policy_ref\x18\a \x01(\tR\tpolicyRef\x12%\n" +
+	"\x0eprovenance_ref\x18\b \x01(\tR\rprovenanceRef\x12\x1d\n" +
+	"\n" +
+	"use_reason\x18\t \x01(\tR\tuseReason\x12;\n" +
+	"\vrecorded_at\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"recordedAt\"\x93\x01\n" +
+	"\x1fPromoteReviewedLearningResponse\x12)\n" +
+	"\x06memory\x18\x01 \x01(\v2\x11.memory.v1.MemoryR\x06memory\x12E\n" +
+	"\areceipt\x18\x02 \x01(\v2+.memory.v1.ReviewedLearningPromotionReceiptR\areceipt\"\xa2\x02\n" +
 	"\rDeleteRequest\x12\x17\n" +
 	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\x129\n" +
 	"\x11expected_revision\x18\x02 \x01(\x03B\a\xbaH\x04\"\x02(\x01H\x00R\x10expectedRevision\x88\x01\x01\x12'\n" +
@@ -3727,7 +4225,7 @@ const file_memory_v1_memory_proto_rawDesc = "" +
 	"#MEMORY_LIFECYCLE_EVENT_TYPE_CREATED\x10\x01\x12)\n" +
 	"%MEMORY_LIFECYCLE_EVENT_TYPE_CORRECTED\x10\x02\x12)\n" +
 	"%MEMORY_LIFECYCLE_EVENT_TYPE_FORGOTTEN\x10\x03\x12(\n" +
-	"$MEMORY_LIFECYCLE_EVENT_TYPE_REVIEWED\x10\x042\xa4\f\n" +
+	"$MEMORY_LIFECYCLE_EVENT_TYPE_REVIEWED\x10\x042\xaf\r\n" +
 	"\rMemoryService\x12R\n" +
 	"\x05Store\x12\x17.memory.v1.StoreRequest\x1a\x18.memory.v1.StoreResponse\"\x16\xca\xf3\x18\x0ememories:write\xd8\xf3\x18\x02\x12a\n" +
 	"\n" +
@@ -3737,7 +4235,8 @@ const file_memory_v1_memory_proto_rawDesc = "" +
 	"\tGetMemory\x12\x1b.memory.v1.GetMemoryRequest\x1a\x1c.memory.v1.GetMemoryResponse\"\x15\xca\xf3\x18\rmemories:read\xd8\xf3\x18\x01\x12i\n" +
 	"\rExplainMemory\x12\x1f.memory.v1.ExplainMemoryRequest\x1a .memory.v1.ExplainMemoryResponse\"\x15\xca\xf3\x18\rmemories:read\xd8\xf3\x18\x01\x12o\n" +
 	"\x0fClusterMemories\x12!.memory.v1.ClusterMemoriesRequest\x1a\".memory.v1.ClusterMemoriesResponse\"\x15\xca\xf3\x18\rmemories:read\xd8\xf3\x18\x01\x12U\n" +
-	"\x06Update\x12\x18.memory.v1.UpdateRequest\x1a\x19.memory.v1.UpdateResponse\"\x16\xca\xf3\x18\x0ememories:write\xd8\xf3\x18\x02\x12U\n" +
+	"\x06Update\x12\x18.memory.v1.UpdateRequest\x1a\x19.memory.v1.UpdateResponse\"\x16\xca\xf3\x18\x0ememories:write\xd8\xf3\x18\x02\x12\x88\x01\n" +
+	"\x17PromoteReviewedLearning\x12).memory.v1.PromoteReviewedLearningRequest\x1a*.memory.v1.PromoteReviewedLearningResponse\"\x16\xca\xf3\x18\x0ememories:write\xd8\xf3\x18\x03\x12U\n" +
 	"\x06Delete\x12\x18.memory.v1.DeleteRequest\x1a\x19.memory.v1.DeleteResponse\"\x16\xca\xf3\x18\x0ememories:write\xd8\xf3\x18\x03\x12N\n" +
 	"\x04List\x12\x16.memory.v1.ListRequest\x1a\x17.memory.v1.ListResponse\"\x15\xca\xf3\x18\rmemories:read\xd8\xf3\x18\x01\x12g\n" +
 	"\fLinkMemories\x12\x1e.memory.v1.LinkMemoriesRequest\x1a\x1f.memory.v1.LinkMemoriesResponse\"\x16\xca\xf3\x18\x0ememories:write\xd8\xf3\x18\x02\x12\x87\x01\n" +
@@ -3759,7 +4258,7 @@ func file_memory_v1_memory_proto_rawDescGZIP() []byte {
 }
 
 var file_memory_v1_memory_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_memory_v1_memory_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
+var file_memory_v1_memory_proto_msgTypes = make([]protoimpl.MessageInfo, 42)
 var file_memory_v1_memory_proto_goTypes = []any{
 	(Scope)(0),                               // 0: memory.v1.Scope
 	(MemoryReviewStatus)(0),                  // 1: memory.v1.MemoryReviewStatus
@@ -3788,43 +4287,47 @@ var file_memory_v1_memory_proto_goTypes = []any{
 	(*RecallResult)(nil),                     // 24: memory.v1.RecallResult
 	(*UpdateRequest)(nil),                    // 25: memory.v1.UpdateRequest
 	(*UpdateResponse)(nil),                   // 26: memory.v1.UpdateResponse
-	(*DeleteRequest)(nil),                    // 27: memory.v1.DeleteRequest
-	(*DeleteResponse)(nil),                   // 28: memory.v1.DeleteResponse
-	(*ListRequest)(nil),                      // 29: memory.v1.ListRequest
-	(*LinkMemoriesRequest)(nil),              // 30: memory.v1.LinkMemoriesRequest
-	(*LinkMemoriesResponse)(nil),             // 31: memory.v1.LinkMemoriesResponse
-	(*ListMemoryRelationshipsRequest)(nil),   // 32: memory.v1.ListMemoryRelationshipsRequest
-	(*ListMemoryRelationshipsResponse)(nil),  // 33: memory.v1.ListMemoryRelationshipsResponse
-	(*DeleteMemoryRelationshipRequest)(nil),  // 34: memory.v1.DeleteMemoryRelationshipRequest
-	(*DeleteMemoryRelationshipResponse)(nil), // 35: memory.v1.DeleteMemoryRelationshipResponse
-	(*GetOperatingRulesRequest)(nil),         // 36: memory.v1.GetOperatingRulesRequest
-	(*ListResponse)(nil),                     // 37: memory.v1.ListResponse
-	(*GetOperatingRulesResponse)(nil),        // 38: memory.v1.GetOperatingRulesResponse
-	(*ConsolidateRequest)(nil),               // 39: memory.v1.ConsolidateRequest
-	(*ConsolidateResponse)(nil),              // 40: memory.v1.ConsolidateResponse
-	nil,                                      // 41: memory.v1.SourceReference.MetadataEntry
-	(*v1.ResourceRef)(nil),                   // 42: platform.v1.ResourceRef
-	(*timestamppb.Timestamp)(nil),            // 43: google.protobuf.Timestamp
+	(*ReviewedLearningImpact)(nil),           // 27: memory.v1.ReviewedLearningImpact
+	(*PromoteReviewedLearningRequest)(nil),   // 28: memory.v1.PromoteReviewedLearningRequest
+	(*ReviewedLearningPromotionReceipt)(nil), // 29: memory.v1.ReviewedLearningPromotionReceipt
+	(*PromoteReviewedLearningResponse)(nil),  // 30: memory.v1.PromoteReviewedLearningResponse
+	(*DeleteRequest)(nil),                    // 31: memory.v1.DeleteRequest
+	(*DeleteResponse)(nil),                   // 32: memory.v1.DeleteResponse
+	(*ListRequest)(nil),                      // 33: memory.v1.ListRequest
+	(*LinkMemoriesRequest)(nil),              // 34: memory.v1.LinkMemoriesRequest
+	(*LinkMemoriesResponse)(nil),             // 35: memory.v1.LinkMemoriesResponse
+	(*ListMemoryRelationshipsRequest)(nil),   // 36: memory.v1.ListMemoryRelationshipsRequest
+	(*ListMemoryRelationshipsResponse)(nil),  // 37: memory.v1.ListMemoryRelationshipsResponse
+	(*DeleteMemoryRelationshipRequest)(nil),  // 38: memory.v1.DeleteMemoryRelationshipRequest
+	(*DeleteMemoryRelationshipResponse)(nil), // 39: memory.v1.DeleteMemoryRelationshipResponse
+	(*GetOperatingRulesRequest)(nil),         // 40: memory.v1.GetOperatingRulesRequest
+	(*ListResponse)(nil),                     // 41: memory.v1.ListResponse
+	(*GetOperatingRulesResponse)(nil),        // 42: memory.v1.GetOperatingRulesResponse
+	(*ConsolidateRequest)(nil),               // 43: memory.v1.ConsolidateRequest
+	(*ConsolidateResponse)(nil),              // 44: memory.v1.ConsolidateResponse
+	nil,                                      // 45: memory.v1.SourceReference.MetadataEntry
+	(*v1.ResourceRef)(nil),                   // 46: platform.v1.ResourceRef
+	(*timestamppb.Timestamp)(nil),            // 47: google.protobuf.Timestamp
 }
 var file_memory_v1_memory_proto_depIdxs = []int32{
-	41, // 0: memory.v1.SourceReference.metadata:type_name -> memory.v1.SourceReference.MetadataEntry
-	42, // 1: memory.v1.SourceReference.resource_ref:type_name -> platform.v1.ResourceRef
+	45, // 0: memory.v1.SourceReference.metadata:type_name -> memory.v1.SourceReference.MetadataEntry
+	46, // 1: memory.v1.SourceReference.resource_ref:type_name -> platform.v1.ResourceRef
 	0,  // 2: memory.v1.Memory.scope:type_name -> memory.v1.Scope
-	43, // 3: memory.v1.Memory.created_at:type_name -> google.protobuf.Timestamp
-	43, // 4: memory.v1.Memory.updated_at:type_name -> google.protobuf.Timestamp
+	47, // 3: memory.v1.Memory.created_at:type_name -> google.protobuf.Timestamp
+	47, // 4: memory.v1.Memory.updated_at:type_name -> google.protobuf.Timestamp
 	4,  // 5: memory.v1.Memory.source_references:type_name -> memory.v1.SourceReference
-	43, // 6: memory.v1.Memory.expires_at:type_name -> google.protobuf.Timestamp
+	47, // 6: memory.v1.Memory.expires_at:type_name -> google.protobuf.Timestamp
 	1,  // 7: memory.v1.Memory.review_status:type_name -> memory.v1.MemoryReviewStatus
 	2,  // 8: memory.v1.Memory.lifecycle_state:type_name -> memory.v1.MemoryLifecycleState
 	3,  // 9: memory.v1.MemoryLifecycleEvent.event_type:type_name -> memory.v1.MemoryLifecycleEventType
-	43, // 10: memory.v1.MemoryLifecycleEvent.recorded_at:type_name -> google.protobuf.Timestamp
-	43, // 11: memory.v1.MemoryRelationship.valid_from:type_name -> google.protobuf.Timestamp
-	43, // 12: memory.v1.MemoryRelationship.valid_until:type_name -> google.protobuf.Timestamp
-	43, // 13: memory.v1.MemoryRelationship.created_at:type_name -> google.protobuf.Timestamp
-	43, // 14: memory.v1.MemoryRelationship.updated_at:type_name -> google.protobuf.Timestamp
+	47, // 10: memory.v1.MemoryLifecycleEvent.recorded_at:type_name -> google.protobuf.Timestamp
+	47, // 11: memory.v1.MemoryRelationship.valid_from:type_name -> google.protobuf.Timestamp
+	47, // 12: memory.v1.MemoryRelationship.valid_until:type_name -> google.protobuf.Timestamp
+	47, // 13: memory.v1.MemoryRelationship.created_at:type_name -> google.protobuf.Timestamp
+	47, // 14: memory.v1.MemoryRelationship.updated_at:type_name -> google.protobuf.Timestamp
 	0,  // 15: memory.v1.StoreRequest.scope:type_name -> memory.v1.Scope
 	4,  // 16: memory.v1.StoreRequest.source_references:type_name -> memory.v1.SourceReference
-	43, // 17: memory.v1.StoreRequest.expires_at:type_name -> google.protobuf.Timestamp
+	47, // 17: memory.v1.StoreRequest.expires_at:type_name -> google.protobuf.Timestamp
 	1,  // 18: memory.v1.StoreRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
 	5,  // 19: memory.v1.StoreResponse.memory:type_name -> memory.v1.Memory
 	8,  // 20: memory.v1.StoreBatchRequest.memories:type_name -> memory.v1.StoreRequest
@@ -3832,7 +4335,7 @@ var file_memory_v1_memory_proto_depIdxs = []int32{
 	5,  // 22: memory.v1.StoreBatchResult.memory:type_name -> memory.v1.Memory
 	0,  // 23: memory.v1.RecallRequest.scope:type_name -> memory.v1.Scope
 	1,  // 24: memory.v1.RecallRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
-	43, // 25: memory.v1.RecallRequest.as_of:type_name -> google.protobuf.Timestamp
+	47, // 25: memory.v1.RecallRequest.as_of:type_name -> google.protobuf.Timestamp
 	0,  // 26: memory.v1.RecallKnowledgeRequest.scope:type_name -> memory.v1.Scope
 	1,  // 27: memory.v1.RecallKnowledgeRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
 	5,  // 28: memory.v1.GetMemoryResponse.memory:type_name -> memory.v1.Memory
@@ -3846,56 +4349,63 @@ var file_memory_v1_memory_proto_depIdxs = []int32{
 	5,  // 36: memory.v1.RecallResult.memory:type_name -> memory.v1.Memory
 	7,  // 37: memory.v1.RecallResult.relationship_path:type_name -> memory.v1.MemoryRelationship
 	4,  // 38: memory.v1.UpdateRequest.source_references:type_name -> memory.v1.SourceReference
-	43, // 39: memory.v1.UpdateRequest.expires_at:type_name -> google.protobuf.Timestamp
+	47, // 39: memory.v1.UpdateRequest.expires_at:type_name -> google.protobuf.Timestamp
 	1,  // 40: memory.v1.UpdateRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
 	5,  // 41: memory.v1.UpdateResponse.memory:type_name -> memory.v1.Memory
-	0,  // 42: memory.v1.ListRequest.scope:type_name -> memory.v1.Scope
-	1,  // 43: memory.v1.ListRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
-	43, // 44: memory.v1.LinkMemoriesRequest.valid_from:type_name -> google.protobuf.Timestamp
-	43, // 45: memory.v1.LinkMemoriesRequest.valid_until:type_name -> google.protobuf.Timestamp
-	7,  // 46: memory.v1.LinkMemoriesResponse.relationship:type_name -> memory.v1.MemoryRelationship
-	43, // 47: memory.v1.ListMemoryRelationshipsRequest.as_of:type_name -> google.protobuf.Timestamp
-	7,  // 48: memory.v1.ListMemoryRelationshipsResponse.relationships:type_name -> memory.v1.MemoryRelationship
-	0,  // 49: memory.v1.GetOperatingRulesRequest.scope:type_name -> memory.v1.Scope
-	1,  // 50: memory.v1.GetOperatingRulesRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
-	5,  // 51: memory.v1.ListResponse.memories:type_name -> memory.v1.Memory
-	5,  // 52: memory.v1.GetOperatingRulesResponse.memories:type_name -> memory.v1.Memory
-	0,  // 53: memory.v1.ConsolidateRequest.scope:type_name -> memory.v1.Scope
-	8,  // 54: memory.v1.MemoryService.Store:input_type -> memory.v1.StoreRequest
-	10, // 55: memory.v1.MemoryService.StoreBatch:input_type -> memory.v1.StoreBatchRequest
-	13, // 56: memory.v1.MemoryService.Recall:input_type -> memory.v1.RecallRequest
-	14, // 57: memory.v1.MemoryService.RecallKnowledge:input_type -> memory.v1.RecallKnowledgeRequest
-	15, // 58: memory.v1.MemoryService.GetMemory:input_type -> memory.v1.GetMemoryRequest
-	17, // 59: memory.v1.MemoryService.ExplainMemory:input_type -> memory.v1.ExplainMemoryRequest
-	21, // 60: memory.v1.MemoryService.ClusterMemories:input_type -> memory.v1.ClusterMemoriesRequest
-	25, // 61: memory.v1.MemoryService.Update:input_type -> memory.v1.UpdateRequest
-	27, // 62: memory.v1.MemoryService.Delete:input_type -> memory.v1.DeleteRequest
-	29, // 63: memory.v1.MemoryService.List:input_type -> memory.v1.ListRequest
-	30, // 64: memory.v1.MemoryService.LinkMemories:input_type -> memory.v1.LinkMemoriesRequest
-	32, // 65: memory.v1.MemoryService.ListMemoryRelationships:input_type -> memory.v1.ListMemoryRelationshipsRequest
-	34, // 66: memory.v1.MemoryService.DeleteMemoryRelationship:input_type -> memory.v1.DeleteMemoryRelationshipRequest
-	36, // 67: memory.v1.MemoryService.GetOperatingRules:input_type -> memory.v1.GetOperatingRulesRequest
-	39, // 68: memory.v1.MemoryService.Consolidate:input_type -> memory.v1.ConsolidateRequest
-	9,  // 69: memory.v1.MemoryService.Store:output_type -> memory.v1.StoreResponse
-	11, // 70: memory.v1.MemoryService.StoreBatch:output_type -> memory.v1.StoreBatchResponse
-	19, // 71: memory.v1.MemoryService.Recall:output_type -> memory.v1.RecallResponse
-	20, // 72: memory.v1.MemoryService.RecallKnowledge:output_type -> memory.v1.RecallKnowledgeResponse
-	16, // 73: memory.v1.MemoryService.GetMemory:output_type -> memory.v1.GetMemoryResponse
-	18, // 74: memory.v1.MemoryService.ExplainMemory:output_type -> memory.v1.ExplainMemoryResponse
-	22, // 75: memory.v1.MemoryService.ClusterMemories:output_type -> memory.v1.ClusterMemoriesResponse
-	26, // 76: memory.v1.MemoryService.Update:output_type -> memory.v1.UpdateResponse
-	28, // 77: memory.v1.MemoryService.Delete:output_type -> memory.v1.DeleteResponse
-	37, // 78: memory.v1.MemoryService.List:output_type -> memory.v1.ListResponse
-	31, // 79: memory.v1.MemoryService.LinkMemories:output_type -> memory.v1.LinkMemoriesResponse
-	33, // 80: memory.v1.MemoryService.ListMemoryRelationships:output_type -> memory.v1.ListMemoryRelationshipsResponse
-	35, // 81: memory.v1.MemoryService.DeleteMemoryRelationship:output_type -> memory.v1.DeleteMemoryRelationshipResponse
-	38, // 82: memory.v1.MemoryService.GetOperatingRules:output_type -> memory.v1.GetOperatingRulesResponse
-	40, // 83: memory.v1.MemoryService.Consolidate:output_type -> memory.v1.ConsolidateResponse
-	69, // [69:84] is the sub-list for method output_type
-	54, // [54:69] is the sub-list for method input_type
-	54, // [54:54] is the sub-list for extension type_name
-	54, // [54:54] is the sub-list for extension extendee
-	0,  // [0:54] is the sub-list for field type_name
+	27, // 42: memory.v1.PromoteReviewedLearningRequest.impact:type_name -> memory.v1.ReviewedLearningImpact
+	27, // 43: memory.v1.ReviewedLearningPromotionReceipt.impact:type_name -> memory.v1.ReviewedLearningImpact
+	47, // 44: memory.v1.ReviewedLearningPromotionReceipt.recorded_at:type_name -> google.protobuf.Timestamp
+	5,  // 45: memory.v1.PromoteReviewedLearningResponse.memory:type_name -> memory.v1.Memory
+	29, // 46: memory.v1.PromoteReviewedLearningResponse.receipt:type_name -> memory.v1.ReviewedLearningPromotionReceipt
+	0,  // 47: memory.v1.ListRequest.scope:type_name -> memory.v1.Scope
+	1,  // 48: memory.v1.ListRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
+	47, // 49: memory.v1.LinkMemoriesRequest.valid_from:type_name -> google.protobuf.Timestamp
+	47, // 50: memory.v1.LinkMemoriesRequest.valid_until:type_name -> google.protobuf.Timestamp
+	7,  // 51: memory.v1.LinkMemoriesResponse.relationship:type_name -> memory.v1.MemoryRelationship
+	47, // 52: memory.v1.ListMemoryRelationshipsRequest.as_of:type_name -> google.protobuf.Timestamp
+	7,  // 53: memory.v1.ListMemoryRelationshipsResponse.relationships:type_name -> memory.v1.MemoryRelationship
+	0,  // 54: memory.v1.GetOperatingRulesRequest.scope:type_name -> memory.v1.Scope
+	1,  // 55: memory.v1.GetOperatingRulesRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
+	5,  // 56: memory.v1.ListResponse.memories:type_name -> memory.v1.Memory
+	5,  // 57: memory.v1.GetOperatingRulesResponse.memories:type_name -> memory.v1.Memory
+	0,  // 58: memory.v1.ConsolidateRequest.scope:type_name -> memory.v1.Scope
+	8,  // 59: memory.v1.MemoryService.Store:input_type -> memory.v1.StoreRequest
+	10, // 60: memory.v1.MemoryService.StoreBatch:input_type -> memory.v1.StoreBatchRequest
+	13, // 61: memory.v1.MemoryService.Recall:input_type -> memory.v1.RecallRequest
+	14, // 62: memory.v1.MemoryService.RecallKnowledge:input_type -> memory.v1.RecallKnowledgeRequest
+	15, // 63: memory.v1.MemoryService.GetMemory:input_type -> memory.v1.GetMemoryRequest
+	17, // 64: memory.v1.MemoryService.ExplainMemory:input_type -> memory.v1.ExplainMemoryRequest
+	21, // 65: memory.v1.MemoryService.ClusterMemories:input_type -> memory.v1.ClusterMemoriesRequest
+	25, // 66: memory.v1.MemoryService.Update:input_type -> memory.v1.UpdateRequest
+	28, // 67: memory.v1.MemoryService.PromoteReviewedLearning:input_type -> memory.v1.PromoteReviewedLearningRequest
+	31, // 68: memory.v1.MemoryService.Delete:input_type -> memory.v1.DeleteRequest
+	33, // 69: memory.v1.MemoryService.List:input_type -> memory.v1.ListRequest
+	34, // 70: memory.v1.MemoryService.LinkMemories:input_type -> memory.v1.LinkMemoriesRequest
+	36, // 71: memory.v1.MemoryService.ListMemoryRelationships:input_type -> memory.v1.ListMemoryRelationshipsRequest
+	38, // 72: memory.v1.MemoryService.DeleteMemoryRelationship:input_type -> memory.v1.DeleteMemoryRelationshipRequest
+	40, // 73: memory.v1.MemoryService.GetOperatingRules:input_type -> memory.v1.GetOperatingRulesRequest
+	43, // 74: memory.v1.MemoryService.Consolidate:input_type -> memory.v1.ConsolidateRequest
+	9,  // 75: memory.v1.MemoryService.Store:output_type -> memory.v1.StoreResponse
+	11, // 76: memory.v1.MemoryService.StoreBatch:output_type -> memory.v1.StoreBatchResponse
+	19, // 77: memory.v1.MemoryService.Recall:output_type -> memory.v1.RecallResponse
+	20, // 78: memory.v1.MemoryService.RecallKnowledge:output_type -> memory.v1.RecallKnowledgeResponse
+	16, // 79: memory.v1.MemoryService.GetMemory:output_type -> memory.v1.GetMemoryResponse
+	18, // 80: memory.v1.MemoryService.ExplainMemory:output_type -> memory.v1.ExplainMemoryResponse
+	22, // 81: memory.v1.MemoryService.ClusterMemories:output_type -> memory.v1.ClusterMemoriesResponse
+	26, // 82: memory.v1.MemoryService.Update:output_type -> memory.v1.UpdateResponse
+	30, // 83: memory.v1.MemoryService.PromoteReviewedLearning:output_type -> memory.v1.PromoteReviewedLearningResponse
+	32, // 84: memory.v1.MemoryService.Delete:output_type -> memory.v1.DeleteResponse
+	41, // 85: memory.v1.MemoryService.List:output_type -> memory.v1.ListResponse
+	35, // 86: memory.v1.MemoryService.LinkMemories:output_type -> memory.v1.LinkMemoriesResponse
+	37, // 87: memory.v1.MemoryService.ListMemoryRelationships:output_type -> memory.v1.ListMemoryRelationshipsResponse
+	39, // 88: memory.v1.MemoryService.DeleteMemoryRelationship:output_type -> memory.v1.DeleteMemoryRelationshipResponse
+	42, // 89: memory.v1.MemoryService.GetOperatingRules:output_type -> memory.v1.GetOperatingRulesResponse
+	44, // 90: memory.v1.MemoryService.Consolidate:output_type -> memory.v1.ConsolidateResponse
+	75, // [75:91] is the sub-list for method output_type
+	59, // [59:75] is the sub-list for method input_type
+	59, // [59:59] is the sub-list for extension type_name
+	59, // [59:59] is the sub-list for extension extendee
+	0,  // [0:59] is the sub-list for field type_name
 }
 
 func init() { file_memory_v1_memory_proto_init() }
@@ -3904,14 +4414,15 @@ func file_memory_v1_memory_proto_init() {
 		return
 	}
 	file_memory_v1_memory_proto_msgTypes[21].OneofWrappers = []any{}
-	file_memory_v1_memory_proto_msgTypes[23].OneofWrappers = []any{}
+	file_memory_v1_memory_proto_msgTypes[24].OneofWrappers = []any{}
+	file_memory_v1_memory_proto_msgTypes[27].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_memory_v1_memory_proto_rawDesc), len(file_memory_v1_memory_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   38,
+			NumMessages:   42,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
