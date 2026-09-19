@@ -1,0 +1,129 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Verify projection state
+        id: source
+        shell: bash
+        env:
+          PROJECTION_NAME: deixic-go
+          DESTINATION_REPOSITORY: dx-corp/deixic-go
+        run: |
+          set -euo pipefail
+          if [[ ! -f .repository-projection.json ]]; then
+            unexpected="$(git ls-files | grep -Ev '^(README\.md|\.github/workflows/ci\.yml)$' || true)"
+            if [[ -n "$unexpected" ]]; then
+              echo "Projected source is present without .repository-projection.json:" >&2
+              echo "$unexpected" >&2
+              exit 1
+            fi
+            echo "The repository is still in its documented README-only bootstrap state."
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          python3 <<'PY'
+          import json
+          import os
+          import re
+
+          with open(".repository-projection.json", encoding="utf-8") as handle:
+              receipt = json.load(handle)
+          expected_keys = {
+              "schemaVersion", "projection", "projectionSchemaVersion", "sourceRepository",
+              "sourceSha", "destinationRepository", "priorProjectedBase", "definitionDigest",
+              "toolDigest", "contentDigest", "publicationEligible",
+          }
+          assert set(receipt) == expected_keys, "projection provenance fields changed"
+          assert receipt["schemaVersion"] == 1 and receipt["projectionSchemaVersion"] == 1
+          assert receipt["projection"] == os.environ["PROJECTION_NAME"]
+          assert receipt["sourceRepository"] == "dx-corp/mono"
+          assert receipt["destinationRepository"] == os.environ["DESTINATION_REPOSITORY"]
+          assert re.fullmatch(r"[0-9a-f]{40}", receipt["sourceSha"])
+          assert re.fullmatch(r"[0-9a-f]{40}", receipt["priorProjectedBase"])
+          for key in ("definitionDigest", "toolDigest", "contentDigest"):
+              assert re.fullmatch(r"[0-9a-f]{64}", receipt[key]), key
+          assert receipt["publicationEligible"] is True
+          PY
+
+          for required in go.mod go.sum common/v1/analytics.pb.go deixic/v1/deixicv1connect/deixic.connect.go deixic/v1/deixicv1connect/projection_test.go; do
+            test -f "$required" || { echo "Missing projected input: $required" >&2; exit 1; }
+          done
+          echo "present=true" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Go
+        if: steps.source.outputs.present == 'true'
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: 1.26.4
+          cache: false
+
+      - name: Verify public module boundary
+        if: steps.source.outputs.present == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          head -n 1 go.mod | grep -Fx 'module github.com/dx-corp/deixic-go'
+          if grep -REq 'github\.com/evalops/platform/gen/go' --include='*.go' --include='go.mod' .; then
+            echo "The module still imports the private generated source module" >&2
+            exit 1
+          fi
+
+      - name: Test and vet module
+        if: steps.source.outputs.present == 'true'
+        shell: bash
+        env:
+          GOWORK: "off"
+        run: |
+          set -euo pipefail
+          go test ./...
+          go vet ./...
+
+      - name: Verify external consumer
+        if: steps.source.outputs.present == 'true'
+        shell: bash
+        env:
+          GOWORK: "off"
+        run: |
+          set -euo pipefail
+          consumer="$RUNNER_TEMP/deixic-go-consumer"
+          mkdir -p "$consumer"
+          cat > "$consumer/go.mod" <<EOF
+          module example.com/deixic-consumer
+
+          go 1.26.0
+
+          require github.com/dx-corp/deixic-go v0.0.0
+
+          replace github.com/dx-corp/deixic-go => $GITHUB_WORKSPACE
+          EOF
+          cat > "$consumer/main.go" <<'EOF'
+          package main
+
+          import (
+            "net/http"
+            "github.com/dx-corp/deixic-go/deixic/v1/deixicv1connect"
+          )
+
+          func main() {
+            _ = deixicv1connect.NewDeixicServiceClient(http.DefaultClient, "https://api.example.invalid")
+          }
+          EOF
+          cd "$consumer"
+          go mod tidy
+          go build ./...
