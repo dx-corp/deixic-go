@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## [0.1.656](https://github.com/dx-corp/mono/compare/gen/go/v0.1.655...gen/go/v0.1.656) (2026-09-19)
+
+
+### Features
+
+* **memory:** atomically persist reviewed learning impact ([#9767](https://github.com/dx-corp/mono/issues/9767)) ([13d7893](https://github.com/dx-corp/mono/commit/13d7893f4c46f1451c67cbe34541bb0f1bc82365))
+
 ## [0.1.655](https://github.com/dx-corp/mono/compare/gen/go/v0.1.654...gen/go/v0.1.655) (2026-09-19)
 
 
