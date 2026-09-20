@@ -26424,11 +26424,16 @@ func (x *ListIntegrationTilesRequest) GetQuery() *ConsoleQuery {
 }
 
 type ListIntegrationTilesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Tiles         []*IntegrationTile     `protobuf:"bytes,1,rep,name=tiles,proto3" json:"tiles,omitempty"`
-	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                       protoimpl.MessageState `protogen:"open.v1"`
+	Tiles                       []*IntegrationTile     `protobuf:"bytes,1,rep,name=tiles,proto3" json:"tiles,omitempty"`
+	Total                       int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	InstalledTotal              *int32                 `protobuf:"varint,3,opt,name=installed_total,json=installedTotal,proto3,oneof" json:"installed_total,omitempty"`
+	PreviewTotal                *int32                 `protobuf:"varint,4,opt,name=preview_total,json=previewTotal,proto3,oneof" json:"preview_total,omitempty"`
+	ReadyTotal                  int32                  `protobuf:"varint,5,opt,name=ready_total,json=readyTotal,proto3" json:"ready_total,omitempty"`
+	ConfiguredTotal             int32                  `protobuf:"varint,6,opt,name=configured_total,json=configuredTotal,proto3" json:"configured_total,omitempty"`
+	PreviewInventoryUnavailable bool                   `protobuf:"varint,7,opt,name=preview_inventory_unavailable,json=previewInventoryUnavailable,proto3" json:"preview_inventory_unavailable,omitempty"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *ListIntegrationTilesResponse) Reset() {
@@ -26473,6 +26478,41 @@ func (x *ListIntegrationTilesResponse) GetTotal() int32 {
 		return x.Total
 	}
 	return 0
+}
+
+func (x *ListIntegrationTilesResponse) GetInstalledTotal() int32 {
+	if x != nil && x.InstalledTotal != nil {
+		return *x.InstalledTotal
+	}
+	return 0
+}
+
+func (x *ListIntegrationTilesResponse) GetPreviewTotal() int32 {
+	if x != nil && x.PreviewTotal != nil {
+		return *x.PreviewTotal
+	}
+	return 0
+}
+
+func (x *ListIntegrationTilesResponse) GetReadyTotal() int32 {
+	if x != nil {
+		return x.ReadyTotal
+	}
+	return 0
+}
+
+func (x *ListIntegrationTilesResponse) GetConfiguredTotal() int32 {
+	if x != nil {
+		return x.ConfiguredTotal
+	}
+	return 0
+}
+
+func (x *ListIntegrationTilesResponse) GetPreviewInventoryUnavailable() bool {
+	if x != nil {
+		return x.PreviewInventoryUnavailable
+	}
+	return false
 }
 
 type ListPinnedSourcesRequest struct {
@@ -40806,6 +40846,85 @@ func (x *IntegrationCredentialField) GetCredentialType() string {
 	return ""
 }
 
+// IntegrationResourceType is safe catalog discovery metadata for one provider
+// resource family. source_* fields preserve the imported source taxonomy and
+// projection intent; they do not claim a canonical or implemented Mono mapping.
+type IntegrationResourceType struct {
+	state                    protoimpl.MessageState `protogen:"open.v1"`
+	Id                       string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	DisplayName              string                 `protobuf:"bytes,2,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
+	SourceCoverageTypes      []string               `protobuf:"bytes,3,rep,name=source_coverage_types,json=sourceCoverageTypes,proto3" json:"source_coverage_types,omitempty"`
+	SourceProjectionTemplate string                 `protobuf:"bytes,4,opt,name=source_projection_template,json=sourceProjectionTemplate,proto3" json:"source_projection_template,omitempty"`
+	EventKind                string                 `protobuf:"bytes,5,opt,name=event_kind,json=eventKind,proto3" json:"event_kind,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *IntegrationResourceType) Reset() {
+	*x = IntegrationResourceType{}
+	mi := &file_console_v1_console_proto_msgTypes[415]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IntegrationResourceType) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IntegrationResourceType) ProtoMessage() {}
+
+func (x *IntegrationResourceType) ProtoReflect() protoreflect.Message {
+	mi := &file_console_v1_console_proto_msgTypes[415]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IntegrationResourceType.ProtoReflect.Descriptor instead.
+func (*IntegrationResourceType) Descriptor() ([]byte, []int) {
+	return file_console_v1_console_proto_rawDescGZIP(), []int{415}
+}
+
+func (x *IntegrationResourceType) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *IntegrationResourceType) GetDisplayName() string {
+	if x != nil {
+		return x.DisplayName
+	}
+	return ""
+}
+
+func (x *IntegrationResourceType) GetSourceCoverageTypes() []string {
+	if x != nil {
+		return x.SourceCoverageTypes
+	}
+	return nil
+}
+
+func (x *IntegrationResourceType) GetSourceProjectionTemplate() string {
+	if x != nil {
+		return x.SourceProjectionTemplate
+	}
+	return ""
+}
+
+func (x *IntegrationResourceType) GetEventKind() string {
+	if x != nil {
+		return x.EventKind
+	}
+	return ""
+}
+
 type IntegrationTile struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	Id                   string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -40841,13 +40960,32 @@ type IntegrationTile struct {
 	OauthSupported       bool                            `protobuf:"varint,28,opt,name=oauth_supported,json=oauthSupported,proto3" json:"oauth_supported,omitempty"`
 	CredentialFields     []*IntegrationCredentialField   `protobuf:"bytes,29,rep,name=credential_fields,json=credentialFields,proto3" json:"credential_fields,omitempty"`
 	CatalogProvenance    *v16.ConnectorCatalogProvenance `protobuf:"bytes,30,opt,name=catalog_provenance,json=catalogProvenance,proto3" json:"catalog_provenance,omitempty"`
+	// catalog_tier is the connector catalog owner's shape-derived tier. Console
+	// carries it verbatim and never promotes a provider's readiness.
+	CatalogTier string `protobuf:"bytes,31,opt,name=catalog_tier,json=catalogTier,proto3" json:"catalog_tier,omitempty"`
+	// provider_actions names the typed runtime actions exposed by the published
+	// provider. Together with resource_families this distinguishes sync,
+	// action-only, and combined providers without inferring support from labels.
+	ProviderActions []string `protobuf:"bytes,32,rep,name=provider_actions,json=providerActions,proto3" json:"provider_actions,omitempty"`
+	// catalog_status is either ready (published and connectable) or
+	// qualification_pending (installed preview, not connectable).
+	CatalogStatus        string                     `protobuf:"bytes,33,opt,name=catalog_status,json=catalogStatus,proto3" json:"catalog_status,omitempty"`
+	SetupAllowed         bool                       `protobuf:"varint,34,opt,name=setup_allowed,json=setupAllowed,proto3" json:"setup_allowed,omitempty"`
+	Configured           bool                       `protobuf:"varint,35,opt,name=configured,proto3" json:"configured,omitempty"`
+	ProviderActionCount  int32                      `protobuf:"varint,36,opt,name=provider_action_count,json=providerActionCount,proto3" json:"provider_action_count,omitempty"`
+	ResourceFamilyCount  int32                      `protobuf:"varint,37,opt,name=resource_family_count,json=resourceFamilyCount,proto3" json:"resource_family_count,omitempty"`
+	RequiredFamilyCount  int32                      `protobuf:"varint,38,opt,name=required_family_count,json=requiredFamilyCount,proto3" json:"required_family_count,omitempty"`
+	QualifiedFamilyCount int32                      `protobuf:"varint,39,opt,name=qualified_family_count,json=qualifiedFamilyCount,proto3" json:"qualified_family_count,omitempty"`
+	RolloutKind          string                     `protobuf:"bytes,40,opt,name=rollout_kind,json=rolloutKind,proto3" json:"rollout_kind,omitempty"`
+	ResourceTypes        []*IntegrationResourceType `protobuf:"bytes,41,rep,name=resource_types,json=resourceTypes,proto3" json:"resource_types,omitempty"`
+	ProviderDescription  string                     `protobuf:"bytes,42,opt,name=provider_description,json=providerDescription,proto3" json:"provider_description,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
 
 func (x *IntegrationTile) Reset() {
 	*x = IntegrationTile{}
-	mi := &file_console_v1_console_proto_msgTypes[415]
+	mi := &file_console_v1_console_proto_msgTypes[416]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -40859,7 +40997,7 @@ func (x *IntegrationTile) String() string {
 func (*IntegrationTile) ProtoMessage() {}
 
 func (x *IntegrationTile) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[415]
+	mi := &file_console_v1_console_proto_msgTypes[416]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -40872,7 +41010,7 @@ func (x *IntegrationTile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IntegrationTile.ProtoReflect.Descriptor instead.
 func (*IntegrationTile) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{415}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{416}
 }
 
 func (x *IntegrationTile) GetId() string {
@@ -41085,6 +41223,90 @@ func (x *IntegrationTile) GetCatalogProvenance() *v16.ConnectorCatalogProvenance
 	return nil
 }
 
+func (x *IntegrationTile) GetCatalogTier() string {
+	if x != nil {
+		return x.CatalogTier
+	}
+	return ""
+}
+
+func (x *IntegrationTile) GetProviderActions() []string {
+	if x != nil {
+		return x.ProviderActions
+	}
+	return nil
+}
+
+func (x *IntegrationTile) GetCatalogStatus() string {
+	if x != nil {
+		return x.CatalogStatus
+	}
+	return ""
+}
+
+func (x *IntegrationTile) GetSetupAllowed() bool {
+	if x != nil {
+		return x.SetupAllowed
+	}
+	return false
+}
+
+func (x *IntegrationTile) GetConfigured() bool {
+	if x != nil {
+		return x.Configured
+	}
+	return false
+}
+
+func (x *IntegrationTile) GetProviderActionCount() int32 {
+	if x != nil {
+		return x.ProviderActionCount
+	}
+	return 0
+}
+
+func (x *IntegrationTile) GetResourceFamilyCount() int32 {
+	if x != nil {
+		return x.ResourceFamilyCount
+	}
+	return 0
+}
+
+func (x *IntegrationTile) GetRequiredFamilyCount() int32 {
+	if x != nil {
+		return x.RequiredFamilyCount
+	}
+	return 0
+}
+
+func (x *IntegrationTile) GetQualifiedFamilyCount() int32 {
+	if x != nil {
+		return x.QualifiedFamilyCount
+	}
+	return 0
+}
+
+func (x *IntegrationTile) GetRolloutKind() string {
+	if x != nil {
+		return x.RolloutKind
+	}
+	return ""
+}
+
+func (x *IntegrationTile) GetResourceTypes() []*IntegrationResourceType {
+	if x != nil {
+		return x.ResourceTypes
+	}
+	return nil
+}
+
+func (x *IntegrationTile) GetProviderDescription() string {
+	if x != nil {
+		return x.ProviderDescription
+	}
+	return ""
+}
+
 type OnboardingTask struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	Id                   string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -41100,7 +41322,7 @@ type OnboardingTask struct {
 
 func (x *OnboardingTask) Reset() {
 	*x = OnboardingTask{}
-	mi := &file_console_v1_console_proto_msgTypes[416]
+	mi := &file_console_v1_console_proto_msgTypes[417]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41112,7 +41334,7 @@ func (x *OnboardingTask) String() string {
 func (*OnboardingTask) ProtoMessage() {}
 
 func (x *OnboardingTask) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[416]
+	mi := &file_console_v1_console_proto_msgTypes[417]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -41125,7 +41347,7 @@ func (x *OnboardingTask) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OnboardingTask.ProtoReflect.Descriptor instead.
 func (*OnboardingTask) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{416}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{417}
 }
 
 func (x *OnboardingTask) GetId() string {
@@ -41212,7 +41434,7 @@ type TraceDrilldown struct {
 
 func (x *TraceDrilldown) Reset() {
 	*x = TraceDrilldown{}
-	mi := &file_console_v1_console_proto_msgTypes[417]
+	mi := &file_console_v1_console_proto_msgTypes[418]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41224,7 +41446,7 @@ func (x *TraceDrilldown) String() string {
 func (*TraceDrilldown) ProtoMessage() {}
 
 func (x *TraceDrilldown) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[417]
+	mi := &file_console_v1_console_proto_msgTypes[418]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -41237,7 +41459,7 @@ func (x *TraceDrilldown) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TraceDrilldown.ProtoReflect.Descriptor instead.
 func (*TraceDrilldown) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{417}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{418}
 }
 
 func (x *TraceDrilldown) GetTraceId() string {
@@ -41383,7 +41605,7 @@ type TraceSpan struct {
 
 func (x *TraceSpan) Reset() {
 	*x = TraceSpan{}
-	mi := &file_console_v1_console_proto_msgTypes[418]
+	mi := &file_console_v1_console_proto_msgTypes[419]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41395,7 +41617,7 @@ func (x *TraceSpan) String() string {
 func (*TraceSpan) ProtoMessage() {}
 
 func (x *TraceSpan) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[418]
+	mi := &file_console_v1_console_proto_msgTypes[419]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -41408,7 +41630,7 @@ func (x *TraceSpan) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TraceSpan.ProtoReflect.Descriptor instead.
 func (*TraceSpan) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{418}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{419}
 }
 
 func (x *TraceSpan) GetSpanId() string {
@@ -41535,7 +41757,7 @@ type TraceSpanReference struct {
 
 func (x *TraceSpanReference) Reset() {
 	*x = TraceSpanReference{}
-	mi := &file_console_v1_console_proto_msgTypes[419]
+	mi := &file_console_v1_console_proto_msgTypes[420]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41547,7 +41769,7 @@ func (x *TraceSpanReference) String() string {
 func (*TraceSpanReference) ProtoMessage() {}
 
 func (x *TraceSpanReference) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[419]
+	mi := &file_console_v1_console_proto_msgTypes[420]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -41560,7 +41782,7 @@ func (x *TraceSpanReference) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TraceSpanReference.ProtoReflect.Descriptor instead.
 func (*TraceSpanReference) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{419}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{420}
 }
 
 func (x *TraceSpanReference) GetId() string {
@@ -41605,7 +41827,7 @@ type TraceCompletenessSignal struct {
 
 func (x *TraceCompletenessSignal) Reset() {
 	*x = TraceCompletenessSignal{}
-	mi := &file_console_v1_console_proto_msgTypes[420]
+	mi := &file_console_v1_console_proto_msgTypes[421]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41617,7 +41839,7 @@ func (x *TraceCompletenessSignal) String() string {
 func (*TraceCompletenessSignal) ProtoMessage() {}
 
 func (x *TraceCompletenessSignal) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[420]
+	mi := &file_console_v1_console_proto_msgTypes[421]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -41630,7 +41852,7 @@ func (x *TraceCompletenessSignal) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TraceCompletenessSignal.ProtoReflect.Descriptor instead.
 func (*TraceCompletenessSignal) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{420}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{421}
 }
 
 func (x *TraceCompletenessSignal) GetId() string {
@@ -41689,7 +41911,7 @@ type SecurityDecisionPacket struct {
 
 func (x *SecurityDecisionPacket) Reset() {
 	*x = SecurityDecisionPacket{}
-	mi := &file_console_v1_console_proto_msgTypes[421]
+	mi := &file_console_v1_console_proto_msgTypes[422]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41701,7 +41923,7 @@ func (x *SecurityDecisionPacket) String() string {
 func (*SecurityDecisionPacket) ProtoMessage() {}
 
 func (x *SecurityDecisionPacket) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[421]
+	mi := &file_console_v1_console_proto_msgTypes[422]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -41714,7 +41936,7 @@ func (x *SecurityDecisionPacket) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SecurityDecisionPacket.ProtoReflect.Descriptor instead.
 func (*SecurityDecisionPacket) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{421}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{422}
 }
 
 func (x *SecurityDecisionPacket) GetId() string {
@@ -41808,7 +42030,7 @@ type SecurityDecisionEvidenceGap struct {
 
 func (x *SecurityDecisionEvidenceGap) Reset() {
 	*x = SecurityDecisionEvidenceGap{}
-	mi := &file_console_v1_console_proto_msgTypes[422]
+	mi := &file_console_v1_console_proto_msgTypes[423]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41820,7 +42042,7 @@ func (x *SecurityDecisionEvidenceGap) String() string {
 func (*SecurityDecisionEvidenceGap) ProtoMessage() {}
 
 func (x *SecurityDecisionEvidenceGap) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[422]
+	mi := &file_console_v1_console_proto_msgTypes[423]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -41833,7 +42055,7 @@ func (x *SecurityDecisionEvidenceGap) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SecurityDecisionEvidenceGap.ProtoReflect.Descriptor instead.
 func (*SecurityDecisionEvidenceGap) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{422}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{423}
 }
 
 func (x *SecurityDecisionEvidenceGap) GetId() string {
@@ -41890,7 +42112,7 @@ type RelatedResource struct {
 
 func (x *RelatedResource) Reset() {
 	*x = RelatedResource{}
-	mi := &file_console_v1_console_proto_msgTypes[423]
+	mi := &file_console_v1_console_proto_msgTypes[424]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41902,7 +42124,7 @@ func (x *RelatedResource) String() string {
 func (*RelatedResource) ProtoMessage() {}
 
 func (x *RelatedResource) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[423]
+	mi := &file_console_v1_console_proto_msgTypes[424]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -41915,7 +42137,7 @@ func (x *RelatedResource) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RelatedResource.ProtoReflect.Descriptor instead.
 func (*RelatedResource) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{423}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{424}
 }
 
 func (x *RelatedResource) GetId() string {
@@ -41965,7 +42187,7 @@ type OperatingHomepageSuggestion struct {
 
 func (x *OperatingHomepageSuggestion) Reset() {
 	*x = OperatingHomepageSuggestion{}
-	mi := &file_console_v1_console_proto_msgTypes[424]
+	mi := &file_console_v1_console_proto_msgTypes[425]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41977,7 +42199,7 @@ func (x *OperatingHomepageSuggestion) String() string {
 func (*OperatingHomepageSuggestion) ProtoMessage() {}
 
 func (x *OperatingHomepageSuggestion) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[424]
+	mi := &file_console_v1_console_proto_msgTypes[425]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -41990,7 +42212,7 @@ func (x *OperatingHomepageSuggestion) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OperatingHomepageSuggestion.ProtoReflect.Descriptor instead.
 func (*OperatingHomepageSuggestion) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{424}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{425}
 }
 
 func (x *OperatingHomepageSuggestion) GetSchema() string {
@@ -42142,7 +42364,7 @@ type DexMcpServer struct {
 
 func (x *DexMcpServer) Reset() {
 	*x = DexMcpServer{}
-	mi := &file_console_v1_console_proto_msgTypes[425]
+	mi := &file_console_v1_console_proto_msgTypes[426]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42154,7 +42376,7 @@ func (x *DexMcpServer) String() string {
 func (*DexMcpServer) ProtoMessage() {}
 
 func (x *DexMcpServer) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[425]
+	mi := &file_console_v1_console_proto_msgTypes[426]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -42167,7 +42389,7 @@ func (x *DexMcpServer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DexMcpServer.ProtoReflect.Descriptor instead.
 func (*DexMcpServer) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{425}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{426}
 }
 
 func (x *DexMcpServer) GetServerId() string {
@@ -42513,7 +42735,7 @@ type DexMcpCatalogTool struct {
 
 func (x *DexMcpCatalogTool) Reset() {
 	*x = DexMcpCatalogTool{}
-	mi := &file_console_v1_console_proto_msgTypes[426]
+	mi := &file_console_v1_console_proto_msgTypes[427]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42525,7 +42747,7 @@ func (x *DexMcpCatalogTool) String() string {
 func (*DexMcpCatalogTool) ProtoMessage() {}
 
 func (x *DexMcpCatalogTool) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[426]
+	mi := &file_console_v1_console_proto_msgTypes[427]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -42538,7 +42760,7 @@ func (x *DexMcpCatalogTool) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DexMcpCatalogTool.ProtoReflect.Descriptor instead.
 func (*DexMcpCatalogTool) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{426}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{427}
 }
 
 func (x *DexMcpCatalogTool) GetName() string {
@@ -42583,7 +42805,7 @@ type CreateDexMcpServerRequest struct {
 
 func (x *CreateDexMcpServerRequest) Reset() {
 	*x = CreateDexMcpServerRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[427]
+	mi := &file_console_v1_console_proto_msgTypes[428]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42595,7 +42817,7 @@ func (x *CreateDexMcpServerRequest) String() string {
 func (*CreateDexMcpServerRequest) ProtoMessage() {}
 
 func (x *CreateDexMcpServerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[427]
+	mi := &file_console_v1_console_proto_msgTypes[428]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -42608,7 +42830,7 @@ func (x *CreateDexMcpServerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateDexMcpServerRequest.ProtoReflect.Descriptor instead.
 func (*CreateDexMcpServerRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{427}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{428}
 }
 
 func (x *CreateDexMcpServerRequest) GetQuery() *ConsoleQuery {
@@ -42662,7 +42884,7 @@ type CreateDexMcpServerResponse struct {
 
 func (x *CreateDexMcpServerResponse) Reset() {
 	*x = CreateDexMcpServerResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[428]
+	mi := &file_console_v1_console_proto_msgTypes[429]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42674,7 +42896,7 @@ func (x *CreateDexMcpServerResponse) String() string {
 func (*CreateDexMcpServerResponse) ProtoMessage() {}
 
 func (x *CreateDexMcpServerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[428]
+	mi := &file_console_v1_console_proto_msgTypes[429]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -42687,7 +42909,7 @@ func (x *CreateDexMcpServerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateDexMcpServerResponse.ProtoReflect.Descriptor instead.
 func (*CreateDexMcpServerResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{428}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{429}
 }
 
 func (x *CreateDexMcpServerResponse) GetServer() *DexMcpServer {
@@ -42706,7 +42928,7 @@ type ListDexMcpServersRequest struct {
 
 func (x *ListDexMcpServersRequest) Reset() {
 	*x = ListDexMcpServersRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[429]
+	mi := &file_console_v1_console_proto_msgTypes[430]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42718,7 +42940,7 @@ func (x *ListDexMcpServersRequest) String() string {
 func (*ListDexMcpServersRequest) ProtoMessage() {}
 
 func (x *ListDexMcpServersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[429]
+	mi := &file_console_v1_console_proto_msgTypes[430]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -42731,7 +42953,7 @@ func (x *ListDexMcpServersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListDexMcpServersRequest.ProtoReflect.Descriptor instead.
 func (*ListDexMcpServersRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{429}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{430}
 }
 
 func (x *ListDexMcpServersRequest) GetQuery() *ConsoleQuery {
@@ -42750,7 +42972,7 @@ type ListDexMcpServersResponse struct {
 
 func (x *ListDexMcpServersResponse) Reset() {
 	*x = ListDexMcpServersResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[430]
+	mi := &file_console_v1_console_proto_msgTypes[431]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42762,7 +42984,7 @@ func (x *ListDexMcpServersResponse) String() string {
 func (*ListDexMcpServersResponse) ProtoMessage() {}
 
 func (x *ListDexMcpServersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[430]
+	mi := &file_console_v1_console_proto_msgTypes[431]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -42775,7 +42997,7 @@ func (x *ListDexMcpServersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListDexMcpServersResponse.ProtoReflect.Descriptor instead.
 func (*ListDexMcpServersResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{430}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{431}
 }
 
 func (x *ListDexMcpServersResponse) GetServers() []*DexMcpServer {
@@ -42795,7 +43017,7 @@ type GetDexMcpServerRequest struct {
 
 func (x *GetDexMcpServerRequest) Reset() {
 	*x = GetDexMcpServerRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[431]
+	mi := &file_console_v1_console_proto_msgTypes[432]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42807,7 +43029,7 @@ func (x *GetDexMcpServerRequest) String() string {
 func (*GetDexMcpServerRequest) ProtoMessage() {}
 
 func (x *GetDexMcpServerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[431]
+	mi := &file_console_v1_console_proto_msgTypes[432]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -42820,7 +43042,7 @@ func (x *GetDexMcpServerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDexMcpServerRequest.ProtoReflect.Descriptor instead.
 func (*GetDexMcpServerRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{431}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{432}
 }
 
 func (x *GetDexMcpServerRequest) GetQuery() *ConsoleQuery {
@@ -42846,7 +43068,7 @@ type GetDexMcpServerResponse struct {
 
 func (x *GetDexMcpServerResponse) Reset() {
 	*x = GetDexMcpServerResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[432]
+	mi := &file_console_v1_console_proto_msgTypes[433]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42858,7 +43080,7 @@ func (x *GetDexMcpServerResponse) String() string {
 func (*GetDexMcpServerResponse) ProtoMessage() {}
 
 func (x *GetDexMcpServerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[432]
+	mi := &file_console_v1_console_proto_msgTypes[433]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -42871,7 +43093,7 @@ func (x *GetDexMcpServerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDexMcpServerResponse.ProtoReflect.Descriptor instead.
 func (*GetDexMcpServerResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{432}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{433}
 }
 
 func (x *GetDexMcpServerResponse) GetServer() *DexMcpServer {
@@ -42891,7 +43113,7 @@ type DiscoverDexMcpServerRequest struct {
 
 func (x *DiscoverDexMcpServerRequest) Reset() {
 	*x = DiscoverDexMcpServerRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[433]
+	mi := &file_console_v1_console_proto_msgTypes[434]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42903,7 +43125,7 @@ func (x *DiscoverDexMcpServerRequest) String() string {
 func (*DiscoverDexMcpServerRequest) ProtoMessage() {}
 
 func (x *DiscoverDexMcpServerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[433]
+	mi := &file_console_v1_console_proto_msgTypes[434]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -42916,7 +43138,7 @@ func (x *DiscoverDexMcpServerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DiscoverDexMcpServerRequest.ProtoReflect.Descriptor instead.
 func (*DiscoverDexMcpServerRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{433}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{434}
 }
 
 func (x *DiscoverDexMcpServerRequest) GetQuery() *ConsoleQuery {
@@ -42942,7 +43164,7 @@ type DiscoverDexMcpServerResponse struct {
 
 func (x *DiscoverDexMcpServerResponse) Reset() {
 	*x = DiscoverDexMcpServerResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[434]
+	mi := &file_console_v1_console_proto_msgTypes[435]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42954,7 +43176,7 @@ func (x *DiscoverDexMcpServerResponse) String() string {
 func (*DiscoverDexMcpServerResponse) ProtoMessage() {}
 
 func (x *DiscoverDexMcpServerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[434]
+	mi := &file_console_v1_console_proto_msgTypes[435]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -42967,7 +43189,7 @@ func (x *DiscoverDexMcpServerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DiscoverDexMcpServerResponse.ProtoReflect.Descriptor instead.
 func (*DiscoverDexMcpServerResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{434}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{435}
 }
 
 func (x *DiscoverDexMcpServerResponse) GetServer() *DexMcpServer {
@@ -42991,7 +43213,7 @@ type UpdateDexMcpServerRequest struct {
 
 func (x *UpdateDexMcpServerRequest) Reset() {
 	*x = UpdateDexMcpServerRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[435]
+	mi := &file_console_v1_console_proto_msgTypes[436]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43003,7 +43225,7 @@ func (x *UpdateDexMcpServerRequest) String() string {
 func (*UpdateDexMcpServerRequest) ProtoMessage() {}
 
 func (x *UpdateDexMcpServerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[435]
+	mi := &file_console_v1_console_proto_msgTypes[436]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43016,7 +43238,7 @@ func (x *UpdateDexMcpServerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateDexMcpServerRequest.ProtoReflect.Descriptor instead.
 func (*UpdateDexMcpServerRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{435}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{436}
 }
 
 func (x *UpdateDexMcpServerRequest) GetQuery() *ConsoleQuery {
@@ -43070,7 +43292,7 @@ type UpdateDexMcpServerResponse struct {
 
 func (x *UpdateDexMcpServerResponse) Reset() {
 	*x = UpdateDexMcpServerResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[436]
+	mi := &file_console_v1_console_proto_msgTypes[437]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43082,7 +43304,7 @@ func (x *UpdateDexMcpServerResponse) String() string {
 func (*UpdateDexMcpServerResponse) ProtoMessage() {}
 
 func (x *UpdateDexMcpServerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[436]
+	mi := &file_console_v1_console_proto_msgTypes[437]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43095,7 +43317,7 @@ func (x *UpdateDexMcpServerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateDexMcpServerResponse.ProtoReflect.Descriptor instead.
 func (*UpdateDexMcpServerResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{436}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{437}
 }
 
 func (x *UpdateDexMcpServerResponse) GetServer() *DexMcpServer {
@@ -43115,7 +43337,7 @@ type DeleteDexMcpServerRequest struct {
 
 func (x *DeleteDexMcpServerRequest) Reset() {
 	*x = DeleteDexMcpServerRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[437]
+	mi := &file_console_v1_console_proto_msgTypes[438]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43127,7 +43349,7 @@ func (x *DeleteDexMcpServerRequest) String() string {
 func (*DeleteDexMcpServerRequest) ProtoMessage() {}
 
 func (x *DeleteDexMcpServerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[437]
+	mi := &file_console_v1_console_proto_msgTypes[438]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43140,7 +43362,7 @@ func (x *DeleteDexMcpServerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteDexMcpServerRequest.ProtoReflect.Descriptor instead.
 func (*DeleteDexMcpServerRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{437}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{438}
 }
 
 func (x *DeleteDexMcpServerRequest) GetQuery() *ConsoleQuery {
@@ -43166,7 +43388,7 @@ type DeleteDexMcpServerResponse struct {
 
 func (x *DeleteDexMcpServerResponse) Reset() {
 	*x = DeleteDexMcpServerResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[438]
+	mi := &file_console_v1_console_proto_msgTypes[439]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43178,7 +43400,7 @@ func (x *DeleteDexMcpServerResponse) String() string {
 func (*DeleteDexMcpServerResponse) ProtoMessage() {}
 
 func (x *DeleteDexMcpServerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[438]
+	mi := &file_console_v1_console_proto_msgTypes[439]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43191,7 +43413,7 @@ func (x *DeleteDexMcpServerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteDexMcpServerResponse.ProtoReflect.Descriptor instead.
 func (*DeleteDexMcpServerResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{438}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{439}
 }
 
 func (x *DeleteDexMcpServerResponse) GetDeleted() bool {
@@ -43227,7 +43449,7 @@ type DexMcpOAuthProfile struct {
 
 func (x *DexMcpOAuthProfile) Reset() {
 	*x = DexMcpOAuthProfile{}
-	mi := &file_console_v1_console_proto_msgTypes[439]
+	mi := &file_console_v1_console_proto_msgTypes[440]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43239,7 +43461,7 @@ func (x *DexMcpOAuthProfile) String() string {
 func (*DexMcpOAuthProfile) ProtoMessage() {}
 
 func (x *DexMcpOAuthProfile) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[439]
+	mi := &file_console_v1_console_proto_msgTypes[440]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43252,7 +43474,7 @@ func (x *DexMcpOAuthProfile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DexMcpOAuthProfile.ProtoReflect.Descriptor instead.
 func (*DexMcpOAuthProfile) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{439}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{440}
 }
 
 func (x *DexMcpOAuthProfile) GetProfileId() string {
@@ -43381,7 +43603,7 @@ type InitiateDexMcpOAuthProfileRequest struct {
 
 func (x *InitiateDexMcpOAuthProfileRequest) Reset() {
 	*x = InitiateDexMcpOAuthProfileRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[440]
+	mi := &file_console_v1_console_proto_msgTypes[441]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43393,7 +43615,7 @@ func (x *InitiateDexMcpOAuthProfileRequest) String() string {
 func (*InitiateDexMcpOAuthProfileRequest) ProtoMessage() {}
 
 func (x *InitiateDexMcpOAuthProfileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[440]
+	mi := &file_console_v1_console_proto_msgTypes[441]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43406,7 +43628,7 @@ func (x *InitiateDexMcpOAuthProfileRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use InitiateDexMcpOAuthProfileRequest.ProtoReflect.Descriptor instead.
 func (*InitiateDexMcpOAuthProfileRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{440}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{441}
 }
 
 func (x *InitiateDexMcpOAuthProfileRequest) GetQuery() *ConsoleQuery {
@@ -43515,7 +43737,7 @@ type InitiateDexMcpOAuthProfileResponse struct {
 
 func (x *InitiateDexMcpOAuthProfileResponse) Reset() {
 	*x = InitiateDexMcpOAuthProfileResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[441]
+	mi := &file_console_v1_console_proto_msgTypes[442]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43527,7 +43749,7 @@ func (x *InitiateDexMcpOAuthProfileResponse) String() string {
 func (*InitiateDexMcpOAuthProfileResponse) ProtoMessage() {}
 
 func (x *InitiateDexMcpOAuthProfileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[441]
+	mi := &file_console_v1_console_proto_msgTypes[442]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43540,7 +43762,7 @@ func (x *InitiateDexMcpOAuthProfileResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use InitiateDexMcpOAuthProfileResponse.ProtoReflect.Descriptor instead.
 func (*InitiateDexMcpOAuthProfileResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{441}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{442}
 }
 
 func (x *InitiateDexMcpOAuthProfileResponse) GetProfile() *DexMcpOAuthProfile {
@@ -43616,7 +43838,7 @@ type CompleteDexMcpOAuthProfileRequest struct {
 
 func (x *CompleteDexMcpOAuthProfileRequest) Reset() {
 	*x = CompleteDexMcpOAuthProfileRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[442]
+	mi := &file_console_v1_console_proto_msgTypes[443]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43628,7 +43850,7 @@ func (x *CompleteDexMcpOAuthProfileRequest) String() string {
 func (*CompleteDexMcpOAuthProfileRequest) ProtoMessage() {}
 
 func (x *CompleteDexMcpOAuthProfileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[442]
+	mi := &file_console_v1_console_proto_msgTypes[443]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43641,7 +43863,7 @@ func (x *CompleteDexMcpOAuthProfileRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use CompleteDexMcpOAuthProfileRequest.ProtoReflect.Descriptor instead.
 func (*CompleteDexMcpOAuthProfileRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{442}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{443}
 }
 
 func (x *CompleteDexMcpOAuthProfileRequest) GetQuery() *ConsoleQuery {
@@ -43737,7 +43959,7 @@ type CompleteDexMcpOAuthProfileResponse struct {
 
 func (x *CompleteDexMcpOAuthProfileResponse) Reset() {
 	*x = CompleteDexMcpOAuthProfileResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[443]
+	mi := &file_console_v1_console_proto_msgTypes[444]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43749,7 +43971,7 @@ func (x *CompleteDexMcpOAuthProfileResponse) String() string {
 func (*CompleteDexMcpOAuthProfileResponse) ProtoMessage() {}
 
 func (x *CompleteDexMcpOAuthProfileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[443]
+	mi := &file_console_v1_console_proto_msgTypes[444]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43762,7 +43984,7 @@ func (x *CompleteDexMcpOAuthProfileResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use CompleteDexMcpOAuthProfileResponse.ProtoReflect.Descriptor instead.
 func (*CompleteDexMcpOAuthProfileResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{443}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{444}
 }
 
 func (x *CompleteDexMcpOAuthProfileResponse) GetProfile() *DexMcpOAuthProfile {
@@ -43782,7 +44004,7 @@ type ListDexMcpOAuthProfilesRequest struct {
 
 func (x *ListDexMcpOAuthProfilesRequest) Reset() {
 	*x = ListDexMcpOAuthProfilesRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[444]
+	mi := &file_console_v1_console_proto_msgTypes[445]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43794,7 +44016,7 @@ func (x *ListDexMcpOAuthProfilesRequest) String() string {
 func (*ListDexMcpOAuthProfilesRequest) ProtoMessage() {}
 
 func (x *ListDexMcpOAuthProfilesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[444]
+	mi := &file_console_v1_console_proto_msgTypes[445]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43807,7 +44029,7 @@ func (x *ListDexMcpOAuthProfilesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListDexMcpOAuthProfilesRequest.ProtoReflect.Descriptor instead.
 func (*ListDexMcpOAuthProfilesRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{444}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{445}
 }
 
 func (x *ListDexMcpOAuthProfilesRequest) GetQuery() *ConsoleQuery {
@@ -43833,7 +44055,7 @@ type ListDexMcpOAuthProfilesResponse struct {
 
 func (x *ListDexMcpOAuthProfilesResponse) Reset() {
 	*x = ListDexMcpOAuthProfilesResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[445]
+	mi := &file_console_v1_console_proto_msgTypes[446]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43845,7 +44067,7 @@ func (x *ListDexMcpOAuthProfilesResponse) String() string {
 func (*ListDexMcpOAuthProfilesResponse) ProtoMessage() {}
 
 func (x *ListDexMcpOAuthProfilesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[445]
+	mi := &file_console_v1_console_proto_msgTypes[446]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43858,7 +44080,7 @@ func (x *ListDexMcpOAuthProfilesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListDexMcpOAuthProfilesResponse.ProtoReflect.Descriptor instead.
 func (*ListDexMcpOAuthProfilesResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{445}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{446}
 }
 
 func (x *ListDexMcpOAuthProfilesResponse) GetProfiles() []*DexMcpOAuthProfile {
@@ -43881,7 +44103,7 @@ type RevokeDexMcpOAuthProfileRequest struct {
 
 func (x *RevokeDexMcpOAuthProfileRequest) Reset() {
 	*x = RevokeDexMcpOAuthProfileRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[446]
+	mi := &file_console_v1_console_proto_msgTypes[447]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43893,7 +44115,7 @@ func (x *RevokeDexMcpOAuthProfileRequest) String() string {
 func (*RevokeDexMcpOAuthProfileRequest) ProtoMessage() {}
 
 func (x *RevokeDexMcpOAuthProfileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[446]
+	mi := &file_console_v1_console_proto_msgTypes[447]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43906,7 +44128,7 @@ func (x *RevokeDexMcpOAuthProfileRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeDexMcpOAuthProfileRequest.ProtoReflect.Descriptor instead.
 func (*RevokeDexMcpOAuthProfileRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{446}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{447}
 }
 
 func (x *RevokeDexMcpOAuthProfileRequest) GetQuery() *ConsoleQuery {
@@ -43953,7 +44175,7 @@ type RevokeDexMcpOAuthProfileResponse struct {
 
 func (x *RevokeDexMcpOAuthProfileResponse) Reset() {
 	*x = RevokeDexMcpOAuthProfileResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[447]
+	mi := &file_console_v1_console_proto_msgTypes[448]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43965,7 +44187,7 @@ func (x *RevokeDexMcpOAuthProfileResponse) String() string {
 func (*RevokeDexMcpOAuthProfileResponse) ProtoMessage() {}
 
 func (x *RevokeDexMcpOAuthProfileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[447]
+	mi := &file_console_v1_console_proto_msgTypes[448]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -43978,7 +44200,7 @@ func (x *RevokeDexMcpOAuthProfileResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeDexMcpOAuthProfileResponse.ProtoReflect.Descriptor instead.
 func (*RevokeDexMcpOAuthProfileResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{447}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{448}
 }
 
 func (x *RevokeDexMcpOAuthProfileResponse) GetProfile() *DexMcpOAuthProfile {
@@ -44001,7 +44223,7 @@ type ReauthorizeDexMcpOAuthProfileRequest struct {
 
 func (x *ReauthorizeDexMcpOAuthProfileRequest) Reset() {
 	*x = ReauthorizeDexMcpOAuthProfileRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[448]
+	mi := &file_console_v1_console_proto_msgTypes[449]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44013,7 +44235,7 @@ func (x *ReauthorizeDexMcpOAuthProfileRequest) String() string {
 func (*ReauthorizeDexMcpOAuthProfileRequest) ProtoMessage() {}
 
 func (x *ReauthorizeDexMcpOAuthProfileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[448]
+	mi := &file_console_v1_console_proto_msgTypes[449]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44026,7 +44248,7 @@ func (x *ReauthorizeDexMcpOAuthProfileRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use ReauthorizeDexMcpOAuthProfileRequest.ProtoReflect.Descriptor instead.
 func (*ReauthorizeDexMcpOAuthProfileRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{448}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{449}
 }
 
 func (x *ReauthorizeDexMcpOAuthProfileRequest) GetQuery() *ConsoleQuery {
@@ -44079,7 +44301,7 @@ type ReauthorizeDexMcpOAuthProfileResponse struct {
 
 func (x *ReauthorizeDexMcpOAuthProfileResponse) Reset() {
 	*x = ReauthorizeDexMcpOAuthProfileResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[449]
+	mi := &file_console_v1_console_proto_msgTypes[450]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44091,7 +44313,7 @@ func (x *ReauthorizeDexMcpOAuthProfileResponse) String() string {
 func (*ReauthorizeDexMcpOAuthProfileResponse) ProtoMessage() {}
 
 func (x *ReauthorizeDexMcpOAuthProfileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[449]
+	mi := &file_console_v1_console_proto_msgTypes[450]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44104,7 +44326,7 @@ func (x *ReauthorizeDexMcpOAuthProfileResponse) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use ReauthorizeDexMcpOAuthProfileResponse.ProtoReflect.Descriptor instead.
 func (*ReauthorizeDexMcpOAuthProfileResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{449}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{450}
 }
 
 func (x *ReauthorizeDexMcpOAuthProfileResponse) GetProfile() *DexMcpOAuthProfile {
@@ -44180,7 +44402,7 @@ type PrivateEndpoint struct {
 
 func (x *PrivateEndpoint) Reset() {
 	*x = PrivateEndpoint{}
-	mi := &file_console_v1_console_proto_msgTypes[450]
+	mi := &file_console_v1_console_proto_msgTypes[451]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44192,7 +44414,7 @@ func (x *PrivateEndpoint) String() string {
 func (*PrivateEndpoint) ProtoMessage() {}
 
 func (x *PrivateEndpoint) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[450]
+	mi := &file_console_v1_console_proto_msgTypes[451]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44205,7 +44427,7 @@ func (x *PrivateEndpoint) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrivateEndpoint.ProtoReflect.Descriptor instead.
 func (*PrivateEndpoint) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{450}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{451}
 }
 
 func (x *PrivateEndpoint) GetEndpointId() string {
@@ -44337,7 +44559,7 @@ type PrivateProfileRoute struct {
 
 func (x *PrivateProfileRoute) Reset() {
 	*x = PrivateProfileRoute{}
-	mi := &file_console_v1_console_proto_msgTypes[451]
+	mi := &file_console_v1_console_proto_msgTypes[452]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44349,7 +44571,7 @@ func (x *PrivateProfileRoute) String() string {
 func (*PrivateProfileRoute) ProtoMessage() {}
 
 func (x *PrivateProfileRoute) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[451]
+	mi := &file_console_v1_console_proto_msgTypes[452]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44362,7 +44584,7 @@ func (x *PrivateProfileRoute) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrivateProfileRoute.ProtoReflect.Descriptor instead.
 func (*PrivateProfileRoute) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{451}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{452}
 }
 
 func (x *PrivateProfileRoute) GetProfileId() string {
@@ -44444,7 +44666,7 @@ type RegisterPrivateEndpointRequest struct {
 
 func (x *RegisterPrivateEndpointRequest) Reset() {
 	*x = RegisterPrivateEndpointRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[452]
+	mi := &file_console_v1_console_proto_msgTypes[453]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44456,7 +44678,7 @@ func (x *RegisterPrivateEndpointRequest) String() string {
 func (*RegisterPrivateEndpointRequest) ProtoMessage() {}
 
 func (x *RegisterPrivateEndpointRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[452]
+	mi := &file_console_v1_console_proto_msgTypes[453]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44469,7 +44691,7 @@ func (x *RegisterPrivateEndpointRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterPrivateEndpointRequest.ProtoReflect.Descriptor instead.
 func (*RegisterPrivateEndpointRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{452}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{453}
 }
 
 func (x *RegisterPrivateEndpointRequest) GetQuery() *ConsoleQuery {
@@ -44537,7 +44759,7 @@ type RegisterPrivateEndpointResponse struct {
 
 func (x *RegisterPrivateEndpointResponse) Reset() {
 	*x = RegisterPrivateEndpointResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[453]
+	mi := &file_console_v1_console_proto_msgTypes[454]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44549,7 +44771,7 @@ func (x *RegisterPrivateEndpointResponse) String() string {
 func (*RegisterPrivateEndpointResponse) ProtoMessage() {}
 
 func (x *RegisterPrivateEndpointResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[453]
+	mi := &file_console_v1_console_proto_msgTypes[454]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44562,7 +44784,7 @@ func (x *RegisterPrivateEndpointResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterPrivateEndpointResponse.ProtoReflect.Descriptor instead.
 func (*RegisterPrivateEndpointResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{453}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{454}
 }
 
 func (x *RegisterPrivateEndpointResponse) GetEndpoint() *PrivateEndpoint {
@@ -44590,7 +44812,7 @@ type VerifyPrivateEndpointRequest struct {
 
 func (x *VerifyPrivateEndpointRequest) Reset() {
 	*x = VerifyPrivateEndpointRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[454]
+	mi := &file_console_v1_console_proto_msgTypes[455]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44602,7 +44824,7 @@ func (x *VerifyPrivateEndpointRequest) String() string {
 func (*VerifyPrivateEndpointRequest) ProtoMessage() {}
 
 func (x *VerifyPrivateEndpointRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[454]
+	mi := &file_console_v1_console_proto_msgTypes[455]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44615,7 +44837,7 @@ func (x *VerifyPrivateEndpointRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VerifyPrivateEndpointRequest.ProtoReflect.Descriptor instead.
 func (*VerifyPrivateEndpointRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{454}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{455}
 }
 
 func (x *VerifyPrivateEndpointRequest) GetQuery() *ConsoleQuery {
@@ -44669,7 +44891,7 @@ type VerifyPrivateEndpointResponse struct {
 
 func (x *VerifyPrivateEndpointResponse) Reset() {
 	*x = VerifyPrivateEndpointResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[455]
+	mi := &file_console_v1_console_proto_msgTypes[456]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44681,7 +44903,7 @@ func (x *VerifyPrivateEndpointResponse) String() string {
 func (*VerifyPrivateEndpointResponse) ProtoMessage() {}
 
 func (x *VerifyPrivateEndpointResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[455]
+	mi := &file_console_v1_console_proto_msgTypes[456]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44694,7 +44916,7 @@ func (x *VerifyPrivateEndpointResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VerifyPrivateEndpointResponse.ProtoReflect.Descriptor instead.
 func (*VerifyPrivateEndpointResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{455}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{456}
 }
 
 func (x *VerifyPrivateEndpointResponse) GetEndpoint() *PrivateEndpoint {
@@ -44713,7 +44935,7 @@ type ListPrivateEndpointsRequest struct {
 
 func (x *ListPrivateEndpointsRequest) Reset() {
 	*x = ListPrivateEndpointsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[456]
+	mi := &file_console_v1_console_proto_msgTypes[457]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44725,7 +44947,7 @@ func (x *ListPrivateEndpointsRequest) String() string {
 func (*ListPrivateEndpointsRequest) ProtoMessage() {}
 
 func (x *ListPrivateEndpointsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[456]
+	mi := &file_console_v1_console_proto_msgTypes[457]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44738,7 +44960,7 @@ func (x *ListPrivateEndpointsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPrivateEndpointsRequest.ProtoReflect.Descriptor instead.
 func (*ListPrivateEndpointsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{456}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{457}
 }
 
 func (x *ListPrivateEndpointsRequest) GetQuery() *ConsoleQuery {
@@ -44757,7 +44979,7 @@ type ListPrivateEndpointsResponse struct {
 
 func (x *ListPrivateEndpointsResponse) Reset() {
 	*x = ListPrivateEndpointsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[457]
+	mi := &file_console_v1_console_proto_msgTypes[458]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44769,7 +44991,7 @@ func (x *ListPrivateEndpointsResponse) String() string {
 func (*ListPrivateEndpointsResponse) ProtoMessage() {}
 
 func (x *ListPrivateEndpointsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[457]
+	mi := &file_console_v1_console_proto_msgTypes[458]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44782,7 +45004,7 @@ func (x *ListPrivateEndpointsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPrivateEndpointsResponse.ProtoReflect.Descriptor instead.
 func (*ListPrivateEndpointsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{457}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{458}
 }
 
 func (x *ListPrivateEndpointsResponse) GetEndpoints() []*PrivateEndpoint {
@@ -44803,7 +45025,7 @@ type DeletePrivateEndpointRequest struct {
 
 func (x *DeletePrivateEndpointRequest) Reset() {
 	*x = DeletePrivateEndpointRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[458]
+	mi := &file_console_v1_console_proto_msgTypes[459]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44815,7 +45037,7 @@ func (x *DeletePrivateEndpointRequest) String() string {
 func (*DeletePrivateEndpointRequest) ProtoMessage() {}
 
 func (x *DeletePrivateEndpointRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[458]
+	mi := &file_console_v1_console_proto_msgTypes[459]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44828,7 +45050,7 @@ func (x *DeletePrivateEndpointRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeletePrivateEndpointRequest.ProtoReflect.Descriptor instead.
 func (*DeletePrivateEndpointRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{458}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{459}
 }
 
 func (x *DeletePrivateEndpointRequest) GetQuery() *ConsoleQuery {
@@ -44862,7 +45084,7 @@ type DeletePrivateEndpointResponse struct {
 
 func (x *DeletePrivateEndpointResponse) Reset() {
 	*x = DeletePrivateEndpointResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[459]
+	mi := &file_console_v1_console_proto_msgTypes[460]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44874,7 +45096,7 @@ func (x *DeletePrivateEndpointResponse) String() string {
 func (*DeletePrivateEndpointResponse) ProtoMessage() {}
 
 func (x *DeletePrivateEndpointResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[459]
+	mi := &file_console_v1_console_proto_msgTypes[460]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44887,7 +45109,7 @@ func (x *DeletePrivateEndpointResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeletePrivateEndpointResponse.ProtoReflect.Descriptor instead.
 func (*DeletePrivateEndpointResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{459}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{460}
 }
 
 func (x *DeletePrivateEndpointResponse) GetDeleted() bool {
@@ -44917,7 +45139,7 @@ type AttachPrivateEndpointToProfileRequest struct {
 
 func (x *AttachPrivateEndpointToProfileRequest) Reset() {
 	*x = AttachPrivateEndpointToProfileRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[460]
+	mi := &file_console_v1_console_proto_msgTypes[461]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44929,7 +45151,7 @@ func (x *AttachPrivateEndpointToProfileRequest) String() string {
 func (*AttachPrivateEndpointToProfileRequest) ProtoMessage() {}
 
 func (x *AttachPrivateEndpointToProfileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[460]
+	mi := &file_console_v1_console_proto_msgTypes[461]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -44942,7 +45164,7 @@ func (x *AttachPrivateEndpointToProfileRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use AttachPrivateEndpointToProfileRequest.ProtoReflect.Descriptor instead.
 func (*AttachPrivateEndpointToProfileRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{460}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{461}
 }
 
 func (x *AttachPrivateEndpointToProfileRequest) GetQuery() *ConsoleQuery {
@@ -44989,7 +45211,7 @@ type AttachPrivateEndpointToProfileResponse struct {
 
 func (x *AttachPrivateEndpointToProfileResponse) Reset() {
 	*x = AttachPrivateEndpointToProfileResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[461]
+	mi := &file_console_v1_console_proto_msgTypes[462]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45001,7 +45223,7 @@ func (x *AttachPrivateEndpointToProfileResponse) String() string {
 func (*AttachPrivateEndpointToProfileResponse) ProtoMessage() {}
 
 func (x *AttachPrivateEndpointToProfileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[461]
+	mi := &file_console_v1_console_proto_msgTypes[462]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45014,7 +45236,7 @@ func (x *AttachPrivateEndpointToProfileResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use AttachPrivateEndpointToProfileResponse.ProtoReflect.Descriptor instead.
 func (*AttachPrivateEndpointToProfileResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{461}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{462}
 }
 
 func (x *AttachPrivateEndpointToProfileResponse) GetRoute() *PrivateProfileRoute {
@@ -45033,7 +45255,7 @@ type ListGatewayEgressOriginsRequest struct {
 
 func (x *ListGatewayEgressOriginsRequest) Reset() {
 	*x = ListGatewayEgressOriginsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[462]
+	mi := &file_console_v1_console_proto_msgTypes[463]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45045,7 +45267,7 @@ func (x *ListGatewayEgressOriginsRequest) String() string {
 func (*ListGatewayEgressOriginsRequest) ProtoMessage() {}
 
 func (x *ListGatewayEgressOriginsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[462]
+	mi := &file_console_v1_console_proto_msgTypes[463]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45058,7 +45280,7 @@ func (x *ListGatewayEgressOriginsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListGatewayEgressOriginsRequest.ProtoReflect.Descriptor instead.
 func (*ListGatewayEgressOriginsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{462}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{463}
 }
 
 func (x *ListGatewayEgressOriginsRequest) GetQuery() *ConsoleQuery {
@@ -45079,7 +45301,7 @@ type ListGatewayEgressOriginsResponse struct {
 
 func (x *ListGatewayEgressOriginsResponse) Reset() {
 	*x = ListGatewayEgressOriginsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[463]
+	mi := &file_console_v1_console_proto_msgTypes[464]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45091,7 +45313,7 @@ func (x *ListGatewayEgressOriginsResponse) String() string {
 func (*ListGatewayEgressOriginsResponse) ProtoMessage() {}
 
 func (x *ListGatewayEgressOriginsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[463]
+	mi := &file_console_v1_console_proto_msgTypes[464]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45104,7 +45326,7 @@ func (x *ListGatewayEgressOriginsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListGatewayEgressOriginsResponse.ProtoReflect.Descriptor instead.
 func (*ListGatewayEgressOriginsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{463}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{464}
 }
 
 func (x *ListGatewayEgressOriginsResponse) GetOrigins() []string {
@@ -45140,7 +45362,7 @@ type OperatingCapabilityRequirementState struct {
 
 func (x *OperatingCapabilityRequirementState) Reset() {
 	*x = OperatingCapabilityRequirementState{}
-	mi := &file_console_v1_console_proto_msgTypes[464]
+	mi := &file_console_v1_console_proto_msgTypes[465]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45152,7 +45374,7 @@ func (x *OperatingCapabilityRequirementState) String() string {
 func (*OperatingCapabilityRequirementState) ProtoMessage() {}
 
 func (x *OperatingCapabilityRequirementState) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[464]
+	mi := &file_console_v1_console_proto_msgTypes[465]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45165,7 +45387,7 @@ func (x *OperatingCapabilityRequirementState) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use OperatingCapabilityRequirementState.ProtoReflect.Descriptor instead.
 func (*OperatingCapabilityRequirementState) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{464}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{465}
 }
 
 func (x *OperatingCapabilityRequirementState) GetService() string {
@@ -45210,7 +45432,7 @@ type PrewarmOperatingThreadRequest struct {
 
 func (x *PrewarmOperatingThreadRequest) Reset() {
 	*x = PrewarmOperatingThreadRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[465]
+	mi := &file_console_v1_console_proto_msgTypes[466]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45222,7 +45444,7 @@ func (x *PrewarmOperatingThreadRequest) String() string {
 func (*PrewarmOperatingThreadRequest) ProtoMessage() {}
 
 func (x *PrewarmOperatingThreadRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[465]
+	mi := &file_console_v1_console_proto_msgTypes[466]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45235,7 +45457,7 @@ func (x *PrewarmOperatingThreadRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrewarmOperatingThreadRequest.ProtoReflect.Descriptor instead.
 func (*PrewarmOperatingThreadRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{465}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{466}
 }
 
 func (x *PrewarmOperatingThreadRequest) GetQuery() *ConsoleQuery {
@@ -45304,7 +45526,7 @@ type PrewarmOperatingThreadResponse struct {
 
 func (x *PrewarmOperatingThreadResponse) Reset() {
 	*x = PrewarmOperatingThreadResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[466]
+	mi := &file_console_v1_console_proto_msgTypes[467]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45316,7 +45538,7 @@ func (x *PrewarmOperatingThreadResponse) String() string {
 func (*PrewarmOperatingThreadResponse) ProtoMessage() {}
 
 func (x *PrewarmOperatingThreadResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[466]
+	mi := &file_console_v1_console_proto_msgTypes[467]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45329,7 +45551,7 @@ func (x *PrewarmOperatingThreadResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrewarmOperatingThreadResponse.ProtoReflect.Descriptor instead.
 func (*PrewarmOperatingThreadResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{466}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{467}
 }
 
 func (x *PrewarmOperatingThreadResponse) GetChannelId() string {
@@ -45441,7 +45663,7 @@ type TerminalErrorEnvelope struct {
 
 func (x *TerminalErrorEnvelope) Reset() {
 	*x = TerminalErrorEnvelope{}
-	mi := &file_console_v1_console_proto_msgTypes[467]
+	mi := &file_console_v1_console_proto_msgTypes[468]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45453,7 +45675,7 @@ func (x *TerminalErrorEnvelope) String() string {
 func (*TerminalErrorEnvelope) ProtoMessage() {}
 
 func (x *TerminalErrorEnvelope) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[467]
+	mi := &file_console_v1_console_proto_msgTypes[468]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45466,7 +45688,7 @@ func (x *TerminalErrorEnvelope) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TerminalErrorEnvelope.ProtoReflect.Descriptor instead.
 func (*TerminalErrorEnvelope) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{467}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{468}
 }
 
 func (x *TerminalErrorEnvelope) GetSchemaVersion() uint32 {
@@ -45530,7 +45752,7 @@ type BootstrapThreadGatewayRequest struct {
 
 func (x *BootstrapThreadGatewayRequest) Reset() {
 	*x = BootstrapThreadGatewayRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[468]
+	mi := &file_console_v1_console_proto_msgTypes[469]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45542,7 +45764,7 @@ func (x *BootstrapThreadGatewayRequest) String() string {
 func (*BootstrapThreadGatewayRequest) ProtoMessage() {}
 
 func (x *BootstrapThreadGatewayRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[468]
+	mi := &file_console_v1_console_proto_msgTypes[469]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45555,7 +45777,7 @@ func (x *BootstrapThreadGatewayRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BootstrapThreadGatewayRequest.ProtoReflect.Descriptor instead.
 func (*BootstrapThreadGatewayRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{468}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{469}
 }
 
 func (x *BootstrapThreadGatewayRequest) GetOrganizationId() string {
@@ -45605,7 +45827,7 @@ type BootstrapThreadGatewayResponse struct {
 
 func (x *BootstrapThreadGatewayResponse) Reset() {
 	*x = BootstrapThreadGatewayResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[469]
+	mi := &file_console_v1_console_proto_msgTypes[470]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45617,7 +45839,7 @@ func (x *BootstrapThreadGatewayResponse) String() string {
 func (*BootstrapThreadGatewayResponse) ProtoMessage() {}
 
 func (x *BootstrapThreadGatewayResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[469]
+	mi := &file_console_v1_console_proto_msgTypes[470]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45630,7 +45852,7 @@ func (x *BootstrapThreadGatewayResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BootstrapThreadGatewayResponse.ProtoReflect.Descriptor instead.
 func (*BootstrapThreadGatewayResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{469}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{470}
 }
 
 func (x *BootstrapThreadGatewayResponse) GetEnabled() bool {
@@ -45725,7 +45947,7 @@ type SetOperatingThreadControllerRequest struct {
 
 func (x *SetOperatingThreadControllerRequest) Reset() {
 	*x = SetOperatingThreadControllerRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[470]
+	mi := &file_console_v1_console_proto_msgTypes[471]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45737,7 +45959,7 @@ func (x *SetOperatingThreadControllerRequest) String() string {
 func (*SetOperatingThreadControllerRequest) ProtoMessage() {}
 
 func (x *SetOperatingThreadControllerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[470]
+	mi := &file_console_v1_console_proto_msgTypes[471]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45750,7 +45972,7 @@ func (x *SetOperatingThreadControllerRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use SetOperatingThreadControllerRequest.ProtoReflect.Descriptor instead.
 func (*SetOperatingThreadControllerRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{470}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{471}
 }
 
 func (x *SetOperatingThreadControllerRequest) GetQuery() *ConsoleQuery {
@@ -45813,7 +46035,7 @@ type SetOperatingThreadControllerResponse struct {
 
 func (x *SetOperatingThreadControllerResponse) Reset() {
 	*x = SetOperatingThreadControllerResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[471]
+	mi := &file_console_v1_console_proto_msgTypes[472]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45825,7 +46047,7 @@ func (x *SetOperatingThreadControllerResponse) String() string {
 func (*SetOperatingThreadControllerResponse) ProtoMessage() {}
 
 func (x *SetOperatingThreadControllerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[471]
+	mi := &file_console_v1_console_proto_msgTypes[472]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45838,7 +46060,7 @@ func (x *SetOperatingThreadControllerResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use SetOperatingThreadControllerResponse.ProtoReflect.Descriptor instead.
 func (*SetOperatingThreadControllerResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{471}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{472}
 }
 
 func (x *SetOperatingThreadControllerResponse) GetReplayed() bool {
@@ -45879,7 +46101,7 @@ type CostUsageSummary struct {
 
 func (x *CostUsageSummary) Reset() {
 	*x = CostUsageSummary{}
-	mi := &file_console_v1_console_proto_msgTypes[472]
+	mi := &file_console_v1_console_proto_msgTypes[473]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45891,7 +46113,7 @@ func (x *CostUsageSummary) String() string {
 func (*CostUsageSummary) ProtoMessage() {}
 
 func (x *CostUsageSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[472]
+	mi := &file_console_v1_console_proto_msgTypes[473]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -45904,7 +46126,7 @@ func (x *CostUsageSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CostUsageSummary.ProtoReflect.Descriptor instead.
 func (*CostUsageSummary) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{472}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{473}
 }
 
 func (x *CostUsageSummary) GetSpendTodayMicros() int64 {
@@ -45991,7 +46213,7 @@ type CostUsageAttributionSummary struct {
 
 func (x *CostUsageAttributionSummary) Reset() {
 	*x = CostUsageAttributionSummary{}
-	mi := &file_console_v1_console_proto_msgTypes[473]
+	mi := &file_console_v1_console_proto_msgTypes[474]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46003,7 +46225,7 @@ func (x *CostUsageAttributionSummary) String() string {
 func (*CostUsageAttributionSummary) ProtoMessage() {}
 
 func (x *CostUsageAttributionSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[473]
+	mi := &file_console_v1_console_proto_msgTypes[474]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46016,7 +46238,7 @@ func (x *CostUsageAttributionSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CostUsageAttributionSummary.ProtoReflect.Descriptor instead.
 func (*CostUsageAttributionSummary) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{473}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{474}
 }
 
 func (x *CostUsageAttributionSummary) GetProvider() string {
@@ -46125,7 +46347,7 @@ type TenantPrivacySetting struct {
 
 func (x *TenantPrivacySetting) Reset() {
 	*x = TenantPrivacySetting{}
-	mi := &file_console_v1_console_proto_msgTypes[474]
+	mi := &file_console_v1_console_proto_msgTypes[475]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46137,7 +46359,7 @@ func (x *TenantPrivacySetting) String() string {
 func (*TenantPrivacySetting) ProtoMessage() {}
 
 func (x *TenantPrivacySetting) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[474]
+	mi := &file_console_v1_console_proto_msgTypes[475]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46150,7 +46372,7 @@ func (x *TenantPrivacySetting) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TenantPrivacySetting.ProtoReflect.Descriptor instead.
 func (*TenantPrivacySetting) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{474}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{475}
 }
 
 func (x *TenantPrivacySetting) GetOrganizationId() string {
@@ -46197,7 +46419,7 @@ type GetPrivacySettingsRequest struct {
 
 func (x *GetPrivacySettingsRequest) Reset() {
 	*x = GetPrivacySettingsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[475]
+	mi := &file_console_v1_console_proto_msgTypes[476]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46209,7 +46431,7 @@ func (x *GetPrivacySettingsRequest) String() string {
 func (*GetPrivacySettingsRequest) ProtoMessage() {}
 
 func (x *GetPrivacySettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[475]
+	mi := &file_console_v1_console_proto_msgTypes[476]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46222,7 +46444,7 @@ func (x *GetPrivacySettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPrivacySettingsRequest.ProtoReflect.Descriptor instead.
 func (*GetPrivacySettingsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{475}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{476}
 }
 
 func (x *GetPrivacySettingsRequest) GetQuery() *ConsoleQuery {
@@ -46248,7 +46470,7 @@ type GetPrivacySettingsResponse struct {
 
 func (x *GetPrivacySettingsResponse) Reset() {
 	*x = GetPrivacySettingsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[476]
+	mi := &file_console_v1_console_proto_msgTypes[477]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46260,7 +46482,7 @@ func (x *GetPrivacySettingsResponse) String() string {
 func (*GetPrivacySettingsResponse) ProtoMessage() {}
 
 func (x *GetPrivacySettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[476]
+	mi := &file_console_v1_console_proto_msgTypes[477]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46273,7 +46495,7 @@ func (x *GetPrivacySettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPrivacySettingsResponse.ProtoReflect.Descriptor instead.
 func (*GetPrivacySettingsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{476}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{477}
 }
 
 func (x *GetPrivacySettingsResponse) GetEffectiveMode() TenantPrivacyMode {
@@ -46308,7 +46530,7 @@ type SetPrivacySettingsRequest struct {
 
 func (x *SetPrivacySettingsRequest) Reset() {
 	*x = SetPrivacySettingsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[477]
+	mi := &file_console_v1_console_proto_msgTypes[478]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46320,7 +46542,7 @@ func (x *SetPrivacySettingsRequest) String() string {
 func (*SetPrivacySettingsRequest) ProtoMessage() {}
 
 func (x *SetPrivacySettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[477]
+	mi := &file_console_v1_console_proto_msgTypes[478]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46333,7 +46555,7 @@ func (x *SetPrivacySettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetPrivacySettingsRequest.ProtoReflect.Descriptor instead.
 func (*SetPrivacySettingsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{477}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{478}
 }
 
 func (x *SetPrivacySettingsRequest) GetQuery() *ConsoleQuery {
@@ -46375,7 +46597,7 @@ type ManagedRule struct {
 
 func (x *ManagedRule) Reset() {
 	*x = ManagedRule{}
-	mi := &file_console_v1_console_proto_msgTypes[478]
+	mi := &file_console_v1_console_proto_msgTypes[479]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46387,7 +46609,7 @@ func (x *ManagedRule) String() string {
 func (*ManagedRule) ProtoMessage() {}
 
 func (x *ManagedRule) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[478]
+	mi := &file_console_v1_console_proto_msgTypes[479]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46400,7 +46622,7 @@ func (x *ManagedRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ManagedRule.ProtoReflect.Descriptor instead.
 func (*ManagedRule) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{478}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{479}
 }
 
 func (x *ManagedRule) GetId() string {
@@ -46449,7 +46671,7 @@ type ManagedSkillRef struct {
 
 func (x *ManagedSkillRef) Reset() {
 	*x = ManagedSkillRef{}
-	mi := &file_console_v1_console_proto_msgTypes[479]
+	mi := &file_console_v1_console_proto_msgTypes[480]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46461,7 +46683,7 @@ func (x *ManagedSkillRef) String() string {
 func (*ManagedSkillRef) ProtoMessage() {}
 
 func (x *ManagedSkillRef) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[479]
+	mi := &file_console_v1_console_proto_msgTypes[480]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46474,7 +46696,7 @@ func (x *ManagedSkillRef) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ManagedSkillRef.ProtoReflect.Descriptor instead.
 func (*ManagedSkillRef) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{479}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{480}
 }
 
 func (x *ManagedSkillRef) GetId() string {
@@ -46520,7 +46742,7 @@ type McpServerRef struct {
 
 func (x *McpServerRef) Reset() {
 	*x = McpServerRef{}
-	mi := &file_console_v1_console_proto_msgTypes[480]
+	mi := &file_console_v1_console_proto_msgTypes[481]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46532,7 +46754,7 @@ func (x *McpServerRef) String() string {
 func (*McpServerRef) ProtoMessage() {}
 
 func (x *McpServerRef) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[480]
+	mi := &file_console_v1_console_proto_msgTypes[481]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46545,7 +46767,7 @@ func (x *McpServerRef) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use McpServerRef.ProtoReflect.Descriptor instead.
 func (*McpServerRef) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{480}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{481}
 }
 
 func (x *McpServerRef) GetName() string {
@@ -46583,7 +46805,7 @@ type McpPolicy struct {
 
 func (x *McpPolicy) Reset() {
 	*x = McpPolicy{}
-	mi := &file_console_v1_console_proto_msgTypes[481]
+	mi := &file_console_v1_console_proto_msgTypes[482]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46595,7 +46817,7 @@ func (x *McpPolicy) String() string {
 func (*McpPolicy) ProtoMessage() {}
 
 func (x *McpPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[481]
+	mi := &file_console_v1_console_proto_msgTypes[482]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46608,7 +46830,7 @@ func (x *McpPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use McpPolicy.ProtoReflect.Descriptor instead.
 func (*McpPolicy) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{481}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{482}
 }
 
 func (x *McpPolicy) GetMode() McpPolicyMode {
@@ -46653,7 +46875,7 @@ type ManagedSetup struct {
 
 func (x *ManagedSetup) Reset() {
 	*x = ManagedSetup{}
-	mi := &file_console_v1_console_proto_msgTypes[482]
+	mi := &file_console_v1_console_proto_msgTypes[483]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46665,7 +46887,7 @@ func (x *ManagedSetup) String() string {
 func (*ManagedSetup) ProtoMessage() {}
 
 func (x *ManagedSetup) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[482]
+	mi := &file_console_v1_console_proto_msgTypes[483]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46678,7 +46900,7 @@ func (x *ManagedSetup) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ManagedSetup.ProtoReflect.Descriptor instead.
 func (*ManagedSetup) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{482}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{483}
 }
 
 func (x *ManagedSetup) GetVersion() uint64 {
@@ -46751,7 +46973,7 @@ type GetManagedSetupRequest struct {
 
 func (x *GetManagedSetupRequest) Reset() {
 	*x = GetManagedSetupRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[483]
+	mi := &file_console_v1_console_proto_msgTypes[484]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46763,7 +46985,7 @@ func (x *GetManagedSetupRequest) String() string {
 func (*GetManagedSetupRequest) ProtoMessage() {}
 
 func (x *GetManagedSetupRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[483]
+	mi := &file_console_v1_console_proto_msgTypes[484]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46776,7 +46998,7 @@ func (x *GetManagedSetupRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetManagedSetupRequest.ProtoReflect.Descriptor instead.
 func (*GetManagedSetupRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{483}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{484}
 }
 
 func (x *GetManagedSetupRequest) GetOrganizationId() string {
@@ -46809,7 +47031,7 @@ type SetManagedSetupRequest struct {
 
 func (x *SetManagedSetupRequest) Reset() {
 	*x = SetManagedSetupRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[484]
+	mi := &file_console_v1_console_proto_msgTypes[485]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46821,7 +47043,7 @@ func (x *SetManagedSetupRequest) String() string {
 func (*SetManagedSetupRequest) ProtoMessage() {}
 
 func (x *SetManagedSetupRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[484]
+	mi := &file_console_v1_console_proto_msgTypes[485]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46834,7 +47056,7 @@ func (x *SetManagedSetupRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetManagedSetupRequest.ProtoReflect.Descriptor instead.
 func (*SetManagedSetupRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{484}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{485}
 }
 
 func (x *SetManagedSetupRequest) GetOrganizationId() string {
@@ -46870,7 +47092,7 @@ type MissionScheduleCapability struct {
 
 func (x *MissionScheduleCapability) Reset() {
 	*x = MissionScheduleCapability{}
-	mi := &file_console_v1_console_proto_msgTypes[485]
+	mi := &file_console_v1_console_proto_msgTypes[486]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46882,7 +47104,7 @@ func (x *MissionScheduleCapability) String() string {
 func (*MissionScheduleCapability) ProtoMessage() {}
 
 func (x *MissionScheduleCapability) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[485]
+	mi := &file_console_v1_console_proto_msgTypes[486]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46895,7 +47117,7 @@ func (x *MissionScheduleCapability) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MissionScheduleCapability.ProtoReflect.Descriptor instead.
 func (*MissionScheduleCapability) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{485}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{486}
 }
 
 func (x *MissionScheduleCapability) GetName() string {
@@ -46942,7 +47164,7 @@ type StartMeetingCaptureRequest struct {
 
 func (x *StartMeetingCaptureRequest) Reset() {
 	*x = StartMeetingCaptureRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[486]
+	mi := &file_console_v1_console_proto_msgTypes[487]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46954,7 +47176,7 @@ func (x *StartMeetingCaptureRequest) String() string {
 func (*StartMeetingCaptureRequest) ProtoMessage() {}
 
 func (x *StartMeetingCaptureRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[486]
+	mi := &file_console_v1_console_proto_msgTypes[487]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -46967,7 +47189,7 @@ func (x *StartMeetingCaptureRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StartMeetingCaptureRequest.ProtoReflect.Descriptor instead.
 func (*StartMeetingCaptureRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{486}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{487}
 }
 
 func (x *StartMeetingCaptureRequest) GetQuery() *ConsoleQuery {
@@ -47036,7 +47258,7 @@ type ListConnectedCallsRequest struct {
 
 func (x *ListConnectedCallsRequest) Reset() {
 	*x = ListConnectedCallsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[487]
+	mi := &file_console_v1_console_proto_msgTypes[488]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47048,7 +47270,7 @@ func (x *ListConnectedCallsRequest) String() string {
 func (*ListConnectedCallsRequest) ProtoMessage() {}
 
 func (x *ListConnectedCallsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[487]
+	mi := &file_console_v1_console_proto_msgTypes[488]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47061,7 +47283,7 @@ func (x *ListConnectedCallsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConnectedCallsRequest.ProtoReflect.Descriptor instead.
 func (*ListConnectedCallsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{487}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{488}
 }
 
 func (x *ListConnectedCallsRequest) GetQuery() *ConsoleQuery {
@@ -47081,7 +47303,7 @@ type ListConnectedCallsResponse struct {
 
 func (x *ListConnectedCallsResponse) Reset() {
 	*x = ListConnectedCallsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[488]
+	mi := &file_console_v1_console_proto_msgTypes[489]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47093,7 +47315,7 @@ func (x *ListConnectedCallsResponse) String() string {
 func (*ListConnectedCallsResponse) ProtoMessage() {}
 
 func (x *ListConnectedCallsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[488]
+	mi := &file_console_v1_console_proto_msgTypes[489]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47106,7 +47328,7 @@ func (x *ListConnectedCallsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConnectedCallsResponse.ProtoReflect.Descriptor instead.
 func (*ListConnectedCallsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{488}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{489}
 }
 
 func (x *ListConnectedCallsResponse) GetCalls() []*ConnectedCall {
@@ -47139,7 +47361,7 @@ type ConnectedCall struct {
 
 func (x *ConnectedCall) Reset() {
 	*x = ConnectedCall{}
-	mi := &file_console_v1_console_proto_msgTypes[489]
+	mi := &file_console_v1_console_proto_msgTypes[490]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47151,7 +47373,7 @@ func (x *ConnectedCall) String() string {
 func (*ConnectedCall) ProtoMessage() {}
 
 func (x *ConnectedCall) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[489]
+	mi := &file_console_v1_console_proto_msgTypes[490]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47164,7 +47386,7 @@ func (x *ConnectedCall) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConnectedCall.ProtoReflect.Descriptor instead.
 func (*ConnectedCall) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{489}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{490}
 }
 
 func (x *ConnectedCall) GetId() string {
@@ -47211,7 +47433,7 @@ type StartMeetingCaptureResponse struct {
 
 func (x *StartMeetingCaptureResponse) Reset() {
 	*x = StartMeetingCaptureResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[490]
+	mi := &file_console_v1_console_proto_msgTypes[491]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47223,7 +47445,7 @@ func (x *StartMeetingCaptureResponse) String() string {
 func (*StartMeetingCaptureResponse) ProtoMessage() {}
 
 func (x *StartMeetingCaptureResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[490]
+	mi := &file_console_v1_console_proto_msgTypes[491]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47236,7 +47458,7 @@ func (x *StartMeetingCaptureResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StartMeetingCaptureResponse.ProtoReflect.Descriptor instead.
 func (*StartMeetingCaptureResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{490}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{491}
 }
 
 func (x *StartMeetingCaptureResponse) GetCapture() *MeetingCapture {
@@ -47256,7 +47478,7 @@ type GetMeetingCaptureRequest struct {
 
 func (x *GetMeetingCaptureRequest) Reset() {
 	*x = GetMeetingCaptureRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[491]
+	mi := &file_console_v1_console_proto_msgTypes[492]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47268,7 +47490,7 @@ func (x *GetMeetingCaptureRequest) String() string {
 func (*GetMeetingCaptureRequest) ProtoMessage() {}
 
 func (x *GetMeetingCaptureRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[491]
+	mi := &file_console_v1_console_proto_msgTypes[492]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47281,7 +47503,7 @@ func (x *GetMeetingCaptureRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMeetingCaptureRequest.ProtoReflect.Descriptor instead.
 func (*GetMeetingCaptureRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{491}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{492}
 }
 
 func (x *GetMeetingCaptureRequest) GetQuery() *ConsoleQuery {
@@ -47307,7 +47529,7 @@ type GetMeetingCaptureResponse struct {
 
 func (x *GetMeetingCaptureResponse) Reset() {
 	*x = GetMeetingCaptureResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[492]
+	mi := &file_console_v1_console_proto_msgTypes[493]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47319,7 +47541,7 @@ func (x *GetMeetingCaptureResponse) String() string {
 func (*GetMeetingCaptureResponse) ProtoMessage() {}
 
 func (x *GetMeetingCaptureResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[492]
+	mi := &file_console_v1_console_proto_msgTypes[493]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47332,7 +47554,7 @@ func (x *GetMeetingCaptureResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMeetingCaptureResponse.ProtoReflect.Descriptor instead.
 func (*GetMeetingCaptureResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{492}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{493}
 }
 
 func (x *GetMeetingCaptureResponse) GetCapture() *MeetingCapture {
@@ -47351,7 +47573,7 @@ type ListMeetingCapturesRequest struct {
 
 func (x *ListMeetingCapturesRequest) Reset() {
 	*x = ListMeetingCapturesRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[493]
+	mi := &file_console_v1_console_proto_msgTypes[494]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47363,7 +47585,7 @@ func (x *ListMeetingCapturesRequest) String() string {
 func (*ListMeetingCapturesRequest) ProtoMessage() {}
 
 func (x *ListMeetingCapturesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[493]
+	mi := &file_console_v1_console_proto_msgTypes[494]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47376,7 +47598,7 @@ func (x *ListMeetingCapturesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMeetingCapturesRequest.ProtoReflect.Descriptor instead.
 func (*ListMeetingCapturesRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{493}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{494}
 }
 
 func (x *ListMeetingCapturesRequest) GetQuery() *ConsoleQuery {
@@ -47395,7 +47617,7 @@ type ListMeetingCapturesResponse struct {
 
 func (x *ListMeetingCapturesResponse) Reset() {
 	*x = ListMeetingCapturesResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[494]
+	mi := &file_console_v1_console_proto_msgTypes[495]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47407,7 +47629,7 @@ func (x *ListMeetingCapturesResponse) String() string {
 func (*ListMeetingCapturesResponse) ProtoMessage() {}
 
 func (x *ListMeetingCapturesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[494]
+	mi := &file_console_v1_console_proto_msgTypes[495]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47420,7 +47642,7 @@ func (x *ListMeetingCapturesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMeetingCapturesResponse.ProtoReflect.Descriptor instead.
 func (*ListMeetingCapturesResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{494}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{495}
 }
 
 func (x *ListMeetingCapturesResponse) GetCaptures() []*MeetingCapture {
@@ -47444,7 +47666,7 @@ type StopMeetingCaptureRequest struct {
 
 func (x *StopMeetingCaptureRequest) Reset() {
 	*x = StopMeetingCaptureRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[495]
+	mi := &file_console_v1_console_proto_msgTypes[496]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47456,7 +47678,7 @@ func (x *StopMeetingCaptureRequest) String() string {
 func (*StopMeetingCaptureRequest) ProtoMessage() {}
 
 func (x *StopMeetingCaptureRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[495]
+	mi := &file_console_v1_console_proto_msgTypes[496]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47469,7 +47691,7 @@ func (x *StopMeetingCaptureRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StopMeetingCaptureRequest.ProtoReflect.Descriptor instead.
 func (*StopMeetingCaptureRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{495}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{496}
 }
 
 func (x *StopMeetingCaptureRequest) GetQuery() *ConsoleQuery {
@@ -47502,7 +47724,7 @@ type StopMeetingCaptureResponse struct {
 
 func (x *StopMeetingCaptureResponse) Reset() {
 	*x = StopMeetingCaptureResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[496]
+	mi := &file_console_v1_console_proto_msgTypes[497]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47514,7 +47736,7 @@ func (x *StopMeetingCaptureResponse) String() string {
 func (*StopMeetingCaptureResponse) ProtoMessage() {}
 
 func (x *StopMeetingCaptureResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[496]
+	mi := &file_console_v1_console_proto_msgTypes[497]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47527,7 +47749,7 @@ func (x *StopMeetingCaptureResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StopMeetingCaptureResponse.ProtoReflect.Descriptor instead.
 func (*StopMeetingCaptureResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{496}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{497}
 }
 
 func (x *StopMeetingCaptureResponse) GetCapture() *MeetingCapture {
@@ -47580,7 +47802,7 @@ type MeetingCapture struct {
 
 func (x *MeetingCapture) Reset() {
 	*x = MeetingCapture{}
-	mi := &file_console_v1_console_proto_msgTypes[497]
+	mi := &file_console_v1_console_proto_msgTypes[498]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47592,7 +47814,7 @@ func (x *MeetingCapture) String() string {
 func (*MeetingCapture) ProtoMessage() {}
 
 func (x *MeetingCapture) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[497]
+	mi := &file_console_v1_console_proto_msgTypes[498]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47605,7 +47827,7 @@ func (x *MeetingCapture) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MeetingCapture.ProtoReflect.Descriptor instead.
 func (*MeetingCapture) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{497}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{498}
 }
 
 func (x *MeetingCapture) GetCaptureId() string {
@@ -47822,7 +48044,7 @@ type ProspectingWatchProgram struct {
 
 func (x *ProspectingWatchProgram) Reset() {
 	*x = ProspectingWatchProgram{}
-	mi := &file_console_v1_console_proto_msgTypes[498]
+	mi := &file_console_v1_console_proto_msgTypes[499]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47834,7 +48056,7 @@ func (x *ProspectingWatchProgram) String() string {
 func (*ProspectingWatchProgram) ProtoMessage() {}
 
 func (x *ProspectingWatchProgram) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[498]
+	mi := &file_console_v1_console_proto_msgTypes[499]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47847,7 +48069,7 @@ func (x *ProspectingWatchProgram) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProspectingWatchProgram.ProtoReflect.Descriptor instead.
 func (*ProspectingWatchProgram) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{498}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{499}
 }
 
 func (x *ProspectingWatchProgram) GetOrganizationId() string {
@@ -47963,7 +48185,7 @@ type ProspectingWatchProgramMutationReceipt struct {
 
 func (x *ProspectingWatchProgramMutationReceipt) Reset() {
 	*x = ProspectingWatchProgramMutationReceipt{}
-	mi := &file_console_v1_console_proto_msgTypes[499]
+	mi := &file_console_v1_console_proto_msgTypes[500]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47975,7 +48197,7 @@ func (x *ProspectingWatchProgramMutationReceipt) String() string {
 func (*ProspectingWatchProgramMutationReceipt) ProtoMessage() {}
 
 func (x *ProspectingWatchProgramMutationReceipt) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[499]
+	mi := &file_console_v1_console_proto_msgTypes[500]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47988,7 +48210,7 @@ func (x *ProspectingWatchProgramMutationReceipt) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use ProspectingWatchProgramMutationReceipt.ProtoReflect.Descriptor instead.
 func (*ProspectingWatchProgramMutationReceipt) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{499}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{500}
 }
 
 func (x *ProspectingWatchProgramMutationReceipt) GetIdempotencyKey() string {
@@ -48040,7 +48262,7 @@ type CreateProspectingWatchProgramRequest struct {
 
 func (x *CreateProspectingWatchProgramRequest) Reset() {
 	*x = CreateProspectingWatchProgramRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[500]
+	mi := &file_console_v1_console_proto_msgTypes[501]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48052,7 +48274,7 @@ func (x *CreateProspectingWatchProgramRequest) String() string {
 func (*CreateProspectingWatchProgramRequest) ProtoMessage() {}
 
 func (x *CreateProspectingWatchProgramRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[500]
+	mi := &file_console_v1_console_proto_msgTypes[501]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48065,7 +48287,7 @@ func (x *CreateProspectingWatchProgramRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use CreateProspectingWatchProgramRequest.ProtoReflect.Descriptor instead.
 func (*CreateProspectingWatchProgramRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{500}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{501}
 }
 
 func (x *CreateProspectingWatchProgramRequest) GetQuery() *ConsoleQuery {
@@ -48120,7 +48342,7 @@ type CreateProspectingWatchProgramResponse struct {
 
 func (x *CreateProspectingWatchProgramResponse) Reset() {
 	*x = CreateProspectingWatchProgramResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[501]
+	mi := &file_console_v1_console_proto_msgTypes[502]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48132,7 +48354,7 @@ func (x *CreateProspectingWatchProgramResponse) String() string {
 func (*CreateProspectingWatchProgramResponse) ProtoMessage() {}
 
 func (x *CreateProspectingWatchProgramResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[501]
+	mi := &file_console_v1_console_proto_msgTypes[502]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48145,7 +48367,7 @@ func (x *CreateProspectingWatchProgramResponse) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use CreateProspectingWatchProgramResponse.ProtoReflect.Descriptor instead.
 func (*CreateProspectingWatchProgramResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{501}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{502}
 }
 
 func (x *CreateProspectingWatchProgramResponse) GetProgram() *ProspectingWatchProgram {
@@ -48172,7 +48394,7 @@ type GetProspectingWatchProgramRequest struct {
 
 func (x *GetProspectingWatchProgramRequest) Reset() {
 	*x = GetProspectingWatchProgramRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[502]
+	mi := &file_console_v1_console_proto_msgTypes[503]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48184,7 +48406,7 @@ func (x *GetProspectingWatchProgramRequest) String() string {
 func (*GetProspectingWatchProgramRequest) ProtoMessage() {}
 
 func (x *GetProspectingWatchProgramRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[502]
+	mi := &file_console_v1_console_proto_msgTypes[503]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48197,7 +48419,7 @@ func (x *GetProspectingWatchProgramRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use GetProspectingWatchProgramRequest.ProtoReflect.Descriptor instead.
 func (*GetProspectingWatchProgramRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{502}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{503}
 }
 
 func (x *GetProspectingWatchProgramRequest) GetQuery() *ConsoleQuery {
@@ -48223,7 +48445,7 @@ type GetProspectingWatchProgramResponse struct {
 
 func (x *GetProspectingWatchProgramResponse) Reset() {
 	*x = GetProspectingWatchProgramResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[503]
+	mi := &file_console_v1_console_proto_msgTypes[504]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48235,7 +48457,7 @@ func (x *GetProspectingWatchProgramResponse) String() string {
 func (*GetProspectingWatchProgramResponse) ProtoMessage() {}
 
 func (x *GetProspectingWatchProgramResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[503]
+	mi := &file_console_v1_console_proto_msgTypes[504]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48248,7 +48470,7 @@ func (x *GetProspectingWatchProgramResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use GetProspectingWatchProgramResponse.ProtoReflect.Descriptor instead.
 func (*GetProspectingWatchProgramResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{503}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{504}
 }
 
 func (x *GetProspectingWatchProgramResponse) GetProgram() *ProspectingWatchProgram {
@@ -48267,7 +48489,7 @@ type ListProspectingWatchProgramsRequest struct {
 
 func (x *ListProspectingWatchProgramsRequest) Reset() {
 	*x = ListProspectingWatchProgramsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[504]
+	mi := &file_console_v1_console_proto_msgTypes[505]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48279,7 +48501,7 @@ func (x *ListProspectingWatchProgramsRequest) String() string {
 func (*ListProspectingWatchProgramsRequest) ProtoMessage() {}
 
 func (x *ListProspectingWatchProgramsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[504]
+	mi := &file_console_v1_console_proto_msgTypes[505]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48292,7 +48514,7 @@ func (x *ListProspectingWatchProgramsRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use ListProspectingWatchProgramsRequest.ProtoReflect.Descriptor instead.
 func (*ListProspectingWatchProgramsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{504}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{505}
 }
 
 func (x *ListProspectingWatchProgramsRequest) GetQuery() *ConsoleQuery {
@@ -48312,7 +48534,7 @@ type ListProspectingWatchProgramsResponse struct {
 
 func (x *ListProspectingWatchProgramsResponse) Reset() {
 	*x = ListProspectingWatchProgramsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[505]
+	mi := &file_console_v1_console_proto_msgTypes[506]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48324,7 +48546,7 @@ func (x *ListProspectingWatchProgramsResponse) String() string {
 func (*ListProspectingWatchProgramsResponse) ProtoMessage() {}
 
 func (x *ListProspectingWatchProgramsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[505]
+	mi := &file_console_v1_console_proto_msgTypes[506]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48337,7 +48559,7 @@ func (x *ListProspectingWatchProgramsResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use ListProspectingWatchProgramsResponse.ProtoReflect.Descriptor instead.
 func (*ListProspectingWatchProgramsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{505}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{506}
 }
 
 func (x *ListProspectingWatchProgramsResponse) GetPrograms() []*ProspectingWatchProgram {
@@ -48371,7 +48593,7 @@ type UpdateProspectingWatchProgramRequest struct {
 
 func (x *UpdateProspectingWatchProgramRequest) Reset() {
 	*x = UpdateProspectingWatchProgramRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[506]
+	mi := &file_console_v1_console_proto_msgTypes[507]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48383,7 +48605,7 @@ func (x *UpdateProspectingWatchProgramRequest) String() string {
 func (*UpdateProspectingWatchProgramRequest) ProtoMessage() {}
 
 func (x *UpdateProspectingWatchProgramRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[506]
+	mi := &file_console_v1_console_proto_msgTypes[507]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48396,7 +48618,7 @@ func (x *UpdateProspectingWatchProgramRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use UpdateProspectingWatchProgramRequest.ProtoReflect.Descriptor instead.
 func (*UpdateProspectingWatchProgramRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{506}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{507}
 }
 
 func (x *UpdateProspectingWatchProgramRequest) GetQuery() *ConsoleQuery {
@@ -48472,7 +48694,7 @@ type UpdateProspectingWatchProgramResponse struct {
 
 func (x *UpdateProspectingWatchProgramResponse) Reset() {
 	*x = UpdateProspectingWatchProgramResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[507]
+	mi := &file_console_v1_console_proto_msgTypes[508]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48484,7 +48706,7 @@ func (x *UpdateProspectingWatchProgramResponse) String() string {
 func (*UpdateProspectingWatchProgramResponse) ProtoMessage() {}
 
 func (x *UpdateProspectingWatchProgramResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[507]
+	mi := &file_console_v1_console_proto_msgTypes[508]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48497,7 +48719,7 @@ func (x *UpdateProspectingWatchProgramResponse) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use UpdateProspectingWatchProgramResponse.ProtoReflect.Descriptor instead.
 func (*UpdateProspectingWatchProgramResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{507}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{508}
 }
 
 func (x *UpdateProspectingWatchProgramResponse) GetProgram() *ProspectingWatchProgram {
@@ -48528,7 +48750,7 @@ type ListCommitmentsRequest struct {
 
 func (x *ListCommitmentsRequest) Reset() {
 	*x = ListCommitmentsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[508]
+	mi := &file_console_v1_console_proto_msgTypes[509]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48540,7 +48762,7 @@ func (x *ListCommitmentsRequest) String() string {
 func (*ListCommitmentsRequest) ProtoMessage() {}
 
 func (x *ListCommitmentsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[508]
+	mi := &file_console_v1_console_proto_msgTypes[509]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48553,7 +48775,7 @@ func (x *ListCommitmentsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCommitmentsRequest.ProtoReflect.Descriptor instead.
 func (*ListCommitmentsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{508}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{509}
 }
 
 func (x *ListCommitmentsRequest) GetQuery() *ConsoleQuery {
@@ -48583,7 +48805,7 @@ type ListCommitmentsResponse struct {
 
 func (x *ListCommitmentsResponse) Reset() {
 	*x = ListCommitmentsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[509]
+	mi := &file_console_v1_console_proto_msgTypes[510]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48595,7 +48817,7 @@ func (x *ListCommitmentsResponse) String() string {
 func (*ListCommitmentsResponse) ProtoMessage() {}
 
 func (x *ListCommitmentsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[509]
+	mi := &file_console_v1_console_proto_msgTypes[510]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48608,7 +48830,7 @@ func (x *ListCommitmentsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCommitmentsResponse.ProtoReflect.Descriptor instead.
 func (*ListCommitmentsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{509}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{510}
 }
 
 func (x *ListCommitmentsResponse) GetCommitments() []*Commitment {
@@ -48657,7 +48879,7 @@ type Commitment struct {
 
 func (x *Commitment) Reset() {
 	*x = Commitment{}
-	mi := &file_console_v1_console_proto_msgTypes[510]
+	mi := &file_console_v1_console_proto_msgTypes[511]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48669,7 +48891,7 @@ func (x *Commitment) String() string {
 func (*Commitment) ProtoMessage() {}
 
 func (x *Commitment) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[510]
+	mi := &file_console_v1_console_proto_msgTypes[511]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48682,7 +48904,7 @@ func (x *Commitment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Commitment.ProtoReflect.Descriptor instead.
 func (*Commitment) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{510}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{511}
 }
 
 func (x *Commitment) GetCommitmentId() string {
@@ -48770,7 +48992,7 @@ type CommitmentCitation struct {
 
 func (x *CommitmentCitation) Reset() {
 	*x = CommitmentCitation{}
-	mi := &file_console_v1_console_proto_msgTypes[511]
+	mi := &file_console_v1_console_proto_msgTypes[512]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48782,7 +49004,7 @@ func (x *CommitmentCitation) String() string {
 func (*CommitmentCitation) ProtoMessage() {}
 
 func (x *CommitmentCitation) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[511]
+	mi := &file_console_v1_console_proto_msgTypes[512]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48795,7 +49017,7 @@ func (x *CommitmentCitation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CommitmentCitation.ProtoReflect.Descriptor instead.
 func (*CommitmentCitation) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{511}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{512}
 }
 
 func (x *CommitmentCitation) GetKind() string {
@@ -48854,7 +49076,7 @@ type OperatingJobRecordLink struct {
 
 func (x *OperatingJobRecordLink) Reset() {
 	*x = OperatingJobRecordLink{}
-	mi := &file_console_v1_console_proto_msgTypes[512]
+	mi := &file_console_v1_console_proto_msgTypes[513]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48866,7 +49088,7 @@ func (x *OperatingJobRecordLink) String() string {
 func (*OperatingJobRecordLink) ProtoMessage() {}
 
 func (x *OperatingJobRecordLink) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[512]
+	mi := &file_console_v1_console_proto_msgTypes[513]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48879,7 +49101,7 @@ func (x *OperatingJobRecordLink) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OperatingJobRecordLink.ProtoReflect.Descriptor instead.
 func (*OperatingJobRecordLink) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{512}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{513}
 }
 
 func (x *OperatingJobRecordLink) GetCorrelationId() string {
@@ -48940,7 +49162,7 @@ type OperatingJob struct {
 
 func (x *OperatingJob) Reset() {
 	*x = OperatingJob{}
-	mi := &file_console_v1_console_proto_msgTypes[513]
+	mi := &file_console_v1_console_proto_msgTypes[514]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48952,7 +49174,7 @@ func (x *OperatingJob) String() string {
 func (*OperatingJob) ProtoMessage() {}
 
 func (x *OperatingJob) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[513]
+	mi := &file_console_v1_console_proto_msgTypes[514]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -48965,7 +49187,7 @@ func (x *OperatingJob) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OperatingJob.ProtoReflect.Descriptor instead.
 func (*OperatingJob) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{513}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{514}
 }
 
 func (x *OperatingJob) GetJobId() string {
@@ -49117,7 +49339,7 @@ type ListOperatingJobsRequest struct {
 
 func (x *ListOperatingJobsRequest) Reset() {
 	*x = ListOperatingJobsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[514]
+	mi := &file_console_v1_console_proto_msgTypes[515]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49129,7 +49351,7 @@ func (x *ListOperatingJobsRequest) String() string {
 func (*ListOperatingJobsRequest) ProtoMessage() {}
 
 func (x *ListOperatingJobsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[514]
+	mi := &file_console_v1_console_proto_msgTypes[515]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49142,7 +49364,7 @@ func (x *ListOperatingJobsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListOperatingJobsRequest.ProtoReflect.Descriptor instead.
 func (*ListOperatingJobsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{514}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{515}
 }
 
 func (x *ListOperatingJobsRequest) GetQuery() *ConsoleQuery {
@@ -49163,7 +49385,7 @@ type ListOperatingJobsResponse struct {
 
 func (x *ListOperatingJobsResponse) Reset() {
 	*x = ListOperatingJobsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[515]
+	mi := &file_console_v1_console_proto_msgTypes[516]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49175,7 +49397,7 @@ func (x *ListOperatingJobsResponse) String() string {
 func (*ListOperatingJobsResponse) ProtoMessage() {}
 
 func (x *ListOperatingJobsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[515]
+	mi := &file_console_v1_console_proto_msgTypes[516]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49188,7 +49410,7 @@ func (x *ListOperatingJobsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListOperatingJobsResponse.ProtoReflect.Descriptor instead.
 func (*ListOperatingJobsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{515}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{516}
 }
 
 func (x *ListOperatingJobsResponse) GetJobs() []*OperatingJob {
@@ -49218,7 +49440,7 @@ type RecordOperatingHomepageSuggestionFeedbackRequest struct {
 
 func (x *RecordOperatingHomepageSuggestionFeedbackRequest) Reset() {
 	*x = RecordOperatingHomepageSuggestionFeedbackRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[516]
+	mi := &file_console_v1_console_proto_msgTypes[517]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49230,7 +49452,7 @@ func (x *RecordOperatingHomepageSuggestionFeedbackRequest) String() string {
 func (*RecordOperatingHomepageSuggestionFeedbackRequest) ProtoMessage() {}
 
 func (x *RecordOperatingHomepageSuggestionFeedbackRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[516]
+	mi := &file_console_v1_console_proto_msgTypes[517]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49243,7 +49465,7 @@ func (x *RecordOperatingHomepageSuggestionFeedbackRequest) ProtoReflect() protor
 
 // Deprecated: Use RecordOperatingHomepageSuggestionFeedbackRequest.ProtoReflect.Descriptor instead.
 func (*RecordOperatingHomepageSuggestionFeedbackRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{516}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{517}
 }
 
 func (x *RecordOperatingHomepageSuggestionFeedbackRequest) GetQuery() *ConsoleQuery {
@@ -49276,7 +49498,7 @@ type RecordOperatingHomepageSuggestionFeedbackResponse struct {
 
 func (x *RecordOperatingHomepageSuggestionFeedbackResponse) Reset() {
 	*x = RecordOperatingHomepageSuggestionFeedbackResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[517]
+	mi := &file_console_v1_console_proto_msgTypes[518]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49288,7 +49510,7 @@ func (x *RecordOperatingHomepageSuggestionFeedbackResponse) String() string {
 func (*RecordOperatingHomepageSuggestionFeedbackResponse) ProtoMessage() {}
 
 func (x *RecordOperatingHomepageSuggestionFeedbackResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[517]
+	mi := &file_console_v1_console_proto_msgTypes[518]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49301,7 +49523,7 @@ func (x *RecordOperatingHomepageSuggestionFeedbackResponse) ProtoReflect() proto
 
 // Deprecated: Use RecordOperatingHomepageSuggestionFeedbackResponse.ProtoReflect.Descriptor instead.
 func (*RecordOperatingHomepageSuggestionFeedbackResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{517}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{518}
 }
 
 func (x *RecordOperatingHomepageSuggestionFeedbackResponse) GetChanged() bool {
@@ -49334,7 +49556,7 @@ type InferenceCreditBalance struct {
 
 func (x *InferenceCreditBalance) Reset() {
 	*x = InferenceCreditBalance{}
-	mi := &file_console_v1_console_proto_msgTypes[518]
+	mi := &file_console_v1_console_proto_msgTypes[519]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49346,7 +49568,7 @@ func (x *InferenceCreditBalance) String() string {
 func (*InferenceCreditBalance) ProtoMessage() {}
 
 func (x *InferenceCreditBalance) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[518]
+	mi := &file_console_v1_console_proto_msgTypes[519]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49359,7 +49581,7 @@ func (x *InferenceCreditBalance) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceCreditBalance.ProtoReflect.Descriptor instead.
 func (*InferenceCreditBalance) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{518}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{519}
 }
 
 func (x *InferenceCreditBalance) GetGrantedMicros() int64 {
@@ -49456,7 +49678,7 @@ type GetInferenceCreditBalanceRequest struct {
 
 func (x *GetInferenceCreditBalanceRequest) Reset() {
 	*x = GetInferenceCreditBalanceRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[519]
+	mi := &file_console_v1_console_proto_msgTypes[520]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49468,7 +49690,7 @@ func (x *GetInferenceCreditBalanceRequest) String() string {
 func (*GetInferenceCreditBalanceRequest) ProtoMessage() {}
 
 func (x *GetInferenceCreditBalanceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[519]
+	mi := &file_console_v1_console_proto_msgTypes[520]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49481,7 +49703,7 @@ func (x *GetInferenceCreditBalanceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetInferenceCreditBalanceRequest.ProtoReflect.Descriptor instead.
 func (*GetInferenceCreditBalanceRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{519}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{520}
 }
 
 func (x *GetInferenceCreditBalanceRequest) GetWorkspaceId() string {
@@ -49510,7 +49732,7 @@ type InferenceCreditBlock struct {
 
 func (x *InferenceCreditBlock) Reset() {
 	*x = InferenceCreditBlock{}
-	mi := &file_console_v1_console_proto_msgTypes[520]
+	mi := &file_console_v1_console_proto_msgTypes[521]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49522,7 +49744,7 @@ func (x *InferenceCreditBlock) String() string {
 func (*InferenceCreditBlock) ProtoMessage() {}
 
 func (x *InferenceCreditBlock) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[520]
+	mi := &file_console_v1_console_proto_msgTypes[521]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49535,7 +49757,7 @@ func (x *InferenceCreditBlock) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceCreditBlock.ProtoReflect.Descriptor instead.
 func (*InferenceCreditBlock) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{520}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{521}
 }
 
 func (x *InferenceCreditBlock) GetCreditCents() uint64 {
@@ -49586,7 +49808,7 @@ type InferenceCreditPricing struct {
 
 func (x *InferenceCreditPricing) Reset() {
 	*x = InferenceCreditPricing{}
-	mi := &file_console_v1_console_proto_msgTypes[521]
+	mi := &file_console_v1_console_proto_msgTypes[522]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49598,7 +49820,7 @@ func (x *InferenceCreditPricing) String() string {
 func (*InferenceCreditPricing) ProtoMessage() {}
 
 func (x *InferenceCreditPricing) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[521]
+	mi := &file_console_v1_console_proto_msgTypes[522]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49611,7 +49833,7 @@ func (x *InferenceCreditPricing) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceCreditPricing.ProtoReflect.Descriptor instead.
 func (*InferenceCreditPricing) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{521}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{522}
 }
 
 func (x *InferenceCreditPricing) GetProvider() string {
@@ -49679,7 +49901,7 @@ type GetInferenceCreditBalanceResponse struct {
 
 func (x *GetInferenceCreditBalanceResponse) Reset() {
 	*x = GetInferenceCreditBalanceResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[522]
+	mi := &file_console_v1_console_proto_msgTypes[523]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49691,7 +49913,7 @@ func (x *GetInferenceCreditBalanceResponse) String() string {
 func (*GetInferenceCreditBalanceResponse) ProtoMessage() {}
 
 func (x *GetInferenceCreditBalanceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[522]
+	mi := &file_console_v1_console_proto_msgTypes[523]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49704,7 +49926,7 @@ func (x *GetInferenceCreditBalanceResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use GetInferenceCreditBalanceResponse.ProtoReflect.Descriptor instead.
 func (*GetInferenceCreditBalanceResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{522}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{523}
 }
 
 func (x *GetInferenceCreditBalanceResponse) GetBalance() *InferenceCreditBalance {
@@ -49763,7 +49985,7 @@ type InferenceRunCreditBalance struct {
 
 func (x *InferenceRunCreditBalance) Reset() {
 	*x = InferenceRunCreditBalance{}
-	mi := &file_console_v1_console_proto_msgTypes[523]
+	mi := &file_console_v1_console_proto_msgTypes[524]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49775,7 +49997,7 @@ func (x *InferenceRunCreditBalance) String() string {
 func (*InferenceRunCreditBalance) ProtoMessage() {}
 
 func (x *InferenceRunCreditBalance) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[523]
+	mi := &file_console_v1_console_proto_msgTypes[524]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49788,7 +50010,7 @@ func (x *InferenceRunCreditBalance) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceRunCreditBalance.ProtoReflect.Descriptor instead.
 func (*InferenceRunCreditBalance) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{523}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{524}
 }
 
 func (x *InferenceRunCreditBalance) GetRunId() string {
@@ -49851,7 +50073,7 @@ type InferenceCreditReconciliation struct {
 
 func (x *InferenceCreditReconciliation) Reset() {
 	*x = InferenceCreditReconciliation{}
-	mi := &file_console_v1_console_proto_msgTypes[524]
+	mi := &file_console_v1_console_proto_msgTypes[525]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49863,7 +50085,7 @@ func (x *InferenceCreditReconciliation) String() string {
 func (*InferenceCreditReconciliation) ProtoMessage() {}
 
 func (x *InferenceCreditReconciliation) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[524]
+	mi := &file_console_v1_console_proto_msgTypes[525]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49876,7 +50098,7 @@ func (x *InferenceCreditReconciliation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceCreditReconciliation.ProtoReflect.Descriptor instead.
 func (*InferenceCreditReconciliation) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{524}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{525}
 }
 
 func (x *InferenceCreditReconciliation) GetBalanced() bool {
@@ -49954,7 +50176,7 @@ type CreateInferenceCreditCheckoutRequest struct {
 
 func (x *CreateInferenceCreditCheckoutRequest) Reset() {
 	*x = CreateInferenceCreditCheckoutRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[525]
+	mi := &file_console_v1_console_proto_msgTypes[526]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49966,7 +50188,7 @@ func (x *CreateInferenceCreditCheckoutRequest) String() string {
 func (*CreateInferenceCreditCheckoutRequest) ProtoMessage() {}
 
 func (x *CreateInferenceCreditCheckoutRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[525]
+	mi := &file_console_v1_console_proto_msgTypes[526]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -49979,7 +50201,7 @@ func (x *CreateInferenceCreditCheckoutRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use CreateInferenceCreditCheckoutRequest.ProtoReflect.Descriptor instead.
 func (*CreateInferenceCreditCheckoutRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{525}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{526}
 }
 
 func (x *CreateInferenceCreditCheckoutRequest) GetWorkspaceId() string {
@@ -50012,7 +50234,7 @@ type CreateInferenceCreditCheckoutResponse struct {
 
 func (x *CreateInferenceCreditCheckoutResponse) Reset() {
 	*x = CreateInferenceCreditCheckoutResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[526]
+	mi := &file_console_v1_console_proto_msgTypes[527]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50024,7 +50246,7 @@ func (x *CreateInferenceCreditCheckoutResponse) String() string {
 func (*CreateInferenceCreditCheckoutResponse) ProtoMessage() {}
 
 func (x *CreateInferenceCreditCheckoutResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[526]
+	mi := &file_console_v1_console_proto_msgTypes[527]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50037,7 +50259,7 @@ func (x *CreateInferenceCreditCheckoutResponse) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use CreateInferenceCreditCheckoutResponse.ProtoReflect.Descriptor instead.
 func (*CreateInferenceCreditCheckoutResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{526}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{527}
 }
 
 func (x *CreateInferenceCreditCheckoutResponse) GetUrl() string {
@@ -50057,7 +50279,7 @@ type FulfillInferenceCreditCheckoutRequest struct {
 
 func (x *FulfillInferenceCreditCheckoutRequest) Reset() {
 	*x = FulfillInferenceCreditCheckoutRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[527]
+	mi := &file_console_v1_console_proto_msgTypes[528]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50069,7 +50291,7 @@ func (x *FulfillInferenceCreditCheckoutRequest) String() string {
 func (*FulfillInferenceCreditCheckoutRequest) ProtoMessage() {}
 
 func (x *FulfillInferenceCreditCheckoutRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[527]
+	mi := &file_console_v1_console_proto_msgTypes[528]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50082,7 +50304,7 @@ func (x *FulfillInferenceCreditCheckoutRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use FulfillInferenceCreditCheckoutRequest.ProtoReflect.Descriptor instead.
 func (*FulfillInferenceCreditCheckoutRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{527}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{528}
 }
 
 func (x *FulfillInferenceCreditCheckoutRequest) GetWorkspaceId() string {
@@ -50108,7 +50330,7 @@ type FulfillInferenceCreditCheckoutResponse struct {
 
 func (x *FulfillInferenceCreditCheckoutResponse) Reset() {
 	*x = FulfillInferenceCreditCheckoutResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[528]
+	mi := &file_console_v1_console_proto_msgTypes[529]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50120,7 +50342,7 @@ func (x *FulfillInferenceCreditCheckoutResponse) String() string {
 func (*FulfillInferenceCreditCheckoutResponse) ProtoMessage() {}
 
 func (x *FulfillInferenceCreditCheckoutResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[528]
+	mi := &file_console_v1_console_proto_msgTypes[529]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50133,7 +50355,7 @@ func (x *FulfillInferenceCreditCheckoutResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use FulfillInferenceCreditCheckoutResponse.ProtoReflect.Descriptor instead.
 func (*FulfillInferenceCreditCheckoutResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{528}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{529}
 }
 
 func (x *FulfillInferenceCreditCheckoutResponse) GetBalance() *InferenceCreditBalance {
@@ -50155,7 +50377,7 @@ type OperatingAutoModelRoute struct {
 
 func (x *OperatingAutoModelRoute) Reset() {
 	*x = OperatingAutoModelRoute{}
-	mi := &file_console_v1_console_proto_msgTypes[529]
+	mi := &file_console_v1_console_proto_msgTypes[530]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50167,7 +50389,7 @@ func (x *OperatingAutoModelRoute) String() string {
 func (*OperatingAutoModelRoute) ProtoMessage() {}
 
 func (x *OperatingAutoModelRoute) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[529]
+	mi := &file_console_v1_console_proto_msgTypes[530]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50180,7 +50402,7 @@ func (x *OperatingAutoModelRoute) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OperatingAutoModelRoute.ProtoReflect.Descriptor instead.
 func (*OperatingAutoModelRoute) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{529}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{530}
 }
 
 func (x *OperatingAutoModelRoute) GetTarget() *OperatingModelSelection {
@@ -50225,7 +50447,7 @@ type BusinessFieldDefinition struct {
 
 func (x *BusinessFieldDefinition) Reset() {
 	*x = BusinessFieldDefinition{}
-	mi := &file_console_v1_console_proto_msgTypes[530]
+	mi := &file_console_v1_console_proto_msgTypes[531]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50237,7 +50459,7 @@ func (x *BusinessFieldDefinition) String() string {
 func (*BusinessFieldDefinition) ProtoMessage() {}
 
 func (x *BusinessFieldDefinition) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[530]
+	mi := &file_console_v1_console_proto_msgTypes[531]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50250,7 +50472,7 @@ func (x *BusinessFieldDefinition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessFieldDefinition.ProtoReflect.Descriptor instead.
 func (*BusinessFieldDefinition) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{530}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{531}
 }
 
 func (x *BusinessFieldDefinition) GetFieldId() string {
@@ -50334,7 +50556,7 @@ type BusinessRelationshipDefinition struct {
 
 func (x *BusinessRelationshipDefinition) Reset() {
 	*x = BusinessRelationshipDefinition{}
-	mi := &file_console_v1_console_proto_msgTypes[531]
+	mi := &file_console_v1_console_proto_msgTypes[532]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50346,7 +50568,7 @@ func (x *BusinessRelationshipDefinition) String() string {
 func (*BusinessRelationshipDefinition) ProtoMessage() {}
 
 func (x *BusinessRelationshipDefinition) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[531]
+	mi := &file_console_v1_console_proto_msgTypes[532]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50359,7 +50581,7 @@ func (x *BusinessRelationshipDefinition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessRelationshipDefinition.ProtoReflect.Descriptor instead.
 func (*BusinessRelationshipDefinition) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{531}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{532}
 }
 
 func (x *BusinessRelationshipDefinition) GetRelationshipId() string {
@@ -50405,7 +50627,7 @@ type BusinessObjectType struct {
 
 func (x *BusinessObjectType) Reset() {
 	*x = BusinessObjectType{}
-	mi := &file_console_v1_console_proto_msgTypes[532]
+	mi := &file_console_v1_console_proto_msgTypes[533]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50417,7 +50639,7 @@ func (x *BusinessObjectType) String() string {
 func (*BusinessObjectType) ProtoMessage() {}
 
 func (x *BusinessObjectType) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[532]
+	mi := &file_console_v1_console_proto_msgTypes[533]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50430,7 +50652,7 @@ func (x *BusinessObjectType) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessObjectType.ProtoReflect.Descriptor instead.
 func (*BusinessObjectType) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{532}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{533}
 }
 
 func (x *BusinessObjectType) GetTypeId() string {
@@ -50514,7 +50736,7 @@ type BusinessMoney struct {
 
 func (x *BusinessMoney) Reset() {
 	*x = BusinessMoney{}
-	mi := &file_console_v1_console_proto_msgTypes[533]
+	mi := &file_console_v1_console_proto_msgTypes[534]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50526,7 +50748,7 @@ func (x *BusinessMoney) String() string {
 func (*BusinessMoney) ProtoMessage() {}
 
 func (x *BusinessMoney) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[533]
+	mi := &file_console_v1_console_proto_msgTypes[534]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50539,7 +50761,7 @@ func (x *BusinessMoney) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessMoney.ProtoReflect.Descriptor instead.
 func (*BusinessMoney) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{533}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{534}
 }
 
 func (x *BusinessMoney) GetAmount() string {
@@ -50565,7 +50787,7 @@ type BusinessObjectReference struct {
 
 func (x *BusinessObjectReference) Reset() {
 	*x = BusinessObjectReference{}
-	mi := &file_console_v1_console_proto_msgTypes[534]
+	mi := &file_console_v1_console_proto_msgTypes[535]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50577,7 +50799,7 @@ func (x *BusinessObjectReference) String() string {
 func (*BusinessObjectReference) ProtoMessage() {}
 
 func (x *BusinessObjectReference) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[534]
+	mi := &file_console_v1_console_proto_msgTypes[535]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50590,7 +50812,7 @@ func (x *BusinessObjectReference) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessObjectReference.ProtoReflect.Descriptor instead.
 func (*BusinessObjectReference) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{534}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{535}
 }
 
 func (x *BusinessObjectReference) GetObjectId() string {
@@ -50609,7 +50831,7 @@ type BusinessArtifactReference struct {
 
 func (x *BusinessArtifactReference) Reset() {
 	*x = BusinessArtifactReference{}
-	mi := &file_console_v1_console_proto_msgTypes[535]
+	mi := &file_console_v1_console_proto_msgTypes[536]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50621,7 +50843,7 @@ func (x *BusinessArtifactReference) String() string {
 func (*BusinessArtifactReference) ProtoMessage() {}
 
 func (x *BusinessArtifactReference) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[535]
+	mi := &file_console_v1_console_proto_msgTypes[536]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50634,7 +50856,7 @@ func (x *BusinessArtifactReference) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessArtifactReference.ProtoReflect.Descriptor instead.
 func (*BusinessArtifactReference) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{535}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{536}
 }
 
 func (x *BusinessArtifactReference) GetArtifactVersionId() string {
@@ -50653,7 +50875,7 @@ type BusinessTextList struct {
 
 func (x *BusinessTextList) Reset() {
 	*x = BusinessTextList{}
-	mi := &file_console_v1_console_proto_msgTypes[536]
+	mi := &file_console_v1_console_proto_msgTypes[537]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50665,7 +50887,7 @@ func (x *BusinessTextList) String() string {
 func (*BusinessTextList) ProtoMessage() {}
 
 func (x *BusinessTextList) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[536]
+	mi := &file_console_v1_console_proto_msgTypes[537]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50678,7 +50900,7 @@ func (x *BusinessTextList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessTextList.ProtoReflect.Descriptor instead.
 func (*BusinessTextList) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{536}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{537}
 }
 
 func (x *BusinessTextList) GetValues() []string {
@@ -50711,7 +50933,7 @@ type BusinessFieldValue struct {
 
 func (x *BusinessFieldValue) Reset() {
 	*x = BusinessFieldValue{}
-	mi := &file_console_v1_console_proto_msgTypes[537]
+	mi := &file_console_v1_console_proto_msgTypes[538]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50723,7 +50945,7 @@ func (x *BusinessFieldValue) String() string {
 func (*BusinessFieldValue) ProtoMessage() {}
 
 func (x *BusinessFieldValue) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[537]
+	mi := &file_console_v1_console_proto_msgTypes[538]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50736,7 +50958,7 @@ func (x *BusinessFieldValue) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessFieldValue.ProtoReflect.Descriptor instead.
 func (*BusinessFieldValue) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{537}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{538}
 }
 
 func (x *BusinessFieldValue) GetFieldId() string {
@@ -50932,7 +51154,7 @@ type BusinessSourceField struct {
 
 func (x *BusinessSourceField) Reset() {
 	*x = BusinessSourceField{}
-	mi := &file_console_v1_console_proto_msgTypes[538]
+	mi := &file_console_v1_console_proto_msgTypes[539]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -50944,7 +51166,7 @@ func (x *BusinessSourceField) String() string {
 func (*BusinessSourceField) ProtoMessage() {}
 
 func (x *BusinessSourceField) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[538]
+	mi := &file_console_v1_console_proto_msgTypes[539]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -50957,7 +51179,7 @@ func (x *BusinessSourceField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessSourceField.ProtoReflect.Descriptor instead.
 func (*BusinessSourceField) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{538}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{539}
 }
 
 func (x *BusinessSourceField) GetFieldId() string {
@@ -50995,7 +51217,7 @@ type BusinessSourceBinding struct {
 
 func (x *BusinessSourceBinding) Reset() {
 	*x = BusinessSourceBinding{}
-	mi := &file_console_v1_console_proto_msgTypes[539]
+	mi := &file_console_v1_console_proto_msgTypes[540]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51007,7 +51229,7 @@ func (x *BusinessSourceBinding) String() string {
 func (*BusinessSourceBinding) ProtoMessage() {}
 
 func (x *BusinessSourceBinding) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[539]
+	mi := &file_console_v1_console_proto_msgTypes[540]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51020,7 +51242,7 @@ func (x *BusinessSourceBinding) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessSourceBinding.ProtoReflect.Descriptor instead.
 func (*BusinessSourceBinding) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{539}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{540}
 }
 
 func (x *BusinessSourceBinding) GetResourceId() string {
@@ -51131,7 +51353,7 @@ type BusinessObject struct {
 
 func (x *BusinessObject) Reset() {
 	*x = BusinessObject{}
-	mi := &file_console_v1_console_proto_msgTypes[540]
+	mi := &file_console_v1_console_proto_msgTypes[541]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51143,7 +51365,7 @@ func (x *BusinessObject) String() string {
 func (*BusinessObject) ProtoMessage() {}
 
 func (x *BusinessObject) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[540]
+	mi := &file_console_v1_console_proto_msgTypes[541]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51156,7 +51378,7 @@ func (x *BusinessObject) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessObject.ProtoReflect.Descriptor instead.
 func (*BusinessObject) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{540}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{541}
 }
 
 func (x *BusinessObject) GetObjectId() string {
@@ -51235,7 +51457,7 @@ type BusinessObjectRevision struct {
 
 func (x *BusinessObjectRevision) Reset() {
 	*x = BusinessObjectRevision{}
-	mi := &file_console_v1_console_proto_msgTypes[541]
+	mi := &file_console_v1_console_proto_msgTypes[542]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51247,7 +51469,7 @@ func (x *BusinessObjectRevision) String() string {
 func (*BusinessObjectRevision) ProtoMessage() {}
 
 func (x *BusinessObjectRevision) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[541]
+	mi := &file_console_v1_console_proto_msgTypes[542]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51260,7 +51482,7 @@ func (x *BusinessObjectRevision) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessObjectRevision.ProtoReflect.Descriptor instead.
 func (*BusinessObjectRevision) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{541}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{542}
 }
 
 func (x *BusinessObjectRevision) GetObject() *BusinessObject {
@@ -51309,7 +51531,7 @@ type BusinessObjectRelationship struct {
 
 func (x *BusinessObjectRelationship) Reset() {
 	*x = BusinessObjectRelationship{}
-	mi := &file_console_v1_console_proto_msgTypes[542]
+	mi := &file_console_v1_console_proto_msgTypes[543]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51321,7 +51543,7 @@ func (x *BusinessObjectRelationship) String() string {
 func (*BusinessObjectRelationship) ProtoMessage() {}
 
 func (x *BusinessObjectRelationship) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[542]
+	mi := &file_console_v1_console_proto_msgTypes[543]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51334,7 +51556,7 @@ func (x *BusinessObjectRelationship) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessObjectRelationship.ProtoReflect.Descriptor instead.
 func (*BusinessObjectRelationship) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{542}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{543}
 }
 
 func (x *BusinessObjectRelationship) GetSourceObjectId() string {
@@ -51371,7 +51593,7 @@ type DefineBusinessObjectTypeRequest struct {
 
 func (x *DefineBusinessObjectTypeRequest) Reset() {
 	*x = DefineBusinessObjectTypeRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[543]
+	mi := &file_console_v1_console_proto_msgTypes[544]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51383,7 +51605,7 @@ func (x *DefineBusinessObjectTypeRequest) String() string {
 func (*DefineBusinessObjectTypeRequest) ProtoMessage() {}
 
 func (x *DefineBusinessObjectTypeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[543]
+	mi := &file_console_v1_console_proto_msgTypes[544]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51396,7 +51618,7 @@ func (x *DefineBusinessObjectTypeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DefineBusinessObjectTypeRequest.ProtoReflect.Descriptor instead.
 func (*DefineBusinessObjectTypeRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{543}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{544}
 }
 
 func (x *DefineBusinessObjectTypeRequest) GetOrganizationId() string {
@@ -51443,7 +51665,7 @@ type DefineBusinessObjectTypeResponse struct {
 
 func (x *DefineBusinessObjectTypeResponse) Reset() {
 	*x = DefineBusinessObjectTypeResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[544]
+	mi := &file_console_v1_console_proto_msgTypes[545]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51455,7 +51677,7 @@ func (x *DefineBusinessObjectTypeResponse) String() string {
 func (*DefineBusinessObjectTypeResponse) ProtoMessage() {}
 
 func (x *DefineBusinessObjectTypeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[544]
+	mi := &file_console_v1_console_proto_msgTypes[545]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51468,7 +51690,7 @@ func (x *DefineBusinessObjectTypeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DefineBusinessObjectTypeResponse.ProtoReflect.Descriptor instead.
 func (*DefineBusinessObjectTypeResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{544}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{545}
 }
 
 func (x *DefineBusinessObjectTypeResponse) GetDefinition() *BusinessObjectType {
@@ -51491,7 +51713,7 @@ type ListBusinessObjectTypesRequest struct {
 
 func (x *ListBusinessObjectTypesRequest) Reset() {
 	*x = ListBusinessObjectTypesRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[545]
+	mi := &file_console_v1_console_proto_msgTypes[546]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51503,7 +51725,7 @@ func (x *ListBusinessObjectTypesRequest) String() string {
 func (*ListBusinessObjectTypesRequest) ProtoMessage() {}
 
 func (x *ListBusinessObjectTypesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[545]
+	mi := &file_console_v1_console_proto_msgTypes[546]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51516,7 +51738,7 @@ func (x *ListBusinessObjectTypesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBusinessObjectTypesRequest.ProtoReflect.Descriptor instead.
 func (*ListBusinessObjectTypesRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{545}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{546}
 }
 
 func (x *ListBusinessObjectTypesRequest) GetOrganizationId() string {
@@ -51564,7 +51786,7 @@ type ListBusinessObjectTypesResponse struct {
 
 func (x *ListBusinessObjectTypesResponse) Reset() {
 	*x = ListBusinessObjectTypesResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[546]
+	mi := &file_console_v1_console_proto_msgTypes[547]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51576,7 +51798,7 @@ func (x *ListBusinessObjectTypesResponse) String() string {
 func (*ListBusinessObjectTypesResponse) ProtoMessage() {}
 
 func (x *ListBusinessObjectTypesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[546]
+	mi := &file_console_v1_console_proto_msgTypes[547]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51589,7 +51811,7 @@ func (x *ListBusinessObjectTypesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBusinessObjectTypesResponse.ProtoReflect.Descriptor instead.
 func (*ListBusinessObjectTypesResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{546}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{547}
 }
 
 func (x *ListBusinessObjectTypesResponse) GetDefinitions() []*BusinessObjectType {
@@ -51620,7 +51842,7 @@ type CreateBusinessObjectRequest struct {
 
 func (x *CreateBusinessObjectRequest) Reset() {
 	*x = CreateBusinessObjectRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[547]
+	mi := &file_console_v1_console_proto_msgTypes[548]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51632,7 +51854,7 @@ func (x *CreateBusinessObjectRequest) String() string {
 func (*CreateBusinessObjectRequest) ProtoMessage() {}
 
 func (x *CreateBusinessObjectRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[547]
+	mi := &file_console_v1_console_proto_msgTypes[548]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51645,7 +51867,7 @@ func (x *CreateBusinessObjectRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateBusinessObjectRequest.ProtoReflect.Descriptor instead.
 func (*CreateBusinessObjectRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{547}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{548}
 }
 
 func (x *CreateBusinessObjectRequest) GetOrganizationId() string {
@@ -51699,7 +51921,7 @@ type CreateBusinessObjectResponse struct {
 
 func (x *CreateBusinessObjectResponse) Reset() {
 	*x = CreateBusinessObjectResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[548]
+	mi := &file_console_v1_console_proto_msgTypes[549]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51711,7 +51933,7 @@ func (x *CreateBusinessObjectResponse) String() string {
 func (*CreateBusinessObjectResponse) ProtoMessage() {}
 
 func (x *CreateBusinessObjectResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[548]
+	mi := &file_console_v1_console_proto_msgTypes[549]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51724,7 +51946,7 @@ func (x *CreateBusinessObjectResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateBusinessObjectResponse.ProtoReflect.Descriptor instead.
 func (*CreateBusinessObjectResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{548}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{549}
 }
 
 func (x *CreateBusinessObjectResponse) GetObject() *BusinessObject {
@@ -51749,7 +51971,7 @@ type GetBusinessObjectRequest struct {
 
 func (x *GetBusinessObjectRequest) Reset() {
 	*x = GetBusinessObjectRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[549]
+	mi := &file_console_v1_console_proto_msgTypes[550]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51761,7 +51983,7 @@ func (x *GetBusinessObjectRequest) String() string {
 func (*GetBusinessObjectRequest) ProtoMessage() {}
 
 func (x *GetBusinessObjectRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[549]
+	mi := &file_console_v1_console_proto_msgTypes[550]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51774,7 +51996,7 @@ func (x *GetBusinessObjectRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBusinessObjectRequest.ProtoReflect.Descriptor instead.
 func (*GetBusinessObjectRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{549}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{550}
 }
 
 func (x *GetBusinessObjectRequest) GetOrganizationId() string {
@@ -51823,7 +52045,7 @@ type GetBusinessObjectResponse struct {
 
 func (x *GetBusinessObjectResponse) Reset() {
 	*x = GetBusinessObjectResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[550]
+	mi := &file_console_v1_console_proto_msgTypes[551]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51835,7 +52057,7 @@ func (x *GetBusinessObjectResponse) String() string {
 func (*GetBusinessObjectResponse) ProtoMessage() {}
 
 func (x *GetBusinessObjectResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[550]
+	mi := &file_console_v1_console_proto_msgTypes[551]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51848,7 +52070,7 @@ func (x *GetBusinessObjectResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBusinessObjectResponse.ProtoReflect.Descriptor instead.
 func (*GetBusinessObjectResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{550}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{551}
 }
 
 func (x *GetBusinessObjectResponse) GetObject() *BusinessObject {
@@ -51877,7 +52099,7 @@ type BusinessObjectSourceRecovery struct {
 
 func (x *BusinessObjectSourceRecovery) Reset() {
 	*x = BusinessObjectSourceRecovery{}
-	mi := &file_console_v1_console_proto_msgTypes[551]
+	mi := &file_console_v1_console_proto_msgTypes[552]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51889,7 +52111,7 @@ func (x *BusinessObjectSourceRecovery) String() string {
 func (*BusinessObjectSourceRecovery) ProtoMessage() {}
 
 func (x *BusinessObjectSourceRecovery) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[551]
+	mi := &file_console_v1_console_proto_msgTypes[552]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51902,7 +52124,7 @@ func (x *BusinessObjectSourceRecovery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessObjectSourceRecovery.ProtoReflect.Descriptor instead.
 func (*BusinessObjectSourceRecovery) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{551}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{552}
 }
 
 func (x *BusinessObjectSourceRecovery) GetObjectId() string {
@@ -51953,7 +52175,7 @@ type ListBusinessObjectsRequest struct {
 
 func (x *ListBusinessObjectsRequest) Reset() {
 	*x = ListBusinessObjectsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[552]
+	mi := &file_console_v1_console_proto_msgTypes[553]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -51965,7 +52187,7 @@ func (x *ListBusinessObjectsRequest) String() string {
 func (*ListBusinessObjectsRequest) ProtoMessage() {}
 
 func (x *ListBusinessObjectsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[552]
+	mi := &file_console_v1_console_proto_msgTypes[553]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -51978,7 +52200,7 @@ func (x *ListBusinessObjectsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBusinessObjectsRequest.ProtoReflect.Descriptor instead.
 func (*ListBusinessObjectsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{552}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{553}
 }
 
 func (x *ListBusinessObjectsRequest) GetOrganizationId() string {
@@ -52045,7 +52267,7 @@ type BusinessObjectFilter struct {
 
 func (x *BusinessObjectFilter) Reset() {
 	*x = BusinessObjectFilter{}
-	mi := &file_console_v1_console_proto_msgTypes[553]
+	mi := &file_console_v1_console_proto_msgTypes[554]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52057,7 +52279,7 @@ func (x *BusinessObjectFilter) String() string {
 func (*BusinessObjectFilter) ProtoMessage() {}
 
 func (x *BusinessObjectFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[553]
+	mi := &file_console_v1_console_proto_msgTypes[554]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52070,7 +52292,7 @@ func (x *BusinessObjectFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessObjectFilter.ProtoReflect.Descriptor instead.
 func (*BusinessObjectFilter) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{553}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{554}
 }
 
 func (x *BusinessObjectFilter) GetPredicate() isBusinessObjectFilter_Predicate {
@@ -52124,7 +52346,7 @@ type BusinessObjectReferenceFilter struct {
 
 func (x *BusinessObjectReferenceFilter) Reset() {
 	*x = BusinessObjectReferenceFilter{}
-	mi := &file_console_v1_console_proto_msgTypes[554]
+	mi := &file_console_v1_console_proto_msgTypes[555]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52136,7 +52358,7 @@ func (x *BusinessObjectReferenceFilter) String() string {
 func (*BusinessObjectReferenceFilter) ProtoMessage() {}
 
 func (x *BusinessObjectReferenceFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[554]
+	mi := &file_console_v1_console_proto_msgTypes[555]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52149,7 +52371,7 @@ func (x *BusinessObjectReferenceFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessObjectReferenceFilter.ProtoReflect.Descriptor instead.
 func (*BusinessObjectReferenceFilter) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{554}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{555}
 }
 
 func (x *BusinessObjectReferenceFilter) GetFieldId() string {
@@ -52176,7 +52398,7 @@ type ListBusinessObjectsResponse struct {
 
 func (x *ListBusinessObjectsResponse) Reset() {
 	*x = ListBusinessObjectsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[555]
+	mi := &file_console_v1_console_proto_msgTypes[556]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52188,7 +52410,7 @@ func (x *ListBusinessObjectsResponse) String() string {
 func (*ListBusinessObjectsResponse) ProtoMessage() {}
 
 func (x *ListBusinessObjectsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[555]
+	mi := &file_console_v1_console_proto_msgTypes[556]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52201,7 +52423,7 @@ func (x *ListBusinessObjectsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBusinessObjectsResponse.ProtoReflect.Descriptor instead.
 func (*ListBusinessObjectsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{555}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{556}
 }
 
 func (x *ListBusinessObjectsResponse) GetObjects() []*BusinessObject {
@@ -52233,7 +52455,7 @@ type UpdateBusinessObjectRequest struct {
 
 func (x *UpdateBusinessObjectRequest) Reset() {
 	*x = UpdateBusinessObjectRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[556]
+	mi := &file_console_v1_console_proto_msgTypes[557]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52245,7 +52467,7 @@ func (x *UpdateBusinessObjectRequest) String() string {
 func (*UpdateBusinessObjectRequest) ProtoMessage() {}
 
 func (x *UpdateBusinessObjectRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[556]
+	mi := &file_console_v1_console_proto_msgTypes[557]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52258,7 +52480,7 @@ func (x *UpdateBusinessObjectRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBusinessObjectRequest.ProtoReflect.Descriptor instead.
 func (*UpdateBusinessObjectRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{556}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{557}
 }
 
 func (x *UpdateBusinessObjectRequest) GetOrganizationId() string {
@@ -52319,7 +52541,7 @@ type UpdateBusinessObjectResponse struct {
 
 func (x *UpdateBusinessObjectResponse) Reset() {
 	*x = UpdateBusinessObjectResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[557]
+	mi := &file_console_v1_console_proto_msgTypes[558]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52331,7 +52553,7 @@ func (x *UpdateBusinessObjectResponse) String() string {
 func (*UpdateBusinessObjectResponse) ProtoMessage() {}
 
 func (x *UpdateBusinessObjectResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[557]
+	mi := &file_console_v1_console_proto_msgTypes[558]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52344,7 +52566,7 @@ func (x *UpdateBusinessObjectResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBusinessObjectResponse.ProtoReflect.Descriptor instead.
 func (*UpdateBusinessObjectResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{557}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{558}
 }
 
 func (x *UpdateBusinessObjectResponse) GetObject() *BusinessObject {
@@ -52367,7 +52589,7 @@ type DeleteBusinessObjectRequest struct {
 
 func (x *DeleteBusinessObjectRequest) Reset() {
 	*x = DeleteBusinessObjectRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[558]
+	mi := &file_console_v1_console_proto_msgTypes[559]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52379,7 +52601,7 @@ func (x *DeleteBusinessObjectRequest) String() string {
 func (*DeleteBusinessObjectRequest) ProtoMessage() {}
 
 func (x *DeleteBusinessObjectRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[558]
+	mi := &file_console_v1_console_proto_msgTypes[559]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52392,7 +52614,7 @@ func (x *DeleteBusinessObjectRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteBusinessObjectRequest.ProtoReflect.Descriptor instead.
 func (*DeleteBusinessObjectRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{558}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{559}
 }
 
 func (x *DeleteBusinessObjectRequest) GetOrganizationId() string {
@@ -52439,7 +52661,7 @@ type DeleteBusinessObjectResponse struct {
 
 func (x *DeleteBusinessObjectResponse) Reset() {
 	*x = DeleteBusinessObjectResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[559]
+	mi := &file_console_v1_console_proto_msgTypes[560]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52451,7 +52673,7 @@ func (x *DeleteBusinessObjectResponse) String() string {
 func (*DeleteBusinessObjectResponse) ProtoMessage() {}
 
 func (x *DeleteBusinessObjectResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[559]
+	mi := &file_console_v1_console_proto_msgTypes[560]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52464,7 +52686,7 @@ func (x *DeleteBusinessObjectResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteBusinessObjectResponse.ProtoReflect.Descriptor instead.
 func (*DeleteBusinessObjectResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{559}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{560}
 }
 
 func (x *DeleteBusinessObjectResponse) GetObject() *BusinessObject {
@@ -52488,7 +52710,7 @@ type ListBusinessObjectRevisionsRequest struct {
 
 func (x *ListBusinessObjectRevisionsRequest) Reset() {
 	*x = ListBusinessObjectRevisionsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[560]
+	mi := &file_console_v1_console_proto_msgTypes[561]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52500,7 +52722,7 @@ func (x *ListBusinessObjectRevisionsRequest) String() string {
 func (*ListBusinessObjectRevisionsRequest) ProtoMessage() {}
 
 func (x *ListBusinessObjectRevisionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[560]
+	mi := &file_console_v1_console_proto_msgTypes[561]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52513,7 +52735,7 @@ func (x *ListBusinessObjectRevisionsRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ListBusinessObjectRevisionsRequest.ProtoReflect.Descriptor instead.
 func (*ListBusinessObjectRevisionsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{560}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{561}
 }
 
 func (x *ListBusinessObjectRevisionsRequest) GetOrganizationId() string {
@@ -52568,7 +52790,7 @@ type ListBusinessObjectRevisionsResponse struct {
 
 func (x *ListBusinessObjectRevisionsResponse) Reset() {
 	*x = ListBusinessObjectRevisionsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[561]
+	mi := &file_console_v1_console_proto_msgTypes[562]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52580,7 +52802,7 @@ func (x *ListBusinessObjectRevisionsResponse) String() string {
 func (*ListBusinessObjectRevisionsResponse) ProtoMessage() {}
 
 func (x *ListBusinessObjectRevisionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[561]
+	mi := &file_console_v1_console_proto_msgTypes[562]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52593,7 +52815,7 @@ func (x *ListBusinessObjectRevisionsResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use ListBusinessObjectRevisionsResponse.ProtoReflect.Descriptor instead.
 func (*ListBusinessObjectRevisionsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{561}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{562}
 }
 
 func (x *ListBusinessObjectRevisionsResponse) GetRevisions() []*BusinessObjectRevision {
@@ -52629,7 +52851,7 @@ type BindBusinessObjectSourceRequest struct {
 
 func (x *BindBusinessObjectSourceRequest) Reset() {
 	*x = BindBusinessObjectSourceRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[562]
+	mi := &file_console_v1_console_proto_msgTypes[563]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52641,7 +52863,7 @@ func (x *BindBusinessObjectSourceRequest) String() string {
 func (*BindBusinessObjectSourceRequest) ProtoMessage() {}
 
 func (x *BindBusinessObjectSourceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[562]
+	mi := &file_console_v1_console_proto_msgTypes[563]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52654,7 +52876,7 @@ func (x *BindBusinessObjectSourceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BindBusinessObjectSourceRequest.ProtoReflect.Descriptor instead.
 func (*BindBusinessObjectSourceRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{562}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{563}
 }
 
 func (x *BindBusinessObjectSourceRequest) GetOrganizationId() string {
@@ -52743,7 +52965,7 @@ type BindBusinessObjectSourceResponse struct {
 
 func (x *BindBusinessObjectSourceResponse) Reset() {
 	*x = BindBusinessObjectSourceResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[563]
+	mi := &file_console_v1_console_proto_msgTypes[564]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52755,7 +52977,7 @@ func (x *BindBusinessObjectSourceResponse) String() string {
 func (*BindBusinessObjectSourceResponse) ProtoMessage() {}
 
 func (x *BindBusinessObjectSourceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[563]
+	mi := &file_console_v1_console_proto_msgTypes[564]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52768,7 +52990,7 @@ func (x *BindBusinessObjectSourceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BindBusinessObjectSourceResponse.ProtoReflect.Descriptor instead.
 func (*BindBusinessObjectSourceResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{563}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{564}
 }
 
 func (x *BindBusinessObjectSourceResponse) GetObject() *BusinessObject {
@@ -52792,7 +53014,7 @@ type AdmitBusinessObjectObservationRequest struct {
 
 func (x *AdmitBusinessObjectObservationRequest) Reset() {
 	*x = AdmitBusinessObjectObservationRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[564]
+	mi := &file_console_v1_console_proto_msgTypes[565]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52804,7 +53026,7 @@ func (x *AdmitBusinessObjectObservationRequest) String() string {
 func (*AdmitBusinessObjectObservationRequest) ProtoMessage() {}
 
 func (x *AdmitBusinessObjectObservationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[564]
+	mi := &file_console_v1_console_proto_msgTypes[565]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52817,7 +53039,7 @@ func (x *AdmitBusinessObjectObservationRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use AdmitBusinessObjectObservationRequest.ProtoReflect.Descriptor instead.
 func (*AdmitBusinessObjectObservationRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{564}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{565}
 }
 
 func (x *AdmitBusinessObjectObservationRequest) GetOrganizationId() string {
@@ -52871,7 +53093,7 @@ type AdmitBusinessObjectObservationResponse struct {
 
 func (x *AdmitBusinessObjectObservationResponse) Reset() {
 	*x = AdmitBusinessObjectObservationResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[565]
+	mi := &file_console_v1_console_proto_msgTypes[566]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52883,7 +53105,7 @@ func (x *AdmitBusinessObjectObservationResponse) String() string {
 func (*AdmitBusinessObjectObservationResponse) ProtoMessage() {}
 
 func (x *AdmitBusinessObjectObservationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[565]
+	mi := &file_console_v1_console_proto_msgTypes[566]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52896,7 +53118,7 @@ func (x *AdmitBusinessObjectObservationResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use AdmitBusinessObjectObservationResponse.ProtoReflect.Descriptor instead.
 func (*AdmitBusinessObjectObservationResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{565}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{566}
 }
 
 func (x *AdmitBusinessObjectObservationResponse) GetObject() *BusinessObject {
@@ -52923,7 +53145,7 @@ type ListBusinessObjectRelationshipsRequest struct {
 
 func (x *ListBusinessObjectRelationshipsRequest) Reset() {
 	*x = ListBusinessObjectRelationshipsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[566]
+	mi := &file_console_v1_console_proto_msgTypes[567]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -52935,7 +53157,7 @@ func (x *ListBusinessObjectRelationshipsRequest) String() string {
 func (*ListBusinessObjectRelationshipsRequest) ProtoMessage() {}
 
 func (x *ListBusinessObjectRelationshipsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[566]
+	mi := &file_console_v1_console_proto_msgTypes[567]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -52948,7 +53170,7 @@ func (x *ListBusinessObjectRelationshipsRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use ListBusinessObjectRelationshipsRequest.ProtoReflect.Descriptor instead.
 func (*ListBusinessObjectRelationshipsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{566}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{567}
 }
 
 func (x *ListBusinessObjectRelationshipsRequest) GetOrganizationId() string {
@@ -53010,7 +53232,7 @@ type ListBusinessObjectRelationshipsResponse struct {
 
 func (x *ListBusinessObjectRelationshipsResponse) Reset() {
 	*x = ListBusinessObjectRelationshipsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[567]
+	mi := &file_console_v1_console_proto_msgTypes[568]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53022,7 +53244,7 @@ func (x *ListBusinessObjectRelationshipsResponse) String() string {
 func (*ListBusinessObjectRelationshipsResponse) ProtoMessage() {}
 
 func (x *ListBusinessObjectRelationshipsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[567]
+	mi := &file_console_v1_console_proto_msgTypes[568]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53035,7 +53257,7 @@ func (x *ListBusinessObjectRelationshipsResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use ListBusinessObjectRelationshipsResponse.ProtoReflect.Descriptor instead.
 func (*ListBusinessObjectRelationshipsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{567}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{568}
 }
 
 func (x *ListBusinessObjectRelationshipsResponse) GetRelationships() []*BusinessObjectRelationship {
@@ -53065,7 +53287,7 @@ type CreateBusinessObjectRelationshipRequest struct {
 
 func (x *CreateBusinessObjectRelationshipRequest) Reset() {
 	*x = CreateBusinessObjectRelationshipRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[568]
+	mi := &file_console_v1_console_proto_msgTypes[569]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53077,7 +53299,7 @@ func (x *CreateBusinessObjectRelationshipRequest) String() string {
 func (*CreateBusinessObjectRelationshipRequest) ProtoMessage() {}
 
 func (x *CreateBusinessObjectRelationshipRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[568]
+	mi := &file_console_v1_console_proto_msgTypes[569]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53090,7 +53312,7 @@ func (x *CreateBusinessObjectRelationshipRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use CreateBusinessObjectRelationshipRequest.ProtoReflect.Descriptor instead.
 func (*CreateBusinessObjectRelationshipRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{568}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{569}
 }
 
 func (x *CreateBusinessObjectRelationshipRequest) GetOrganizationId() string {
@@ -53137,7 +53359,7 @@ type CreateBusinessObjectRelationshipResponse struct {
 
 func (x *CreateBusinessObjectRelationshipResponse) Reset() {
 	*x = CreateBusinessObjectRelationshipResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[569]
+	mi := &file_console_v1_console_proto_msgTypes[570]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53149,7 +53371,7 @@ func (x *CreateBusinessObjectRelationshipResponse) String() string {
 func (*CreateBusinessObjectRelationshipResponse) ProtoMessage() {}
 
 func (x *CreateBusinessObjectRelationshipResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[569]
+	mi := &file_console_v1_console_proto_msgTypes[570]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53162,7 +53384,7 @@ func (x *CreateBusinessObjectRelationshipResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use CreateBusinessObjectRelationshipResponse.ProtoReflect.Descriptor instead.
 func (*CreateBusinessObjectRelationshipResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{569}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{570}
 }
 
 func (x *CreateBusinessObjectRelationshipResponse) GetObject() *BusinessObject {
@@ -53185,7 +53407,7 @@ type DeleteBusinessObjectRelationshipRequest struct {
 
 func (x *DeleteBusinessObjectRelationshipRequest) Reset() {
 	*x = DeleteBusinessObjectRelationshipRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[570]
+	mi := &file_console_v1_console_proto_msgTypes[571]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53197,7 +53419,7 @@ func (x *DeleteBusinessObjectRelationshipRequest) String() string {
 func (*DeleteBusinessObjectRelationshipRequest) ProtoMessage() {}
 
 func (x *DeleteBusinessObjectRelationshipRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[570]
+	mi := &file_console_v1_console_proto_msgTypes[571]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53210,7 +53432,7 @@ func (x *DeleteBusinessObjectRelationshipRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use DeleteBusinessObjectRelationshipRequest.ProtoReflect.Descriptor instead.
 func (*DeleteBusinessObjectRelationshipRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{570}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{571}
 }
 
 func (x *DeleteBusinessObjectRelationshipRequest) GetOrganizationId() string {
@@ -53257,7 +53479,7 @@ type DeleteBusinessObjectRelationshipResponse struct {
 
 func (x *DeleteBusinessObjectRelationshipResponse) Reset() {
 	*x = DeleteBusinessObjectRelationshipResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[571]
+	mi := &file_console_v1_console_proto_msgTypes[572]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53269,7 +53491,7 @@ func (x *DeleteBusinessObjectRelationshipResponse) String() string {
 func (*DeleteBusinessObjectRelationshipResponse) ProtoMessage() {}
 
 func (x *DeleteBusinessObjectRelationshipResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[571]
+	mi := &file_console_v1_console_proto_msgTypes[572]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53282,7 +53504,7 @@ func (x *DeleteBusinessObjectRelationshipResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use DeleteBusinessObjectRelationshipResponse.ProtoReflect.Descriptor instead.
 func (*DeleteBusinessObjectRelationshipResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{571}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{572}
 }
 
 func (x *DeleteBusinessObjectRelationshipResponse) GetObject() *BusinessObject {
@@ -53303,7 +53525,7 @@ type CaptureFormObjectTarget struct {
 
 func (x *CaptureFormObjectTarget) Reset() {
 	*x = CaptureFormObjectTarget{}
-	mi := &file_console_v1_console_proto_msgTypes[572]
+	mi := &file_console_v1_console_proto_msgTypes[573]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53315,7 +53537,7 @@ func (x *CaptureFormObjectTarget) String() string {
 func (*CaptureFormObjectTarget) ProtoMessage() {}
 
 func (x *CaptureFormObjectTarget) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[572]
+	mi := &file_console_v1_console_proto_msgTypes[573]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53328,7 +53550,7 @@ func (x *CaptureFormObjectTarget) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormObjectTarget.ProtoReflect.Descriptor instead.
 func (*CaptureFormObjectTarget) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{572}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{573}
 }
 
 func (x *CaptureFormObjectTarget) GetTypeId() string {
@@ -53357,7 +53579,7 @@ type CaptureFormAssetRef struct {
 
 func (x *CaptureFormAssetRef) Reset() {
 	*x = CaptureFormAssetRef{}
-	mi := &file_console_v1_console_proto_msgTypes[573]
+	mi := &file_console_v1_console_proto_msgTypes[574]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53369,7 +53591,7 @@ func (x *CaptureFormAssetRef) String() string {
 func (*CaptureFormAssetRef) ProtoMessage() {}
 
 func (x *CaptureFormAssetRef) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[573]
+	mi := &file_console_v1_console_proto_msgTypes[574]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53382,7 +53604,7 @@ func (x *CaptureFormAssetRef) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormAssetRef.ProtoReflect.Descriptor instead.
 func (*CaptureFormAssetRef) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{573}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{574}
 }
 
 func (x *CaptureFormAssetRef) GetObjectId() string {
@@ -53414,7 +53636,7 @@ type CaptureFormBrandingInput struct {
 
 func (x *CaptureFormBrandingInput) Reset() {
 	*x = CaptureFormBrandingInput{}
-	mi := &file_console_v1_console_proto_msgTypes[574]
+	mi := &file_console_v1_console_proto_msgTypes[575]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53426,7 +53648,7 @@ func (x *CaptureFormBrandingInput) String() string {
 func (*CaptureFormBrandingInput) ProtoMessage() {}
 
 func (x *CaptureFormBrandingInput) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[574]
+	mi := &file_console_v1_console_proto_msgTypes[575]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53439,7 +53661,7 @@ func (x *CaptureFormBrandingInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormBrandingInput.ProtoReflect.Descriptor instead.
 func (*CaptureFormBrandingInput) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{574}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{575}
 }
 
 func (x *CaptureFormBrandingInput) GetDisplayName() string {
@@ -53510,7 +53732,7 @@ type CaptureFormBranding struct {
 
 func (x *CaptureFormBranding) Reset() {
 	*x = CaptureFormBranding{}
-	mi := &file_console_v1_console_proto_msgTypes[575]
+	mi := &file_console_v1_console_proto_msgTypes[576]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53522,7 +53744,7 @@ func (x *CaptureFormBranding) String() string {
 func (*CaptureFormBranding) ProtoMessage() {}
 
 func (x *CaptureFormBranding) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[575]
+	mi := &file_console_v1_console_proto_msgTypes[576]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53535,7 +53757,7 @@ func (x *CaptureFormBranding) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormBranding.ProtoReflect.Descriptor instead.
 func (*CaptureFormBranding) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{575}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{576}
 }
 
 func (x *CaptureFormBranding) GetDisplayName() string {
@@ -53616,7 +53838,7 @@ type CaptureFormPublicBranding struct {
 
 func (x *CaptureFormPublicBranding) Reset() {
 	*x = CaptureFormPublicBranding{}
-	mi := &file_console_v1_console_proto_msgTypes[576]
+	mi := &file_console_v1_console_proto_msgTypes[577]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53628,7 +53850,7 @@ func (x *CaptureFormPublicBranding) String() string {
 func (*CaptureFormPublicBranding) ProtoMessage() {}
 
 func (x *CaptureFormPublicBranding) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[576]
+	mi := &file_console_v1_console_proto_msgTypes[577]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53641,7 +53863,7 @@ func (x *CaptureFormPublicBranding) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormPublicBranding.ProtoReflect.Descriptor instead.
 func (*CaptureFormPublicBranding) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{576}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{577}
 }
 
 func (x *CaptureFormPublicBranding) GetDisplayName() string {
@@ -53705,7 +53927,7 @@ type CaptureFormSelectOption struct {
 
 func (x *CaptureFormSelectOption) Reset() {
 	*x = CaptureFormSelectOption{}
-	mi := &file_console_v1_console_proto_msgTypes[577]
+	mi := &file_console_v1_console_proto_msgTypes[578]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53717,7 +53939,7 @@ func (x *CaptureFormSelectOption) String() string {
 func (*CaptureFormSelectOption) ProtoMessage() {}
 
 func (x *CaptureFormSelectOption) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[577]
+	mi := &file_console_v1_console_proto_msgTypes[578]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53730,7 +53952,7 @@ func (x *CaptureFormSelectOption) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormSelectOption.ProtoReflect.Descriptor instead.
 func (*CaptureFormSelectOption) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{577}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{578}
 }
 
 func (x *CaptureFormSelectOption) GetOptionId() string {
@@ -53771,7 +53993,7 @@ type CaptureFormSelectSpec struct {
 
 func (x *CaptureFormSelectSpec) Reset() {
 	*x = CaptureFormSelectSpec{}
-	mi := &file_console_v1_console_proto_msgTypes[578]
+	mi := &file_console_v1_console_proto_msgTypes[579]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53783,7 +54005,7 @@ func (x *CaptureFormSelectSpec) String() string {
 func (*CaptureFormSelectSpec) ProtoMessage() {}
 
 func (x *CaptureFormSelectSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[578]
+	mi := &file_console_v1_console_proto_msgTypes[579]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53796,7 +54018,7 @@ func (x *CaptureFormSelectSpec) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormSelectSpec.ProtoReflect.Descriptor instead.
 func (*CaptureFormSelectSpec) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{578}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{579}
 }
 
 func (x *CaptureFormSelectSpec) GetOptions() []*CaptureFormSelectOption {
@@ -53824,7 +54046,7 @@ type CaptureFormUploadSpec struct {
 
 func (x *CaptureFormUploadSpec) Reset() {
 	*x = CaptureFormUploadSpec{}
-	mi := &file_console_v1_console_proto_msgTypes[579]
+	mi := &file_console_v1_console_proto_msgTypes[580]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53836,7 +54058,7 @@ func (x *CaptureFormUploadSpec) String() string {
 func (*CaptureFormUploadSpec) ProtoMessage() {}
 
 func (x *CaptureFormUploadSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[579]
+	mi := &file_console_v1_console_proto_msgTypes[580]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53849,7 +54071,7 @@ func (x *CaptureFormUploadSpec) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormUploadSpec.ProtoReflect.Descriptor instead.
 func (*CaptureFormUploadSpec) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{579}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{580}
 }
 
 func (x *CaptureFormUploadSpec) GetAcceptedContentTypes() []string {
@@ -53893,7 +54115,7 @@ type CaptureFormUpload struct {
 
 func (x *CaptureFormUpload) Reset() {
 	*x = CaptureFormUpload{}
-	mi := &file_console_v1_console_proto_msgTypes[580]
+	mi := &file_console_v1_console_proto_msgTypes[581]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -53905,7 +54127,7 @@ func (x *CaptureFormUpload) String() string {
 func (*CaptureFormUpload) ProtoMessage() {}
 
 func (x *CaptureFormUpload) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[580]
+	mi := &file_console_v1_console_proto_msgTypes[581]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -53918,7 +54140,7 @@ func (x *CaptureFormUpload) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormUpload.ProtoReflect.Descriptor instead.
 func (*CaptureFormUpload) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{580}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{581}
 }
 
 func (x *CaptureFormUpload) GetUploadId() string {
@@ -54010,7 +54232,7 @@ type CaptureFormTypedValue struct {
 
 func (x *CaptureFormTypedValue) Reset() {
 	*x = CaptureFormTypedValue{}
-	mi := &file_console_v1_console_proto_msgTypes[581]
+	mi := &file_console_v1_console_proto_msgTypes[582]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -54022,7 +54244,7 @@ func (x *CaptureFormTypedValue) String() string {
 func (*CaptureFormTypedValue) ProtoMessage() {}
 
 func (x *CaptureFormTypedValue) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[581]
+	mi := &file_console_v1_console_proto_msgTypes[582]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -54035,7 +54257,7 @@ func (x *CaptureFormTypedValue) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormTypedValue.ProtoReflect.Descriptor instead.
 func (*CaptureFormTypedValue) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{581}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{582}
 }
 
 func (x *CaptureFormTypedValue) GetValue() isCaptureFormTypedValue_Value {
@@ -54259,7 +54481,7 @@ type CaptureFormField struct {
 
 func (x *CaptureFormField) Reset() {
 	*x = CaptureFormField{}
-	mi := &file_console_v1_console_proto_msgTypes[582]
+	mi := &file_console_v1_console_proto_msgTypes[583]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -54271,7 +54493,7 @@ func (x *CaptureFormField) String() string {
 func (*CaptureFormField) ProtoMessage() {}
 
 func (x *CaptureFormField) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[582]
+	mi := &file_console_v1_console_proto_msgTypes[583]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -54284,7 +54506,7 @@ func (x *CaptureFormField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormField.ProtoReflect.Descriptor instead.
 func (*CaptureFormField) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{582}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{583}
 }
 
 func (x *CaptureFormField) GetInputId() string {
@@ -54447,7 +54669,7 @@ type CaptureFormPublicField struct {
 
 func (x *CaptureFormPublicField) Reset() {
 	*x = CaptureFormPublicField{}
-	mi := &file_console_v1_console_proto_msgTypes[583]
+	mi := &file_console_v1_console_proto_msgTypes[584]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -54459,7 +54681,7 @@ func (x *CaptureFormPublicField) String() string {
 func (*CaptureFormPublicField) ProtoMessage() {}
 
 func (x *CaptureFormPublicField) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[583]
+	mi := &file_console_v1_console_proto_msgTypes[584]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -54472,7 +54694,7 @@ func (x *CaptureFormPublicField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormPublicField.ProtoReflect.Descriptor instead.
 func (*CaptureFormPublicField) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{583}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{584}
 }
 
 func (x *CaptureFormPublicField) GetInputId() string {
@@ -54583,7 +54805,7 @@ type CaptureFormVersionInput struct {
 
 func (x *CaptureFormVersionInput) Reset() {
 	*x = CaptureFormVersionInput{}
-	mi := &file_console_v1_console_proto_msgTypes[584]
+	mi := &file_console_v1_console_proto_msgTypes[585]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -54595,7 +54817,7 @@ func (x *CaptureFormVersionInput) String() string {
 func (*CaptureFormVersionInput) ProtoMessage() {}
 
 func (x *CaptureFormVersionInput) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[584]
+	mi := &file_console_v1_console_proto_msgTypes[585]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -54608,7 +54830,7 @@ func (x *CaptureFormVersionInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormVersionInput.ProtoReflect.Descriptor instead.
 func (*CaptureFormVersionInput) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{584}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{585}
 }
 
 func (x *CaptureFormVersionInput) GetObjectTarget() *CaptureFormObjectTarget {
@@ -54651,7 +54873,7 @@ type CaptureFormVersion struct {
 
 func (x *CaptureFormVersion) Reset() {
 	*x = CaptureFormVersion{}
-	mi := &file_console_v1_console_proto_msgTypes[585]
+	mi := &file_console_v1_console_proto_msgTypes[586]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -54663,7 +54885,7 @@ func (x *CaptureFormVersion) String() string {
 func (*CaptureFormVersion) ProtoMessage() {}
 
 func (x *CaptureFormVersion) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[585]
+	mi := &file_console_v1_console_proto_msgTypes[586]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -54676,7 +54898,7 @@ func (x *CaptureFormVersion) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormVersion.ProtoReflect.Descriptor instead.
 func (*CaptureFormVersion) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{585}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{586}
 }
 
 func (x *CaptureFormVersion) GetFormId() string {
@@ -54757,7 +54979,7 @@ type CaptureFormPublicationInput struct {
 
 func (x *CaptureFormPublicationInput) Reset() {
 	*x = CaptureFormPublicationInput{}
-	mi := &file_console_v1_console_proto_msgTypes[586]
+	mi := &file_console_v1_console_proto_msgTypes[587]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -54769,7 +54991,7 @@ func (x *CaptureFormPublicationInput) String() string {
 func (*CaptureFormPublicationInput) ProtoMessage() {}
 
 func (x *CaptureFormPublicationInput) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[586]
+	mi := &file_console_v1_console_proto_msgTypes[587]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -54782,7 +55004,7 @@ func (x *CaptureFormPublicationInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormPublicationInput.ProtoReflect.Descriptor instead.
 func (*CaptureFormPublicationInput) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{586}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{587}
 }
 
 func (x *CaptureFormPublicationInput) GetSlug() string {
@@ -54843,7 +55065,7 @@ type CaptureFormPublicRoute struct {
 
 func (x *CaptureFormPublicRoute) Reset() {
 	*x = CaptureFormPublicRoute{}
-	mi := &file_console_v1_console_proto_msgTypes[587]
+	mi := &file_console_v1_console_proto_msgTypes[588]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -54855,7 +55077,7 @@ func (x *CaptureFormPublicRoute) String() string {
 func (*CaptureFormPublicRoute) ProtoMessage() {}
 
 func (x *CaptureFormPublicRoute) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[587]
+	mi := &file_console_v1_console_proto_msgTypes[588]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -54868,7 +55090,7 @@ func (x *CaptureFormPublicRoute) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormPublicRoute.ProtoReflect.Descriptor instead.
 func (*CaptureFormPublicRoute) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{587}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{588}
 }
 
 func (x *CaptureFormPublicRoute) GetHostname() string {
@@ -54935,7 +55157,7 @@ type CaptureFormPublication struct {
 
 func (x *CaptureFormPublication) Reset() {
 	*x = CaptureFormPublication{}
-	mi := &file_console_v1_console_proto_msgTypes[588]
+	mi := &file_console_v1_console_proto_msgTypes[589]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -54947,7 +55169,7 @@ func (x *CaptureFormPublication) String() string {
 func (*CaptureFormPublication) ProtoMessage() {}
 
 func (x *CaptureFormPublication) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[588]
+	mi := &file_console_v1_console_proto_msgTypes[589]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -54960,7 +55182,7 @@ func (x *CaptureFormPublication) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormPublication.ProtoReflect.Descriptor instead.
 func (*CaptureFormPublication) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{588}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{589}
 }
 
 func (x *CaptureFormPublication) GetPublicationId() string {
@@ -55061,7 +55283,7 @@ type CaptureForm struct {
 
 func (x *CaptureForm) Reset() {
 	*x = CaptureForm{}
-	mi := &file_console_v1_console_proto_msgTypes[589]
+	mi := &file_console_v1_console_proto_msgTypes[590]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -55073,7 +55295,7 @@ func (x *CaptureForm) String() string {
 func (*CaptureForm) ProtoMessage() {}
 
 func (x *CaptureForm) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[589]
+	mi := &file_console_v1_console_proto_msgTypes[590]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55086,7 +55308,7 @@ func (x *CaptureForm) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureForm.ProtoReflect.Descriptor instead.
 func (*CaptureForm) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{589}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{590}
 }
 
 func (x *CaptureForm) GetOrganizationId() string {
@@ -55198,7 +55420,7 @@ type PublishedCaptureForm struct {
 
 func (x *PublishedCaptureForm) Reset() {
 	*x = PublishedCaptureForm{}
-	mi := &file_console_v1_console_proto_msgTypes[590]
+	mi := &file_console_v1_console_proto_msgTypes[591]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -55210,7 +55432,7 @@ func (x *PublishedCaptureForm) String() string {
 func (*PublishedCaptureForm) ProtoMessage() {}
 
 func (x *PublishedCaptureForm) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[590]
+	mi := &file_console_v1_console_proto_msgTypes[591]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55223,7 +55445,7 @@ func (x *PublishedCaptureForm) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PublishedCaptureForm.ProtoReflect.Descriptor instead.
 func (*PublishedCaptureForm) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{590}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{591}
 }
 
 func (x *PublishedCaptureForm) GetPublicationId() string {
@@ -55306,7 +55528,7 @@ type CaptureFormAnswer struct {
 
 func (x *CaptureFormAnswer) Reset() {
 	*x = CaptureFormAnswer{}
-	mi := &file_console_v1_console_proto_msgTypes[591]
+	mi := &file_console_v1_console_proto_msgTypes[592]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -55318,7 +55540,7 @@ func (x *CaptureFormAnswer) String() string {
 func (*CaptureFormAnswer) ProtoMessage() {}
 
 func (x *CaptureFormAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[591]
+	mi := &file_console_v1_console_proto_msgTypes[592]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55331,7 +55553,7 @@ func (x *CaptureFormAnswer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormAnswer.ProtoReflect.Descriptor instead.
 func (*CaptureFormAnswer) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{591}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{592}
 }
 
 func (x *CaptureFormAnswer) GetInputId() string {
@@ -55365,7 +55587,7 @@ type CaptureFormReview struct {
 
 func (x *CaptureFormReview) Reset() {
 	*x = CaptureFormReview{}
-	mi := &file_console_v1_console_proto_msgTypes[592]
+	mi := &file_console_v1_console_proto_msgTypes[593]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -55377,7 +55599,7 @@ func (x *CaptureFormReview) String() string {
 func (*CaptureFormReview) ProtoMessage() {}
 
 func (x *CaptureFormReview) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[592]
+	mi := &file_console_v1_console_proto_msgTypes[593]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55390,7 +55612,7 @@ func (x *CaptureFormReview) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormReview.ProtoReflect.Descriptor instead.
 func (*CaptureFormReview) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{592}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{593}
 }
 
 func (x *CaptureFormReview) GetDecision() CaptureFormReviewDecision {
@@ -55444,7 +55666,7 @@ type CaptureFormObjectResult struct {
 
 func (x *CaptureFormObjectResult) Reset() {
 	*x = CaptureFormObjectResult{}
-	mi := &file_console_v1_console_proto_msgTypes[593]
+	mi := &file_console_v1_console_proto_msgTypes[594]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -55456,7 +55678,7 @@ func (x *CaptureFormObjectResult) String() string {
 func (*CaptureFormObjectResult) ProtoMessage() {}
 
 func (x *CaptureFormObjectResult) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[593]
+	mi := &file_console_v1_console_proto_msgTypes[594]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55469,7 +55691,7 @@ func (x *CaptureFormObjectResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormObjectResult.ProtoReflect.Descriptor instead.
 func (*CaptureFormObjectResult) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{593}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{594}
 }
 
 func (x *CaptureFormObjectResult) GetResultId() string {
@@ -55549,7 +55771,7 @@ type CaptureFormSubmission struct {
 
 func (x *CaptureFormSubmission) Reset() {
 	*x = CaptureFormSubmission{}
-	mi := &file_console_v1_console_proto_msgTypes[594]
+	mi := &file_console_v1_console_proto_msgTypes[595]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -55561,7 +55783,7 @@ func (x *CaptureFormSubmission) String() string {
 func (*CaptureFormSubmission) ProtoMessage() {}
 
 func (x *CaptureFormSubmission) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[594]
+	mi := &file_console_v1_console_proto_msgTypes[595]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55574,7 +55796,7 @@ func (x *CaptureFormSubmission) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormSubmission.ProtoReflect.Descriptor instead.
 func (*CaptureFormSubmission) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{594}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{595}
 }
 
 func (x *CaptureFormSubmission) GetOrganizationId() string {
@@ -55682,7 +55904,7 @@ type CaptureFormPublicSubmissionReceipt struct {
 
 func (x *CaptureFormPublicSubmissionReceipt) Reset() {
 	*x = CaptureFormPublicSubmissionReceipt{}
-	mi := &file_console_v1_console_proto_msgTypes[595]
+	mi := &file_console_v1_console_proto_msgTypes[596]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -55694,7 +55916,7 @@ func (x *CaptureFormPublicSubmissionReceipt) String() string {
 func (*CaptureFormPublicSubmissionReceipt) ProtoMessage() {}
 
 func (x *CaptureFormPublicSubmissionReceipt) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[595]
+	mi := &file_console_v1_console_proto_msgTypes[596]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55707,7 +55929,7 @@ func (x *CaptureFormPublicSubmissionReceipt) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use CaptureFormPublicSubmissionReceipt.ProtoReflect.Descriptor instead.
 func (*CaptureFormPublicSubmissionReceipt) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{595}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{596}
 }
 
 func (x *CaptureFormPublicSubmissionReceipt) GetSubmissionId() string {
@@ -55752,7 +55974,7 @@ type CreateCaptureFormRequest struct {
 
 func (x *CreateCaptureFormRequest) Reset() {
 	*x = CreateCaptureFormRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[596]
+	mi := &file_console_v1_console_proto_msgTypes[597]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -55764,7 +55986,7 @@ func (x *CreateCaptureFormRequest) String() string {
 func (*CreateCaptureFormRequest) ProtoMessage() {}
 
 func (x *CreateCaptureFormRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[596]
+	mi := &file_console_v1_console_proto_msgTypes[597]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55777,7 +55999,7 @@ func (x *CreateCaptureFormRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateCaptureFormRequest.ProtoReflect.Descriptor instead.
 func (*CreateCaptureFormRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{596}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{597}
 }
 
 func (x *CreateCaptureFormRequest) GetOrganizationId() string {
@@ -55832,7 +56054,7 @@ type CreateCaptureFormResponse struct {
 
 func (x *CreateCaptureFormResponse) Reset() {
 	*x = CreateCaptureFormResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[597]
+	mi := &file_console_v1_console_proto_msgTypes[598]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -55844,7 +56066,7 @@ func (x *CreateCaptureFormResponse) String() string {
 func (*CreateCaptureFormResponse) ProtoMessage() {}
 
 func (x *CreateCaptureFormResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[597]
+	mi := &file_console_v1_console_proto_msgTypes[598]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55857,7 +56079,7 @@ func (x *CreateCaptureFormResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateCaptureFormResponse.ProtoReflect.Descriptor instead.
 func (*CreateCaptureFormResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{597}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{598}
 }
 
 func (x *CreateCaptureFormResponse) GetForm() *CaptureForm {
@@ -55887,7 +56109,7 @@ type ListCaptureFormsRequest struct {
 
 func (x *ListCaptureFormsRequest) Reset() {
 	*x = ListCaptureFormsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[598]
+	mi := &file_console_v1_console_proto_msgTypes[599]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -55899,7 +56121,7 @@ func (x *ListCaptureFormsRequest) String() string {
 func (*ListCaptureFormsRequest) ProtoMessage() {}
 
 func (x *ListCaptureFormsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[598]
+	mi := &file_console_v1_console_proto_msgTypes[599]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55912,7 +56134,7 @@ func (x *ListCaptureFormsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCaptureFormsRequest.ProtoReflect.Descriptor instead.
 func (*ListCaptureFormsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{598}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{599}
 }
 
 func (x *ListCaptureFormsRequest) GetOrganizationId() string {
@@ -55960,7 +56182,7 @@ type ListCaptureFormsResponse struct {
 
 func (x *ListCaptureFormsResponse) Reset() {
 	*x = ListCaptureFormsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[599]
+	mi := &file_console_v1_console_proto_msgTypes[600]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -55972,7 +56194,7 @@ func (x *ListCaptureFormsResponse) String() string {
 func (*ListCaptureFormsResponse) ProtoMessage() {}
 
 func (x *ListCaptureFormsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[599]
+	mi := &file_console_v1_console_proto_msgTypes[600]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55985,7 +56207,7 @@ func (x *ListCaptureFormsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCaptureFormsResponse.ProtoReflect.Descriptor instead.
 func (*ListCaptureFormsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{599}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{600}
 }
 
 func (x *ListCaptureFormsResponse) GetForms() []*CaptureForm {
@@ -56014,7 +56236,7 @@ type GetCaptureFormRequest struct {
 
 func (x *GetCaptureFormRequest) Reset() {
 	*x = GetCaptureFormRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[600]
+	mi := &file_console_v1_console_proto_msgTypes[601]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56026,7 +56248,7 @@ func (x *GetCaptureFormRequest) String() string {
 func (*GetCaptureFormRequest) ProtoMessage() {}
 
 func (x *GetCaptureFormRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[600]
+	mi := &file_console_v1_console_proto_msgTypes[601]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56039,7 +56261,7 @@ func (x *GetCaptureFormRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCaptureFormRequest.ProtoReflect.Descriptor instead.
 func (*GetCaptureFormRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{600}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{601}
 }
 
 func (x *GetCaptureFormRequest) GetOrganizationId() string {
@@ -56080,7 +56302,7 @@ type GetCaptureFormResponse struct {
 
 func (x *GetCaptureFormResponse) Reset() {
 	*x = GetCaptureFormResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[601]
+	mi := &file_console_v1_console_proto_msgTypes[602]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56092,7 +56314,7 @@ func (x *GetCaptureFormResponse) String() string {
 func (*GetCaptureFormResponse) ProtoMessage() {}
 
 func (x *GetCaptureFormResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[601]
+	mi := &file_console_v1_console_proto_msgTypes[602]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56105,7 +56327,7 @@ func (x *GetCaptureFormResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCaptureFormResponse.ProtoReflect.Descriptor instead.
 func (*GetCaptureFormResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{601}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{602}
 }
 
 func (x *GetCaptureFormResponse) GetForm() *CaptureForm {
@@ -56138,7 +56360,7 @@ type UpdateCaptureFormRequest struct {
 
 func (x *UpdateCaptureFormRequest) Reset() {
 	*x = UpdateCaptureFormRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[602]
+	mi := &file_console_v1_console_proto_msgTypes[603]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56150,7 +56372,7 @@ func (x *UpdateCaptureFormRequest) String() string {
 func (*UpdateCaptureFormRequest) ProtoMessage() {}
 
 func (x *UpdateCaptureFormRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[602]
+	mi := &file_console_v1_console_proto_msgTypes[603]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56163,7 +56385,7 @@ func (x *UpdateCaptureFormRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCaptureFormRequest.ProtoReflect.Descriptor instead.
 func (*UpdateCaptureFormRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{602}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{603}
 }
 
 func (x *UpdateCaptureFormRequest) GetOrganizationId() string {
@@ -56232,7 +56454,7 @@ type UpdateCaptureFormResponse struct {
 
 func (x *UpdateCaptureFormResponse) Reset() {
 	*x = UpdateCaptureFormResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[603]
+	mi := &file_console_v1_console_proto_msgTypes[604]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56244,7 +56466,7 @@ func (x *UpdateCaptureFormResponse) String() string {
 func (*UpdateCaptureFormResponse) ProtoMessage() {}
 
 func (x *UpdateCaptureFormResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[603]
+	mi := &file_console_v1_console_proto_msgTypes[604]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56257,7 +56479,7 @@ func (x *UpdateCaptureFormResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCaptureFormResponse.ProtoReflect.Descriptor instead.
 func (*UpdateCaptureFormResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{603}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{604}
 }
 
 func (x *UpdateCaptureFormResponse) GetForm() *CaptureForm {
@@ -56288,7 +56510,7 @@ type PublishCaptureFormRequest struct {
 
 func (x *PublishCaptureFormRequest) Reset() {
 	*x = PublishCaptureFormRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[604]
+	mi := &file_console_v1_console_proto_msgTypes[605]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56300,7 +56522,7 @@ func (x *PublishCaptureFormRequest) String() string {
 func (*PublishCaptureFormRequest) ProtoMessage() {}
 
 func (x *PublishCaptureFormRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[604]
+	mi := &file_console_v1_console_proto_msgTypes[605]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56313,7 +56535,7 @@ func (x *PublishCaptureFormRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PublishCaptureFormRequest.ProtoReflect.Descriptor instead.
 func (*PublishCaptureFormRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{604}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{605}
 }
 
 func (x *PublishCaptureFormRequest) GetOrganizationId() string {
@@ -56369,7 +56591,7 @@ type PublishCaptureFormResponse struct {
 
 func (x *PublishCaptureFormResponse) Reset() {
 	*x = PublishCaptureFormResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[605]
+	mi := &file_console_v1_console_proto_msgTypes[606]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56381,7 +56603,7 @@ func (x *PublishCaptureFormResponse) String() string {
 func (*PublishCaptureFormResponse) ProtoMessage() {}
 
 func (x *PublishCaptureFormResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[605]
+	mi := &file_console_v1_console_proto_msgTypes[606]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56394,7 +56616,7 @@ func (x *PublishCaptureFormResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PublishCaptureFormResponse.ProtoReflect.Descriptor instead.
 func (*PublishCaptureFormResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{605}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{606}
 }
 
 func (x *PublishCaptureFormResponse) GetForm() *CaptureForm {
@@ -56431,7 +56653,7 @@ type RevokeCaptureFormPublicationRequest struct {
 
 func (x *RevokeCaptureFormPublicationRequest) Reset() {
 	*x = RevokeCaptureFormPublicationRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[606]
+	mi := &file_console_v1_console_proto_msgTypes[607]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56443,7 +56665,7 @@ func (x *RevokeCaptureFormPublicationRequest) String() string {
 func (*RevokeCaptureFormPublicationRequest) ProtoMessage() {}
 
 func (x *RevokeCaptureFormPublicationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[606]
+	mi := &file_console_v1_console_proto_msgTypes[607]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56456,7 +56678,7 @@ func (x *RevokeCaptureFormPublicationRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use RevokeCaptureFormPublicationRequest.ProtoReflect.Descriptor instead.
 func (*RevokeCaptureFormPublicationRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{606}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{607}
 }
 
 func (x *RevokeCaptureFormPublicationRequest) GetOrganizationId() string {
@@ -56504,7 +56726,7 @@ type RevokeCaptureFormPublicationResponse struct {
 
 func (x *RevokeCaptureFormPublicationResponse) Reset() {
 	*x = RevokeCaptureFormPublicationResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[607]
+	mi := &file_console_v1_console_proto_msgTypes[608]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56516,7 +56738,7 @@ func (x *RevokeCaptureFormPublicationResponse) String() string {
 func (*RevokeCaptureFormPublicationResponse) ProtoMessage() {}
 
 func (x *RevokeCaptureFormPublicationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[607]
+	mi := &file_console_v1_console_proto_msgTypes[608]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56529,7 +56751,7 @@ func (x *RevokeCaptureFormPublicationResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use RevokeCaptureFormPublicationResponse.ProtoReflect.Descriptor instead.
 func (*RevokeCaptureFormPublicationResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{607}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{608}
 }
 
 func (x *RevokeCaptureFormPublicationResponse) GetForm() *CaptureForm {
@@ -56557,7 +56779,7 @@ type GetPublishedCaptureFormRequest struct {
 
 func (x *GetPublishedCaptureFormRequest) Reset() {
 	*x = GetPublishedCaptureFormRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[608]
+	mi := &file_console_v1_console_proto_msgTypes[609]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56569,7 +56791,7 @@ func (x *GetPublishedCaptureFormRequest) String() string {
 func (*GetPublishedCaptureFormRequest) ProtoMessage() {}
 
 func (x *GetPublishedCaptureFormRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[608]
+	mi := &file_console_v1_console_proto_msgTypes[609]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56582,7 +56804,7 @@ func (x *GetPublishedCaptureFormRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPublishedCaptureFormRequest.ProtoReflect.Descriptor instead.
 func (*GetPublishedCaptureFormRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{608}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{609}
 }
 
 func (x *GetPublishedCaptureFormRequest) GetPublicationId() string {
@@ -56601,7 +56823,7 @@ type GetPublishedCaptureFormResponse struct {
 
 func (x *GetPublishedCaptureFormResponse) Reset() {
 	*x = GetPublishedCaptureFormResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[609]
+	mi := &file_console_v1_console_proto_msgTypes[610]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56613,7 +56835,7 @@ func (x *GetPublishedCaptureFormResponse) String() string {
 func (*GetPublishedCaptureFormResponse) ProtoMessage() {}
 
 func (x *GetPublishedCaptureFormResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[609]
+	mi := &file_console_v1_console_proto_msgTypes[610]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56626,7 +56848,7 @@ func (x *GetPublishedCaptureFormResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPublishedCaptureFormResponse.ProtoReflect.Descriptor instead.
 func (*GetPublishedCaptureFormResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{609}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{610}
 }
 
 func (x *GetPublishedCaptureFormResponse) GetForm() *PublishedCaptureForm {
@@ -56648,7 +56870,7 @@ type GetPublishedCaptureFormBrandingAssetRequest struct {
 
 func (x *GetPublishedCaptureFormBrandingAssetRequest) Reset() {
 	*x = GetPublishedCaptureFormBrandingAssetRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[610]
+	mi := &file_console_v1_console_proto_msgTypes[611]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56660,7 +56882,7 @@ func (x *GetPublishedCaptureFormBrandingAssetRequest) String() string {
 func (*GetPublishedCaptureFormBrandingAssetRequest) ProtoMessage() {}
 
 func (x *GetPublishedCaptureFormBrandingAssetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[610]
+	mi := &file_console_v1_console_proto_msgTypes[611]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56673,7 +56895,7 @@ func (x *GetPublishedCaptureFormBrandingAssetRequest) ProtoReflect() protoreflec
 
 // Deprecated: Use GetPublishedCaptureFormBrandingAssetRequest.ProtoReflect.Descriptor instead.
 func (*GetPublishedCaptureFormBrandingAssetRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{610}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{611}
 }
 
 func (x *GetPublishedCaptureFormBrandingAssetRequest) GetPublicationId() string {
@@ -56702,7 +56924,7 @@ type GetPublishedCaptureFormBrandingAssetResponse struct {
 
 func (x *GetPublishedCaptureFormBrandingAssetResponse) Reset() {
 	*x = GetPublishedCaptureFormBrandingAssetResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[611]
+	mi := &file_console_v1_console_proto_msgTypes[612]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56714,7 +56936,7 @@ func (x *GetPublishedCaptureFormBrandingAssetResponse) String() string {
 func (*GetPublishedCaptureFormBrandingAssetResponse) ProtoMessage() {}
 
 func (x *GetPublishedCaptureFormBrandingAssetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[611]
+	mi := &file_console_v1_console_proto_msgTypes[612]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56727,7 +56949,7 @@ func (x *GetPublishedCaptureFormBrandingAssetResponse) ProtoReflect() protorefle
 
 // Deprecated: Use GetPublishedCaptureFormBrandingAssetResponse.ProtoReflect.Descriptor instead.
 func (*GetPublishedCaptureFormBrandingAssetResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{611}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{612}
 }
 
 func (x *GetPublishedCaptureFormBrandingAssetResponse) GetContent() []byte {
@@ -56771,7 +56993,7 @@ type SubmitPublishedCaptureFormRequest struct {
 
 func (x *SubmitPublishedCaptureFormRequest) Reset() {
 	*x = SubmitPublishedCaptureFormRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[612]
+	mi := &file_console_v1_console_proto_msgTypes[613]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56783,7 +57005,7 @@ func (x *SubmitPublishedCaptureFormRequest) String() string {
 func (*SubmitPublishedCaptureFormRequest) ProtoMessage() {}
 
 func (x *SubmitPublishedCaptureFormRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[612]
+	mi := &file_console_v1_console_proto_msgTypes[613]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56796,7 +57018,7 @@ func (x *SubmitPublishedCaptureFormRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use SubmitPublishedCaptureFormRequest.ProtoReflect.Descriptor instead.
 func (*SubmitPublishedCaptureFormRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{612}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{613}
 }
 
 func (x *SubmitPublishedCaptureFormRequest) GetPublicationId() string {
@@ -56829,7 +57051,7 @@ type SubmitPublishedCaptureFormResponse struct {
 
 func (x *SubmitPublishedCaptureFormResponse) Reset() {
 	*x = SubmitPublishedCaptureFormResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[613]
+	mi := &file_console_v1_console_proto_msgTypes[614]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56841,7 +57063,7 @@ func (x *SubmitPublishedCaptureFormResponse) String() string {
 func (*SubmitPublishedCaptureFormResponse) ProtoMessage() {}
 
 func (x *SubmitPublishedCaptureFormResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[613]
+	mi := &file_console_v1_console_proto_msgTypes[614]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56854,7 +57076,7 @@ func (x *SubmitPublishedCaptureFormResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use SubmitPublishedCaptureFormResponse.ProtoReflect.Descriptor instead.
 func (*SubmitPublishedCaptureFormResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{613}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{614}
 }
 
 func (x *SubmitPublishedCaptureFormResponse) GetReceipt() *CaptureFormPublicSubmissionReceipt {
@@ -56879,7 +57101,7 @@ type BeginPublishedCaptureFormUploadRequest struct {
 
 func (x *BeginPublishedCaptureFormUploadRequest) Reset() {
 	*x = BeginPublishedCaptureFormUploadRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[614]
+	mi := &file_console_v1_console_proto_msgTypes[615]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56891,7 +57113,7 @@ func (x *BeginPublishedCaptureFormUploadRequest) String() string {
 func (*BeginPublishedCaptureFormUploadRequest) ProtoMessage() {}
 
 func (x *BeginPublishedCaptureFormUploadRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[614]
+	mi := &file_console_v1_console_proto_msgTypes[615]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56904,7 +57126,7 @@ func (x *BeginPublishedCaptureFormUploadRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use BeginPublishedCaptureFormUploadRequest.ProtoReflect.Descriptor instead.
 func (*BeginPublishedCaptureFormUploadRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{614}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{615}
 }
 
 func (x *BeginPublishedCaptureFormUploadRequest) GetPublicationId() string {
@@ -56969,7 +57191,7 @@ type BeginPublishedCaptureFormUploadResponse struct {
 
 func (x *BeginPublishedCaptureFormUploadResponse) Reset() {
 	*x = BeginPublishedCaptureFormUploadResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[615]
+	mi := &file_console_v1_console_proto_msgTypes[616]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56981,7 +57203,7 @@ func (x *BeginPublishedCaptureFormUploadResponse) String() string {
 func (*BeginPublishedCaptureFormUploadResponse) ProtoMessage() {}
 
 func (x *BeginPublishedCaptureFormUploadResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[615]
+	mi := &file_console_v1_console_proto_msgTypes[616]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56994,7 +57216,7 @@ func (x *BeginPublishedCaptureFormUploadResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use BeginPublishedCaptureFormUploadResponse.ProtoReflect.Descriptor instead.
 func (*BeginPublishedCaptureFormUploadResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{615}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{616}
 }
 
 func (x *BeginPublishedCaptureFormUploadResponse) GetGrant() *CaptureFormUpload {
@@ -57051,7 +57273,7 @@ type CompletePublishedCaptureFormUploadRequest struct {
 
 func (x *CompletePublishedCaptureFormUploadRequest) Reset() {
 	*x = CompletePublishedCaptureFormUploadRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[616]
+	mi := &file_console_v1_console_proto_msgTypes[617]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57063,7 +57285,7 @@ func (x *CompletePublishedCaptureFormUploadRequest) String() string {
 func (*CompletePublishedCaptureFormUploadRequest) ProtoMessage() {}
 
 func (x *CompletePublishedCaptureFormUploadRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[616]
+	mi := &file_console_v1_console_proto_msgTypes[617]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57076,7 +57298,7 @@ func (x *CompletePublishedCaptureFormUploadRequest) ProtoReflect() protoreflect.
 
 // Deprecated: Use CompletePublishedCaptureFormUploadRequest.ProtoReflect.Descriptor instead.
 func (*CompletePublishedCaptureFormUploadRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{616}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{617}
 }
 
 func (x *CompletePublishedCaptureFormUploadRequest) GetPublicationId() string {
@@ -57165,7 +57387,7 @@ type CompletePublishedCaptureFormUploadResponse struct {
 
 func (x *CompletePublishedCaptureFormUploadResponse) Reset() {
 	*x = CompletePublishedCaptureFormUploadResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[617]
+	mi := &file_console_v1_console_proto_msgTypes[618]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57177,7 +57399,7 @@ func (x *CompletePublishedCaptureFormUploadResponse) String() string {
 func (*CompletePublishedCaptureFormUploadResponse) ProtoMessage() {}
 
 func (x *CompletePublishedCaptureFormUploadResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[617]
+	mi := &file_console_v1_console_proto_msgTypes[618]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57190,7 +57412,7 @@ func (x *CompletePublishedCaptureFormUploadResponse) ProtoReflect() protoreflect
 
 // Deprecated: Use CompletePublishedCaptureFormUploadResponse.ProtoReflect.Descriptor instead.
 func (*CompletePublishedCaptureFormUploadResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{617}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{618}
 }
 
 func (x *CompletePublishedCaptureFormUploadResponse) GetUpload() *CaptureFormUpload {
@@ -57211,7 +57433,7 @@ type GetCaptureFormSubmissionRequest struct {
 
 func (x *GetCaptureFormSubmissionRequest) Reset() {
 	*x = GetCaptureFormSubmissionRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[618]
+	mi := &file_console_v1_console_proto_msgTypes[619]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57223,7 +57445,7 @@ func (x *GetCaptureFormSubmissionRequest) String() string {
 func (*GetCaptureFormSubmissionRequest) ProtoMessage() {}
 
 func (x *GetCaptureFormSubmissionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[618]
+	mi := &file_console_v1_console_proto_msgTypes[619]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57236,7 +57458,7 @@ func (x *GetCaptureFormSubmissionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCaptureFormSubmissionRequest.ProtoReflect.Descriptor instead.
 func (*GetCaptureFormSubmissionRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{618}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{619}
 }
 
 func (x *GetCaptureFormSubmissionRequest) GetOrganizationId() string {
@@ -57269,7 +57491,7 @@ type GetCaptureFormSubmissionResponse struct {
 
 func (x *GetCaptureFormSubmissionResponse) Reset() {
 	*x = GetCaptureFormSubmissionResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[619]
+	mi := &file_console_v1_console_proto_msgTypes[620]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57281,7 +57503,7 @@ func (x *GetCaptureFormSubmissionResponse) String() string {
 func (*GetCaptureFormSubmissionResponse) ProtoMessage() {}
 
 func (x *GetCaptureFormSubmissionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[619]
+	mi := &file_console_v1_console_proto_msgTypes[620]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57294,7 +57516,7 @@ func (x *GetCaptureFormSubmissionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCaptureFormSubmissionResponse.ProtoReflect.Descriptor instead.
 func (*GetCaptureFormSubmissionResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{619}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{620}
 }
 
 func (x *GetCaptureFormSubmissionResponse) GetSubmission() *CaptureFormSubmission {
@@ -57318,7 +57540,7 @@ type ListCaptureFormSubmissionsRequest struct {
 
 func (x *ListCaptureFormSubmissionsRequest) Reset() {
 	*x = ListCaptureFormSubmissionsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[620]
+	mi := &file_console_v1_console_proto_msgTypes[621]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57330,7 +57552,7 @@ func (x *ListCaptureFormSubmissionsRequest) String() string {
 func (*ListCaptureFormSubmissionsRequest) ProtoMessage() {}
 
 func (x *ListCaptureFormSubmissionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[620]
+	mi := &file_console_v1_console_proto_msgTypes[621]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57343,7 +57565,7 @@ func (x *ListCaptureFormSubmissionsRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use ListCaptureFormSubmissionsRequest.ProtoReflect.Descriptor instead.
 func (*ListCaptureFormSubmissionsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{620}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{621}
 }
 
 func (x *ListCaptureFormSubmissionsRequest) GetOrganizationId() string {
@@ -57398,7 +57620,7 @@ type ListCaptureFormSubmissionsResponse struct {
 
 func (x *ListCaptureFormSubmissionsResponse) Reset() {
 	*x = ListCaptureFormSubmissionsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[621]
+	mi := &file_console_v1_console_proto_msgTypes[622]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57410,7 +57632,7 @@ func (x *ListCaptureFormSubmissionsResponse) String() string {
 func (*ListCaptureFormSubmissionsResponse) ProtoMessage() {}
 
 func (x *ListCaptureFormSubmissionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[621]
+	mi := &file_console_v1_console_proto_msgTypes[622]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57423,7 +57645,7 @@ func (x *ListCaptureFormSubmissionsResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ListCaptureFormSubmissionsResponse.ProtoReflect.Descriptor instead.
 func (*ListCaptureFormSubmissionsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{621}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{622}
 }
 
 func (x *ListCaptureFormSubmissionsResponse) GetSubmissions() []*CaptureFormSubmission {
@@ -57459,7 +57681,7 @@ type ReviewCaptureFormSubmissionRequest struct {
 
 func (x *ReviewCaptureFormSubmissionRequest) Reset() {
 	*x = ReviewCaptureFormSubmissionRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[622]
+	mi := &file_console_v1_console_proto_msgTypes[623]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57471,7 +57693,7 @@ func (x *ReviewCaptureFormSubmissionRequest) String() string {
 func (*ReviewCaptureFormSubmissionRequest) ProtoMessage() {}
 
 func (x *ReviewCaptureFormSubmissionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[622]
+	mi := &file_console_v1_console_proto_msgTypes[623]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57484,7 +57706,7 @@ func (x *ReviewCaptureFormSubmissionRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ReviewCaptureFormSubmissionRequest.ProtoReflect.Descriptor instead.
 func (*ReviewCaptureFormSubmissionRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{622}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{623}
 }
 
 func (x *ReviewCaptureFormSubmissionRequest) GetOrganizationId() string {
@@ -57553,7 +57775,7 @@ type ReviewCaptureFormSubmissionResponse struct {
 
 func (x *ReviewCaptureFormSubmissionResponse) Reset() {
 	*x = ReviewCaptureFormSubmissionResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[623]
+	mi := &file_console_v1_console_proto_msgTypes[624]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57565,7 +57787,7 @@ func (x *ReviewCaptureFormSubmissionResponse) String() string {
 func (*ReviewCaptureFormSubmissionResponse) ProtoMessage() {}
 
 func (x *ReviewCaptureFormSubmissionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[623]
+	mi := &file_console_v1_console_proto_msgTypes[624]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57578,7 +57800,7 @@ func (x *ReviewCaptureFormSubmissionResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use ReviewCaptureFormSubmissionResponse.ProtoReflect.Descriptor instead.
 func (*ReviewCaptureFormSubmissionResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{623}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{624}
 }
 
 func (x *ReviewCaptureFormSubmissionResponse) GetSubmission() *CaptureFormSubmission {
@@ -57608,7 +57830,7 @@ type GetBusinessObjectTypeRequest struct {
 
 func (x *GetBusinessObjectTypeRequest) Reset() {
 	*x = GetBusinessObjectTypeRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[624]
+	mi := &file_console_v1_console_proto_msgTypes[625]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57620,7 +57842,7 @@ func (x *GetBusinessObjectTypeRequest) String() string {
 func (*GetBusinessObjectTypeRequest) ProtoMessage() {}
 
 func (x *GetBusinessObjectTypeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[624]
+	mi := &file_console_v1_console_proto_msgTypes[625]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57633,7 +57855,7 @@ func (x *GetBusinessObjectTypeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBusinessObjectTypeRequest.ProtoReflect.Descriptor instead.
 func (*GetBusinessObjectTypeRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{624}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{625}
 }
 
 func (x *GetBusinessObjectTypeRequest) GetOrganizationId() string {
@@ -57673,7 +57895,7 @@ type GetBusinessObjectTypeResponse struct {
 
 func (x *GetBusinessObjectTypeResponse) Reset() {
 	*x = GetBusinessObjectTypeResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[625]
+	mi := &file_console_v1_console_proto_msgTypes[626]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57685,7 +57907,7 @@ func (x *GetBusinessObjectTypeResponse) String() string {
 func (*GetBusinessObjectTypeResponse) ProtoMessage() {}
 
 func (x *GetBusinessObjectTypeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[625]
+	mi := &file_console_v1_console_proto_msgTypes[626]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57698,7 +57920,7 @@ func (x *GetBusinessObjectTypeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBusinessObjectTypeResponse.ProtoReflect.Descriptor instead.
 func (*GetBusinessObjectTypeResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{625}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{626}
 }
 
 func (x *GetBusinessObjectTypeResponse) GetDefinition() *BusinessObjectType {
@@ -57725,7 +57947,7 @@ type InferenceCreditReceipt struct {
 
 func (x *InferenceCreditReceipt) Reset() {
 	*x = InferenceCreditReceipt{}
-	mi := &file_console_v1_console_proto_msgTypes[626]
+	mi := &file_console_v1_console_proto_msgTypes[627]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57737,7 +57959,7 @@ func (x *InferenceCreditReceipt) String() string {
 func (*InferenceCreditReceipt) ProtoMessage() {}
 
 func (x *InferenceCreditReceipt) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[626]
+	mi := &file_console_v1_console_proto_msgTypes[627]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57750,7 +57972,7 @@ func (x *InferenceCreditReceipt) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceCreditReceipt.ProtoReflect.Descriptor instead.
 func (*InferenceCreditReceipt) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{626}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{627}
 }
 
 func (x *InferenceCreditReceipt) GetPaymentId() string {
@@ -57819,7 +58041,7 @@ type ListInferenceCreditReceiptsRequest struct {
 
 func (x *ListInferenceCreditReceiptsRequest) Reset() {
 	*x = ListInferenceCreditReceiptsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[627]
+	mi := &file_console_v1_console_proto_msgTypes[628]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57831,7 +58053,7 @@ func (x *ListInferenceCreditReceiptsRequest) String() string {
 func (*ListInferenceCreditReceiptsRequest) ProtoMessage() {}
 
 func (x *ListInferenceCreditReceiptsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[627]
+	mi := &file_console_v1_console_proto_msgTypes[628]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57844,7 +58066,7 @@ func (x *ListInferenceCreditReceiptsRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ListInferenceCreditReceiptsRequest.ProtoReflect.Descriptor instead.
 func (*ListInferenceCreditReceiptsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{627}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{628}
 }
 
 func (x *ListInferenceCreditReceiptsRequest) GetWorkspaceId() string {
@@ -57872,7 +58094,7 @@ type ListInferenceCreditReceiptsResponse struct {
 
 func (x *ListInferenceCreditReceiptsResponse) Reset() {
 	*x = ListInferenceCreditReceiptsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[628]
+	mi := &file_console_v1_console_proto_msgTypes[629]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57884,7 +58106,7 @@ func (x *ListInferenceCreditReceiptsResponse) String() string {
 func (*ListInferenceCreditReceiptsResponse) ProtoMessage() {}
 
 func (x *ListInferenceCreditReceiptsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[628]
+	mi := &file_console_v1_console_proto_msgTypes[629]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57897,7 +58119,7 @@ func (x *ListInferenceCreditReceiptsResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use ListInferenceCreditReceiptsResponse.ProtoReflect.Descriptor instead.
 func (*ListInferenceCreditReceiptsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{628}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{629}
 }
 
 func (x *ListInferenceCreditReceiptsResponse) GetReceipts() []*InferenceCreditReceipt {
@@ -57937,7 +58159,7 @@ type InferenceCreditAutoRefill struct {
 
 func (x *InferenceCreditAutoRefill) Reset() {
 	*x = InferenceCreditAutoRefill{}
-	mi := &file_console_v1_console_proto_msgTypes[629]
+	mi := &file_console_v1_console_proto_msgTypes[630]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57949,7 +58171,7 @@ func (x *InferenceCreditAutoRefill) String() string {
 func (*InferenceCreditAutoRefill) ProtoMessage() {}
 
 func (x *InferenceCreditAutoRefill) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[629]
+	mi := &file_console_v1_console_proto_msgTypes[630]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57962,7 +58184,7 @@ func (x *InferenceCreditAutoRefill) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceCreditAutoRefill.ProtoReflect.Descriptor instead.
 func (*InferenceCreditAutoRefill) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{629}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{630}
 }
 
 func (x *InferenceCreditAutoRefill) GetEnabled() bool {
@@ -58023,7 +58245,7 @@ type GetInferenceCreditAutoRefillRequest struct {
 
 func (x *GetInferenceCreditAutoRefillRequest) Reset() {
 	*x = GetInferenceCreditAutoRefillRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[630]
+	mi := &file_console_v1_console_proto_msgTypes[631]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58035,7 +58257,7 @@ func (x *GetInferenceCreditAutoRefillRequest) String() string {
 func (*GetInferenceCreditAutoRefillRequest) ProtoMessage() {}
 
 func (x *GetInferenceCreditAutoRefillRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[630]
+	mi := &file_console_v1_console_proto_msgTypes[631]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58048,7 +58270,7 @@ func (x *GetInferenceCreditAutoRefillRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use GetInferenceCreditAutoRefillRequest.ProtoReflect.Descriptor instead.
 func (*GetInferenceCreditAutoRefillRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{630}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{631}
 }
 
 func (x *GetInferenceCreditAutoRefillRequest) GetWorkspaceId() string {
@@ -58067,7 +58289,7 @@ type GetInferenceCreditAutoRefillResponse struct {
 
 func (x *GetInferenceCreditAutoRefillResponse) Reset() {
 	*x = GetInferenceCreditAutoRefillResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[631]
+	mi := &file_console_v1_console_proto_msgTypes[632]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58079,7 +58301,7 @@ func (x *GetInferenceCreditAutoRefillResponse) String() string {
 func (*GetInferenceCreditAutoRefillResponse) ProtoMessage() {}
 
 func (x *GetInferenceCreditAutoRefillResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[631]
+	mi := &file_console_v1_console_proto_msgTypes[632]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58092,7 +58314,7 @@ func (x *GetInferenceCreditAutoRefillResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use GetInferenceCreditAutoRefillResponse.ProtoReflect.Descriptor instead.
 func (*GetInferenceCreditAutoRefillResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{631}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{632}
 }
 
 func (x *GetInferenceCreditAutoRefillResponse) GetSettings() *InferenceCreditAutoRefill {
@@ -58119,7 +58341,7 @@ type UpdateInferenceCreditAutoRefillRequest struct {
 
 func (x *UpdateInferenceCreditAutoRefillRequest) Reset() {
 	*x = UpdateInferenceCreditAutoRefillRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[632]
+	mi := &file_console_v1_console_proto_msgTypes[633]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58131,7 +58353,7 @@ func (x *UpdateInferenceCreditAutoRefillRequest) String() string {
 func (*UpdateInferenceCreditAutoRefillRequest) ProtoMessage() {}
 
 func (x *UpdateInferenceCreditAutoRefillRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[632]
+	mi := &file_console_v1_console_proto_msgTypes[633]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58144,7 +58366,7 @@ func (x *UpdateInferenceCreditAutoRefillRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use UpdateInferenceCreditAutoRefillRequest.ProtoReflect.Descriptor instead.
 func (*UpdateInferenceCreditAutoRefillRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{632}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{633}
 }
 
 func (x *UpdateInferenceCreditAutoRefillRequest) GetWorkspaceId() string {
@@ -58213,7 +58435,7 @@ type UpdateInferenceCreditAutoRefillResponse struct {
 
 func (x *UpdateInferenceCreditAutoRefillResponse) Reset() {
 	*x = UpdateInferenceCreditAutoRefillResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[633]
+	mi := &file_console_v1_console_proto_msgTypes[634]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58225,7 +58447,7 @@ func (x *UpdateInferenceCreditAutoRefillResponse) String() string {
 func (*UpdateInferenceCreditAutoRefillResponse) ProtoMessage() {}
 
 func (x *UpdateInferenceCreditAutoRefillResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[633]
+	mi := &file_console_v1_console_proto_msgTypes[634]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58238,7 +58460,7 @@ func (x *UpdateInferenceCreditAutoRefillResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use UpdateInferenceCreditAutoRefillResponse.ProtoReflect.Descriptor instead.
 func (*UpdateInferenceCreditAutoRefillResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{633}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{634}
 }
 
 func (x *UpdateInferenceCreditAutoRefillResponse) GetSetupUrl() string {
@@ -58265,7 +58487,7 @@ type CompleteInferenceCreditAutoRefillRequest struct {
 
 func (x *CompleteInferenceCreditAutoRefillRequest) Reset() {
 	*x = CompleteInferenceCreditAutoRefillRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[634]
+	mi := &file_console_v1_console_proto_msgTypes[635]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58277,7 +58499,7 @@ func (x *CompleteInferenceCreditAutoRefillRequest) String() string {
 func (*CompleteInferenceCreditAutoRefillRequest) ProtoMessage() {}
 
 func (x *CompleteInferenceCreditAutoRefillRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[634]
+	mi := &file_console_v1_console_proto_msgTypes[635]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58290,7 +58512,7 @@ func (x *CompleteInferenceCreditAutoRefillRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use CompleteInferenceCreditAutoRefillRequest.ProtoReflect.Descriptor instead.
 func (*CompleteInferenceCreditAutoRefillRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{634}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{635}
 }
 
 func (x *CompleteInferenceCreditAutoRefillRequest) GetWorkspaceId() string {
@@ -58316,7 +58538,7 @@ type CompleteInferenceCreditAutoRefillResponse struct {
 
 func (x *CompleteInferenceCreditAutoRefillResponse) Reset() {
 	*x = CompleteInferenceCreditAutoRefillResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[635]
+	mi := &file_console_v1_console_proto_msgTypes[636]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58328,7 +58550,7 @@ func (x *CompleteInferenceCreditAutoRefillResponse) String() string {
 func (*CompleteInferenceCreditAutoRefillResponse) ProtoMessage() {}
 
 func (x *CompleteInferenceCreditAutoRefillResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[635]
+	mi := &file_console_v1_console_proto_msgTypes[636]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58341,7 +58563,7 @@ func (x *CompleteInferenceCreditAutoRefillResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use CompleteInferenceCreditAutoRefillResponse.ProtoReflect.Descriptor instead.
 func (*CompleteInferenceCreditAutoRefillResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{635}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{636}
 }
 
 func (x *CompleteInferenceCreditAutoRefillResponse) GetEnabled() bool {
@@ -58365,7 +58587,7 @@ type PrepareBusinessObjectAuthorityTransferRequest struct {
 
 func (x *PrepareBusinessObjectAuthorityTransferRequest) Reset() {
 	*x = PrepareBusinessObjectAuthorityTransferRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[636]
+	mi := &file_console_v1_console_proto_msgTypes[637]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58377,7 +58599,7 @@ func (x *PrepareBusinessObjectAuthorityTransferRequest) String() string {
 func (*PrepareBusinessObjectAuthorityTransferRequest) ProtoMessage() {}
 
 func (x *PrepareBusinessObjectAuthorityTransferRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[636]
+	mi := &file_console_v1_console_proto_msgTypes[637]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58390,7 +58612,7 @@ func (x *PrepareBusinessObjectAuthorityTransferRequest) ProtoReflect() protorefl
 
 // Deprecated: Use PrepareBusinessObjectAuthorityTransferRequest.ProtoReflect.Descriptor instead.
 func (*PrepareBusinessObjectAuthorityTransferRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{636}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{637}
 }
 
 func (x *PrepareBusinessObjectAuthorityTransferRequest) GetOrganizationId() string {
@@ -58446,7 +58668,7 @@ type PrepareBusinessObjectAuthorityTransferResponse struct {
 
 func (x *PrepareBusinessObjectAuthorityTransferResponse) Reset() {
 	*x = PrepareBusinessObjectAuthorityTransferResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[637]
+	mi := &file_console_v1_console_proto_msgTypes[638]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58458,7 +58680,7 @@ func (x *PrepareBusinessObjectAuthorityTransferResponse) String() string {
 func (*PrepareBusinessObjectAuthorityTransferResponse) ProtoMessage() {}
 
 func (x *PrepareBusinessObjectAuthorityTransferResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[637]
+	mi := &file_console_v1_console_proto_msgTypes[638]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58471,7 +58693,7 @@ func (x *PrepareBusinessObjectAuthorityTransferResponse) ProtoReflect() protoref
 
 // Deprecated: Use PrepareBusinessObjectAuthorityTransferResponse.ProtoReflect.Descriptor instead.
 func (*PrepareBusinessObjectAuthorityTransferResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{637}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{638}
 }
 
 func (x *PrepareBusinessObjectAuthorityTransferResponse) GetObject() *BusinessObject {
@@ -58511,7 +58733,7 @@ type FinalizeBusinessObjectAuthorityTransferRequest struct {
 
 func (x *FinalizeBusinessObjectAuthorityTransferRequest) Reset() {
 	*x = FinalizeBusinessObjectAuthorityTransferRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[638]
+	mi := &file_console_v1_console_proto_msgTypes[639]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58523,7 +58745,7 @@ func (x *FinalizeBusinessObjectAuthorityTransferRequest) String() string {
 func (*FinalizeBusinessObjectAuthorityTransferRequest) ProtoMessage() {}
 
 func (x *FinalizeBusinessObjectAuthorityTransferRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[638]
+	mi := &file_console_v1_console_proto_msgTypes[639]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58536,7 +58758,7 @@ func (x *FinalizeBusinessObjectAuthorityTransferRequest) ProtoReflect() protoref
 
 // Deprecated: Use FinalizeBusinessObjectAuthorityTransferRequest.ProtoReflect.Descriptor instead.
 func (*FinalizeBusinessObjectAuthorityTransferRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{638}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{639}
 }
 
 func (x *FinalizeBusinessObjectAuthorityTransferRequest) GetOrganizationId() string {
@@ -58604,7 +58826,7 @@ type FinalizeBusinessObjectAuthorityTransferResponse struct {
 
 func (x *FinalizeBusinessObjectAuthorityTransferResponse) Reset() {
 	*x = FinalizeBusinessObjectAuthorityTransferResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[639]
+	mi := &file_console_v1_console_proto_msgTypes[640]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58616,7 +58838,7 @@ func (x *FinalizeBusinessObjectAuthorityTransferResponse) String() string {
 func (*FinalizeBusinessObjectAuthorityTransferResponse) ProtoMessage() {}
 
 func (x *FinalizeBusinessObjectAuthorityTransferResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[639]
+	mi := &file_console_v1_console_proto_msgTypes[640]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58629,7 +58851,7 @@ func (x *FinalizeBusinessObjectAuthorityTransferResponse) ProtoReflect() protore
 
 // Deprecated: Use FinalizeBusinessObjectAuthorityTransferResponse.ProtoReflect.Descriptor instead.
 func (*FinalizeBusinessObjectAuthorityTransferResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{639}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{640}
 }
 
 func (x *FinalizeBusinessObjectAuthorityTransferResponse) GetObject() *BusinessObject {
@@ -58651,7 +58873,7 @@ type BusinessProcessParticipantType struct {
 
 func (x *BusinessProcessParticipantType) Reset() {
 	*x = BusinessProcessParticipantType{}
-	mi := &file_console_v1_console_proto_msgTypes[640]
+	mi := &file_console_v1_console_proto_msgTypes[641]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58663,7 +58885,7 @@ func (x *BusinessProcessParticipantType) String() string {
 func (*BusinessProcessParticipantType) ProtoMessage() {}
 
 func (x *BusinessProcessParticipantType) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[640]
+	mi := &file_console_v1_console_proto_msgTypes[641]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58676,7 +58898,7 @@ func (x *BusinessProcessParticipantType) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessProcessParticipantType.ProtoReflect.Descriptor instead.
 func (*BusinessProcessParticipantType) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{640}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{641}
 }
 
 func (x *BusinessProcessParticipantType) GetRoleId() string {
@@ -58712,7 +58934,7 @@ type BusinessProcessParticipant struct {
 
 func (x *BusinessProcessParticipant) Reset() {
 	*x = BusinessProcessParticipant{}
-	mi := &file_console_v1_console_proto_msgTypes[641]
+	mi := &file_console_v1_console_proto_msgTypes[642]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58724,7 +58946,7 @@ func (x *BusinessProcessParticipant) String() string {
 func (*BusinessProcessParticipant) ProtoMessage() {}
 
 func (x *BusinessProcessParticipant) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[641]
+	mi := &file_console_v1_console_proto_msgTypes[642]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58737,7 +58959,7 @@ func (x *BusinessProcessParticipant) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessProcessParticipant.ProtoReflect.Descriptor instead.
 func (*BusinessProcessParticipant) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{641}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{642}
 }
 
 func (x *BusinessProcessParticipant) GetRoleId() string {
@@ -58778,7 +59000,7 @@ type BusinessProcessRequirement struct {
 
 func (x *BusinessProcessRequirement) Reset() {
 	*x = BusinessProcessRequirement{}
-	mi := &file_console_v1_console_proto_msgTypes[642]
+	mi := &file_console_v1_console_proto_msgTypes[643]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58790,7 +59012,7 @@ func (x *BusinessProcessRequirement) String() string {
 func (*BusinessProcessRequirement) ProtoMessage() {}
 
 func (x *BusinessProcessRequirement) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[642]
+	mi := &file_console_v1_console_proto_msgTypes[643]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58803,7 +59025,7 @@ func (x *BusinessProcessRequirement) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessProcessRequirement.ProtoReflect.Descriptor instead.
 func (*BusinessProcessRequirement) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{642}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{643}
 }
 
 func (x *BusinessProcessRequirement) GetRequirementId() string {
@@ -58865,7 +59087,7 @@ type BusinessProcessTransition struct {
 
 func (x *BusinessProcessTransition) Reset() {
 	*x = BusinessProcessTransition{}
-	mi := &file_console_v1_console_proto_msgTypes[643]
+	mi := &file_console_v1_console_proto_msgTypes[644]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58877,7 +59099,7 @@ func (x *BusinessProcessTransition) String() string {
 func (*BusinessProcessTransition) ProtoMessage() {}
 
 func (x *BusinessProcessTransition) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[643]
+	mi := &file_console_v1_console_proto_msgTypes[644]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58890,7 +59112,7 @@ func (x *BusinessProcessTransition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessProcessTransition.ProtoReflect.Descriptor instead.
 func (*BusinessProcessTransition) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{643}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{644}
 }
 
 func (x *BusinessProcessTransition) GetTransitionId() string {
@@ -58954,7 +59176,7 @@ type BusinessProcessFollowUp struct {
 
 func (x *BusinessProcessFollowUp) Reset() {
 	*x = BusinessProcessFollowUp{}
-	mi := &file_console_v1_console_proto_msgTypes[644]
+	mi := &file_console_v1_console_proto_msgTypes[645]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58966,7 +59188,7 @@ func (x *BusinessProcessFollowUp) String() string {
 func (*BusinessProcessFollowUp) ProtoMessage() {}
 
 func (x *BusinessProcessFollowUp) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[644]
+	mi := &file_console_v1_console_proto_msgTypes[645]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58979,7 +59201,7 @@ func (x *BusinessProcessFollowUp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessProcessFollowUp.ProtoReflect.Descriptor instead.
 func (*BusinessProcessFollowUp) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{644}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{645}
 }
 
 func (x *BusinessProcessFollowUp) GetDefinitionId() string {
@@ -59022,7 +59244,7 @@ type BusinessProcessDefinition struct {
 
 func (x *BusinessProcessDefinition) Reset() {
 	*x = BusinessProcessDefinition{}
-	mi := &file_console_v1_console_proto_msgTypes[645]
+	mi := &file_console_v1_console_proto_msgTypes[646]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59034,7 +59256,7 @@ func (x *BusinessProcessDefinition) String() string {
 func (*BusinessProcessDefinition) ProtoMessage() {}
 
 func (x *BusinessProcessDefinition) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[645]
+	mi := &file_console_v1_console_proto_msgTypes[646]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59047,7 +59269,7 @@ func (x *BusinessProcessDefinition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessProcessDefinition.ProtoReflect.Descriptor instead.
 func (*BusinessProcessDefinition) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{645}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{646}
 }
 
 func (x *BusinessProcessDefinition) GetDefinitionId() string {
@@ -59145,7 +59367,7 @@ type BusinessProcessReceipt struct {
 
 func (x *BusinessProcessReceipt) Reset() {
 	*x = BusinessProcessReceipt{}
-	mi := &file_console_v1_console_proto_msgTypes[646]
+	mi := &file_console_v1_console_proto_msgTypes[647]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59157,7 +59379,7 @@ func (x *BusinessProcessReceipt) String() string {
 func (*BusinessProcessReceipt) ProtoMessage() {}
 
 func (x *BusinessProcessReceipt) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[646]
+	mi := &file_console_v1_console_proto_msgTypes[647]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59170,7 +59392,7 @@ func (x *BusinessProcessReceipt) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessProcessReceipt.ProtoReflect.Descriptor instead.
 func (*BusinessProcessReceipt) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{646}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{647}
 }
 
 func (x *BusinessProcessReceipt) GetOperationId() string {
@@ -59265,7 +59487,7 @@ type BusinessProcess struct {
 
 func (x *BusinessProcess) Reset() {
 	*x = BusinessProcess{}
-	mi := &file_console_v1_console_proto_msgTypes[647]
+	mi := &file_console_v1_console_proto_msgTypes[648]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59277,7 +59499,7 @@ func (x *BusinessProcess) String() string {
 func (*BusinessProcess) ProtoMessage() {}
 
 func (x *BusinessProcess) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[647]
+	mi := &file_console_v1_console_proto_msgTypes[648]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59290,7 +59512,7 @@ func (x *BusinessProcess) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessProcess.ProtoReflect.Descriptor instead.
 func (*BusinessProcess) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{647}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{648}
 }
 
 func (x *BusinessProcess) GetProcessId() string {
@@ -59404,7 +59626,7 @@ type DefineBusinessProcessRequest struct {
 
 func (x *DefineBusinessProcessRequest) Reset() {
 	*x = DefineBusinessProcessRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[648]
+	mi := &file_console_v1_console_proto_msgTypes[649]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59416,7 +59638,7 @@ func (x *DefineBusinessProcessRequest) String() string {
 func (*DefineBusinessProcessRequest) ProtoMessage() {}
 
 func (x *DefineBusinessProcessRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[648]
+	mi := &file_console_v1_console_proto_msgTypes[649]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59429,7 +59651,7 @@ func (x *DefineBusinessProcessRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DefineBusinessProcessRequest.ProtoReflect.Descriptor instead.
 func (*DefineBusinessProcessRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{648}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{649}
 }
 
 func (x *DefineBusinessProcessRequest) GetOrganizationId() string {
@@ -59476,7 +59698,7 @@ type DefineBusinessProcessResponse struct {
 
 func (x *DefineBusinessProcessResponse) Reset() {
 	*x = DefineBusinessProcessResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[649]
+	mi := &file_console_v1_console_proto_msgTypes[650]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59488,7 +59710,7 @@ func (x *DefineBusinessProcessResponse) String() string {
 func (*DefineBusinessProcessResponse) ProtoMessage() {}
 
 func (x *DefineBusinessProcessResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[649]
+	mi := &file_console_v1_console_proto_msgTypes[650]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59501,7 +59723,7 @@ func (x *DefineBusinessProcessResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DefineBusinessProcessResponse.ProtoReflect.Descriptor instead.
 func (*DefineBusinessProcessResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{649}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{650}
 }
 
 func (x *DefineBusinessProcessResponse) GetDefinition() *BusinessProcessDefinition {
@@ -59526,7 +59748,7 @@ type StartBusinessProcessRequest struct {
 
 func (x *StartBusinessProcessRequest) Reset() {
 	*x = StartBusinessProcessRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[650]
+	mi := &file_console_v1_console_proto_msgTypes[651]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59538,7 +59760,7 @@ func (x *StartBusinessProcessRequest) String() string {
 func (*StartBusinessProcessRequest) ProtoMessage() {}
 
 func (x *StartBusinessProcessRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[650]
+	mi := &file_console_v1_console_proto_msgTypes[651]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59551,7 +59773,7 @@ func (x *StartBusinessProcessRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StartBusinessProcessRequest.ProtoReflect.Descriptor instead.
 func (*StartBusinessProcessRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{650}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{651}
 }
 
 func (x *StartBusinessProcessRequest) GetOrganizationId() string {
@@ -59612,7 +59834,7 @@ type StartBusinessProcessResponse struct {
 
 func (x *StartBusinessProcessResponse) Reset() {
 	*x = StartBusinessProcessResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[651]
+	mi := &file_console_v1_console_proto_msgTypes[652]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59624,7 +59846,7 @@ func (x *StartBusinessProcessResponse) String() string {
 func (*StartBusinessProcessResponse) ProtoMessage() {}
 
 func (x *StartBusinessProcessResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[651]
+	mi := &file_console_v1_console_proto_msgTypes[652]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59637,7 +59859,7 @@ func (x *StartBusinessProcessResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StartBusinessProcessResponse.ProtoReflect.Descriptor instead.
 func (*StartBusinessProcessResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{651}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{652}
 }
 
 func (x *StartBusinessProcessResponse) GetProcess() *BusinessProcess {
@@ -59658,7 +59880,7 @@ type GetBusinessProcessRequest struct {
 
 func (x *GetBusinessProcessRequest) Reset() {
 	*x = GetBusinessProcessRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[652]
+	mi := &file_console_v1_console_proto_msgTypes[653]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59670,7 +59892,7 @@ func (x *GetBusinessProcessRequest) String() string {
 func (*GetBusinessProcessRequest) ProtoMessage() {}
 
 func (x *GetBusinessProcessRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[652]
+	mi := &file_console_v1_console_proto_msgTypes[653]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59683,7 +59905,7 @@ func (x *GetBusinessProcessRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBusinessProcessRequest.ProtoReflect.Descriptor instead.
 func (*GetBusinessProcessRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{652}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{653}
 }
 
 func (x *GetBusinessProcessRequest) GetOrganizationId() string {
@@ -59717,7 +59939,7 @@ type GetBusinessProcessResponse struct {
 
 func (x *GetBusinessProcessResponse) Reset() {
 	*x = GetBusinessProcessResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[653]
+	mi := &file_console_v1_console_proto_msgTypes[654]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59729,7 +59951,7 @@ func (x *GetBusinessProcessResponse) String() string {
 func (*GetBusinessProcessResponse) ProtoMessage() {}
 
 func (x *GetBusinessProcessResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[653]
+	mi := &file_console_v1_console_proto_msgTypes[654]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59742,7 +59964,7 @@ func (x *GetBusinessProcessResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBusinessProcessResponse.ProtoReflect.Descriptor instead.
 func (*GetBusinessProcessResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{653}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{654}
 }
 
 func (x *GetBusinessProcessResponse) GetProcess() *BusinessProcess {
@@ -59772,7 +59994,7 @@ type ListBusinessProcessesRequest struct {
 
 func (x *ListBusinessProcessesRequest) Reset() {
 	*x = ListBusinessProcessesRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[654]
+	mi := &file_console_v1_console_proto_msgTypes[655]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59784,7 +60006,7 @@ func (x *ListBusinessProcessesRequest) String() string {
 func (*ListBusinessProcessesRequest) ProtoMessage() {}
 
 func (x *ListBusinessProcessesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[654]
+	mi := &file_console_v1_console_proto_msgTypes[655]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59797,7 +60019,7 @@ func (x *ListBusinessProcessesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBusinessProcessesRequest.ProtoReflect.Descriptor instead.
 func (*ListBusinessProcessesRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{654}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{655}
 }
 
 func (x *ListBusinessProcessesRequest) GetOrganizationId() string {
@@ -59846,7 +60068,7 @@ type ListBusinessProcessesResponse struct {
 
 func (x *ListBusinessProcessesResponse) Reset() {
 	*x = ListBusinessProcessesResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[655]
+	mi := &file_console_v1_console_proto_msgTypes[656]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59858,7 +60080,7 @@ func (x *ListBusinessProcessesResponse) String() string {
 func (*ListBusinessProcessesResponse) ProtoMessage() {}
 
 func (x *ListBusinessProcessesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[655]
+	mi := &file_console_v1_console_proto_msgTypes[656]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59871,7 +60093,7 @@ func (x *ListBusinessProcessesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBusinessProcessesResponse.ProtoReflect.Descriptor instead.
 func (*ListBusinessProcessesResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{655}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{656}
 }
 
 func (x *ListBusinessProcessesResponse) GetProcesses() []*BusinessProcess {
@@ -59905,7 +60127,7 @@ type TransitionBusinessProcessRequest struct {
 
 func (x *TransitionBusinessProcessRequest) Reset() {
 	*x = TransitionBusinessProcessRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[656]
+	mi := &file_console_v1_console_proto_msgTypes[657]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -59917,7 +60139,7 @@ func (x *TransitionBusinessProcessRequest) String() string {
 func (*TransitionBusinessProcessRequest) ProtoMessage() {}
 
 func (x *TransitionBusinessProcessRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[656]
+	mi := &file_console_v1_console_proto_msgTypes[657]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59930,7 +60152,7 @@ func (x *TransitionBusinessProcessRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TransitionBusinessProcessRequest.ProtoReflect.Descriptor instead.
 func (*TransitionBusinessProcessRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{656}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{657}
 }
 
 func (x *TransitionBusinessProcessRequest) GetOrganizationId() string {
@@ -60000,7 +60222,7 @@ type TransitionBusinessProcessResponse struct {
 
 func (x *TransitionBusinessProcessResponse) Reset() {
 	*x = TransitionBusinessProcessResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[657]
+	mi := &file_console_v1_console_proto_msgTypes[658]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60012,7 +60234,7 @@ func (x *TransitionBusinessProcessResponse) String() string {
 func (*TransitionBusinessProcessResponse) ProtoMessage() {}
 
 func (x *TransitionBusinessProcessResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[657]
+	mi := &file_console_v1_console_proto_msgTypes[658]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60025,7 +60247,7 @@ func (x *TransitionBusinessProcessResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use TransitionBusinessProcessResponse.ProtoReflect.Descriptor instead.
 func (*TransitionBusinessProcessResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{657}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{658}
 }
 
 func (x *TransitionBusinessProcessResponse) GetProcess() *BusinessProcess {
@@ -60062,7 +60284,7 @@ type GetBusinessProcessDefinitionRequest struct {
 
 func (x *GetBusinessProcessDefinitionRequest) Reset() {
 	*x = GetBusinessProcessDefinitionRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[658]
+	mi := &file_console_v1_console_proto_msgTypes[659]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60074,7 +60296,7 @@ func (x *GetBusinessProcessDefinitionRequest) String() string {
 func (*GetBusinessProcessDefinitionRequest) ProtoMessage() {}
 
 func (x *GetBusinessProcessDefinitionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[658]
+	mi := &file_console_v1_console_proto_msgTypes[659]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60087,7 +60309,7 @@ func (x *GetBusinessProcessDefinitionRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use GetBusinessProcessDefinitionRequest.ProtoReflect.Descriptor instead.
 func (*GetBusinessProcessDefinitionRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{658}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{659}
 }
 
 func (x *GetBusinessProcessDefinitionRequest) GetOrganizationId() string {
@@ -60127,7 +60349,7 @@ type GetBusinessProcessDefinitionResponse struct {
 
 func (x *GetBusinessProcessDefinitionResponse) Reset() {
 	*x = GetBusinessProcessDefinitionResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[659]
+	mi := &file_console_v1_console_proto_msgTypes[660]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60139,7 +60361,7 @@ func (x *GetBusinessProcessDefinitionResponse) String() string {
 func (*GetBusinessProcessDefinitionResponse) ProtoMessage() {}
 
 func (x *GetBusinessProcessDefinitionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[659]
+	mi := &file_console_v1_console_proto_msgTypes[660]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60152,7 +60374,7 @@ func (x *GetBusinessProcessDefinitionResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use GetBusinessProcessDefinitionResponse.ProtoReflect.Descriptor instead.
 func (*GetBusinessProcessDefinitionResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{659}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{660}
 }
 
 func (x *GetBusinessProcessDefinitionResponse) GetDefinition() *BusinessProcessDefinition {
@@ -60175,7 +60397,7 @@ type ListBusinessProcessDefinitionsRequest struct {
 
 func (x *ListBusinessProcessDefinitionsRequest) Reset() {
 	*x = ListBusinessProcessDefinitionsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[660]
+	mi := &file_console_v1_console_proto_msgTypes[661]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60187,7 +60409,7 @@ func (x *ListBusinessProcessDefinitionsRequest) String() string {
 func (*ListBusinessProcessDefinitionsRequest) ProtoMessage() {}
 
 func (x *ListBusinessProcessDefinitionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[660]
+	mi := &file_console_v1_console_proto_msgTypes[661]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60200,7 +60422,7 @@ func (x *ListBusinessProcessDefinitionsRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use ListBusinessProcessDefinitionsRequest.ProtoReflect.Descriptor instead.
 func (*ListBusinessProcessDefinitionsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{660}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{661}
 }
 
 func (x *ListBusinessProcessDefinitionsRequest) GetOrganizationId() string {
@@ -60241,7 +60463,7 @@ type ListBusinessProcessDefinitionsResponse struct {
 
 func (x *ListBusinessProcessDefinitionsResponse) Reset() {
 	*x = ListBusinessProcessDefinitionsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[661]
+	mi := &file_console_v1_console_proto_msgTypes[662]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60253,7 +60475,7 @@ func (x *ListBusinessProcessDefinitionsResponse) String() string {
 func (*ListBusinessProcessDefinitionsResponse) ProtoMessage() {}
 
 func (x *ListBusinessProcessDefinitionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[661]
+	mi := &file_console_v1_console_proto_msgTypes[662]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60266,7 +60488,7 @@ func (x *ListBusinessProcessDefinitionsResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use ListBusinessProcessDefinitionsResponse.ProtoReflect.Descriptor instead.
 func (*ListBusinessProcessDefinitionsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{661}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{662}
 }
 
 func (x *ListBusinessProcessDefinitionsResponse) GetDefinitions() []*BusinessProcessDefinition {
@@ -60293,7 +60515,7 @@ type OperatingProjectSnapshotFileInput struct {
 
 func (x *OperatingProjectSnapshotFileInput) Reset() {
 	*x = OperatingProjectSnapshotFileInput{}
-	mi := &file_console_v1_console_proto_msgTypes[662]
+	mi := &file_console_v1_console_proto_msgTypes[663]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60305,7 +60527,7 @@ func (x *OperatingProjectSnapshotFileInput) String() string {
 func (*OperatingProjectSnapshotFileInput) ProtoMessage() {}
 
 func (x *OperatingProjectSnapshotFileInput) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[662]
+	mi := &file_console_v1_console_proto_msgTypes[663]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60318,7 +60540,7 @@ func (x *OperatingProjectSnapshotFileInput) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use OperatingProjectSnapshotFileInput.ProtoReflect.Descriptor instead.
 func (*OperatingProjectSnapshotFileInput) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{662}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{663}
 }
 
 func (x *OperatingProjectSnapshotFileInput) GetPath() string {
@@ -60351,7 +60573,7 @@ type AcceptOperatingProjectSnapshotRequest struct {
 
 func (x *AcceptOperatingProjectSnapshotRequest) Reset() {
 	*x = AcceptOperatingProjectSnapshotRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[663]
+	mi := &file_console_v1_console_proto_msgTypes[664]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60363,7 +60585,7 @@ func (x *AcceptOperatingProjectSnapshotRequest) String() string {
 func (*AcceptOperatingProjectSnapshotRequest) ProtoMessage() {}
 
 func (x *AcceptOperatingProjectSnapshotRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[663]
+	mi := &file_console_v1_console_proto_msgTypes[664]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60376,7 +60598,7 @@ func (x *AcceptOperatingProjectSnapshotRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use AcceptOperatingProjectSnapshotRequest.ProtoReflect.Descriptor instead.
 func (*AcceptOperatingProjectSnapshotRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{663}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{664}
 }
 
 func (x *AcceptOperatingProjectSnapshotRequest) GetQuery() *ConsoleQuery {
@@ -60434,7 +60656,7 @@ type AcceptOperatingProjectSnapshotResponse struct {
 
 func (x *AcceptOperatingProjectSnapshotResponse) Reset() {
 	*x = AcceptOperatingProjectSnapshotResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[664]
+	mi := &file_console_v1_console_proto_msgTypes[665]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60446,7 +60668,7 @@ func (x *AcceptOperatingProjectSnapshotResponse) String() string {
 func (*AcceptOperatingProjectSnapshotResponse) ProtoMessage() {}
 
 func (x *AcceptOperatingProjectSnapshotResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[664]
+	mi := &file_console_v1_console_proto_msgTypes[665]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60459,7 +60681,7 @@ func (x *AcceptOperatingProjectSnapshotResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use AcceptOperatingProjectSnapshotResponse.ProtoReflect.Descriptor instead.
 func (*AcceptOperatingProjectSnapshotResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{664}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{665}
 }
 
 func (x *AcceptOperatingProjectSnapshotResponse) GetProjectSource() *v11.ToolExecutionProjectSource {
@@ -60508,7 +60730,7 @@ type GetOperatingProjectSnapshotRequest struct {
 
 func (x *GetOperatingProjectSnapshotRequest) Reset() {
 	*x = GetOperatingProjectSnapshotRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[665]
+	mi := &file_console_v1_console_proto_msgTypes[666]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60520,7 +60742,7 @@ func (x *GetOperatingProjectSnapshotRequest) String() string {
 func (*GetOperatingProjectSnapshotRequest) ProtoMessage() {}
 
 func (x *GetOperatingProjectSnapshotRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[665]
+	mi := &file_console_v1_console_proto_msgTypes[666]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60533,7 +60755,7 @@ func (x *GetOperatingProjectSnapshotRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use GetOperatingProjectSnapshotRequest.ProtoReflect.Descriptor instead.
 func (*GetOperatingProjectSnapshotRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{665}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{666}
 }
 
 func (x *GetOperatingProjectSnapshotRequest) GetQuery() *ConsoleQuery {
@@ -60568,7 +60790,7 @@ type GetOperatingTaskEnvironmentRequest struct {
 
 func (x *GetOperatingTaskEnvironmentRequest) Reset() {
 	*x = GetOperatingTaskEnvironmentRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[666]
+	mi := &file_console_v1_console_proto_msgTypes[667]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60580,7 +60802,7 @@ func (x *GetOperatingTaskEnvironmentRequest) String() string {
 func (*GetOperatingTaskEnvironmentRequest) ProtoMessage() {}
 
 func (x *GetOperatingTaskEnvironmentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[666]
+	mi := &file_console_v1_console_proto_msgTypes[667]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60593,7 +60815,7 @@ func (x *GetOperatingTaskEnvironmentRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use GetOperatingTaskEnvironmentRequest.ProtoReflect.Descriptor instead.
 func (*GetOperatingTaskEnvironmentRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{666}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{667}
 }
 
 func (x *GetOperatingTaskEnvironmentRequest) GetQuery() *ConsoleQuery {
@@ -60636,7 +60858,7 @@ type GetOperatingTaskEnvironmentResponse struct {
 
 func (x *GetOperatingTaskEnvironmentResponse) Reset() {
 	*x = GetOperatingTaskEnvironmentResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[667]
+	mi := &file_console_v1_console_proto_msgTypes[668]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60648,7 +60870,7 @@ func (x *GetOperatingTaskEnvironmentResponse) String() string {
 func (*GetOperatingTaskEnvironmentResponse) ProtoMessage() {}
 
 func (x *GetOperatingTaskEnvironmentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[667]
+	mi := &file_console_v1_console_proto_msgTypes[668]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60661,7 +60883,7 @@ func (x *GetOperatingTaskEnvironmentResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use GetOperatingTaskEnvironmentResponse.ProtoReflect.Descriptor instead.
 func (*GetOperatingTaskEnvironmentResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{667}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{668}
 }
 
 func (x *GetOperatingTaskEnvironmentResponse) GetAvailable() bool {
@@ -60740,7 +60962,7 @@ type ImportOperatingProjectSnapshotRequest struct {
 
 func (x *ImportOperatingProjectSnapshotRequest) Reset() {
 	*x = ImportOperatingProjectSnapshotRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[668]
+	mi := &file_console_v1_console_proto_msgTypes[669]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60752,7 +60974,7 @@ func (x *ImportOperatingProjectSnapshotRequest) String() string {
 func (*ImportOperatingProjectSnapshotRequest) ProtoMessage() {}
 
 func (x *ImportOperatingProjectSnapshotRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[668]
+	mi := &file_console_v1_console_proto_msgTypes[669]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60765,7 +60987,7 @@ func (x *ImportOperatingProjectSnapshotRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use ImportOperatingProjectSnapshotRequest.ProtoReflect.Descriptor instead.
 func (*ImportOperatingProjectSnapshotRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{668}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{669}
 }
 
 func (x *ImportOperatingProjectSnapshotRequest) GetQuery() *ConsoleQuery {
@@ -60819,7 +61041,7 @@ type BusinessBlueprint struct {
 
 func (x *BusinessBlueprint) Reset() {
 	*x = BusinessBlueprint{}
-	mi := &file_console_v1_console_proto_msgTypes[669]
+	mi := &file_console_v1_console_proto_msgTypes[670]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60831,7 +61053,7 @@ func (x *BusinessBlueprint) String() string {
 func (*BusinessBlueprint) ProtoMessage() {}
 
 func (x *BusinessBlueprint) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[669]
+	mi := &file_console_v1_console_proto_msgTypes[670]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60844,7 +61066,7 @@ func (x *BusinessBlueprint) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessBlueprint.ProtoReflect.Descriptor instead.
 func (*BusinessBlueprint) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{669}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{670}
 }
 
 func (x *BusinessBlueprint) GetBlueprintId() string {
@@ -60927,7 +61149,7 @@ type ListBusinessBlueprintsRequest struct {
 
 func (x *ListBusinessBlueprintsRequest) Reset() {
 	*x = ListBusinessBlueprintsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[670]
+	mi := &file_console_v1_console_proto_msgTypes[671]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60939,7 +61161,7 @@ func (x *ListBusinessBlueprintsRequest) String() string {
 func (*ListBusinessBlueprintsRequest) ProtoMessage() {}
 
 func (x *ListBusinessBlueprintsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[670]
+	mi := &file_console_v1_console_proto_msgTypes[671]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60952,7 +61174,7 @@ func (x *ListBusinessBlueprintsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBusinessBlueprintsRequest.ProtoReflect.Descriptor instead.
 func (*ListBusinessBlueprintsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{670}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{671}
 }
 
 func (x *ListBusinessBlueprintsRequest) GetOrganizationId() string {
@@ -60978,7 +61200,7 @@ type ListBusinessBlueprintsResponse struct {
 
 func (x *ListBusinessBlueprintsResponse) Reset() {
 	*x = ListBusinessBlueprintsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[671]
+	mi := &file_console_v1_console_proto_msgTypes[672]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60990,7 +61212,7 @@ func (x *ListBusinessBlueprintsResponse) String() string {
 func (*ListBusinessBlueprintsResponse) ProtoMessage() {}
 
 func (x *ListBusinessBlueprintsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[671]
+	mi := &file_console_v1_console_proto_msgTypes[672]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61003,7 +61225,7 @@ func (x *ListBusinessBlueprintsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBusinessBlueprintsResponse.ProtoReflect.Descriptor instead.
 func (*ListBusinessBlueprintsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{671}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{672}
 }
 
 func (x *ListBusinessBlueprintsResponse) GetBlueprints() []*BusinessBlueprint {
@@ -61028,7 +61250,7 @@ type CloneBusinessBlueprintRequest struct {
 
 func (x *CloneBusinessBlueprintRequest) Reset() {
 	*x = CloneBusinessBlueprintRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[672]
+	mi := &file_console_v1_console_proto_msgTypes[673]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61040,7 +61262,7 @@ func (x *CloneBusinessBlueprintRequest) String() string {
 func (*CloneBusinessBlueprintRequest) ProtoMessage() {}
 
 func (x *CloneBusinessBlueprintRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[672]
+	mi := &file_console_v1_console_proto_msgTypes[673]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61053,7 +61275,7 @@ func (x *CloneBusinessBlueprintRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CloneBusinessBlueprintRequest.ProtoReflect.Descriptor instead.
 func (*CloneBusinessBlueprintRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{672}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{673}
 }
 
 func (x *CloneBusinessBlueprintRequest) GetOrganizationId() string {
@@ -61124,7 +61346,7 @@ type CloneBusinessBlueprintResponse struct {
 
 func (x *CloneBusinessBlueprintResponse) Reset() {
 	*x = CloneBusinessBlueprintResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[673]
+	mi := &file_console_v1_console_proto_msgTypes[674]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61136,7 +61358,7 @@ func (x *CloneBusinessBlueprintResponse) String() string {
 func (*CloneBusinessBlueprintResponse) ProtoMessage() {}
 
 func (x *CloneBusinessBlueprintResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[673]
+	mi := &file_console_v1_console_proto_msgTypes[674]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61149,7 +61371,7 @@ func (x *CloneBusinessBlueprintResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CloneBusinessBlueprintResponse.ProtoReflect.Descriptor instead.
 func (*CloneBusinessBlueprintResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{673}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{674}
 }
 
 func (x *CloneBusinessBlueprintResponse) GetBlueprintId() string {
@@ -61221,7 +61443,7 @@ type BusinessBlueprintSource struct {
 
 func (x *BusinessBlueprintSource) Reset() {
 	*x = BusinessBlueprintSource{}
-	mi := &file_console_v1_console_proto_msgTypes[674]
+	mi := &file_console_v1_console_proto_msgTypes[675]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61233,7 +61455,7 @@ func (x *BusinessBlueprintSource) String() string {
 func (*BusinessBlueprintSource) ProtoMessage() {}
 
 func (x *BusinessBlueprintSource) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[674]
+	mi := &file_console_v1_console_proto_msgTypes[675]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61246,7 +61468,7 @@ func (x *BusinessBlueprintSource) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BusinessBlueprintSource.ProtoReflect.Descriptor instead.
 func (*BusinessBlueprintSource) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{674}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{675}
 }
 
 func (x *BusinessBlueprintSource) GetBlueprintId() string {
@@ -61292,7 +61514,7 @@ type CaptureFormInvitation struct {
 
 func (x *CaptureFormInvitation) Reset() {
 	*x = CaptureFormInvitation{}
-	mi := &file_console_v1_console_proto_msgTypes[675]
+	mi := &file_console_v1_console_proto_msgTypes[676]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61304,7 +61526,7 @@ func (x *CaptureFormInvitation) String() string {
 func (*CaptureFormInvitation) ProtoMessage() {}
 
 func (x *CaptureFormInvitation) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[675]
+	mi := &file_console_v1_console_proto_msgTypes[676]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61317,7 +61539,7 @@ func (x *CaptureFormInvitation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CaptureFormInvitation.ProtoReflect.Descriptor instead.
 func (*CaptureFormInvitation) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{675}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{676}
 }
 
 func (x *CaptureFormInvitation) GetInvitationId() string {
@@ -61370,7 +61592,7 @@ type CreateCaptureFormInvitationRequest struct {
 
 func (x *CreateCaptureFormInvitationRequest) Reset() {
 	*x = CreateCaptureFormInvitationRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[676]
+	mi := &file_console_v1_console_proto_msgTypes[677]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61382,7 +61604,7 @@ func (x *CreateCaptureFormInvitationRequest) String() string {
 func (*CreateCaptureFormInvitationRequest) ProtoMessage() {}
 
 func (x *CreateCaptureFormInvitationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[676]
+	mi := &file_console_v1_console_proto_msgTypes[677]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61395,7 +61617,7 @@ func (x *CreateCaptureFormInvitationRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use CreateCaptureFormInvitationRequest.ProtoReflect.Descriptor instead.
 func (*CreateCaptureFormInvitationRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{676}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{677}
 }
 
 func (x *CreateCaptureFormInvitationRequest) GetOrganizationId() string {
@@ -61456,7 +61678,7 @@ type CreateCaptureFormInvitationResponse struct {
 
 func (x *CreateCaptureFormInvitationResponse) Reset() {
 	*x = CreateCaptureFormInvitationResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[677]
+	mi := &file_console_v1_console_proto_msgTypes[678]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61468,7 +61690,7 @@ func (x *CreateCaptureFormInvitationResponse) String() string {
 func (*CreateCaptureFormInvitationResponse) ProtoMessage() {}
 
 func (x *CreateCaptureFormInvitationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[677]
+	mi := &file_console_v1_console_proto_msgTypes[678]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61481,7 +61703,7 @@ func (x *CreateCaptureFormInvitationResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use CreateCaptureFormInvitationResponse.ProtoReflect.Descriptor instead.
 func (*CreateCaptureFormInvitationResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{677}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{678}
 }
 
 func (x *CreateCaptureFormInvitationResponse) GetInvitation() *CaptureFormInvitation {
@@ -61503,7 +61725,7 @@ type RevokeCaptureFormInvitationRequest struct {
 
 func (x *RevokeCaptureFormInvitationRequest) Reset() {
 	*x = RevokeCaptureFormInvitationRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[678]
+	mi := &file_console_v1_console_proto_msgTypes[679]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61515,7 +61737,7 @@ func (x *RevokeCaptureFormInvitationRequest) String() string {
 func (*RevokeCaptureFormInvitationRequest) ProtoMessage() {}
 
 func (x *RevokeCaptureFormInvitationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[678]
+	mi := &file_console_v1_console_proto_msgTypes[679]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61528,7 +61750,7 @@ func (x *RevokeCaptureFormInvitationRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use RevokeCaptureFormInvitationRequest.ProtoReflect.Descriptor instead.
 func (*RevokeCaptureFormInvitationRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{678}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{679}
 }
 
 func (x *RevokeCaptureFormInvitationRequest) GetOrganizationId() string {
@@ -61568,7 +61790,7 @@ type RevokeCaptureFormInvitationResponse struct {
 
 func (x *RevokeCaptureFormInvitationResponse) Reset() {
 	*x = RevokeCaptureFormInvitationResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[679]
+	mi := &file_console_v1_console_proto_msgTypes[680]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61580,7 +61802,7 @@ func (x *RevokeCaptureFormInvitationResponse) String() string {
 func (*RevokeCaptureFormInvitationResponse) ProtoMessage() {}
 
 func (x *RevokeCaptureFormInvitationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[679]
+	mi := &file_console_v1_console_proto_msgTypes[680]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61593,7 +61815,7 @@ func (x *RevokeCaptureFormInvitationResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use RevokeCaptureFormInvitationResponse.ProtoReflect.Descriptor instead.
 func (*RevokeCaptureFormInvitationResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{679}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{680}
 }
 
 func (x *RevokeCaptureFormInvitationResponse) GetInvitation() *CaptureFormInvitation {
@@ -61612,7 +61834,7 @@ type GetInvitedCaptureFormRequest struct {
 
 func (x *GetInvitedCaptureFormRequest) Reset() {
 	*x = GetInvitedCaptureFormRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[680]
+	mi := &file_console_v1_console_proto_msgTypes[681]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61624,7 +61846,7 @@ func (x *GetInvitedCaptureFormRequest) String() string {
 func (*GetInvitedCaptureFormRequest) ProtoMessage() {}
 
 func (x *GetInvitedCaptureFormRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[680]
+	mi := &file_console_v1_console_proto_msgTypes[681]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61637,7 +61859,7 @@ func (x *GetInvitedCaptureFormRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetInvitedCaptureFormRequest.ProtoReflect.Descriptor instead.
 func (*GetInvitedCaptureFormRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{680}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{681}
 }
 
 func (x *GetInvitedCaptureFormRequest) GetInvitationId() string {
@@ -61658,7 +61880,7 @@ type GetInvitedCaptureFormResponse struct {
 
 func (x *GetInvitedCaptureFormResponse) Reset() {
 	*x = GetInvitedCaptureFormResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[681]
+	mi := &file_console_v1_console_proto_msgTypes[682]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61670,7 +61892,7 @@ func (x *GetInvitedCaptureFormResponse) String() string {
 func (*GetInvitedCaptureFormResponse) ProtoMessage() {}
 
 func (x *GetInvitedCaptureFormResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[681]
+	mi := &file_console_v1_console_proto_msgTypes[682]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61683,7 +61905,7 @@ func (x *GetInvitedCaptureFormResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetInvitedCaptureFormResponse.ProtoReflect.Descriptor instead.
 func (*GetInvitedCaptureFormResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{681}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{682}
 }
 
 func (x *GetInvitedCaptureFormResponse) GetForm() *PublishedCaptureForm {
@@ -61711,7 +61933,7 @@ type SubmitInvitedCaptureFormRequest struct {
 
 func (x *SubmitInvitedCaptureFormRequest) Reset() {
 	*x = SubmitInvitedCaptureFormRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[682]
+	mi := &file_console_v1_console_proto_msgTypes[683]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61723,7 +61945,7 @@ func (x *SubmitInvitedCaptureFormRequest) String() string {
 func (*SubmitInvitedCaptureFormRequest) ProtoMessage() {}
 
 func (x *SubmitInvitedCaptureFormRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[682]
+	mi := &file_console_v1_console_proto_msgTypes[683]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61736,7 +61958,7 @@ func (x *SubmitInvitedCaptureFormRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitInvitedCaptureFormRequest.ProtoReflect.Descriptor instead.
 func (*SubmitInvitedCaptureFormRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{682}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{683}
 }
 
 func (x *SubmitInvitedCaptureFormRequest) GetInvitationId() string {
@@ -61769,7 +61991,7 @@ type SubmitInvitedCaptureFormResponse struct {
 
 func (x *SubmitInvitedCaptureFormResponse) Reset() {
 	*x = SubmitInvitedCaptureFormResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[683]
+	mi := &file_console_v1_console_proto_msgTypes[684]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61781,7 +62003,7 @@ func (x *SubmitInvitedCaptureFormResponse) String() string {
 func (*SubmitInvitedCaptureFormResponse) ProtoMessage() {}
 
 func (x *SubmitInvitedCaptureFormResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[683]
+	mi := &file_console_v1_console_proto_msgTypes[684]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61794,7 +62016,7 @@ func (x *SubmitInvitedCaptureFormResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitInvitedCaptureFormResponse.ProtoReflect.Descriptor instead.
 func (*SubmitInvitedCaptureFormResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{683}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{684}
 }
 
 func (x *SubmitInvitedCaptureFormResponse) GetReceipt() *CaptureFormPublicSubmissionReceipt {
@@ -61819,7 +62041,7 @@ type GetStaffManagedInferenceReadinessRequest struct {
 
 func (x *GetStaffManagedInferenceReadinessRequest) Reset() {
 	*x = GetStaffManagedInferenceReadinessRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[684]
+	mi := &file_console_v1_console_proto_msgTypes[685]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61831,7 +62053,7 @@ func (x *GetStaffManagedInferenceReadinessRequest) String() string {
 func (*GetStaffManagedInferenceReadinessRequest) ProtoMessage() {}
 
 func (x *GetStaffManagedInferenceReadinessRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[684]
+	mi := &file_console_v1_console_proto_msgTypes[685]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61844,7 +62066,7 @@ func (x *GetStaffManagedInferenceReadinessRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use GetStaffManagedInferenceReadinessRequest.ProtoReflect.Descriptor instead.
 func (*GetStaffManagedInferenceReadinessRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{684}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{685}
 }
 
 func (x *GetStaffManagedInferenceReadinessRequest) GetOrganizationId() string {
@@ -61897,7 +62119,7 @@ type GetManagedInferenceReadinessRequest struct {
 
 func (x *GetManagedInferenceReadinessRequest) Reset() {
 	*x = GetManagedInferenceReadinessRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[685]
+	mi := &file_console_v1_console_proto_msgTypes[686]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61909,7 +62131,7 @@ func (x *GetManagedInferenceReadinessRequest) String() string {
 func (*GetManagedInferenceReadinessRequest) ProtoMessage() {}
 
 func (x *GetManagedInferenceReadinessRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[685]
+	mi := &file_console_v1_console_proto_msgTypes[686]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61922,7 +62144,7 @@ func (x *GetManagedInferenceReadinessRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use GetManagedInferenceReadinessRequest.ProtoReflect.Descriptor instead.
 func (*GetManagedInferenceReadinessRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{685}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{686}
 }
 
 func (x *GetManagedInferenceReadinessRequest) GetOrganizationId() string {
@@ -61983,7 +62205,7 @@ type GetManagedInferenceReadinessResponse struct {
 
 func (x *GetManagedInferenceReadinessResponse) Reset() {
 	*x = GetManagedInferenceReadinessResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[686]
+	mi := &file_console_v1_console_proto_msgTypes[687]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -61995,7 +62217,7 @@ func (x *GetManagedInferenceReadinessResponse) String() string {
 func (*GetManagedInferenceReadinessResponse) ProtoMessage() {}
 
 func (x *GetManagedInferenceReadinessResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[686]
+	mi := &file_console_v1_console_proto_msgTypes[687]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62008,7 +62230,7 @@ func (x *GetManagedInferenceReadinessResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use GetManagedInferenceReadinessResponse.ProtoReflect.Descriptor instead.
 func (*GetManagedInferenceReadinessResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{686}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{687}
 }
 
 func (x *GetManagedInferenceReadinessResponse) GetOrganizationId() string {
@@ -62113,7 +62335,7 @@ type GetStaffManagedInferenceFundingRequest struct {
 
 func (x *GetStaffManagedInferenceFundingRequest) Reset() {
 	*x = GetStaffManagedInferenceFundingRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[687]
+	mi := &file_console_v1_console_proto_msgTypes[688]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -62125,7 +62347,7 @@ func (x *GetStaffManagedInferenceFundingRequest) String() string {
 func (*GetStaffManagedInferenceFundingRequest) ProtoMessage() {}
 
 func (x *GetStaffManagedInferenceFundingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[687]
+	mi := &file_console_v1_console_proto_msgTypes[688]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62138,7 +62360,7 @@ func (x *GetStaffManagedInferenceFundingRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use GetStaffManagedInferenceFundingRequest.ProtoReflect.Descriptor instead.
 func (*GetStaffManagedInferenceFundingRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{687}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{688}
 }
 
 func (x *GetStaffManagedInferenceFundingRequest) GetOrganizationId() string {
@@ -62173,7 +62395,7 @@ type GrantStaffManagedInferenceCreditsRequest struct {
 
 func (x *GrantStaffManagedInferenceCreditsRequest) Reset() {
 	*x = GrantStaffManagedInferenceCreditsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[688]
+	mi := &file_console_v1_console_proto_msgTypes[689]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -62185,7 +62407,7 @@ func (x *GrantStaffManagedInferenceCreditsRequest) String() string {
 func (*GrantStaffManagedInferenceCreditsRequest) ProtoMessage() {}
 
 func (x *GrantStaffManagedInferenceCreditsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[688]
+	mi := &file_console_v1_console_proto_msgTypes[689]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62198,7 +62420,7 @@ func (x *GrantStaffManagedInferenceCreditsRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use GrantStaffManagedInferenceCreditsRequest.ProtoReflect.Descriptor instead.
 func (*GrantStaffManagedInferenceCreditsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{688}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{689}
 }
 
 func (x *GrantStaffManagedInferenceCreditsRequest) GetOrganizationId() string {
@@ -62233,7 +62455,7 @@ type GetStaffManagedInferenceUsageRequest struct {
 
 func (x *GetStaffManagedInferenceUsageRequest) Reset() {
 	*x = GetStaffManagedInferenceUsageRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[689]
+	mi := &file_console_v1_console_proto_msgTypes[690]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -62245,7 +62467,7 @@ func (x *GetStaffManagedInferenceUsageRequest) String() string {
 func (*GetStaffManagedInferenceUsageRequest) ProtoMessage() {}
 
 func (x *GetStaffManagedInferenceUsageRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[689]
+	mi := &file_console_v1_console_proto_msgTypes[690]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62258,7 +62480,7 @@ func (x *GetStaffManagedInferenceUsageRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use GetStaffManagedInferenceUsageRequest.ProtoReflect.Descriptor instead.
 func (*GetStaffManagedInferenceUsageRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{689}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{690}
 }
 
 func (x *GetStaffManagedInferenceUsageRequest) GetOrganizationId() string {
@@ -62293,7 +62515,7 @@ type GetStaffManagedInferenceBudgetRequest struct {
 
 func (x *GetStaffManagedInferenceBudgetRequest) Reset() {
 	*x = GetStaffManagedInferenceBudgetRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[690]
+	mi := &file_console_v1_console_proto_msgTypes[691]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -62305,7 +62527,7 @@ func (x *GetStaffManagedInferenceBudgetRequest) String() string {
 func (*GetStaffManagedInferenceBudgetRequest) ProtoMessage() {}
 
 func (x *GetStaffManagedInferenceBudgetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[690]
+	mi := &file_console_v1_console_proto_msgTypes[691]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62318,7 +62540,7 @@ func (x *GetStaffManagedInferenceBudgetRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use GetStaffManagedInferenceBudgetRequest.ProtoReflect.Descriptor instead.
 func (*GetStaffManagedInferenceBudgetRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{690}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{691}
 }
 
 func (x *GetStaffManagedInferenceBudgetRequest) GetOrganizationId() string {
@@ -62355,7 +62577,7 @@ type SetStaffManagedInferenceBudgetRequest struct {
 
 func (x *SetStaffManagedInferenceBudgetRequest) Reset() {
 	*x = SetStaffManagedInferenceBudgetRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[691]
+	mi := &file_console_v1_console_proto_msgTypes[692]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -62367,7 +62589,7 @@ func (x *SetStaffManagedInferenceBudgetRequest) String() string {
 func (*SetStaffManagedInferenceBudgetRequest) ProtoMessage() {}
 
 func (x *SetStaffManagedInferenceBudgetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[691]
+	mi := &file_console_v1_console_proto_msgTypes[692]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62380,7 +62602,7 @@ func (x *SetStaffManagedInferenceBudgetRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use SetStaffManagedInferenceBudgetRequest.ProtoReflect.Descriptor instead.
 func (*SetStaffManagedInferenceBudgetRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{691}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{692}
 }
 
 func (x *SetStaffManagedInferenceBudgetRequest) GetOrganizationId() string {
@@ -62431,7 +62653,7 @@ type ListManagedProviderAccessEventsRequest struct {
 
 func (x *ListManagedProviderAccessEventsRequest) Reset() {
 	*x = ListManagedProviderAccessEventsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[692]
+	mi := &file_console_v1_console_proto_msgTypes[693]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -62443,7 +62665,7 @@ func (x *ListManagedProviderAccessEventsRequest) String() string {
 func (*ListManagedProviderAccessEventsRequest) ProtoMessage() {}
 
 func (x *ListManagedProviderAccessEventsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[692]
+	mi := &file_console_v1_console_proto_msgTypes[693]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62456,7 +62678,7 @@ func (x *ListManagedProviderAccessEventsRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use ListManagedProviderAccessEventsRequest.ProtoReflect.Descriptor instead.
 func (*ListManagedProviderAccessEventsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{692}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{693}
 }
 
 func (x *ListManagedProviderAccessEventsRequest) GetOrganizationId() string {
@@ -62506,7 +62728,7 @@ type ManagedProviderAccessEvent struct {
 
 func (x *ManagedProviderAccessEvent) Reset() {
 	*x = ManagedProviderAccessEvent{}
-	mi := &file_console_v1_console_proto_msgTypes[693]
+	mi := &file_console_v1_console_proto_msgTypes[694]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -62518,7 +62740,7 @@ func (x *ManagedProviderAccessEvent) String() string {
 func (*ManagedProviderAccessEvent) ProtoMessage() {}
 
 func (x *ManagedProviderAccessEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[693]
+	mi := &file_console_v1_console_proto_msgTypes[694]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62531,7 +62753,7 @@ func (x *ManagedProviderAccessEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ManagedProviderAccessEvent.ProtoReflect.Descriptor instead.
 func (*ManagedProviderAccessEvent) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{693}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{694}
 }
 
 func (x *ManagedProviderAccessEvent) GetEventId() string {
@@ -62614,7 +62836,7 @@ type ListManagedProviderAccessEventsResponse struct {
 
 func (x *ListManagedProviderAccessEventsResponse) Reset() {
 	*x = ListManagedProviderAccessEventsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[694]
+	mi := &file_console_v1_console_proto_msgTypes[695]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -62626,7 +62848,7 @@ func (x *ListManagedProviderAccessEventsResponse) String() string {
 func (*ListManagedProviderAccessEventsResponse) ProtoMessage() {}
 
 func (x *ListManagedProviderAccessEventsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[694]
+	mi := &file_console_v1_console_proto_msgTypes[695]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62639,7 +62861,7 @@ func (x *ListManagedProviderAccessEventsResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use ListManagedProviderAccessEventsResponse.ProtoReflect.Descriptor instead.
 func (*ListManagedProviderAccessEventsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{694}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{695}
 }
 
 func (x *ListManagedProviderAccessEventsResponse) GetEvents() []*ManagedProviderAccessEvent {
@@ -62667,7 +62889,7 @@ type ListStaffManagedInferenceAdminEventsRequest struct {
 
 func (x *ListStaffManagedInferenceAdminEventsRequest) Reset() {
 	*x = ListStaffManagedInferenceAdminEventsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[695]
+	mi := &file_console_v1_console_proto_msgTypes[696]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -62679,7 +62901,7 @@ func (x *ListStaffManagedInferenceAdminEventsRequest) String() string {
 func (*ListStaffManagedInferenceAdminEventsRequest) ProtoMessage() {}
 
 func (x *ListStaffManagedInferenceAdminEventsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[695]
+	mi := &file_console_v1_console_proto_msgTypes[696]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62692,7 +62914,7 @@ func (x *ListStaffManagedInferenceAdminEventsRequest) ProtoReflect() protoreflec
 
 // Deprecated: Use ListStaffManagedInferenceAdminEventsRequest.ProtoReflect.Descriptor instead.
 func (*ListStaffManagedInferenceAdminEventsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{695}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{696}
 }
 
 func (x *ListStaffManagedInferenceAdminEventsRequest) GetOrganizationId() string {
@@ -62729,7 +62951,7 @@ type ListStaffManagedExecutionGrantEventsRequest struct {
 
 func (x *ListStaffManagedExecutionGrantEventsRequest) Reset() {
 	*x = ListStaffManagedExecutionGrantEventsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[696]
+	mi := &file_console_v1_console_proto_msgTypes[697]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -62741,7 +62963,7 @@ func (x *ListStaffManagedExecutionGrantEventsRequest) String() string {
 func (*ListStaffManagedExecutionGrantEventsRequest) ProtoMessage() {}
 
 func (x *ListStaffManagedExecutionGrantEventsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[696]
+	mi := &file_console_v1_console_proto_msgTypes[697]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62754,7 +62976,7 @@ func (x *ListStaffManagedExecutionGrantEventsRequest) ProtoReflect() protoreflec
 
 // Deprecated: Use ListStaffManagedExecutionGrantEventsRequest.ProtoReflect.Descriptor instead.
 func (*ListStaffManagedExecutionGrantEventsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{696}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{697}
 }
 
 func (x *ListStaffManagedExecutionGrantEventsRequest) GetOrganizationId() string {
@@ -62820,7 +63042,7 @@ type ManagedExecutionGrantEvent struct {
 
 func (x *ManagedExecutionGrantEvent) Reset() {
 	*x = ManagedExecutionGrantEvent{}
-	mi := &file_console_v1_console_proto_msgTypes[697]
+	mi := &file_console_v1_console_proto_msgTypes[698]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -62832,7 +63054,7 @@ func (x *ManagedExecutionGrantEvent) String() string {
 func (*ManagedExecutionGrantEvent) ProtoMessage() {}
 
 func (x *ManagedExecutionGrantEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[697]
+	mi := &file_console_v1_console_proto_msgTypes[698]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62845,7 +63067,7 @@ func (x *ManagedExecutionGrantEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ManagedExecutionGrantEvent.ProtoReflect.Descriptor instead.
 func (*ManagedExecutionGrantEvent) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{697}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{698}
 }
 
 func (x *ManagedExecutionGrantEvent) GetEventId() string {
@@ -62992,7 +63214,7 @@ type ListStaffManagedExecutionGrantEventsResponse struct {
 
 func (x *ListStaffManagedExecutionGrantEventsResponse) Reset() {
 	*x = ListStaffManagedExecutionGrantEventsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[698]
+	mi := &file_console_v1_console_proto_msgTypes[699]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63004,7 +63226,7 @@ func (x *ListStaffManagedExecutionGrantEventsResponse) String() string {
 func (*ListStaffManagedExecutionGrantEventsResponse) ProtoMessage() {}
 
 func (x *ListStaffManagedExecutionGrantEventsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[698]
+	mi := &file_console_v1_console_proto_msgTypes[699]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63017,7 +63239,7 @@ func (x *ListStaffManagedExecutionGrantEventsResponse) ProtoReflect() protorefle
 
 // Deprecated: Use ListStaffManagedExecutionGrantEventsResponse.ProtoReflect.Descriptor instead.
 func (*ListStaffManagedExecutionGrantEventsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{698}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{699}
 }
 
 func (x *ListStaffManagedExecutionGrantEventsResponse) GetEvents() []*ManagedExecutionGrantEvent {
@@ -63053,7 +63275,7 @@ type ListStaffManagedExecutionOutcomesRequest struct {
 
 func (x *ListStaffManagedExecutionOutcomesRequest) Reset() {
 	*x = ListStaffManagedExecutionOutcomesRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[699]
+	mi := &file_console_v1_console_proto_msgTypes[700]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63065,7 +63287,7 @@ func (x *ListStaffManagedExecutionOutcomesRequest) String() string {
 func (*ListStaffManagedExecutionOutcomesRequest) ProtoMessage() {}
 
 func (x *ListStaffManagedExecutionOutcomesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[699]
+	mi := &file_console_v1_console_proto_msgTypes[700]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63078,7 +63300,7 @@ func (x *ListStaffManagedExecutionOutcomesRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use ListStaffManagedExecutionOutcomesRequest.ProtoReflect.Descriptor instead.
 func (*ListStaffManagedExecutionOutcomesRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{699}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{700}
 }
 
 func (x *ListStaffManagedExecutionOutcomesRequest) GetOrganizationId() string {
@@ -63132,7 +63354,7 @@ type ManagedExecutionOutcome struct {
 
 func (x *ManagedExecutionOutcome) Reset() {
 	*x = ManagedExecutionOutcome{}
-	mi := &file_console_v1_console_proto_msgTypes[700]
+	mi := &file_console_v1_console_proto_msgTypes[701]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63144,7 +63366,7 @@ func (x *ManagedExecutionOutcome) String() string {
 func (*ManagedExecutionOutcome) ProtoMessage() {}
 
 func (x *ManagedExecutionOutcome) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[700]
+	mi := &file_console_v1_console_proto_msgTypes[701]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63157,7 +63379,7 @@ func (x *ManagedExecutionOutcome) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ManagedExecutionOutcome.ProtoReflect.Descriptor instead.
 func (*ManagedExecutionOutcome) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{700}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{701}
 }
 
 func (x *ManagedExecutionOutcome) GetRecordId() string {
@@ -63276,7 +63498,7 @@ type ListStaffManagedExecutionOutcomesResponse struct {
 
 func (x *ListStaffManagedExecutionOutcomesResponse) Reset() {
 	*x = ListStaffManagedExecutionOutcomesResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[701]
+	mi := &file_console_v1_console_proto_msgTypes[702]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63288,7 +63510,7 @@ func (x *ListStaffManagedExecutionOutcomesResponse) String() string {
 func (*ListStaffManagedExecutionOutcomesResponse) ProtoMessage() {}
 
 func (x *ListStaffManagedExecutionOutcomesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[701]
+	mi := &file_console_v1_console_proto_msgTypes[702]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63301,7 +63523,7 @@ func (x *ListStaffManagedExecutionOutcomesResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use ListStaffManagedExecutionOutcomesResponse.ProtoReflect.Descriptor instead.
 func (*ListStaffManagedExecutionOutcomesResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{701}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{702}
 }
 
 func (x *ListStaffManagedExecutionOutcomesResponse) GetRecords() []*ManagedExecutionOutcome {
@@ -63333,7 +63555,7 @@ type ProspectingDraftTargetAccount struct {
 
 func (x *ProspectingDraftTargetAccount) Reset() {
 	*x = ProspectingDraftTargetAccount{}
-	mi := &file_console_v1_console_proto_msgTypes[702]
+	mi := &file_console_v1_console_proto_msgTypes[703]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63345,7 +63567,7 @@ func (x *ProspectingDraftTargetAccount) String() string {
 func (*ProspectingDraftTargetAccount) ProtoMessage() {}
 
 func (x *ProspectingDraftTargetAccount) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[702]
+	mi := &file_console_v1_console_proto_msgTypes[703]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63358,7 +63580,7 @@ func (x *ProspectingDraftTargetAccount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProspectingDraftTargetAccount.ProtoReflect.Descriptor instead.
 func (*ProspectingDraftTargetAccount) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{702}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{703}
 }
 
 func (x *ProspectingDraftTargetAccount) GetAccountOrganizationId() string {
@@ -63421,7 +63643,7 @@ type ProspectingDraft struct {
 
 func (x *ProspectingDraft) Reset() {
 	*x = ProspectingDraft{}
-	mi := &file_console_v1_console_proto_msgTypes[703]
+	mi := &file_console_v1_console_proto_msgTypes[704]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63433,7 +63655,7 @@ func (x *ProspectingDraft) String() string {
 func (*ProspectingDraft) ProtoMessage() {}
 
 func (x *ProspectingDraft) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[703]
+	mi := &file_console_v1_console_proto_msgTypes[704]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63446,7 +63668,7 @@ func (x *ProspectingDraft) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProspectingDraft.ProtoReflect.Descriptor instead.
 func (*ProspectingDraft) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{703}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{704}
 }
 
 func (x *ProspectingDraft) GetOrganizationId() string {
@@ -63590,7 +63812,7 @@ type ProspectingDraftMutationReceipt struct {
 
 func (x *ProspectingDraftMutationReceipt) Reset() {
 	*x = ProspectingDraftMutationReceipt{}
-	mi := &file_console_v1_console_proto_msgTypes[704]
+	mi := &file_console_v1_console_proto_msgTypes[705]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63602,7 +63824,7 @@ func (x *ProspectingDraftMutationReceipt) String() string {
 func (*ProspectingDraftMutationReceipt) ProtoMessage() {}
 
 func (x *ProspectingDraftMutationReceipt) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[704]
+	mi := &file_console_v1_console_proto_msgTypes[705]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63615,7 +63837,7 @@ func (x *ProspectingDraftMutationReceipt) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProspectingDraftMutationReceipt.ProtoReflect.Descriptor instead.
 func (*ProspectingDraftMutationReceipt) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{704}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{705}
 }
 
 func (x *ProspectingDraftMutationReceipt) GetIdempotencyKey() string {
@@ -63669,7 +63891,7 @@ type CreateProspectingDraftRequest struct {
 
 func (x *CreateProspectingDraftRequest) Reset() {
 	*x = CreateProspectingDraftRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[705]
+	mi := &file_console_v1_console_proto_msgTypes[706]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63681,7 +63903,7 @@ func (x *CreateProspectingDraftRequest) String() string {
 func (*CreateProspectingDraftRequest) ProtoMessage() {}
 
 func (x *CreateProspectingDraftRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[705]
+	mi := &file_console_v1_console_proto_msgTypes[706]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63694,7 +63916,7 @@ func (x *CreateProspectingDraftRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateProspectingDraftRequest.ProtoReflect.Descriptor instead.
 func (*CreateProspectingDraftRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{705}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{706}
 }
 
 func (x *CreateProspectingDraftRequest) GetQuery() *ConsoleQuery {
@@ -63763,7 +63985,7 @@ type CreateProspectingDraftResponse struct {
 
 func (x *CreateProspectingDraftResponse) Reset() {
 	*x = CreateProspectingDraftResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[706]
+	mi := &file_console_v1_console_proto_msgTypes[707]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63775,7 +63997,7 @@ func (x *CreateProspectingDraftResponse) String() string {
 func (*CreateProspectingDraftResponse) ProtoMessage() {}
 
 func (x *CreateProspectingDraftResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[706]
+	mi := &file_console_v1_console_proto_msgTypes[707]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63788,7 +64010,7 @@ func (x *CreateProspectingDraftResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateProspectingDraftResponse.ProtoReflect.Descriptor instead.
 func (*CreateProspectingDraftResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{706}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{707}
 }
 
 func (x *CreateProspectingDraftResponse) GetDraft() *ProspectingDraft {
@@ -63814,7 +64036,7 @@ type ListProspectingDraftsRequest struct {
 
 func (x *ListProspectingDraftsRequest) Reset() {
 	*x = ListProspectingDraftsRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[707]
+	mi := &file_console_v1_console_proto_msgTypes[708]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63826,7 +64048,7 @@ func (x *ListProspectingDraftsRequest) String() string {
 func (*ListProspectingDraftsRequest) ProtoMessage() {}
 
 func (x *ListProspectingDraftsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[707]
+	mi := &file_console_v1_console_proto_msgTypes[708]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63839,7 +64061,7 @@ func (x *ListProspectingDraftsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProspectingDraftsRequest.ProtoReflect.Descriptor instead.
 func (*ListProspectingDraftsRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{707}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{708}
 }
 
 func (x *ListProspectingDraftsRequest) GetQuery() *ConsoleQuery {
@@ -63859,7 +64081,7 @@ type ListProspectingDraftsResponse struct {
 
 func (x *ListProspectingDraftsResponse) Reset() {
 	*x = ListProspectingDraftsResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[708]
+	mi := &file_console_v1_console_proto_msgTypes[709]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63871,7 +64093,7 @@ func (x *ListProspectingDraftsResponse) String() string {
 func (*ListProspectingDraftsResponse) ProtoMessage() {}
 
 func (x *ListProspectingDraftsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[708]
+	mi := &file_console_v1_console_proto_msgTypes[709]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63884,7 +64106,7 @@ func (x *ListProspectingDraftsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProspectingDraftsResponse.ProtoReflect.Descriptor instead.
 func (*ListProspectingDraftsResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{708}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{709}
 }
 
 func (x *ListProspectingDraftsResponse) GetDrafts() []*ProspectingDraft {
@@ -63915,7 +64137,7 @@ type ReviewProspectingDraftRequest struct {
 
 func (x *ReviewProspectingDraftRequest) Reset() {
 	*x = ReviewProspectingDraftRequest{}
-	mi := &file_console_v1_console_proto_msgTypes[709]
+	mi := &file_console_v1_console_proto_msgTypes[710]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -63927,7 +64149,7 @@ func (x *ReviewProspectingDraftRequest) String() string {
 func (*ReviewProspectingDraftRequest) ProtoMessage() {}
 
 func (x *ReviewProspectingDraftRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[709]
+	mi := &file_console_v1_console_proto_msgTypes[710]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63940,7 +64162,7 @@ func (x *ReviewProspectingDraftRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReviewProspectingDraftRequest.ProtoReflect.Descriptor instead.
 func (*ReviewProspectingDraftRequest) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{709}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{710}
 }
 
 func (x *ReviewProspectingDraftRequest) GetQuery() *ConsoleQuery {
@@ -63995,7 +64217,7 @@ type ReviewProspectingDraftResponse struct {
 
 func (x *ReviewProspectingDraftResponse) Reset() {
 	*x = ReviewProspectingDraftResponse{}
-	mi := &file_console_v1_console_proto_msgTypes[710]
+	mi := &file_console_v1_console_proto_msgTypes[711]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -64007,7 +64229,7 @@ func (x *ReviewProspectingDraftResponse) String() string {
 func (*ReviewProspectingDraftResponse) ProtoMessage() {}
 
 func (x *ReviewProspectingDraftResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[710]
+	mi := &file_console_v1_console_proto_msgTypes[711]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -64020,7 +64242,7 @@ func (x *ReviewProspectingDraftResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReviewProspectingDraftResponse.ProtoReflect.Descriptor instead.
 func (*ReviewProspectingDraftResponse) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{710}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{711}
 }
 
 func (x *ReviewProspectingDraftResponse) GetDraft() *ProspectingDraft {
@@ -64064,7 +64286,7 @@ type WorkspaceBrandVoice struct {
 
 func (x *WorkspaceBrandVoice) Reset() {
 	*x = WorkspaceBrandVoice{}
-	mi := &file_console_v1_console_proto_msgTypes[711]
+	mi := &file_console_v1_console_proto_msgTypes[712]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -64076,7 +64298,7 @@ func (x *WorkspaceBrandVoice) String() string {
 func (*WorkspaceBrandVoice) ProtoMessage() {}
 
 func (x *WorkspaceBrandVoice) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[711]
+	mi := &file_console_v1_console_proto_msgTypes[712]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -64089,7 +64311,7 @@ func (x *WorkspaceBrandVoice) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WorkspaceBrandVoice.ProtoReflect.Descriptor instead.
 func (*WorkspaceBrandVoice) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{711}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{712}
 }
 
 func (x *WorkspaceBrandVoice) GetVoiceId() string {
@@ -64157,7 +64379,7 @@ type CaptureFormTypedValue_OptionValues struct {
 
 func (x *CaptureFormTypedValue_OptionValues) Reset() {
 	*x = CaptureFormTypedValue_OptionValues{}
-	mi := &file_console_v1_console_proto_msgTypes[714]
+	mi := &file_console_v1_console_proto_msgTypes[715]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -64169,7 +64391,7 @@ func (x *CaptureFormTypedValue_OptionValues) String() string {
 func (*CaptureFormTypedValue_OptionValues) ProtoMessage() {}
 
 func (x *CaptureFormTypedValue_OptionValues) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[714]
+	mi := &file_console_v1_console_proto_msgTypes[715]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -64182,7 +64404,7 @@ func (x *CaptureFormTypedValue_OptionValues) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use CaptureFormTypedValue_OptionValues.ProtoReflect.Descriptor instead.
 func (*CaptureFormTypedValue_OptionValues) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{581, 0}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{582, 0}
 }
 
 func (x *CaptureFormTypedValue_OptionValues) GetOptionIds() []string {
@@ -64202,7 +64424,7 @@ type WorkspaceBrandVoice_Scope struct {
 
 func (x *WorkspaceBrandVoice_Scope) Reset() {
 	*x = WorkspaceBrandVoice_Scope{}
-	mi := &file_console_v1_console_proto_msgTypes[715]
+	mi := &file_console_v1_console_proto_msgTypes[716]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -64214,7 +64436,7 @@ func (x *WorkspaceBrandVoice_Scope) String() string {
 func (*WorkspaceBrandVoice_Scope) ProtoMessage() {}
 
 func (x *WorkspaceBrandVoice_Scope) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[715]
+	mi := &file_console_v1_console_proto_msgTypes[716]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -64227,7 +64449,7 @@ func (x *WorkspaceBrandVoice_Scope) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WorkspaceBrandVoice_Scope.ProtoReflect.Descriptor instead.
 func (*WorkspaceBrandVoice_Scope) Descriptor() ([]byte, []int) {
-	return file_console_v1_console_proto_rawDescGZIP(), []int{711, 0}
+	return file_console_v1_console_proto_rawDescGZIP(), []int{712, 0}
 }
 
 func (x *WorkspaceBrandVoice_Scope) GetKind() string {
@@ -66277,10 +66499,18 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"\x19GetTraceDrilldownResponse\x120\n" +
 	"\x05trace\x18\x01 \x01(\v2\x1a.console.v1.TraceDrilldownR\x05trace\"U\n" +
 	"\x1bListIntegrationTilesRequest\x126\n" +
-	"\x05query\x18\x01 \x01(\v2\x18.console.v1.ConsoleQueryB\x06\xbaH\x03\xc8\x01\x01R\x05query\"p\n" +
+	"\x05query\x18\x01 \x01(\v2\x18.console.v1.ConsoleQueryB\x06\xbaH\x03\xc8\x01\x01R\x05query\"\xa2\x03\n" +
 	"\x1cListIntegrationTilesResponse\x121\n" +
 	"\x05tiles\x18\x01 \x03(\v2\x1b.console.v1.IntegrationTileR\x05tiles\x12\x1d\n" +
-	"\x05total\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x05total\"F\n" +
+	"\x05total\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x05total\x125\n" +
+	"\x0finstalled_total\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00H\x00R\x0einstalledTotal\x88\x01\x01\x121\n" +
+	"\rpreview_total\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00H\x01R\fpreviewTotal\x88\x01\x01\x12(\n" +
+	"\vready_total\x18\x05 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\n" +
+	"readyTotal\x122\n" +
+	"\x10configured_total\x18\x06 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x0fconfiguredTotal\x12B\n" +
+	"\x1dpreview_inventory_unavailable\x18\a \x01(\bR\x1bpreviewInventoryUnavailableB\x12\n" +
+	"\x10_installed_totalB\x10\n" +
+	"\x0e_preview_total\"F\n" +
 	"\x18ListPinnedSourcesRequest\x12*\n" +
 	"\fworkspace_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vworkspaceId\"I\n" +
 	"\x19ListPinnedSourcesResponse\x12,\n" +
@@ -67640,8 +67870,14 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"\brequired\x18\x03 \x01(\bR\brequired\x12\x16\n" +
 	"\x06secret\x18\x04 \x01(\bR\x06secret\x12<\n" +
 	"\x1aaccepted_reference_schemes\x18\x05 \x03(\tR\x18acceptedReferenceSchemes\x12'\n" +
-	"\x0fcredential_type\x18\x06 \x01(\tR\x0ecredentialType\"\xa3\n" +
+	"\x0fcredential_type\x18\x06 \x01(\tR\x0ecredentialType\"\xdd\x01\n" +
+	"\x17IntegrationResourceType\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12!\n" +
+	"\fdisplay_name\x18\x02 \x01(\tR\vdisplayName\x122\n" +
+	"\x15source_coverage_types\x18\x03 \x03(\tR\x13sourceCoverageTypes\x12<\n" +
+	"\x1asource_projection_template\x18\x04 \x01(\tR\x18sourceProjectionTemplate\x12\x1d\n" +
 	"\n" +
+	"event_kind\x18\x05 \x01(\tR\teventKind\"\xf5\x0e\n" +
 	"\x0fIntegrationTile\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
@@ -67678,7 +67914,21 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"\tauth_type\x18\x1b \x01(\tR\bauthType\x12'\n" +
 	"\x0foauth_supported\x18\x1c \x01(\bR\x0eoauthSupported\x12S\n" +
 	"\x11credential_fields\x18\x1d \x03(\v2&.console.v1.IntegrationCredentialFieldR\x10credentialFields\x12X\n" +
-	"\x12catalog_provenance\x18\x1e \x01(\v2).connectors.v1.ConnectorCatalogProvenanceR\x11catalogProvenance\"\xd2\x01\n" +
+	"\x12catalog_provenance\x18\x1e \x01(\v2).connectors.v1.ConnectorCatalogProvenanceR\x11catalogProvenance\x12!\n" +
+	"\fcatalog_tier\x18\x1f \x01(\tR\vcatalogTier\x12)\n" +
+	"\x10provider_actions\x18  \x03(\tR\x0fproviderActions\x12%\n" +
+	"\x0ecatalog_status\x18! \x01(\tR\rcatalogStatus\x12#\n" +
+	"\rsetup_allowed\x18\" \x01(\bR\fsetupAllowed\x12\x1e\n" +
+	"\n" +
+	"configured\x18# \x01(\bR\n" +
+	"configured\x12;\n" +
+	"\x15provider_action_count\x18$ \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x13providerActionCount\x12;\n" +
+	"\x15resource_family_count\x18% \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x13resourceFamilyCount\x12;\n" +
+	"\x15required_family_count\x18& \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x13requiredFamilyCount\x12=\n" +
+	"\x16qualified_family_count\x18' \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x14qualifiedFamilyCount\x12!\n" +
+	"\frollout_kind\x18( \x01(\tR\vrolloutKind\x12J\n" +
+	"\x0eresource_types\x18) \x03(\v2#.console.v1.IntegrationResourceTypeR\rresourceTypes\x121\n" +
+	"\x14provider_description\x18* \x01(\tR\x13providerDescription\"\xd2\x01\n" +
 	"\x0eOnboardingTask\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x16\n" +
@@ -70751,7 +71001,7 @@ func file_console_v1_console_proto_rawDescGZIP() []byte {
 }
 
 var file_console_v1_console_proto_enumTypes = make([]protoimpl.EnumInfo, 105)
-var file_console_v1_console_proto_msgTypes = make([]protoimpl.MessageInfo, 716)
+var file_console_v1_console_proto_msgTypes = make([]protoimpl.MessageInfo, 717)
 var file_console_v1_console_proto_goTypes = []any{
 	(OperatingTurnRouteKind)(0),                                 // 0: console.v1.OperatingTurnRouteKind
 	(OperatingTurnIntentKind)(0),                                // 1: console.v1.OperatingTurnIntentKind
@@ -71273,403 +71523,404 @@ var file_console_v1_console_proto_goTypes = []any{
 	(*AgentWorkforceDebugIdentifiers)(nil),                      // 517: console.v1.AgentWorkforceDebugIdentifiers
 	(*RiskFinding)(nil),                                         // 518: console.v1.RiskFinding
 	(*IntegrationCredentialField)(nil),                          // 519: console.v1.IntegrationCredentialField
-	(*IntegrationTile)(nil),                                     // 520: console.v1.IntegrationTile
-	(*OnboardingTask)(nil),                                      // 521: console.v1.OnboardingTask
-	(*TraceDrilldown)(nil),                                      // 522: console.v1.TraceDrilldown
-	(*TraceSpan)(nil),                                           // 523: console.v1.TraceSpan
-	(*TraceSpanReference)(nil),                                  // 524: console.v1.TraceSpanReference
-	(*TraceCompletenessSignal)(nil),                             // 525: console.v1.TraceCompletenessSignal
-	(*SecurityDecisionPacket)(nil),                              // 526: console.v1.SecurityDecisionPacket
-	(*SecurityDecisionEvidenceGap)(nil),                         // 527: console.v1.SecurityDecisionEvidenceGap
-	(*RelatedResource)(nil),                                     // 528: console.v1.RelatedResource
-	(*OperatingHomepageSuggestion)(nil),                         // 529: console.v1.OperatingHomepageSuggestion
-	(*DexMcpServer)(nil),                                        // 530: console.v1.DexMcpServer
-	(*DexMcpCatalogTool)(nil),                                   // 531: console.v1.DexMcpCatalogTool
-	(*CreateDexMcpServerRequest)(nil),                           // 532: console.v1.CreateDexMcpServerRequest
-	(*CreateDexMcpServerResponse)(nil),                          // 533: console.v1.CreateDexMcpServerResponse
-	(*ListDexMcpServersRequest)(nil),                            // 534: console.v1.ListDexMcpServersRequest
-	(*ListDexMcpServersResponse)(nil),                           // 535: console.v1.ListDexMcpServersResponse
-	(*GetDexMcpServerRequest)(nil),                              // 536: console.v1.GetDexMcpServerRequest
-	(*GetDexMcpServerResponse)(nil),                             // 537: console.v1.GetDexMcpServerResponse
-	(*DiscoverDexMcpServerRequest)(nil),                         // 538: console.v1.DiscoverDexMcpServerRequest
-	(*DiscoverDexMcpServerResponse)(nil),                        // 539: console.v1.DiscoverDexMcpServerResponse
-	(*UpdateDexMcpServerRequest)(nil),                           // 540: console.v1.UpdateDexMcpServerRequest
-	(*UpdateDexMcpServerResponse)(nil),                          // 541: console.v1.UpdateDexMcpServerResponse
-	(*DeleteDexMcpServerRequest)(nil),                           // 542: console.v1.DeleteDexMcpServerRequest
-	(*DeleteDexMcpServerResponse)(nil),                          // 543: console.v1.DeleteDexMcpServerResponse
-	(*DexMcpOAuthProfile)(nil),                                  // 544: console.v1.DexMcpOAuthProfile
-	(*InitiateDexMcpOAuthProfileRequest)(nil),                   // 545: console.v1.InitiateDexMcpOAuthProfileRequest
-	(*InitiateDexMcpOAuthProfileResponse)(nil),                  // 546: console.v1.InitiateDexMcpOAuthProfileResponse
-	(*CompleteDexMcpOAuthProfileRequest)(nil),                   // 547: console.v1.CompleteDexMcpOAuthProfileRequest
-	(*CompleteDexMcpOAuthProfileResponse)(nil),                  // 548: console.v1.CompleteDexMcpOAuthProfileResponse
-	(*ListDexMcpOAuthProfilesRequest)(nil),                      // 549: console.v1.ListDexMcpOAuthProfilesRequest
-	(*ListDexMcpOAuthProfilesResponse)(nil),                     // 550: console.v1.ListDexMcpOAuthProfilesResponse
-	(*RevokeDexMcpOAuthProfileRequest)(nil),                     // 551: console.v1.RevokeDexMcpOAuthProfileRequest
-	(*RevokeDexMcpOAuthProfileResponse)(nil),                    // 552: console.v1.RevokeDexMcpOAuthProfileResponse
-	(*ReauthorizeDexMcpOAuthProfileRequest)(nil),                // 553: console.v1.ReauthorizeDexMcpOAuthProfileRequest
-	(*ReauthorizeDexMcpOAuthProfileResponse)(nil),               // 554: console.v1.ReauthorizeDexMcpOAuthProfileResponse
-	(*PrivateEndpoint)(nil),                                     // 555: console.v1.PrivateEndpoint
-	(*PrivateProfileRoute)(nil),                                 // 556: console.v1.PrivateProfileRoute
-	(*RegisterPrivateEndpointRequest)(nil),                      // 557: console.v1.RegisterPrivateEndpointRequest
-	(*RegisterPrivateEndpointResponse)(nil),                     // 558: console.v1.RegisterPrivateEndpointResponse
-	(*VerifyPrivateEndpointRequest)(nil),                        // 559: console.v1.VerifyPrivateEndpointRequest
-	(*VerifyPrivateEndpointResponse)(nil),                       // 560: console.v1.VerifyPrivateEndpointResponse
-	(*ListPrivateEndpointsRequest)(nil),                         // 561: console.v1.ListPrivateEndpointsRequest
-	(*ListPrivateEndpointsResponse)(nil),                        // 562: console.v1.ListPrivateEndpointsResponse
-	(*DeletePrivateEndpointRequest)(nil),                        // 563: console.v1.DeletePrivateEndpointRequest
-	(*DeletePrivateEndpointResponse)(nil),                       // 564: console.v1.DeletePrivateEndpointResponse
-	(*AttachPrivateEndpointToProfileRequest)(nil),               // 565: console.v1.AttachPrivateEndpointToProfileRequest
-	(*AttachPrivateEndpointToProfileResponse)(nil),              // 566: console.v1.AttachPrivateEndpointToProfileResponse
-	(*ListGatewayEgressOriginsRequest)(nil),                     // 567: console.v1.ListGatewayEgressOriginsRequest
-	(*ListGatewayEgressOriginsResponse)(nil),                    // 568: console.v1.ListGatewayEgressOriginsResponse
-	(*OperatingCapabilityRequirementState)(nil),                 // 569: console.v1.OperatingCapabilityRequirementState
-	(*PrewarmOperatingThreadRequest)(nil),                       // 570: console.v1.PrewarmOperatingThreadRequest
-	(*PrewarmOperatingThreadResponse)(nil),                      // 571: console.v1.PrewarmOperatingThreadResponse
-	(*TerminalErrorEnvelope)(nil),                               // 572: console.v1.TerminalErrorEnvelope
-	(*BootstrapThreadGatewayRequest)(nil),                       // 573: console.v1.BootstrapThreadGatewayRequest
-	(*BootstrapThreadGatewayResponse)(nil),                      // 574: console.v1.BootstrapThreadGatewayResponse
-	(*SetOperatingThreadControllerRequest)(nil),                 // 575: console.v1.SetOperatingThreadControllerRequest
-	(*SetOperatingThreadControllerResponse)(nil),                // 576: console.v1.SetOperatingThreadControllerResponse
-	(*CostUsageSummary)(nil),                                    // 577: console.v1.CostUsageSummary
-	(*CostUsageAttributionSummary)(nil),                         // 578: console.v1.CostUsageAttributionSummary
-	(*TenantPrivacySetting)(nil),                                // 579: console.v1.TenantPrivacySetting
-	(*GetPrivacySettingsRequest)(nil),                           // 580: console.v1.GetPrivacySettingsRequest
-	(*GetPrivacySettingsResponse)(nil),                          // 581: console.v1.GetPrivacySettingsResponse
-	(*SetPrivacySettingsRequest)(nil),                           // 582: console.v1.SetPrivacySettingsRequest
-	(*ManagedRule)(nil),                                         // 583: console.v1.ManagedRule
-	(*ManagedSkillRef)(nil),                                     // 584: console.v1.ManagedSkillRef
-	(*McpServerRef)(nil),                                        // 585: console.v1.McpServerRef
-	(*McpPolicy)(nil),                                           // 586: console.v1.McpPolicy
-	(*ManagedSetup)(nil),                                        // 587: console.v1.ManagedSetup
-	(*GetManagedSetupRequest)(nil),                              // 588: console.v1.GetManagedSetupRequest
-	(*SetManagedSetupRequest)(nil),                              // 589: console.v1.SetManagedSetupRequest
-	(*MissionScheduleCapability)(nil),                           // 590: console.v1.MissionScheduleCapability
-	(*StartMeetingCaptureRequest)(nil),                          // 591: console.v1.StartMeetingCaptureRequest
-	(*ListConnectedCallsRequest)(nil),                           // 592: console.v1.ListConnectedCallsRequest
-	(*ListConnectedCallsResponse)(nil),                          // 593: console.v1.ListConnectedCallsResponse
-	(*ConnectedCall)(nil),                                       // 594: console.v1.ConnectedCall
-	(*StartMeetingCaptureResponse)(nil),                         // 595: console.v1.StartMeetingCaptureResponse
-	(*GetMeetingCaptureRequest)(nil),                            // 596: console.v1.GetMeetingCaptureRequest
-	(*GetMeetingCaptureResponse)(nil),                           // 597: console.v1.GetMeetingCaptureResponse
-	(*ListMeetingCapturesRequest)(nil),                          // 598: console.v1.ListMeetingCapturesRequest
-	(*ListMeetingCapturesResponse)(nil),                         // 599: console.v1.ListMeetingCapturesResponse
-	(*StopMeetingCaptureRequest)(nil),                           // 600: console.v1.StopMeetingCaptureRequest
-	(*StopMeetingCaptureResponse)(nil),                          // 601: console.v1.StopMeetingCaptureResponse
-	(*MeetingCapture)(nil),                                      // 602: console.v1.MeetingCapture
-	(*ProspectingWatchProgram)(nil),                             // 603: console.v1.ProspectingWatchProgram
-	(*ProspectingWatchProgramMutationReceipt)(nil),              // 604: console.v1.ProspectingWatchProgramMutationReceipt
-	(*CreateProspectingWatchProgramRequest)(nil),                // 605: console.v1.CreateProspectingWatchProgramRequest
-	(*CreateProspectingWatchProgramResponse)(nil),               // 606: console.v1.CreateProspectingWatchProgramResponse
-	(*GetProspectingWatchProgramRequest)(nil),                   // 607: console.v1.GetProspectingWatchProgramRequest
-	(*GetProspectingWatchProgramResponse)(nil),                  // 608: console.v1.GetProspectingWatchProgramResponse
-	(*ListProspectingWatchProgramsRequest)(nil),                 // 609: console.v1.ListProspectingWatchProgramsRequest
-	(*ListProspectingWatchProgramsResponse)(nil),                // 610: console.v1.ListProspectingWatchProgramsResponse
-	(*UpdateProspectingWatchProgramRequest)(nil),                // 611: console.v1.UpdateProspectingWatchProgramRequest
-	(*UpdateProspectingWatchProgramResponse)(nil),               // 612: console.v1.UpdateProspectingWatchProgramResponse
-	(*ListCommitmentsRequest)(nil),                              // 613: console.v1.ListCommitmentsRequest
-	(*ListCommitmentsResponse)(nil),                             // 614: console.v1.ListCommitmentsResponse
-	(*Commitment)(nil),                                          // 615: console.v1.Commitment
-	(*CommitmentCitation)(nil),                                  // 616: console.v1.CommitmentCitation
-	(*OperatingJobRecordLink)(nil),                              // 617: console.v1.OperatingJobRecordLink
-	(*OperatingJob)(nil),                                        // 618: console.v1.OperatingJob
-	(*ListOperatingJobsRequest)(nil),                            // 619: console.v1.ListOperatingJobsRequest
-	(*ListOperatingJobsResponse)(nil),                           // 620: console.v1.ListOperatingJobsResponse
-	(*RecordOperatingHomepageSuggestionFeedbackRequest)(nil),    // 621: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
-	(*RecordOperatingHomepageSuggestionFeedbackResponse)(nil),   // 622: console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
-	(*InferenceCreditBalance)(nil),                              // 623: console.v1.InferenceCreditBalance
-	(*GetInferenceCreditBalanceRequest)(nil),                    // 624: console.v1.GetInferenceCreditBalanceRequest
-	(*InferenceCreditBlock)(nil),                                // 625: console.v1.InferenceCreditBlock
-	(*InferenceCreditPricing)(nil),                              // 626: console.v1.InferenceCreditPricing
-	(*GetInferenceCreditBalanceResponse)(nil),                   // 627: console.v1.GetInferenceCreditBalanceResponse
-	(*InferenceRunCreditBalance)(nil),                           // 628: console.v1.InferenceRunCreditBalance
-	(*InferenceCreditReconciliation)(nil),                       // 629: console.v1.InferenceCreditReconciliation
-	(*CreateInferenceCreditCheckoutRequest)(nil),                // 630: console.v1.CreateInferenceCreditCheckoutRequest
-	(*CreateInferenceCreditCheckoutResponse)(nil),               // 631: console.v1.CreateInferenceCreditCheckoutResponse
-	(*FulfillInferenceCreditCheckoutRequest)(nil),               // 632: console.v1.FulfillInferenceCreditCheckoutRequest
-	(*FulfillInferenceCreditCheckoutResponse)(nil),              // 633: console.v1.FulfillInferenceCreditCheckoutResponse
-	(*OperatingAutoModelRoute)(nil),                             // 634: console.v1.OperatingAutoModelRoute
-	(*BusinessFieldDefinition)(nil),                             // 635: console.v1.BusinessFieldDefinition
-	(*BusinessRelationshipDefinition)(nil),                      // 636: console.v1.BusinessRelationshipDefinition
-	(*BusinessObjectType)(nil),                                  // 637: console.v1.BusinessObjectType
-	(*BusinessMoney)(nil),                                       // 638: console.v1.BusinessMoney
-	(*BusinessObjectReference)(nil),                             // 639: console.v1.BusinessObjectReference
-	(*BusinessArtifactReference)(nil),                           // 640: console.v1.BusinessArtifactReference
-	(*BusinessTextList)(nil),                                    // 641: console.v1.BusinessTextList
-	(*BusinessFieldValue)(nil),                                  // 642: console.v1.BusinessFieldValue
-	(*BusinessSourceField)(nil),                                 // 643: console.v1.BusinessSourceField
-	(*BusinessSourceBinding)(nil),                               // 644: console.v1.BusinessSourceBinding
-	(*BusinessObject)(nil),                                      // 645: console.v1.BusinessObject
-	(*BusinessObjectRevision)(nil),                              // 646: console.v1.BusinessObjectRevision
-	(*BusinessObjectRelationship)(nil),                          // 647: console.v1.BusinessObjectRelationship
-	(*DefineBusinessObjectTypeRequest)(nil),                     // 648: console.v1.DefineBusinessObjectTypeRequest
-	(*DefineBusinessObjectTypeResponse)(nil),                    // 649: console.v1.DefineBusinessObjectTypeResponse
-	(*ListBusinessObjectTypesRequest)(nil),                      // 650: console.v1.ListBusinessObjectTypesRequest
-	(*ListBusinessObjectTypesResponse)(nil),                     // 651: console.v1.ListBusinessObjectTypesResponse
-	(*CreateBusinessObjectRequest)(nil),                         // 652: console.v1.CreateBusinessObjectRequest
-	(*CreateBusinessObjectResponse)(nil),                        // 653: console.v1.CreateBusinessObjectResponse
-	(*GetBusinessObjectRequest)(nil),                            // 654: console.v1.GetBusinessObjectRequest
-	(*GetBusinessObjectResponse)(nil),                           // 655: console.v1.GetBusinessObjectResponse
-	(*BusinessObjectSourceRecovery)(nil),                        // 656: console.v1.BusinessObjectSourceRecovery
-	(*ListBusinessObjectsRequest)(nil),                          // 657: console.v1.ListBusinessObjectsRequest
-	(*BusinessObjectFilter)(nil),                                // 658: console.v1.BusinessObjectFilter
-	(*BusinessObjectReferenceFilter)(nil),                       // 659: console.v1.BusinessObjectReferenceFilter
-	(*ListBusinessObjectsResponse)(nil),                         // 660: console.v1.ListBusinessObjectsResponse
-	(*UpdateBusinessObjectRequest)(nil),                         // 661: console.v1.UpdateBusinessObjectRequest
-	(*UpdateBusinessObjectResponse)(nil),                        // 662: console.v1.UpdateBusinessObjectResponse
-	(*DeleteBusinessObjectRequest)(nil),                         // 663: console.v1.DeleteBusinessObjectRequest
-	(*DeleteBusinessObjectResponse)(nil),                        // 664: console.v1.DeleteBusinessObjectResponse
-	(*ListBusinessObjectRevisionsRequest)(nil),                  // 665: console.v1.ListBusinessObjectRevisionsRequest
-	(*ListBusinessObjectRevisionsResponse)(nil),                 // 666: console.v1.ListBusinessObjectRevisionsResponse
-	(*BindBusinessObjectSourceRequest)(nil),                     // 667: console.v1.BindBusinessObjectSourceRequest
-	(*BindBusinessObjectSourceResponse)(nil),                    // 668: console.v1.BindBusinessObjectSourceResponse
-	(*AdmitBusinessObjectObservationRequest)(nil),               // 669: console.v1.AdmitBusinessObjectObservationRequest
-	(*AdmitBusinessObjectObservationResponse)(nil),              // 670: console.v1.AdmitBusinessObjectObservationResponse
-	(*ListBusinessObjectRelationshipsRequest)(nil),              // 671: console.v1.ListBusinessObjectRelationshipsRequest
-	(*ListBusinessObjectRelationshipsResponse)(nil),             // 672: console.v1.ListBusinessObjectRelationshipsResponse
-	(*CreateBusinessObjectRelationshipRequest)(nil),             // 673: console.v1.CreateBusinessObjectRelationshipRequest
-	(*CreateBusinessObjectRelationshipResponse)(nil),            // 674: console.v1.CreateBusinessObjectRelationshipResponse
-	(*DeleteBusinessObjectRelationshipRequest)(nil),             // 675: console.v1.DeleteBusinessObjectRelationshipRequest
-	(*DeleteBusinessObjectRelationshipResponse)(nil),            // 676: console.v1.DeleteBusinessObjectRelationshipResponse
-	(*CaptureFormObjectTarget)(nil),                             // 677: console.v1.CaptureFormObjectTarget
-	(*CaptureFormAssetRef)(nil),                                 // 678: console.v1.CaptureFormAssetRef
-	(*CaptureFormBrandingInput)(nil),                            // 679: console.v1.CaptureFormBrandingInput
-	(*CaptureFormBranding)(nil),                                 // 680: console.v1.CaptureFormBranding
-	(*CaptureFormPublicBranding)(nil),                           // 681: console.v1.CaptureFormPublicBranding
-	(*CaptureFormSelectOption)(nil),                             // 682: console.v1.CaptureFormSelectOption
-	(*CaptureFormSelectSpec)(nil),                               // 683: console.v1.CaptureFormSelectSpec
-	(*CaptureFormUploadSpec)(nil),                               // 684: console.v1.CaptureFormUploadSpec
-	(*CaptureFormUpload)(nil),                                   // 685: console.v1.CaptureFormUpload
-	(*CaptureFormTypedValue)(nil),                               // 686: console.v1.CaptureFormTypedValue
-	(*CaptureFormField)(nil),                                    // 687: console.v1.CaptureFormField
-	(*CaptureFormPublicField)(nil),                              // 688: console.v1.CaptureFormPublicField
-	(*CaptureFormVersionInput)(nil),                             // 689: console.v1.CaptureFormVersionInput
-	(*CaptureFormVersion)(nil),                                  // 690: console.v1.CaptureFormVersion
-	(*CaptureFormPublicationInput)(nil),                         // 691: console.v1.CaptureFormPublicationInput
-	(*CaptureFormPublicRoute)(nil),                              // 692: console.v1.CaptureFormPublicRoute
-	(*CaptureFormPublication)(nil),                              // 693: console.v1.CaptureFormPublication
-	(*CaptureForm)(nil),                                         // 694: console.v1.CaptureForm
-	(*PublishedCaptureForm)(nil),                                // 695: console.v1.PublishedCaptureForm
-	(*CaptureFormAnswer)(nil),                                   // 696: console.v1.CaptureFormAnswer
-	(*CaptureFormReview)(nil),                                   // 697: console.v1.CaptureFormReview
-	(*CaptureFormObjectResult)(nil),                             // 698: console.v1.CaptureFormObjectResult
-	(*CaptureFormSubmission)(nil),                               // 699: console.v1.CaptureFormSubmission
-	(*CaptureFormPublicSubmissionReceipt)(nil),                  // 700: console.v1.CaptureFormPublicSubmissionReceipt
-	(*CreateCaptureFormRequest)(nil),                            // 701: console.v1.CreateCaptureFormRequest
-	(*CreateCaptureFormResponse)(nil),                           // 702: console.v1.CreateCaptureFormResponse
-	(*ListCaptureFormsRequest)(nil),                             // 703: console.v1.ListCaptureFormsRequest
-	(*ListCaptureFormsResponse)(nil),                            // 704: console.v1.ListCaptureFormsResponse
-	(*GetCaptureFormRequest)(nil),                               // 705: console.v1.GetCaptureFormRequest
-	(*GetCaptureFormResponse)(nil),                              // 706: console.v1.GetCaptureFormResponse
-	(*UpdateCaptureFormRequest)(nil),                            // 707: console.v1.UpdateCaptureFormRequest
-	(*UpdateCaptureFormResponse)(nil),                           // 708: console.v1.UpdateCaptureFormResponse
-	(*PublishCaptureFormRequest)(nil),                           // 709: console.v1.PublishCaptureFormRequest
-	(*PublishCaptureFormResponse)(nil),                          // 710: console.v1.PublishCaptureFormResponse
-	(*RevokeCaptureFormPublicationRequest)(nil),                 // 711: console.v1.RevokeCaptureFormPublicationRequest
-	(*RevokeCaptureFormPublicationResponse)(nil),                // 712: console.v1.RevokeCaptureFormPublicationResponse
-	(*GetPublishedCaptureFormRequest)(nil),                      // 713: console.v1.GetPublishedCaptureFormRequest
-	(*GetPublishedCaptureFormResponse)(nil),                     // 714: console.v1.GetPublishedCaptureFormResponse
-	(*GetPublishedCaptureFormBrandingAssetRequest)(nil),         // 715: console.v1.GetPublishedCaptureFormBrandingAssetRequest
-	(*GetPublishedCaptureFormBrandingAssetResponse)(nil),        // 716: console.v1.GetPublishedCaptureFormBrandingAssetResponse
-	(*SubmitPublishedCaptureFormRequest)(nil),                   // 717: console.v1.SubmitPublishedCaptureFormRequest
-	(*SubmitPublishedCaptureFormResponse)(nil),                  // 718: console.v1.SubmitPublishedCaptureFormResponse
-	(*BeginPublishedCaptureFormUploadRequest)(nil),              // 719: console.v1.BeginPublishedCaptureFormUploadRequest
-	(*BeginPublishedCaptureFormUploadResponse)(nil),             // 720: console.v1.BeginPublishedCaptureFormUploadResponse
-	(*CompletePublishedCaptureFormUploadRequest)(nil),           // 721: console.v1.CompletePublishedCaptureFormUploadRequest
-	(*CompletePublishedCaptureFormUploadResponse)(nil),          // 722: console.v1.CompletePublishedCaptureFormUploadResponse
-	(*GetCaptureFormSubmissionRequest)(nil),                     // 723: console.v1.GetCaptureFormSubmissionRequest
-	(*GetCaptureFormSubmissionResponse)(nil),                    // 724: console.v1.GetCaptureFormSubmissionResponse
-	(*ListCaptureFormSubmissionsRequest)(nil),                   // 725: console.v1.ListCaptureFormSubmissionsRequest
-	(*ListCaptureFormSubmissionsResponse)(nil),                  // 726: console.v1.ListCaptureFormSubmissionsResponse
-	(*ReviewCaptureFormSubmissionRequest)(nil),                  // 727: console.v1.ReviewCaptureFormSubmissionRequest
-	(*ReviewCaptureFormSubmissionResponse)(nil),                 // 728: console.v1.ReviewCaptureFormSubmissionResponse
-	(*GetBusinessObjectTypeRequest)(nil),                        // 729: console.v1.GetBusinessObjectTypeRequest
-	(*GetBusinessObjectTypeResponse)(nil),                       // 730: console.v1.GetBusinessObjectTypeResponse
-	(*InferenceCreditReceipt)(nil),                              // 731: console.v1.InferenceCreditReceipt
-	(*ListInferenceCreditReceiptsRequest)(nil),                  // 732: console.v1.ListInferenceCreditReceiptsRequest
-	(*ListInferenceCreditReceiptsResponse)(nil),                 // 733: console.v1.ListInferenceCreditReceiptsResponse
-	(*InferenceCreditAutoRefill)(nil),                           // 734: console.v1.InferenceCreditAutoRefill
-	(*GetInferenceCreditAutoRefillRequest)(nil),                 // 735: console.v1.GetInferenceCreditAutoRefillRequest
-	(*GetInferenceCreditAutoRefillResponse)(nil),                // 736: console.v1.GetInferenceCreditAutoRefillResponse
-	(*UpdateInferenceCreditAutoRefillRequest)(nil),              // 737: console.v1.UpdateInferenceCreditAutoRefillRequest
-	(*UpdateInferenceCreditAutoRefillResponse)(nil),             // 738: console.v1.UpdateInferenceCreditAutoRefillResponse
-	(*CompleteInferenceCreditAutoRefillRequest)(nil),            // 739: console.v1.CompleteInferenceCreditAutoRefillRequest
-	(*CompleteInferenceCreditAutoRefillResponse)(nil),           // 740: console.v1.CompleteInferenceCreditAutoRefillResponse
-	(*PrepareBusinessObjectAuthorityTransferRequest)(nil),       // 741: console.v1.PrepareBusinessObjectAuthorityTransferRequest
-	(*PrepareBusinessObjectAuthorityTransferResponse)(nil),      // 742: console.v1.PrepareBusinessObjectAuthorityTransferResponse
-	(*FinalizeBusinessObjectAuthorityTransferRequest)(nil),      // 743: console.v1.FinalizeBusinessObjectAuthorityTransferRequest
-	(*FinalizeBusinessObjectAuthorityTransferResponse)(nil),     // 744: console.v1.FinalizeBusinessObjectAuthorityTransferResponse
-	(*BusinessProcessParticipantType)(nil),                      // 745: console.v1.BusinessProcessParticipantType
-	(*BusinessProcessParticipant)(nil),                          // 746: console.v1.BusinessProcessParticipant
-	(*BusinessProcessRequirement)(nil),                          // 747: console.v1.BusinessProcessRequirement
-	(*BusinessProcessTransition)(nil),                           // 748: console.v1.BusinessProcessTransition
-	(*BusinessProcessFollowUp)(nil),                             // 749: console.v1.BusinessProcessFollowUp
-	(*BusinessProcessDefinition)(nil),                           // 750: console.v1.BusinessProcessDefinition
-	(*BusinessProcessReceipt)(nil),                              // 751: console.v1.BusinessProcessReceipt
-	(*BusinessProcess)(nil),                                     // 752: console.v1.BusinessProcess
-	(*DefineBusinessProcessRequest)(nil),                        // 753: console.v1.DefineBusinessProcessRequest
-	(*DefineBusinessProcessResponse)(nil),                       // 754: console.v1.DefineBusinessProcessResponse
-	(*StartBusinessProcessRequest)(nil),                         // 755: console.v1.StartBusinessProcessRequest
-	(*StartBusinessProcessResponse)(nil),                        // 756: console.v1.StartBusinessProcessResponse
-	(*GetBusinessProcessRequest)(nil),                           // 757: console.v1.GetBusinessProcessRequest
-	(*GetBusinessProcessResponse)(nil),                          // 758: console.v1.GetBusinessProcessResponse
-	(*ListBusinessProcessesRequest)(nil),                        // 759: console.v1.ListBusinessProcessesRequest
-	(*ListBusinessProcessesResponse)(nil),                       // 760: console.v1.ListBusinessProcessesResponse
-	(*TransitionBusinessProcessRequest)(nil),                    // 761: console.v1.TransitionBusinessProcessRequest
-	(*TransitionBusinessProcessResponse)(nil),                   // 762: console.v1.TransitionBusinessProcessResponse
-	(*GetBusinessProcessDefinitionRequest)(nil),                 // 763: console.v1.GetBusinessProcessDefinitionRequest
-	(*GetBusinessProcessDefinitionResponse)(nil),                // 764: console.v1.GetBusinessProcessDefinitionResponse
-	(*ListBusinessProcessDefinitionsRequest)(nil),               // 765: console.v1.ListBusinessProcessDefinitionsRequest
-	(*ListBusinessProcessDefinitionsResponse)(nil),              // 766: console.v1.ListBusinessProcessDefinitionsResponse
-	(*OperatingProjectSnapshotFileInput)(nil),                   // 767: console.v1.OperatingProjectSnapshotFileInput
-	(*AcceptOperatingProjectSnapshotRequest)(nil),               // 768: console.v1.AcceptOperatingProjectSnapshotRequest
-	(*AcceptOperatingProjectSnapshotResponse)(nil),              // 769: console.v1.AcceptOperatingProjectSnapshotResponse
-	(*GetOperatingProjectSnapshotRequest)(nil),                  // 770: console.v1.GetOperatingProjectSnapshotRequest
-	(*GetOperatingTaskEnvironmentRequest)(nil),                  // 771: console.v1.GetOperatingTaskEnvironmentRequest
-	(*GetOperatingTaskEnvironmentResponse)(nil),                 // 772: console.v1.GetOperatingTaskEnvironmentResponse
-	(*ImportOperatingProjectSnapshotRequest)(nil),               // 773: console.v1.ImportOperatingProjectSnapshotRequest
-	(*BusinessBlueprint)(nil),                                   // 774: console.v1.BusinessBlueprint
-	(*ListBusinessBlueprintsRequest)(nil),                       // 775: console.v1.ListBusinessBlueprintsRequest
-	(*ListBusinessBlueprintsResponse)(nil),                      // 776: console.v1.ListBusinessBlueprintsResponse
-	(*CloneBusinessBlueprintRequest)(nil),                       // 777: console.v1.CloneBusinessBlueprintRequest
-	(*CloneBusinessBlueprintResponse)(nil),                      // 778: console.v1.CloneBusinessBlueprintResponse
-	(*BusinessBlueprintSource)(nil),                             // 779: console.v1.BusinessBlueprintSource
-	(*CaptureFormInvitation)(nil),                               // 780: console.v1.CaptureFormInvitation
-	(*CreateCaptureFormInvitationRequest)(nil),                  // 781: console.v1.CreateCaptureFormInvitationRequest
-	(*CreateCaptureFormInvitationResponse)(nil),                 // 782: console.v1.CreateCaptureFormInvitationResponse
-	(*RevokeCaptureFormInvitationRequest)(nil),                  // 783: console.v1.RevokeCaptureFormInvitationRequest
-	(*RevokeCaptureFormInvitationResponse)(nil),                 // 784: console.v1.RevokeCaptureFormInvitationResponse
-	(*GetInvitedCaptureFormRequest)(nil),                        // 785: console.v1.GetInvitedCaptureFormRequest
-	(*GetInvitedCaptureFormResponse)(nil),                       // 786: console.v1.GetInvitedCaptureFormResponse
-	(*SubmitInvitedCaptureFormRequest)(nil),                     // 787: console.v1.SubmitInvitedCaptureFormRequest
-	(*SubmitInvitedCaptureFormResponse)(nil),                    // 788: console.v1.SubmitInvitedCaptureFormResponse
-	(*GetStaffManagedInferenceReadinessRequest)(nil),            // 789: console.v1.GetStaffManagedInferenceReadinessRequest
-	(*GetManagedInferenceReadinessRequest)(nil),                 // 790: console.v1.GetManagedInferenceReadinessRequest
-	(*GetManagedInferenceReadinessResponse)(nil),                // 791: console.v1.GetManagedInferenceReadinessResponse
-	(*GetStaffManagedInferenceFundingRequest)(nil),              // 792: console.v1.GetStaffManagedInferenceFundingRequest
-	(*GrantStaffManagedInferenceCreditsRequest)(nil),            // 793: console.v1.GrantStaffManagedInferenceCreditsRequest
-	(*GetStaffManagedInferenceUsageRequest)(nil),                // 794: console.v1.GetStaffManagedInferenceUsageRequest
-	(*GetStaffManagedInferenceBudgetRequest)(nil),               // 795: console.v1.GetStaffManagedInferenceBudgetRequest
-	(*SetStaffManagedInferenceBudgetRequest)(nil),               // 796: console.v1.SetStaffManagedInferenceBudgetRequest
-	(*ListManagedProviderAccessEventsRequest)(nil),              // 797: console.v1.ListManagedProviderAccessEventsRequest
-	(*ManagedProviderAccessEvent)(nil),                          // 798: console.v1.ManagedProviderAccessEvent
-	(*ListManagedProviderAccessEventsResponse)(nil),             // 799: console.v1.ListManagedProviderAccessEventsResponse
-	(*ListStaffManagedInferenceAdminEventsRequest)(nil),         // 800: console.v1.ListStaffManagedInferenceAdminEventsRequest
-	(*ListStaffManagedExecutionGrantEventsRequest)(nil),         // 801: console.v1.ListStaffManagedExecutionGrantEventsRequest
-	(*ManagedExecutionGrantEvent)(nil),                          // 802: console.v1.ManagedExecutionGrantEvent
-	(*ListStaffManagedExecutionGrantEventsResponse)(nil),        // 803: console.v1.ListStaffManagedExecutionGrantEventsResponse
-	(*ListStaffManagedExecutionOutcomesRequest)(nil),            // 804: console.v1.ListStaffManagedExecutionOutcomesRequest
-	(*ManagedExecutionOutcome)(nil),                             // 805: console.v1.ManagedExecutionOutcome
-	(*ListStaffManagedExecutionOutcomesResponse)(nil),           // 806: console.v1.ListStaffManagedExecutionOutcomesResponse
-	(*ProspectingDraftTargetAccount)(nil),                       // 807: console.v1.ProspectingDraftTargetAccount
-	(*ProspectingDraft)(nil),                                    // 808: console.v1.ProspectingDraft
-	(*ProspectingDraftMutationReceipt)(nil),                     // 809: console.v1.ProspectingDraftMutationReceipt
-	(*CreateProspectingDraftRequest)(nil),                       // 810: console.v1.CreateProspectingDraftRequest
-	(*CreateProspectingDraftResponse)(nil),                      // 811: console.v1.CreateProspectingDraftResponse
-	(*ListProspectingDraftsRequest)(nil),                        // 812: console.v1.ListProspectingDraftsRequest
-	(*ListProspectingDraftsResponse)(nil),                       // 813: console.v1.ListProspectingDraftsResponse
-	(*ReviewProspectingDraftRequest)(nil),                       // 814: console.v1.ReviewProspectingDraftRequest
-	(*ReviewProspectingDraftResponse)(nil),                      // 815: console.v1.ReviewProspectingDraftResponse
-	(*WorkspaceBrandVoice)(nil),                                 // 816: console.v1.WorkspaceBrandVoice
-	nil,                                                         // 817: console.v1.OperatingRequiredInitialToolIntent.MetadataEntry
-	nil,                                                         // 818: console.v1.WorkspaceSettingsActivityEntry.DetailsEntry
-	(*CaptureFormTypedValue_OptionValues)(nil),                  // 819: console.v1.CaptureFormTypedValue.OptionValues
-	(*WorkspaceBrandVoice_Scope)(nil),                           // 820: console.v1.WorkspaceBrandVoice.Scope
-	(*timestamppb.Timestamp)(nil),                               // 821: google.protobuf.Timestamp
-	(v1.RiskLevel)(0),                                           // 822: common.v1.RiskLevel
-	(*v11.ToolExecutionProjectSource)(nil),                      // 823: toolexecution.v1.ToolExecutionProjectSource
-	(*structpb.Struct)(nil),                                     // 824: google.protobuf.Struct
-	(*v12.VfsUploadTarget)(nil),                                 // 825: vfs.v1.VfsUploadTarget
-	(*v12.VfsCompletedUploadPart)(nil),                          // 826: vfs.v1.VfsCompletedUploadPart
-	(v13.MemoryReviewStatus)(0),                                 // 827: memory.v1.MemoryReviewStatus
-	(v13.Scope)(0),                                              // 828: memory.v1.Scope
-	(v11.ToolExecutionState)(0),                                 // 829: toolexecution.v1.ToolExecutionState
-	(*v11.ToolExecutionAttachmentMount)(nil),                    // 830: toolexecution.v1.ToolExecutionAttachmentMount
-	(*v14.RunnerSessionOwnerBinding)(nil),                       // 831: remoterunner.v1.RunnerSessionOwnerBinding
-	(v15.OrbObservedLifecycle)(0),                               // 832: orbcontrol.v1.OrbObservedLifecycle
-	(v15.OrbCommandKind)(0),                                     // 833: orbcontrol.v1.OrbCommandKind
-	(*v16.ConnectorCatalogProvenance)(nil),                      // 834: connectors.v1.ConnectorCatalogProvenance
-	(*v17.TraceAnnotation)(nil),                                 // 835: traces.v1.TraceAnnotation
-	(*v16.SourceAuthorityObservation)(nil),                      // 836: connectors.v1.SourceAuthorityObservation
-	(*v18.RecordRef)(nil),                                       // 837: platform.v1.RecordRef
-	(*v16.ProviderResourceEnvelope)(nil),                        // 838: connectors.v1.ProviderResourceEnvelope
-	(*v19.GetBudgetDashboardResponse)(nil),                      // 839: meter.v1.GetBudgetDashboardResponse
-	(*v19.GetPrepaidCreditBalanceRequest)(nil),                  // 840: meter.v1.GetPrepaidCreditBalanceRequest
-	(*v19.GrantDevelopmentCreditsRequest)(nil),                  // 841: meter.v1.GrantDevelopmentCreditsRequest
-	(*v19.QueryUsageRequest)(nil),                               // 842: meter.v1.QueryUsageRequest
-	(*v19.GetBudgetDashboardRequest)(nil),                       // 843: meter.v1.GetBudgetDashboardRequest
-	(*v19.SetBudgetRequest)(nil),                                // 844: meter.v1.SetBudgetRequest
-	(*v19.ListManagedInferenceAdminEventsRequest)(nil),          // 845: meter.v1.ListManagedInferenceAdminEventsRequest
-	(*v19.GetPrepaidCreditBalanceResponse)(nil),                 // 846: meter.v1.GetPrepaidCreditBalanceResponse
-	(*v19.GrantDevelopmentCreditsResponse)(nil),                 // 847: meter.v1.GrantDevelopmentCreditsResponse
-	(*v19.QueryUsageResponse)(nil),                              // 848: meter.v1.QueryUsageResponse
-	(*v19.SetBudgetResponse)(nil),                               // 849: meter.v1.SetBudgetResponse
-	(*v19.ListManagedInferenceAdminEventsResponse)(nil),         // 850: meter.v1.ListManagedInferenceAdminEventsResponse
+	(*IntegrationResourceType)(nil),                             // 520: console.v1.IntegrationResourceType
+	(*IntegrationTile)(nil),                                     // 521: console.v1.IntegrationTile
+	(*OnboardingTask)(nil),                                      // 522: console.v1.OnboardingTask
+	(*TraceDrilldown)(nil),                                      // 523: console.v1.TraceDrilldown
+	(*TraceSpan)(nil),                                           // 524: console.v1.TraceSpan
+	(*TraceSpanReference)(nil),                                  // 525: console.v1.TraceSpanReference
+	(*TraceCompletenessSignal)(nil),                             // 526: console.v1.TraceCompletenessSignal
+	(*SecurityDecisionPacket)(nil),                              // 527: console.v1.SecurityDecisionPacket
+	(*SecurityDecisionEvidenceGap)(nil),                         // 528: console.v1.SecurityDecisionEvidenceGap
+	(*RelatedResource)(nil),                                     // 529: console.v1.RelatedResource
+	(*OperatingHomepageSuggestion)(nil),                         // 530: console.v1.OperatingHomepageSuggestion
+	(*DexMcpServer)(nil),                                        // 531: console.v1.DexMcpServer
+	(*DexMcpCatalogTool)(nil),                                   // 532: console.v1.DexMcpCatalogTool
+	(*CreateDexMcpServerRequest)(nil),                           // 533: console.v1.CreateDexMcpServerRequest
+	(*CreateDexMcpServerResponse)(nil),                          // 534: console.v1.CreateDexMcpServerResponse
+	(*ListDexMcpServersRequest)(nil),                            // 535: console.v1.ListDexMcpServersRequest
+	(*ListDexMcpServersResponse)(nil),                           // 536: console.v1.ListDexMcpServersResponse
+	(*GetDexMcpServerRequest)(nil),                              // 537: console.v1.GetDexMcpServerRequest
+	(*GetDexMcpServerResponse)(nil),                             // 538: console.v1.GetDexMcpServerResponse
+	(*DiscoverDexMcpServerRequest)(nil),                         // 539: console.v1.DiscoverDexMcpServerRequest
+	(*DiscoverDexMcpServerResponse)(nil),                        // 540: console.v1.DiscoverDexMcpServerResponse
+	(*UpdateDexMcpServerRequest)(nil),                           // 541: console.v1.UpdateDexMcpServerRequest
+	(*UpdateDexMcpServerResponse)(nil),                          // 542: console.v1.UpdateDexMcpServerResponse
+	(*DeleteDexMcpServerRequest)(nil),                           // 543: console.v1.DeleteDexMcpServerRequest
+	(*DeleteDexMcpServerResponse)(nil),                          // 544: console.v1.DeleteDexMcpServerResponse
+	(*DexMcpOAuthProfile)(nil),                                  // 545: console.v1.DexMcpOAuthProfile
+	(*InitiateDexMcpOAuthProfileRequest)(nil),                   // 546: console.v1.InitiateDexMcpOAuthProfileRequest
+	(*InitiateDexMcpOAuthProfileResponse)(nil),                  // 547: console.v1.InitiateDexMcpOAuthProfileResponse
+	(*CompleteDexMcpOAuthProfileRequest)(nil),                   // 548: console.v1.CompleteDexMcpOAuthProfileRequest
+	(*CompleteDexMcpOAuthProfileResponse)(nil),                  // 549: console.v1.CompleteDexMcpOAuthProfileResponse
+	(*ListDexMcpOAuthProfilesRequest)(nil),                      // 550: console.v1.ListDexMcpOAuthProfilesRequest
+	(*ListDexMcpOAuthProfilesResponse)(nil),                     // 551: console.v1.ListDexMcpOAuthProfilesResponse
+	(*RevokeDexMcpOAuthProfileRequest)(nil),                     // 552: console.v1.RevokeDexMcpOAuthProfileRequest
+	(*RevokeDexMcpOAuthProfileResponse)(nil),                    // 553: console.v1.RevokeDexMcpOAuthProfileResponse
+	(*ReauthorizeDexMcpOAuthProfileRequest)(nil),                // 554: console.v1.ReauthorizeDexMcpOAuthProfileRequest
+	(*ReauthorizeDexMcpOAuthProfileResponse)(nil),               // 555: console.v1.ReauthorizeDexMcpOAuthProfileResponse
+	(*PrivateEndpoint)(nil),                                     // 556: console.v1.PrivateEndpoint
+	(*PrivateProfileRoute)(nil),                                 // 557: console.v1.PrivateProfileRoute
+	(*RegisterPrivateEndpointRequest)(nil),                      // 558: console.v1.RegisterPrivateEndpointRequest
+	(*RegisterPrivateEndpointResponse)(nil),                     // 559: console.v1.RegisterPrivateEndpointResponse
+	(*VerifyPrivateEndpointRequest)(nil),                        // 560: console.v1.VerifyPrivateEndpointRequest
+	(*VerifyPrivateEndpointResponse)(nil),                       // 561: console.v1.VerifyPrivateEndpointResponse
+	(*ListPrivateEndpointsRequest)(nil),                         // 562: console.v1.ListPrivateEndpointsRequest
+	(*ListPrivateEndpointsResponse)(nil),                        // 563: console.v1.ListPrivateEndpointsResponse
+	(*DeletePrivateEndpointRequest)(nil),                        // 564: console.v1.DeletePrivateEndpointRequest
+	(*DeletePrivateEndpointResponse)(nil),                       // 565: console.v1.DeletePrivateEndpointResponse
+	(*AttachPrivateEndpointToProfileRequest)(nil),               // 566: console.v1.AttachPrivateEndpointToProfileRequest
+	(*AttachPrivateEndpointToProfileResponse)(nil),              // 567: console.v1.AttachPrivateEndpointToProfileResponse
+	(*ListGatewayEgressOriginsRequest)(nil),                     // 568: console.v1.ListGatewayEgressOriginsRequest
+	(*ListGatewayEgressOriginsResponse)(nil),                    // 569: console.v1.ListGatewayEgressOriginsResponse
+	(*OperatingCapabilityRequirementState)(nil),                 // 570: console.v1.OperatingCapabilityRequirementState
+	(*PrewarmOperatingThreadRequest)(nil),                       // 571: console.v1.PrewarmOperatingThreadRequest
+	(*PrewarmOperatingThreadResponse)(nil),                      // 572: console.v1.PrewarmOperatingThreadResponse
+	(*TerminalErrorEnvelope)(nil),                               // 573: console.v1.TerminalErrorEnvelope
+	(*BootstrapThreadGatewayRequest)(nil),                       // 574: console.v1.BootstrapThreadGatewayRequest
+	(*BootstrapThreadGatewayResponse)(nil),                      // 575: console.v1.BootstrapThreadGatewayResponse
+	(*SetOperatingThreadControllerRequest)(nil),                 // 576: console.v1.SetOperatingThreadControllerRequest
+	(*SetOperatingThreadControllerResponse)(nil),                // 577: console.v1.SetOperatingThreadControllerResponse
+	(*CostUsageSummary)(nil),                                    // 578: console.v1.CostUsageSummary
+	(*CostUsageAttributionSummary)(nil),                         // 579: console.v1.CostUsageAttributionSummary
+	(*TenantPrivacySetting)(nil),                                // 580: console.v1.TenantPrivacySetting
+	(*GetPrivacySettingsRequest)(nil),                           // 581: console.v1.GetPrivacySettingsRequest
+	(*GetPrivacySettingsResponse)(nil),                          // 582: console.v1.GetPrivacySettingsResponse
+	(*SetPrivacySettingsRequest)(nil),                           // 583: console.v1.SetPrivacySettingsRequest
+	(*ManagedRule)(nil),                                         // 584: console.v1.ManagedRule
+	(*ManagedSkillRef)(nil),                                     // 585: console.v1.ManagedSkillRef
+	(*McpServerRef)(nil),                                        // 586: console.v1.McpServerRef
+	(*McpPolicy)(nil),                                           // 587: console.v1.McpPolicy
+	(*ManagedSetup)(nil),                                        // 588: console.v1.ManagedSetup
+	(*GetManagedSetupRequest)(nil),                              // 589: console.v1.GetManagedSetupRequest
+	(*SetManagedSetupRequest)(nil),                              // 590: console.v1.SetManagedSetupRequest
+	(*MissionScheduleCapability)(nil),                           // 591: console.v1.MissionScheduleCapability
+	(*StartMeetingCaptureRequest)(nil),                          // 592: console.v1.StartMeetingCaptureRequest
+	(*ListConnectedCallsRequest)(nil),                           // 593: console.v1.ListConnectedCallsRequest
+	(*ListConnectedCallsResponse)(nil),                          // 594: console.v1.ListConnectedCallsResponse
+	(*ConnectedCall)(nil),                                       // 595: console.v1.ConnectedCall
+	(*StartMeetingCaptureResponse)(nil),                         // 596: console.v1.StartMeetingCaptureResponse
+	(*GetMeetingCaptureRequest)(nil),                            // 597: console.v1.GetMeetingCaptureRequest
+	(*GetMeetingCaptureResponse)(nil),                           // 598: console.v1.GetMeetingCaptureResponse
+	(*ListMeetingCapturesRequest)(nil),                          // 599: console.v1.ListMeetingCapturesRequest
+	(*ListMeetingCapturesResponse)(nil),                         // 600: console.v1.ListMeetingCapturesResponse
+	(*StopMeetingCaptureRequest)(nil),                           // 601: console.v1.StopMeetingCaptureRequest
+	(*StopMeetingCaptureResponse)(nil),                          // 602: console.v1.StopMeetingCaptureResponse
+	(*MeetingCapture)(nil),                                      // 603: console.v1.MeetingCapture
+	(*ProspectingWatchProgram)(nil),                             // 604: console.v1.ProspectingWatchProgram
+	(*ProspectingWatchProgramMutationReceipt)(nil),              // 605: console.v1.ProspectingWatchProgramMutationReceipt
+	(*CreateProspectingWatchProgramRequest)(nil),                // 606: console.v1.CreateProspectingWatchProgramRequest
+	(*CreateProspectingWatchProgramResponse)(nil),               // 607: console.v1.CreateProspectingWatchProgramResponse
+	(*GetProspectingWatchProgramRequest)(nil),                   // 608: console.v1.GetProspectingWatchProgramRequest
+	(*GetProspectingWatchProgramResponse)(nil),                  // 609: console.v1.GetProspectingWatchProgramResponse
+	(*ListProspectingWatchProgramsRequest)(nil),                 // 610: console.v1.ListProspectingWatchProgramsRequest
+	(*ListProspectingWatchProgramsResponse)(nil),                // 611: console.v1.ListProspectingWatchProgramsResponse
+	(*UpdateProspectingWatchProgramRequest)(nil),                // 612: console.v1.UpdateProspectingWatchProgramRequest
+	(*UpdateProspectingWatchProgramResponse)(nil),               // 613: console.v1.UpdateProspectingWatchProgramResponse
+	(*ListCommitmentsRequest)(nil),                              // 614: console.v1.ListCommitmentsRequest
+	(*ListCommitmentsResponse)(nil),                             // 615: console.v1.ListCommitmentsResponse
+	(*Commitment)(nil),                                          // 616: console.v1.Commitment
+	(*CommitmentCitation)(nil),                                  // 617: console.v1.CommitmentCitation
+	(*OperatingJobRecordLink)(nil),                              // 618: console.v1.OperatingJobRecordLink
+	(*OperatingJob)(nil),                                        // 619: console.v1.OperatingJob
+	(*ListOperatingJobsRequest)(nil),                            // 620: console.v1.ListOperatingJobsRequest
+	(*ListOperatingJobsResponse)(nil),                           // 621: console.v1.ListOperatingJobsResponse
+	(*RecordOperatingHomepageSuggestionFeedbackRequest)(nil),    // 622: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
+	(*RecordOperatingHomepageSuggestionFeedbackResponse)(nil),   // 623: console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
+	(*InferenceCreditBalance)(nil),                              // 624: console.v1.InferenceCreditBalance
+	(*GetInferenceCreditBalanceRequest)(nil),                    // 625: console.v1.GetInferenceCreditBalanceRequest
+	(*InferenceCreditBlock)(nil),                                // 626: console.v1.InferenceCreditBlock
+	(*InferenceCreditPricing)(nil),                              // 627: console.v1.InferenceCreditPricing
+	(*GetInferenceCreditBalanceResponse)(nil),                   // 628: console.v1.GetInferenceCreditBalanceResponse
+	(*InferenceRunCreditBalance)(nil),                           // 629: console.v1.InferenceRunCreditBalance
+	(*InferenceCreditReconciliation)(nil),                       // 630: console.v1.InferenceCreditReconciliation
+	(*CreateInferenceCreditCheckoutRequest)(nil),                // 631: console.v1.CreateInferenceCreditCheckoutRequest
+	(*CreateInferenceCreditCheckoutResponse)(nil),               // 632: console.v1.CreateInferenceCreditCheckoutResponse
+	(*FulfillInferenceCreditCheckoutRequest)(nil),               // 633: console.v1.FulfillInferenceCreditCheckoutRequest
+	(*FulfillInferenceCreditCheckoutResponse)(nil),              // 634: console.v1.FulfillInferenceCreditCheckoutResponse
+	(*OperatingAutoModelRoute)(nil),                             // 635: console.v1.OperatingAutoModelRoute
+	(*BusinessFieldDefinition)(nil),                             // 636: console.v1.BusinessFieldDefinition
+	(*BusinessRelationshipDefinition)(nil),                      // 637: console.v1.BusinessRelationshipDefinition
+	(*BusinessObjectType)(nil),                                  // 638: console.v1.BusinessObjectType
+	(*BusinessMoney)(nil),                                       // 639: console.v1.BusinessMoney
+	(*BusinessObjectReference)(nil),                             // 640: console.v1.BusinessObjectReference
+	(*BusinessArtifactReference)(nil),                           // 641: console.v1.BusinessArtifactReference
+	(*BusinessTextList)(nil),                                    // 642: console.v1.BusinessTextList
+	(*BusinessFieldValue)(nil),                                  // 643: console.v1.BusinessFieldValue
+	(*BusinessSourceField)(nil),                                 // 644: console.v1.BusinessSourceField
+	(*BusinessSourceBinding)(nil),                               // 645: console.v1.BusinessSourceBinding
+	(*BusinessObject)(nil),                                      // 646: console.v1.BusinessObject
+	(*BusinessObjectRevision)(nil),                              // 647: console.v1.BusinessObjectRevision
+	(*BusinessObjectRelationship)(nil),                          // 648: console.v1.BusinessObjectRelationship
+	(*DefineBusinessObjectTypeRequest)(nil),                     // 649: console.v1.DefineBusinessObjectTypeRequest
+	(*DefineBusinessObjectTypeResponse)(nil),                    // 650: console.v1.DefineBusinessObjectTypeResponse
+	(*ListBusinessObjectTypesRequest)(nil),                      // 651: console.v1.ListBusinessObjectTypesRequest
+	(*ListBusinessObjectTypesResponse)(nil),                     // 652: console.v1.ListBusinessObjectTypesResponse
+	(*CreateBusinessObjectRequest)(nil),                         // 653: console.v1.CreateBusinessObjectRequest
+	(*CreateBusinessObjectResponse)(nil),                        // 654: console.v1.CreateBusinessObjectResponse
+	(*GetBusinessObjectRequest)(nil),                            // 655: console.v1.GetBusinessObjectRequest
+	(*GetBusinessObjectResponse)(nil),                           // 656: console.v1.GetBusinessObjectResponse
+	(*BusinessObjectSourceRecovery)(nil),                        // 657: console.v1.BusinessObjectSourceRecovery
+	(*ListBusinessObjectsRequest)(nil),                          // 658: console.v1.ListBusinessObjectsRequest
+	(*BusinessObjectFilter)(nil),                                // 659: console.v1.BusinessObjectFilter
+	(*BusinessObjectReferenceFilter)(nil),                       // 660: console.v1.BusinessObjectReferenceFilter
+	(*ListBusinessObjectsResponse)(nil),                         // 661: console.v1.ListBusinessObjectsResponse
+	(*UpdateBusinessObjectRequest)(nil),                         // 662: console.v1.UpdateBusinessObjectRequest
+	(*UpdateBusinessObjectResponse)(nil),                        // 663: console.v1.UpdateBusinessObjectResponse
+	(*DeleteBusinessObjectRequest)(nil),                         // 664: console.v1.DeleteBusinessObjectRequest
+	(*DeleteBusinessObjectResponse)(nil),                        // 665: console.v1.DeleteBusinessObjectResponse
+	(*ListBusinessObjectRevisionsRequest)(nil),                  // 666: console.v1.ListBusinessObjectRevisionsRequest
+	(*ListBusinessObjectRevisionsResponse)(nil),                 // 667: console.v1.ListBusinessObjectRevisionsResponse
+	(*BindBusinessObjectSourceRequest)(nil),                     // 668: console.v1.BindBusinessObjectSourceRequest
+	(*BindBusinessObjectSourceResponse)(nil),                    // 669: console.v1.BindBusinessObjectSourceResponse
+	(*AdmitBusinessObjectObservationRequest)(nil),               // 670: console.v1.AdmitBusinessObjectObservationRequest
+	(*AdmitBusinessObjectObservationResponse)(nil),              // 671: console.v1.AdmitBusinessObjectObservationResponse
+	(*ListBusinessObjectRelationshipsRequest)(nil),              // 672: console.v1.ListBusinessObjectRelationshipsRequest
+	(*ListBusinessObjectRelationshipsResponse)(nil),             // 673: console.v1.ListBusinessObjectRelationshipsResponse
+	(*CreateBusinessObjectRelationshipRequest)(nil),             // 674: console.v1.CreateBusinessObjectRelationshipRequest
+	(*CreateBusinessObjectRelationshipResponse)(nil),            // 675: console.v1.CreateBusinessObjectRelationshipResponse
+	(*DeleteBusinessObjectRelationshipRequest)(nil),             // 676: console.v1.DeleteBusinessObjectRelationshipRequest
+	(*DeleteBusinessObjectRelationshipResponse)(nil),            // 677: console.v1.DeleteBusinessObjectRelationshipResponse
+	(*CaptureFormObjectTarget)(nil),                             // 678: console.v1.CaptureFormObjectTarget
+	(*CaptureFormAssetRef)(nil),                                 // 679: console.v1.CaptureFormAssetRef
+	(*CaptureFormBrandingInput)(nil),                            // 680: console.v1.CaptureFormBrandingInput
+	(*CaptureFormBranding)(nil),                                 // 681: console.v1.CaptureFormBranding
+	(*CaptureFormPublicBranding)(nil),                           // 682: console.v1.CaptureFormPublicBranding
+	(*CaptureFormSelectOption)(nil),                             // 683: console.v1.CaptureFormSelectOption
+	(*CaptureFormSelectSpec)(nil),                               // 684: console.v1.CaptureFormSelectSpec
+	(*CaptureFormUploadSpec)(nil),                               // 685: console.v1.CaptureFormUploadSpec
+	(*CaptureFormUpload)(nil),                                   // 686: console.v1.CaptureFormUpload
+	(*CaptureFormTypedValue)(nil),                               // 687: console.v1.CaptureFormTypedValue
+	(*CaptureFormField)(nil),                                    // 688: console.v1.CaptureFormField
+	(*CaptureFormPublicField)(nil),                              // 689: console.v1.CaptureFormPublicField
+	(*CaptureFormVersionInput)(nil),                             // 690: console.v1.CaptureFormVersionInput
+	(*CaptureFormVersion)(nil),                                  // 691: console.v1.CaptureFormVersion
+	(*CaptureFormPublicationInput)(nil),                         // 692: console.v1.CaptureFormPublicationInput
+	(*CaptureFormPublicRoute)(nil),                              // 693: console.v1.CaptureFormPublicRoute
+	(*CaptureFormPublication)(nil),                              // 694: console.v1.CaptureFormPublication
+	(*CaptureForm)(nil),                                         // 695: console.v1.CaptureForm
+	(*PublishedCaptureForm)(nil),                                // 696: console.v1.PublishedCaptureForm
+	(*CaptureFormAnswer)(nil),                                   // 697: console.v1.CaptureFormAnswer
+	(*CaptureFormReview)(nil),                                   // 698: console.v1.CaptureFormReview
+	(*CaptureFormObjectResult)(nil),                             // 699: console.v1.CaptureFormObjectResult
+	(*CaptureFormSubmission)(nil),                               // 700: console.v1.CaptureFormSubmission
+	(*CaptureFormPublicSubmissionReceipt)(nil),                  // 701: console.v1.CaptureFormPublicSubmissionReceipt
+	(*CreateCaptureFormRequest)(nil),                            // 702: console.v1.CreateCaptureFormRequest
+	(*CreateCaptureFormResponse)(nil),                           // 703: console.v1.CreateCaptureFormResponse
+	(*ListCaptureFormsRequest)(nil),                             // 704: console.v1.ListCaptureFormsRequest
+	(*ListCaptureFormsResponse)(nil),                            // 705: console.v1.ListCaptureFormsResponse
+	(*GetCaptureFormRequest)(nil),                               // 706: console.v1.GetCaptureFormRequest
+	(*GetCaptureFormResponse)(nil),                              // 707: console.v1.GetCaptureFormResponse
+	(*UpdateCaptureFormRequest)(nil),                            // 708: console.v1.UpdateCaptureFormRequest
+	(*UpdateCaptureFormResponse)(nil),                           // 709: console.v1.UpdateCaptureFormResponse
+	(*PublishCaptureFormRequest)(nil),                           // 710: console.v1.PublishCaptureFormRequest
+	(*PublishCaptureFormResponse)(nil),                          // 711: console.v1.PublishCaptureFormResponse
+	(*RevokeCaptureFormPublicationRequest)(nil),                 // 712: console.v1.RevokeCaptureFormPublicationRequest
+	(*RevokeCaptureFormPublicationResponse)(nil),                // 713: console.v1.RevokeCaptureFormPublicationResponse
+	(*GetPublishedCaptureFormRequest)(nil),                      // 714: console.v1.GetPublishedCaptureFormRequest
+	(*GetPublishedCaptureFormResponse)(nil),                     // 715: console.v1.GetPublishedCaptureFormResponse
+	(*GetPublishedCaptureFormBrandingAssetRequest)(nil),         // 716: console.v1.GetPublishedCaptureFormBrandingAssetRequest
+	(*GetPublishedCaptureFormBrandingAssetResponse)(nil),        // 717: console.v1.GetPublishedCaptureFormBrandingAssetResponse
+	(*SubmitPublishedCaptureFormRequest)(nil),                   // 718: console.v1.SubmitPublishedCaptureFormRequest
+	(*SubmitPublishedCaptureFormResponse)(nil),                  // 719: console.v1.SubmitPublishedCaptureFormResponse
+	(*BeginPublishedCaptureFormUploadRequest)(nil),              // 720: console.v1.BeginPublishedCaptureFormUploadRequest
+	(*BeginPublishedCaptureFormUploadResponse)(nil),             // 721: console.v1.BeginPublishedCaptureFormUploadResponse
+	(*CompletePublishedCaptureFormUploadRequest)(nil),           // 722: console.v1.CompletePublishedCaptureFormUploadRequest
+	(*CompletePublishedCaptureFormUploadResponse)(nil),          // 723: console.v1.CompletePublishedCaptureFormUploadResponse
+	(*GetCaptureFormSubmissionRequest)(nil),                     // 724: console.v1.GetCaptureFormSubmissionRequest
+	(*GetCaptureFormSubmissionResponse)(nil),                    // 725: console.v1.GetCaptureFormSubmissionResponse
+	(*ListCaptureFormSubmissionsRequest)(nil),                   // 726: console.v1.ListCaptureFormSubmissionsRequest
+	(*ListCaptureFormSubmissionsResponse)(nil),                  // 727: console.v1.ListCaptureFormSubmissionsResponse
+	(*ReviewCaptureFormSubmissionRequest)(nil),                  // 728: console.v1.ReviewCaptureFormSubmissionRequest
+	(*ReviewCaptureFormSubmissionResponse)(nil),                 // 729: console.v1.ReviewCaptureFormSubmissionResponse
+	(*GetBusinessObjectTypeRequest)(nil),                        // 730: console.v1.GetBusinessObjectTypeRequest
+	(*GetBusinessObjectTypeResponse)(nil),                       // 731: console.v1.GetBusinessObjectTypeResponse
+	(*InferenceCreditReceipt)(nil),                              // 732: console.v1.InferenceCreditReceipt
+	(*ListInferenceCreditReceiptsRequest)(nil),                  // 733: console.v1.ListInferenceCreditReceiptsRequest
+	(*ListInferenceCreditReceiptsResponse)(nil),                 // 734: console.v1.ListInferenceCreditReceiptsResponse
+	(*InferenceCreditAutoRefill)(nil),                           // 735: console.v1.InferenceCreditAutoRefill
+	(*GetInferenceCreditAutoRefillRequest)(nil),                 // 736: console.v1.GetInferenceCreditAutoRefillRequest
+	(*GetInferenceCreditAutoRefillResponse)(nil),                // 737: console.v1.GetInferenceCreditAutoRefillResponse
+	(*UpdateInferenceCreditAutoRefillRequest)(nil),              // 738: console.v1.UpdateInferenceCreditAutoRefillRequest
+	(*UpdateInferenceCreditAutoRefillResponse)(nil),             // 739: console.v1.UpdateInferenceCreditAutoRefillResponse
+	(*CompleteInferenceCreditAutoRefillRequest)(nil),            // 740: console.v1.CompleteInferenceCreditAutoRefillRequest
+	(*CompleteInferenceCreditAutoRefillResponse)(nil),           // 741: console.v1.CompleteInferenceCreditAutoRefillResponse
+	(*PrepareBusinessObjectAuthorityTransferRequest)(nil),       // 742: console.v1.PrepareBusinessObjectAuthorityTransferRequest
+	(*PrepareBusinessObjectAuthorityTransferResponse)(nil),      // 743: console.v1.PrepareBusinessObjectAuthorityTransferResponse
+	(*FinalizeBusinessObjectAuthorityTransferRequest)(nil),      // 744: console.v1.FinalizeBusinessObjectAuthorityTransferRequest
+	(*FinalizeBusinessObjectAuthorityTransferResponse)(nil),     // 745: console.v1.FinalizeBusinessObjectAuthorityTransferResponse
+	(*BusinessProcessParticipantType)(nil),                      // 746: console.v1.BusinessProcessParticipantType
+	(*BusinessProcessParticipant)(nil),                          // 747: console.v1.BusinessProcessParticipant
+	(*BusinessProcessRequirement)(nil),                          // 748: console.v1.BusinessProcessRequirement
+	(*BusinessProcessTransition)(nil),                           // 749: console.v1.BusinessProcessTransition
+	(*BusinessProcessFollowUp)(nil),                             // 750: console.v1.BusinessProcessFollowUp
+	(*BusinessProcessDefinition)(nil),                           // 751: console.v1.BusinessProcessDefinition
+	(*BusinessProcessReceipt)(nil),                              // 752: console.v1.BusinessProcessReceipt
+	(*BusinessProcess)(nil),                                     // 753: console.v1.BusinessProcess
+	(*DefineBusinessProcessRequest)(nil),                        // 754: console.v1.DefineBusinessProcessRequest
+	(*DefineBusinessProcessResponse)(nil),                       // 755: console.v1.DefineBusinessProcessResponse
+	(*StartBusinessProcessRequest)(nil),                         // 756: console.v1.StartBusinessProcessRequest
+	(*StartBusinessProcessResponse)(nil),                        // 757: console.v1.StartBusinessProcessResponse
+	(*GetBusinessProcessRequest)(nil),                           // 758: console.v1.GetBusinessProcessRequest
+	(*GetBusinessProcessResponse)(nil),                          // 759: console.v1.GetBusinessProcessResponse
+	(*ListBusinessProcessesRequest)(nil),                        // 760: console.v1.ListBusinessProcessesRequest
+	(*ListBusinessProcessesResponse)(nil),                       // 761: console.v1.ListBusinessProcessesResponse
+	(*TransitionBusinessProcessRequest)(nil),                    // 762: console.v1.TransitionBusinessProcessRequest
+	(*TransitionBusinessProcessResponse)(nil),                   // 763: console.v1.TransitionBusinessProcessResponse
+	(*GetBusinessProcessDefinitionRequest)(nil),                 // 764: console.v1.GetBusinessProcessDefinitionRequest
+	(*GetBusinessProcessDefinitionResponse)(nil),                // 765: console.v1.GetBusinessProcessDefinitionResponse
+	(*ListBusinessProcessDefinitionsRequest)(nil),               // 766: console.v1.ListBusinessProcessDefinitionsRequest
+	(*ListBusinessProcessDefinitionsResponse)(nil),              // 767: console.v1.ListBusinessProcessDefinitionsResponse
+	(*OperatingProjectSnapshotFileInput)(nil),                   // 768: console.v1.OperatingProjectSnapshotFileInput
+	(*AcceptOperatingProjectSnapshotRequest)(nil),               // 769: console.v1.AcceptOperatingProjectSnapshotRequest
+	(*AcceptOperatingProjectSnapshotResponse)(nil),              // 770: console.v1.AcceptOperatingProjectSnapshotResponse
+	(*GetOperatingProjectSnapshotRequest)(nil),                  // 771: console.v1.GetOperatingProjectSnapshotRequest
+	(*GetOperatingTaskEnvironmentRequest)(nil),                  // 772: console.v1.GetOperatingTaskEnvironmentRequest
+	(*GetOperatingTaskEnvironmentResponse)(nil),                 // 773: console.v1.GetOperatingTaskEnvironmentResponse
+	(*ImportOperatingProjectSnapshotRequest)(nil),               // 774: console.v1.ImportOperatingProjectSnapshotRequest
+	(*BusinessBlueprint)(nil),                                   // 775: console.v1.BusinessBlueprint
+	(*ListBusinessBlueprintsRequest)(nil),                       // 776: console.v1.ListBusinessBlueprintsRequest
+	(*ListBusinessBlueprintsResponse)(nil),                      // 777: console.v1.ListBusinessBlueprintsResponse
+	(*CloneBusinessBlueprintRequest)(nil),                       // 778: console.v1.CloneBusinessBlueprintRequest
+	(*CloneBusinessBlueprintResponse)(nil),                      // 779: console.v1.CloneBusinessBlueprintResponse
+	(*BusinessBlueprintSource)(nil),                             // 780: console.v1.BusinessBlueprintSource
+	(*CaptureFormInvitation)(nil),                               // 781: console.v1.CaptureFormInvitation
+	(*CreateCaptureFormInvitationRequest)(nil),                  // 782: console.v1.CreateCaptureFormInvitationRequest
+	(*CreateCaptureFormInvitationResponse)(nil),                 // 783: console.v1.CreateCaptureFormInvitationResponse
+	(*RevokeCaptureFormInvitationRequest)(nil),                  // 784: console.v1.RevokeCaptureFormInvitationRequest
+	(*RevokeCaptureFormInvitationResponse)(nil),                 // 785: console.v1.RevokeCaptureFormInvitationResponse
+	(*GetInvitedCaptureFormRequest)(nil),                        // 786: console.v1.GetInvitedCaptureFormRequest
+	(*GetInvitedCaptureFormResponse)(nil),                       // 787: console.v1.GetInvitedCaptureFormResponse
+	(*SubmitInvitedCaptureFormRequest)(nil),                     // 788: console.v1.SubmitInvitedCaptureFormRequest
+	(*SubmitInvitedCaptureFormResponse)(nil),                    // 789: console.v1.SubmitInvitedCaptureFormResponse
+	(*GetStaffManagedInferenceReadinessRequest)(nil),            // 790: console.v1.GetStaffManagedInferenceReadinessRequest
+	(*GetManagedInferenceReadinessRequest)(nil),                 // 791: console.v1.GetManagedInferenceReadinessRequest
+	(*GetManagedInferenceReadinessResponse)(nil),                // 792: console.v1.GetManagedInferenceReadinessResponse
+	(*GetStaffManagedInferenceFundingRequest)(nil),              // 793: console.v1.GetStaffManagedInferenceFundingRequest
+	(*GrantStaffManagedInferenceCreditsRequest)(nil),            // 794: console.v1.GrantStaffManagedInferenceCreditsRequest
+	(*GetStaffManagedInferenceUsageRequest)(nil),                // 795: console.v1.GetStaffManagedInferenceUsageRequest
+	(*GetStaffManagedInferenceBudgetRequest)(nil),               // 796: console.v1.GetStaffManagedInferenceBudgetRequest
+	(*SetStaffManagedInferenceBudgetRequest)(nil),               // 797: console.v1.SetStaffManagedInferenceBudgetRequest
+	(*ListManagedProviderAccessEventsRequest)(nil),              // 798: console.v1.ListManagedProviderAccessEventsRequest
+	(*ManagedProviderAccessEvent)(nil),                          // 799: console.v1.ManagedProviderAccessEvent
+	(*ListManagedProviderAccessEventsResponse)(nil),             // 800: console.v1.ListManagedProviderAccessEventsResponse
+	(*ListStaffManagedInferenceAdminEventsRequest)(nil),         // 801: console.v1.ListStaffManagedInferenceAdminEventsRequest
+	(*ListStaffManagedExecutionGrantEventsRequest)(nil),         // 802: console.v1.ListStaffManagedExecutionGrantEventsRequest
+	(*ManagedExecutionGrantEvent)(nil),                          // 803: console.v1.ManagedExecutionGrantEvent
+	(*ListStaffManagedExecutionGrantEventsResponse)(nil),        // 804: console.v1.ListStaffManagedExecutionGrantEventsResponse
+	(*ListStaffManagedExecutionOutcomesRequest)(nil),            // 805: console.v1.ListStaffManagedExecutionOutcomesRequest
+	(*ManagedExecutionOutcome)(nil),                             // 806: console.v1.ManagedExecutionOutcome
+	(*ListStaffManagedExecutionOutcomesResponse)(nil),           // 807: console.v1.ListStaffManagedExecutionOutcomesResponse
+	(*ProspectingDraftTargetAccount)(nil),                       // 808: console.v1.ProspectingDraftTargetAccount
+	(*ProspectingDraft)(nil),                                    // 809: console.v1.ProspectingDraft
+	(*ProspectingDraftMutationReceipt)(nil),                     // 810: console.v1.ProspectingDraftMutationReceipt
+	(*CreateProspectingDraftRequest)(nil),                       // 811: console.v1.CreateProspectingDraftRequest
+	(*CreateProspectingDraftResponse)(nil),                      // 812: console.v1.CreateProspectingDraftResponse
+	(*ListProspectingDraftsRequest)(nil),                        // 813: console.v1.ListProspectingDraftsRequest
+	(*ListProspectingDraftsResponse)(nil),                       // 814: console.v1.ListProspectingDraftsResponse
+	(*ReviewProspectingDraftRequest)(nil),                       // 815: console.v1.ReviewProspectingDraftRequest
+	(*ReviewProspectingDraftResponse)(nil),                      // 816: console.v1.ReviewProspectingDraftResponse
+	(*WorkspaceBrandVoice)(nil),                                 // 817: console.v1.WorkspaceBrandVoice
+	nil,                                                         // 818: console.v1.OperatingRequiredInitialToolIntent.MetadataEntry
+	nil,                                                         // 819: console.v1.WorkspaceSettingsActivityEntry.DetailsEntry
+	(*CaptureFormTypedValue_OptionValues)(nil),                  // 820: console.v1.CaptureFormTypedValue.OptionValues
+	(*WorkspaceBrandVoice_Scope)(nil),                           // 821: console.v1.WorkspaceBrandVoice.Scope
+	(*timestamppb.Timestamp)(nil),                               // 822: google.protobuf.Timestamp
+	(v1.RiskLevel)(0),                                           // 823: common.v1.RiskLevel
+	(*v11.ToolExecutionProjectSource)(nil),                      // 824: toolexecution.v1.ToolExecutionProjectSource
+	(*structpb.Struct)(nil),                                     // 825: google.protobuf.Struct
+	(*v12.VfsUploadTarget)(nil),                                 // 826: vfs.v1.VfsUploadTarget
+	(*v12.VfsCompletedUploadPart)(nil),                          // 827: vfs.v1.VfsCompletedUploadPart
+	(v13.MemoryReviewStatus)(0),                                 // 828: memory.v1.MemoryReviewStatus
+	(v13.Scope)(0),                                              // 829: memory.v1.Scope
+	(v11.ToolExecutionState)(0),                                 // 830: toolexecution.v1.ToolExecutionState
+	(*v11.ToolExecutionAttachmentMount)(nil),                    // 831: toolexecution.v1.ToolExecutionAttachmentMount
+	(*v14.RunnerSessionOwnerBinding)(nil),                       // 832: remoterunner.v1.RunnerSessionOwnerBinding
+	(v15.OrbObservedLifecycle)(0),                               // 833: orbcontrol.v1.OrbObservedLifecycle
+	(v15.OrbCommandKind)(0),                                     // 834: orbcontrol.v1.OrbCommandKind
+	(*v16.ConnectorCatalogProvenance)(nil),                      // 835: connectors.v1.ConnectorCatalogProvenance
+	(*v17.TraceAnnotation)(nil),                                 // 836: traces.v1.TraceAnnotation
+	(*v16.SourceAuthorityObservation)(nil),                      // 837: connectors.v1.SourceAuthorityObservation
+	(*v18.RecordRef)(nil),                                       // 838: platform.v1.RecordRef
+	(*v16.ProviderResourceEnvelope)(nil),                        // 839: connectors.v1.ProviderResourceEnvelope
+	(*v19.GetBudgetDashboardResponse)(nil),                      // 840: meter.v1.GetBudgetDashboardResponse
+	(*v19.GetPrepaidCreditBalanceRequest)(nil),                  // 841: meter.v1.GetPrepaidCreditBalanceRequest
+	(*v19.GrantDevelopmentCreditsRequest)(nil),                  // 842: meter.v1.GrantDevelopmentCreditsRequest
+	(*v19.QueryUsageRequest)(nil),                               // 843: meter.v1.QueryUsageRequest
+	(*v19.GetBudgetDashboardRequest)(nil),                       // 844: meter.v1.GetBudgetDashboardRequest
+	(*v19.SetBudgetRequest)(nil),                                // 845: meter.v1.SetBudgetRequest
+	(*v19.ListManagedInferenceAdminEventsRequest)(nil),          // 846: meter.v1.ListManagedInferenceAdminEventsRequest
+	(*v19.GetPrepaidCreditBalanceResponse)(nil),                 // 847: meter.v1.GetPrepaidCreditBalanceResponse
+	(*v19.GrantDevelopmentCreditsResponse)(nil),                 // 848: meter.v1.GrantDevelopmentCreditsResponse
+	(*v19.QueryUsageResponse)(nil),                              // 849: meter.v1.QueryUsageResponse
+	(*v19.SetBudgetResponse)(nil),                               // 850: meter.v1.SetBudgetResponse
+	(*v19.ListManagedInferenceAdminEventsResponse)(nil),         // 851: meter.v1.ListManagedInferenceAdminEventsResponse
 }
 var file_console_v1_console_proto_depIdxs = []int32{
-	821,  // 0: console.v1.TimeRange.start_time:type_name -> google.protobuf.Timestamp
-	821,  // 1: console.v1.TimeRange.end_time:type_name -> google.protobuf.Timestamp
+	822,  // 0: console.v1.TimeRange.start_time:type_name -> google.protobuf.Timestamp
+	822,  // 1: console.v1.TimeRange.end_time:type_name -> google.protobuf.Timestamp
 	109,  // 2: console.v1.ConsoleQuery.time_range:type_name -> console.v1.TimeRange
-	822,  // 3: console.v1.ConsoleQuery.risk_level:type_name -> common.v1.RiskLevel
-	569,  // 4: console.v1.OperatingCapabilityState.missing_requirement_states:type_name -> console.v1.OperatingCapabilityRequirementState
+	823,  // 3: console.v1.ConsoleQuery.risk_level:type_name -> common.v1.RiskLevel
+	570,  // 4: console.v1.OperatingCapabilityState.missing_requirement_states:type_name -> console.v1.OperatingCapabilityRequirementState
 	0,    // 5: console.v1.OperatingTurnRoute.kind:type_name -> console.v1.OperatingTurnRouteKind
 	1,    // 6: console.v1.OperatingTurnRoute.intent_kind:type_name -> console.v1.OperatingTurnIntentKind
 	2,    // 7: console.v1.OperatingTurnRoute.answer_kind:type_name -> console.v1.OperatingTurnAnswerKind
 	3,    // 8: console.v1.OperatingTurnRoute.safety_kind:type_name -> console.v1.OperatingTurnSafetyKind
-	821,  // 9: console.v1.OperatingTurnRoute.decided_at:type_name -> google.protobuf.Timestamp
+	822,  // 9: console.v1.OperatingTurnRoute.decided_at:type_name -> google.protobuf.Timestamp
 	111,  // 10: console.v1.OperatingChannel.capability_state:type_name -> console.v1.OperatingCapabilityState
-	821,  // 11: console.v1.OperatingChannel.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 11: console.v1.OperatingChannel.updated_at:type_name -> google.protobuf.Timestamp
 	114,  // 12: console.v1.OperatingChannel.surface:type_name -> console.v1.OperatingSurfaceMetadata
-	821,  // 13: console.v1.OperatingChannel.archived_at:type_name -> google.protobuf.Timestamp
+	822,  // 13: console.v1.OperatingChannel.archived_at:type_name -> google.protobuf.Timestamp
 	5,    // 14: console.v1.OperatingSurfaceMetadata.kind:type_name -> console.v1.OperatingSurfaceKind
-	821,  // 15: console.v1.OperatingMessage.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 15: console.v1.OperatingMessage.created_at:type_name -> google.protobuf.Timestamp
 	112,  // 16: console.v1.OperatingMessage.route:type_name -> console.v1.OperatingTurnRoute
 	125,  // 17: console.v1.OperatingMessage.attachments:type_name -> console.v1.OperatingAttachmentRef
 	118,  // 18: console.v1.OperatingMessage.turn_record:type_name -> console.v1.OperatingTurnRecord
 	115,  // 19: console.v1.OperatingMessage.model_selection:type_name -> console.v1.OperatingModelSelection
-	634,  // 20: console.v1.OperatingMessage.auto_model_route:type_name -> console.v1.OperatingAutoModelRoute
-	528,  // 21: console.v1.OperatingToolEvent.evidence_refs:type_name -> console.v1.RelatedResource
+	635,  // 20: console.v1.OperatingMessage.auto_model_route:type_name -> console.v1.OperatingAutoModelRoute
+	529,  // 21: console.v1.OperatingToolEvent.evidence_refs:type_name -> console.v1.RelatedResource
 	6,    // 22: console.v1.OperatingTurnRecord.state:type_name -> console.v1.OperatingTurnState
 	7,    // 23: console.v1.OperatingTurnRecord.verification_state:type_name -> console.v1.OperatingVerificationState
 	117,  // 24: console.v1.OperatingTurnRecord.tool_events:type_name -> console.v1.OperatingToolEvent
-	528,  // 25: console.v1.OperatingTurnRecord.evidence_refs:type_name -> console.v1.RelatedResource
-	821,  // 26: console.v1.OperatingTurnRecord.updated_at:type_name -> google.protobuf.Timestamp
+	529,  // 25: console.v1.OperatingTurnRecord.evidence_refs:type_name -> console.v1.RelatedResource
+	822,  // 26: console.v1.OperatingTurnRecord.updated_at:type_name -> google.protobuf.Timestamp
 	8,    // 27: console.v1.OperatingTurnRecord.answer_provenance:type_name -> console.v1.OperatingAnswerProvenance
 	119,  // 28: console.v1.OperatingTurnRecord.customer_outcome_identity:type_name -> console.v1.OperatingCustomerOutcomeIdentity
-	823,  // 29: console.v1.OperatingTurnRecord.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
+	824,  // 29: console.v1.OperatingTurnRecord.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
 	11,   // 30: console.v1.OperatingExecutionIdentity.runtime:type_name -> console.v1.OperatingExecutionRuntime
 	9,    // 31: console.v1.OperatingThreadExecution.state:type_name -> console.v1.OperatingThreadExecutionState
-	821,  // 32: console.v1.OperatingThreadExecution.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 32: console.v1.OperatingThreadExecution.updated_at:type_name -> google.protobuf.Timestamp
 	120,  // 33: console.v1.OperatingThreadExecution.execution_identity:type_name -> console.v1.OperatingExecutionIdentity
 	6,    // 34: console.v1.OperatingThreadTurn.state:type_name -> console.v1.OperatingTurnState
 	10,   // 35: console.v1.OperatingThreadTurn.waiting_reason:type_name -> console.v1.OperatingThreadWaitingReason
-	821,  // 36: console.v1.OperatingThreadTurn.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 37: console.v1.OperatingThreadTurn.updated_at:type_name -> google.protobuf.Timestamp
-	821,  // 38: console.v1.OperatingThreadTurn.completed_at:type_name -> google.protobuf.Timestamp
-	572,  // 39: console.v1.OperatingThreadTurn.terminal_error:type_name -> console.v1.TerminalErrorEnvelope
+	822,  // 36: console.v1.OperatingThreadTurn.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 37: console.v1.OperatingThreadTurn.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 38: console.v1.OperatingThreadTurn.completed_at:type_name -> google.protobuf.Timestamp
+	573,  // 39: console.v1.OperatingThreadTurn.terminal_error:type_name -> console.v1.TerminalErrorEnvelope
 	12,   // 40: console.v1.OperatingThreadEvent.kind:type_name -> console.v1.OperatingThreadEventKind
-	528,  // 41: console.v1.OperatingThreadEvent.artifact_refs:type_name -> console.v1.RelatedResource
-	821,  // 42: console.v1.OperatingThreadEvent.created_at:type_name -> google.protobuf.Timestamp
+	529,  // 41: console.v1.OperatingThreadEvent.artifact_refs:type_name -> console.v1.RelatedResource
+	822,  // 42: console.v1.OperatingThreadEvent.created_at:type_name -> google.protobuf.Timestamp
 	120,  // 43: console.v1.OperatingThreadEvent.execution_identity:type_name -> console.v1.OperatingExecutionIdentity
 	13,   // 44: console.v1.OperatingThreadEvent.request_type:type_name -> console.v1.OperatingThreadRequestType
-	572,  // 45: console.v1.OperatingThreadEvent.terminal_error:type_name -> console.v1.TerminalErrorEnvelope
+	573,  // 45: console.v1.OperatingThreadEvent.terminal_error:type_name -> console.v1.TerminalErrorEnvelope
 	13,   // 46: console.v1.OperatingThreadResponse.request_type:type_name -> console.v1.OperatingThreadRequestType
 	14,   // 47: console.v1.OperatingThreadResponse.action:type_name -> console.v1.OperatingThreadResponseAction
 	15,   // 48: console.v1.OperatingAttachmentRef.scope:type_name -> console.v1.OperatingAttachmentScope
 	16,   // 49: console.v1.OperatingAttachmentRef.processing_state:type_name -> console.v1.OperatingAttachmentProcessingState
-	821,  // 50: console.v1.OperatingAttachmentRef.created_at:type_name -> google.protobuf.Timestamp
-	822,  // 51: console.v1.OperatingReceipt.risk_level:type_name -> common.v1.RiskLevel
-	821,  // 52: console.v1.OperatingReceipt.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 50: console.v1.OperatingAttachmentRef.created_at:type_name -> google.protobuf.Timestamp
+	823,  // 51: console.v1.OperatingReceipt.risk_level:type_name -> common.v1.RiskLevel
+	822,  // 52: console.v1.OperatingReceipt.updated_at:type_name -> google.protobuf.Timestamp
 	127,  // 53: console.v1.OperatingReceipt.allowed_actions:type_name -> console.v1.OperatingReceiptAction
-	528,  // 54: console.v1.OperatingReceipt.evidence_refs:type_name -> console.v1.RelatedResource
-	824,  // 55: console.v1.OperatingReceipt.payload:type_name -> google.protobuf.Struct
+	529,  // 54: console.v1.OperatingReceipt.evidence_refs:type_name -> console.v1.RelatedResource
+	825,  // 55: console.v1.OperatingReceipt.payload:type_name -> google.protobuf.Struct
 	17,   // 56: console.v1.OperatingReceipt.lifecycle_state:type_name -> console.v1.ReceiptLifecycleState
 	226,  // 57: console.v1.OperatingReceipt.coding_acceptance:type_name -> console.v1.OperatingCodingAcceptance
-	824,  // 58: console.v1.OperatingReceiptAction.payload:type_name -> google.protobuf.Struct
+	825,  // 58: console.v1.OperatingReceiptAction.payload:type_name -> google.protobuf.Struct
 	110,  // 59: console.v1.ListOperatingChannelsRequest.query:type_name -> console.v1.ConsoleQuery
 	4,    // 60: console.v1.ListOperatingChannelsRequest.archive_filter:type_name -> console.v1.OperatingThreadArchiveFilter
 	113,  // 61: console.v1.ListOperatingChannelsResponse.channels:type_name -> console.v1.OperatingChannel
 	111,  // 62: console.v1.ListOperatingChannelsResponse.capabilities:type_name -> console.v1.OperatingCapabilityState
-	529,  // 63: console.v1.ListOperatingChannelsResponse.homepage_suggestion:type_name -> console.v1.OperatingHomepageSuggestion
+	530,  // 63: console.v1.ListOperatingChannelsResponse.homepage_suggestion:type_name -> console.v1.OperatingHomepageSuggestion
 	110,  // 64: console.v1.ArchiveOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
 	113,  // 65: console.v1.ArchiveOperatingThreadResponse.channel:type_name -> console.v1.OperatingChannel
 	110,  // 66: console.v1.RenameOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
@@ -71707,9 +71958,9 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	110,  // 98: console.v1.BeginOperatingAttachmentUploadRequest.query:type_name -> console.v1.ConsoleQuery
 	15,   // 99: console.v1.BeginOperatingAttachmentUploadRequest.scope:type_name -> console.v1.OperatingAttachmentScope
 	125,  // 100: console.v1.BeginOperatingAttachmentUploadResponse.attachment:type_name -> console.v1.OperatingAttachmentRef
-	825,  // 101: console.v1.BeginOperatingAttachmentUploadResponse.upload:type_name -> vfs.v1.VfsUploadTarget
+	826,  // 101: console.v1.BeginOperatingAttachmentUploadResponse.upload:type_name -> vfs.v1.VfsUploadTarget
 	110,  // 102: console.v1.CompleteOperatingAttachmentUploadRequest.query:type_name -> console.v1.ConsoleQuery
-	826,  // 103: console.v1.CompleteOperatingAttachmentUploadRequest.completed_parts:type_name -> vfs.v1.VfsCompletedUploadPart
+	827,  // 103: console.v1.CompleteOperatingAttachmentUploadRequest.completed_parts:type_name -> vfs.v1.VfsCompletedUploadPart
 	125,  // 104: console.v1.CompleteOperatingAttachmentUploadResponse.attachment:type_name -> console.v1.OperatingAttachmentRef
 	110,  // 105: console.v1.ListOperatingAttachmentsRequest.query:type_name -> console.v1.ConsoleQuery
 	15,   // 106: console.v1.ListOperatingAttachmentsRequest.scope:type_name -> console.v1.OperatingAttachmentScope
@@ -71724,9 +71975,9 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	20,   // 115: console.v1.DexComputerCorrectionEpisode.review_state:type_name -> console.v1.OperatingCorrectionReviewState
 	19,   // 116: console.v1.OperatingCorrectionCandidate.category:type_name -> console.v1.OperatingCorrectionCategory
 	20,   // 117: console.v1.OperatingCorrectionCandidate.review_state:type_name -> console.v1.OperatingCorrectionReviewState
-	528,  // 118: console.v1.OperatingCorrectionCandidate.evidence_refs:type_name -> console.v1.RelatedResource
-	821,  // 119: console.v1.OperatingCorrectionCandidate.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 120: console.v1.OperatingCorrectionCandidate.reviewed_at:type_name -> google.protobuf.Timestamp
+	529,  // 118: console.v1.OperatingCorrectionCandidate.evidence_refs:type_name -> console.v1.RelatedResource
+	822,  // 119: console.v1.OperatingCorrectionCandidate.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 120: console.v1.OperatingCorrectionCandidate.reviewed_at:type_name -> google.protobuf.Timestamp
 	441,  // 121: console.v1.OperatingCorrectionCandidate.review_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	153,  // 122: console.v1.OperatingCorrectionCandidate.correction_episode:type_name -> console.v1.DexComputerCorrectionEpisode
 	110,  // 123: console.v1.SubmitOperatingCorrectionRequest.query:type_name -> console.v1.ConsoleQuery
@@ -71737,9 +71988,9 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	24,   // 128: console.v1.OperatingFeedback.classification_source:type_name -> console.v1.OperatingFeedbackClassificationSource
 	25,   // 129: console.v1.OperatingFeedback.remediation_action:type_name -> console.v1.OperatingFeedbackRemediationAction
 	26,   // 130: console.v1.OperatingFeedback.remediation_outcome:type_name -> console.v1.OperatingFeedbackRemediationOutcome
-	821,  // 131: console.v1.OperatingFeedback.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 132: console.v1.OperatingFeedback.updated_at:type_name -> google.protobuf.Timestamp
-	821,  // 133: console.v1.OperatingFeedback.resolved_at:type_name -> google.protobuf.Timestamp
+	822,  // 131: console.v1.OperatingFeedback.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 132: console.v1.OperatingFeedback.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 133: console.v1.OperatingFeedback.resolved_at:type_name -> google.protobuf.Timestamp
 	23,   // 134: console.v1.OperatingFeedback.reason:type_name -> console.v1.OperatingFeedbackReason
 	27,   // 135: console.v1.OperatingFeedback.lifecycle_state:type_name -> console.v1.OperatingFeedbackLifecycleState
 	110,  // 136: console.v1.SubmitOperatingFeedbackRequest.query:type_name -> console.v1.ConsoleQuery
@@ -71752,15 +72003,15 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	157,  // 143: console.v1.SubmitOperatingFeedbackResponse.feedback:type_name -> console.v1.OperatingFeedback
 	154,  // 144: console.v1.SubmitOperatingFeedbackResponse.correction:type_name -> console.v1.OperatingCorrectionCandidate
 	178,  // 145: console.v1.SubmitOperatingFeedbackResponse.fact_receipt:type_name -> console.v1.CustomerIntelligenceReceipt
-	821,  // 146: console.v1.ProductIssueReport.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 146: console.v1.ProductIssueReport.created_at:type_name -> google.protobuf.Timestamp
 	110,  // 147: console.v1.SubmitProductIssueReportRequest.query:type_name -> console.v1.ConsoleQuery
 	163,  // 148: console.v1.SubmitProductIssueReportRequest.context:type_name -> console.v1.ProductIssueReportContext
 	110,  // 149: console.v1.SubmitNativeProductIssueReportRequest.query:type_name -> console.v1.ConsoleQuery
 	163,  // 150: console.v1.SubmitNativeProductIssueReportRequest.context:type_name -> console.v1.ProductIssueReportContext
 	164,  // 151: console.v1.ProductIssueReportContext.evidence:type_name -> console.v1.ProductIssueReportEvidence
 	160,  // 152: console.v1.SubmitProductIssueReportResponse.report:type_name -> console.v1.ProductIssueReport
-	821,  // 153: console.v1.StaffProductIssueReport.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 154: console.v1.StaffProductIssueReport.engaged_at:type_name -> google.protobuf.Timestamp
+	822,  // 153: console.v1.StaffProductIssueReport.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 154: console.v1.StaffProductIssueReport.engaged_at:type_name -> google.protobuf.Timestamp
 	163,  // 155: console.v1.StaffProductIssueReport.context:type_name -> console.v1.ProductIssueReportContext
 	166,  // 156: console.v1.ListStaffProductIssueReportsResponse.reports:type_name -> console.v1.StaffProductIssueReport
 	166,  // 157: console.v1.EngageStaffProductIssueReportResponse.report:type_name -> console.v1.StaffProductIssueReport
@@ -71776,9 +72027,9 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	29,   // 167: console.v1.CustomerIntelligenceFactRevision.lifecycle_state:type_name -> console.v1.CustomerIntelligenceLifecycleState
 	175,  // 168: console.v1.CustomerIntelligenceFactRevision.evidence_refs:type_name -> console.v1.CustomerIntelligenceEvidenceRef
 	32,   // 169: console.v1.CustomerIntelligenceFactRevision.producer_kind:type_name -> console.v1.CustomerIntelligenceProducerKind
-	821,  // 170: console.v1.CustomerIntelligenceFactRevision.valid_from:type_name -> google.protobuf.Timestamp
-	821,  // 171: console.v1.CustomerIntelligenceFactRevision.expires_at:type_name -> google.protobuf.Timestamp
-	821,  // 172: console.v1.CustomerIntelligenceFactRevision.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 170: console.v1.CustomerIntelligenceFactRevision.valid_from:type_name -> google.protobuf.Timestamp
+	822,  // 171: console.v1.CustomerIntelligenceFactRevision.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 172: console.v1.CustomerIntelligenceFactRevision.created_at:type_name -> google.protobuf.Timestamp
 	176,  // 173: console.v1.CustomerIntelligenceFact.current:type_name -> console.v1.CustomerIntelligenceFactRevision
 	176,  // 174: console.v1.CustomerIntelligenceFact.revisions:type_name -> console.v1.CustomerIntelligenceFactRevision
 	28,   // 175: console.v1.CustomerIntelligenceReceipt.authority:type_name -> console.v1.CustomerIntelligenceAuthority
@@ -71787,7 +72038,7 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	28,   // 178: console.v1.ListCustomerIntelligenceFactsRequest.authorities:type_name -> console.v1.CustomerIntelligenceAuthority
 	29,   // 179: console.v1.ListCustomerIntelligenceFactsRequest.lifecycle_states:type_name -> console.v1.CustomerIntelligenceLifecycleState
 	30,   // 180: console.v1.ListCustomerIntelligenceFactsRequest.subject_kind:type_name -> console.v1.CustomerIntelligenceSubjectKind
-	821,  // 181: console.v1.ListCustomerIntelligenceFactsRequest.created_after:type_name -> google.protobuf.Timestamp
+	822,  // 181: console.v1.ListCustomerIntelligenceFactsRequest.created_after:type_name -> google.protobuf.Timestamp
 	177,  // 182: console.v1.ListCustomerIntelligenceFactsResponse.facts:type_name -> console.v1.CustomerIntelligenceFact
 	110,  // 183: console.v1.GetCustomerIntelligenceFactRequest.query:type_name -> console.v1.ConsoleQuery
 	177,  // 184: console.v1.GetCustomerIntelligenceFactResponse.fact:type_name -> console.v1.CustomerIntelligenceFact
@@ -71801,7 +72052,7 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	28,   // 192: console.v1.ProposeCustomerIntelligenceFactRequest.authority:type_name -> console.v1.CustomerIntelligenceAuthority
 	175,  // 193: console.v1.ProposeCustomerIntelligenceFactRequest.evidence_refs:type_name -> console.v1.CustomerIntelligenceEvidenceRef
 	32,   // 194: console.v1.ProposeCustomerIntelligenceFactRequest.producer_kind:type_name -> console.v1.CustomerIntelligenceProducerKind
-	821,  // 195: console.v1.ProposeCustomerIntelligenceFactRequest.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 195: console.v1.ProposeCustomerIntelligenceFactRequest.expires_at:type_name -> google.protobuf.Timestamp
 	177,  // 196: console.v1.ProposeCustomerIntelligenceFactResponse.fact:type_name -> console.v1.CustomerIntelligenceFact
 	178,  // 197: console.v1.ProposeCustomerIntelligenceFactResponse.receipt:type_name -> console.v1.CustomerIntelligenceReceipt
 	110,  // 198: console.v1.RespondToCustomerFactConfirmationRequest.query:type_name -> console.v1.ConsoleQuery
@@ -71809,52 +72060,52 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	178,  // 200: console.v1.RespondToCustomerFactConfirmationResponse.receipt:type_name -> console.v1.CustomerIntelligenceReceipt
 	28,   // 201: console.v1.AggregateCustomerIntelligencePatternsRequest.authorities:type_name -> console.v1.CustomerIntelligenceAuthority
 	29,   // 202: console.v1.AggregateCustomerIntelligencePatternsRequest.lifecycle_states:type_name -> console.v1.CustomerIntelligenceLifecycleState
-	821,  // 203: console.v1.AggregateCustomerIntelligencePatternsRequest.created_after:type_name -> google.protobuf.Timestamp
+	822,  // 203: console.v1.AggregateCustomerIntelligencePatternsRequest.created_after:type_name -> google.protobuf.Timestamp
 	190,  // 204: console.v1.AggregateCustomerIntelligencePatternsResponse.patterns:type_name -> console.v1.CustomerIntelligencePattern
 	110,  // 205: console.v1.ListOperatingCorrectionsRequest.query:type_name -> console.v1.ConsoleQuery
 	20,   // 206: console.v1.ListOperatingCorrectionsRequest.review_state:type_name -> console.v1.OperatingCorrectionReviewState
 	154,  // 207: console.v1.ListOperatingCorrectionsResponse.corrections:type_name -> console.v1.OperatingCorrectionCandidate
 	110,  // 208: console.v1.ReviewOperatingCorrectionRequest.query:type_name -> console.v1.ConsoleQuery
 	20,   // 209: console.v1.ReviewOperatingCorrectionRequest.decision:type_name -> console.v1.OperatingCorrectionReviewState
-	528,  // 210: console.v1.ReviewOperatingCorrectionRequest.evidence_refs:type_name -> console.v1.RelatedResource
+	529,  // 210: console.v1.ReviewOperatingCorrectionRequest.evidence_refs:type_name -> console.v1.RelatedResource
 	154,  // 211: console.v1.ReviewOperatingCorrectionResponse.correction:type_name -> console.v1.OperatingCorrectionCandidate
-	827,  // 212: console.v1.ListWorkspaceMemoriesRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
+	828,  // 212: console.v1.ListWorkspaceMemoriesRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
 	110,  // 213: console.v1.ListWorkspaceMemoriesRequest.query:type_name -> console.v1.ConsoleQuery
 	198,  // 214: console.v1.ListWorkspaceMemoriesResponse.memories:type_name -> console.v1.WorkspaceMemory
-	827,  // 215: console.v1.WorkspaceMemory.review_status:type_name -> memory.v1.MemoryReviewStatus
-	828,  // 216: console.v1.WorkspaceMemory.scope:type_name -> memory.v1.Scope
-	821,  // 217: console.v1.WorkspaceMemory.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 218: console.v1.WorkspaceMemory.updated_at:type_name -> google.protobuf.Timestamp
+	828,  // 215: console.v1.WorkspaceMemory.review_status:type_name -> memory.v1.MemoryReviewStatus
+	829,  // 216: console.v1.WorkspaceMemory.scope:type_name -> memory.v1.Scope
+	822,  // 217: console.v1.WorkspaceMemory.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 218: console.v1.WorkspaceMemory.updated_at:type_name -> google.protobuf.Timestamp
 	110,  // 219: console.v1.CorrectWorkspaceMemoryRequest.query:type_name -> console.v1.ConsoleQuery
 	198,  // 220: console.v1.CorrectWorkspaceMemoryResponse.memory:type_name -> console.v1.WorkspaceMemory
 	110,  // 221: console.v1.ReviewWorkspaceMemoryRequest.query:type_name -> console.v1.ConsoleQuery
-	827,  // 222: console.v1.ReviewWorkspaceMemoryRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
+	828,  // 222: console.v1.ReviewWorkspaceMemoryRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
 	198,  // 223: console.v1.ReviewWorkspaceMemoryResponse.memory:type_name -> console.v1.WorkspaceMemory
 	110,  // 224: console.v1.ForgetWorkspaceMemoryRequest.query:type_name -> console.v1.ConsoleQuery
-	821,  // 225: console.v1.OperatingHistorySearchFilter.occurred_after:type_name -> google.protobuf.Timestamp
-	821,  // 226: console.v1.OperatingHistorySearchFilter.occurred_before:type_name -> google.protobuf.Timestamp
+	822,  // 225: console.v1.OperatingHistorySearchFilter.occurred_after:type_name -> google.protobuf.Timestamp
+	822,  // 226: console.v1.OperatingHistorySearchFilter.occurred_before:type_name -> google.protobuf.Timestamp
 	110,  // 227: console.v1.SearchOperatingHistoryRequest.query:type_name -> console.v1.ConsoleQuery
 	205,  // 228: console.v1.SearchOperatingHistoryRequest.filter:type_name -> console.v1.OperatingHistorySearchFilter
-	821,  // 229: console.v1.OperatingHistorySearchResult.occurred_at:type_name -> google.protobuf.Timestamp
-	528,  // 230: console.v1.OperatingHistorySearchResult.source_ref:type_name -> console.v1.RelatedResource
+	822,  // 229: console.v1.OperatingHistorySearchResult.occurred_at:type_name -> google.protobuf.Timestamp
+	529,  // 230: console.v1.OperatingHistorySearchResult.source_ref:type_name -> console.v1.RelatedResource
 	207,  // 231: console.v1.SearchOperatingHistoryResponse.results:type_name -> console.v1.OperatingHistorySearchResult
 	110,  // 232: console.v1.GetOperatingHistoryContextRequest.query:type_name -> console.v1.ConsoleQuery
-	821,  // 233: console.v1.OperatingHistoryContextRecord.occurred_at:type_name -> google.protobuf.Timestamp
-	528,  // 234: console.v1.OperatingHistoryContextRecord.source_ref:type_name -> console.v1.RelatedResource
+	822,  // 233: console.v1.OperatingHistoryContextRecord.occurred_at:type_name -> google.protobuf.Timestamp
+	529,  // 234: console.v1.OperatingHistoryContextRecord.source_ref:type_name -> console.v1.RelatedResource
 	210,  // 235: console.v1.GetOperatingHistoryContextResponse.records:type_name -> console.v1.OperatingHistoryContextRecord
 	213,  // 236: console.v1.OperatingCapabilityContract.identity_authorization:type_name -> console.v1.IdentityToolAuthorizationEvidence
 	35,   // 237: console.v1.OperatingExecutionProfile.kind:type_name -> console.v1.OperatingExecutionProfileKind
 	36,   // 238: console.v1.OperatingHostedFrontDecision.kind:type_name -> console.v1.OperatingHostedFrontDecisionKind
-	829,  // 239: console.v1.OperatingInitialActionResult.state:type_name -> toolexecution.v1.ToolExecutionState
-	824,  // 240: console.v1.OperatingInitialActionResult.safe_output:type_name -> google.protobuf.Struct
-	528,  // 241: console.v1.OperatingInitialActionResult.evidence_refs:type_name -> console.v1.RelatedResource
-	821,  // 242: console.v1.OperatingInitialActionResult.accepted_at:type_name -> google.protobuf.Timestamp
+	830,  // 239: console.v1.OperatingInitialActionResult.state:type_name -> toolexecution.v1.ToolExecutionState
+	825,  // 240: console.v1.OperatingInitialActionResult.safe_output:type_name -> google.protobuf.Struct
+	529,  // 241: console.v1.OperatingInitialActionResult.evidence_refs:type_name -> console.v1.RelatedResource
+	822,  // 242: console.v1.OperatingInitialActionResult.accepted_at:type_name -> google.protobuf.Timestamp
 	38,   // 243: console.v1.OperatingManagedInferenceOutputTokenBudget.origin:type_name -> console.v1.OperatingManagedInferenceBudgetOrigin
 	217,  // 244: console.v1.OperatingManagedInferenceScope.provider_candidates:type_name -> console.v1.OperatingManagedInferenceProviderCandidate
 	37,   // 245: console.v1.OperatingManagedInferenceScope.routing:type_name -> console.v1.OperatingManagedInferenceRouting
 	218,  // 246: console.v1.OperatingManagedInferenceScope.output_token_budget:type_name -> console.v1.OperatingManagedInferenceOutputTokenBudget
-	821,  // 247: console.v1.OperatingRunDispatch.enqueued_at:type_name -> google.protobuf.Timestamp
-	830,  // 248: console.v1.OperatingRunDispatch.attachment_mounts:type_name -> toolexecution.v1.ToolExecutionAttachmentMount
+	822,  // 247: console.v1.OperatingRunDispatch.enqueued_at:type_name -> google.protobuf.Timestamp
+	831,  // 248: console.v1.OperatingRunDispatch.attachment_mounts:type_name -> toolexecution.v1.ToolExecutionAttachmentMount
 	212,  // 249: console.v1.OperatingRunDispatch.capability_contract:type_name -> console.v1.OperatingCapabilityContract
 	124,  // 250: console.v1.OperatingRunDispatch.response:type_name -> console.v1.OperatingThreadResponse
 	214,  // 251: console.v1.OperatingRunDispatch.execution_profile:type_name -> console.v1.OperatingExecutionProfile
@@ -71864,10 +72115,10 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	219,  // 255: console.v1.OperatingRunDispatch.managed_inference:type_name -> console.v1.OperatingManagedInferenceScope
 	144,  // 256: console.v1.OperatingRunDispatch.coding_acceptance:type_name -> console.v1.CodingAcceptanceContract
 	221,  // 257: console.v1.OperatingRunDispatch.task_environment:type_name -> console.v1.OperatingTaskEnvironmentBinding
-	823,  // 258: console.v1.OperatingTaskEnvironmentBinding.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
-	824,  // 259: console.v1.OperatingRequiredInitialToolIntent.arguments:type_name -> google.protobuf.Struct
-	822,  // 260: console.v1.OperatingRequiredInitialToolIntent.risk_level:type_name -> common.v1.RiskLevel
-	817,  // 261: console.v1.OperatingRequiredInitialToolIntent.metadata:type_name -> console.v1.OperatingRequiredInitialToolIntent.MetadataEntry
+	824,  // 258: console.v1.OperatingTaskEnvironmentBinding.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
+	825,  // 259: console.v1.OperatingRequiredInitialToolIntent.arguments:type_name -> google.protobuf.Struct
+	823,  // 260: console.v1.OperatingRequiredInitialToolIntent.risk_level:type_name -> common.v1.RiskLevel
+	818,  // 261: console.v1.OperatingRequiredInitialToolIntent.metadata:type_name -> console.v1.OperatingRequiredInitialToolIntent.MetadataEntry
 	110,  // 262: console.v1.ResolveOperatingReceiptActionRequest.query:type_name -> console.v1.ConsoleQuery
 	127,  // 263: console.v1.ResolveOperatingReceiptActionRequest.action:type_name -> console.v1.OperatingReceiptAction
 	126,  // 264: console.v1.ResolveOperatingReceiptActionResponse.receipt:type_name -> console.v1.OperatingReceipt
@@ -71877,7 +72128,7 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	227,  // 268: console.v1.OperatingCodingAcceptance.outputs:type_name -> console.v1.OperatingCodingOutput
 	126,  // 269: console.v1.GetOperatingReceiptResponse.receipt:type_name -> console.v1.OperatingReceipt
 	47,   // 270: console.v1.ComputerMissionRollbackArgumentBinding.source:type_name -> console.v1.ComputerMissionRollbackArgumentSource
-	824,  // 271: console.v1.ComputerMissionCompensatingAction.rollback_arguments:type_name -> google.protobuf.Struct
+	825,  // 271: console.v1.ComputerMissionCompensatingAction.rollback_arguments:type_name -> google.protobuf.Struct
 	230,  // 272: console.v1.ComputerMissionCompensatingAction.rollback_argument_bindings:type_name -> console.v1.ComputerMissionRollbackArgumentBinding
 	44,   // 273: console.v1.ComputerMissionCanaryThreshold.dimension:type_name -> console.v1.ComputerMissionCanaryScoreDimension
 	41,   // 274: console.v1.ComputerMissionCanaryDefinition.scenario_kind:type_name -> console.v1.ComputerMissionCanaryScenarioKind
@@ -71888,19 +72139,19 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	232,  // 279: console.v1.ComputerMissionCanaryDefinition.thresholds:type_name -> console.v1.ComputerMissionCanaryThreshold
 	229,  // 280: console.v1.ComputerMissionCanaryDefinition.hard_safety_gates:type_name -> console.v1.ComputerMissionEvidenceGate
 	46,   // 281: console.v1.ComputerMissionCanaryOperatorAction.kind:type_name -> console.v1.ComputerMissionCanaryOperatorActionKind
-	821,  // 282: console.v1.ComputerMissionCanaryOperatorAction.occurred_at:type_name -> google.protobuf.Timestamp
+	822,  // 282: console.v1.ComputerMissionCanaryOperatorAction.occurred_at:type_name -> google.protobuf.Timestamp
 	238,  // 283: console.v1.ComputerMissionCanaryOperatorAction.scope_before:type_name -> console.v1.ComputerMissionScope
 	238,  // 284: console.v1.ComputerMissionCanaryOperatorAction.scope_after:type_name -> console.v1.ComputerMissionScope
 	235,  // 285: console.v1.ComputerMissionCanaryOperatorAction.budget_before:type_name -> console.v1.ComputerMissionBudget
 	235,  // 286: console.v1.ComputerMissionCanaryOperatorAction.budget_after:type_name -> console.v1.ComputerMissionBudget
-	821,  // 287: console.v1.ComputerMissionCanaryOperatorAction.grant_expires_at_before:type_name -> google.protobuf.Timestamp
-	821,  // 288: console.v1.ComputerMissionCanaryOperatorAction.grant_expires_at_after:type_name -> google.protobuf.Timestamp
-	528,  // 289: console.v1.ComputerMissionCanaryOperatorAction.evidence_refs:type_name -> console.v1.RelatedResource
-	824,  // 290: console.v1.ComputerMissionCapability.input_schema:type_name -> google.protobuf.Struct
+	822,  // 287: console.v1.ComputerMissionCanaryOperatorAction.grant_expires_at_before:type_name -> google.protobuf.Timestamp
+	822,  // 288: console.v1.ComputerMissionCanaryOperatorAction.grant_expires_at_after:type_name -> google.protobuf.Timestamp
+	529,  // 289: console.v1.ComputerMissionCanaryOperatorAction.evidence_refs:type_name -> console.v1.RelatedResource
+	825,  // 290: console.v1.ComputerMissionCapability.input_schema:type_name -> google.protobuf.Struct
 	236,  // 291: console.v1.ComputerMissionScope.capability_manifests:type_name -> console.v1.ComputerMissionCapability
 	237,  // 292: console.v1.ComputerMissionScope.apex_runner_binding:type_name -> console.v1.ComputerMissionApexRunnerBinding
 	39,   // 293: console.v1.ComputerMissionAuthorityGrant.mode:type_name -> console.v1.ComputerMissionAuthorityMode
-	821,  // 294: console.v1.ComputerMissionAuthorityGrant.granted_at:type_name -> google.protobuf.Timestamp
+	822,  // 294: console.v1.ComputerMissionAuthorityGrant.granted_at:type_name -> google.protobuf.Timestamp
 	48,   // 295: console.v1.ComputerMissionDecision.route:type_name -> console.v1.ComputerMissionDecisionRoute
 	238,  // 296: console.v1.ComputerMissionContract.scope:type_name -> console.v1.ComputerMissionScope
 	239,  // 297: console.v1.ComputerMissionContract.authority:type_name -> console.v1.ComputerMissionAuthorityGrant
@@ -71908,12 +72159,12 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	240,  // 299: console.v1.ComputerMissionContract.decision:type_name -> console.v1.ComputerMissionDecision
 	241,  // 300: console.v1.ComputerMission.contract:type_name -> console.v1.ComputerMissionContract
 	40,   // 301: console.v1.ComputerMission.state:type_name -> console.v1.ComputerMissionState
-	528,  // 302: console.v1.ComputerMission.evidence_refs:type_name -> console.v1.RelatedResource
-	821,  // 303: console.v1.ComputerMission.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 304: console.v1.ComputerMission.updated_at:type_name -> google.protobuf.Timestamp
+	529,  // 302: console.v1.ComputerMission.evidence_refs:type_name -> console.v1.RelatedResource
+	822,  // 303: console.v1.ComputerMission.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 304: console.v1.ComputerMission.updated_at:type_name -> google.protobuf.Timestamp
 	243,  // 305: console.v1.ComputerMission.long_horizon_budget:type_name -> console.v1.ComputerMissionLongHorizonBudgetState
-	821,  // 306: console.v1.ComputerMissionLongHorizonBudgetState.deadline_at:type_name -> google.protobuf.Timestamp
-	821,  // 307: console.v1.ComputerMissionLongHorizonBudgetState.authority_expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 306: console.v1.ComputerMissionLongHorizonBudgetState.deadline_at:type_name -> google.protobuf.Timestamp
+	822,  // 307: console.v1.ComputerMissionLongHorizonBudgetState.authority_expires_at:type_name -> google.protobuf.Timestamp
 	110,  // 308: console.v1.SubmitComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
 	241,  // 309: console.v1.SubmitComputerMissionRequest.contract:type_name -> console.v1.ComputerMissionContract
 	242,  // 310: console.v1.SubmitComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
@@ -71928,36 +72179,36 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	242,  // 319: console.v1.ContinueComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
 	126,  // 320: console.v1.ContinueComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
 	110,  // 321: console.v1.PauseComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	824,  // 322: console.v1.PauseComputerMissionRequest.condition:type_name -> google.protobuf.Struct
-	821,  // 323: console.v1.PauseComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
+	825,  // 322: console.v1.PauseComputerMissionRequest.condition:type_name -> google.protobuf.Struct
+	822,  // 323: console.v1.PauseComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
 	242,  // 324: console.v1.PauseComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
 	126,  // 325: console.v1.PauseComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
 	110,  // 326: console.v1.ResumeComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	824,  // 327: console.v1.ResumeComputerMissionRequest.condition:type_name -> google.protobuf.Struct
-	821,  // 328: console.v1.ResumeComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
+	825,  // 327: console.v1.ResumeComputerMissionRequest.condition:type_name -> google.protobuf.Struct
+	822,  // 328: console.v1.ResumeComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
 	242,  // 329: console.v1.ResumeComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
 	126,  // 330: console.v1.ResumeComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
 	110,  // 331: console.v1.WakeComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	824,  // 332: console.v1.WakeComputerMissionRequest.condition:type_name -> google.protobuf.Struct
-	821,  // 333: console.v1.WakeComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
+	825,  // 332: console.v1.WakeComputerMissionRequest.condition:type_name -> google.protobuf.Struct
+	822,  // 333: console.v1.WakeComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
 	242,  // 334: console.v1.WakeComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
 	126,  // 335: console.v1.WakeComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
 	110,  // 336: console.v1.GuideComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	824,  // 337: console.v1.GuideComputerMissionRequest.condition:type_name -> google.protobuf.Struct
-	821,  // 338: console.v1.GuideComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
+	825,  // 337: console.v1.GuideComputerMissionRequest.condition:type_name -> google.protobuf.Struct
+	822,  // 338: console.v1.GuideComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
 	242,  // 339: console.v1.GuideComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
 	126,  // 340: console.v1.GuideComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
 	43,   // 341: console.v1.ComputerMissionCanaryRun.state:type_name -> console.v1.ComputerMissionCanaryRunState
 	238,  // 342: console.v1.ComputerMissionCanaryRun.scope:type_name -> console.v1.ComputerMissionScope
 	235,  // 343: console.v1.ComputerMissionCanaryRun.budget:type_name -> console.v1.ComputerMissionBudget
-	821,  // 344: console.v1.ComputerMissionCanaryRun.grant_expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 344: console.v1.ComputerMissionCanaryRun.grant_expires_at:type_name -> google.protobuf.Timestamp
 	45,   // 345: console.v1.ComputerMissionCanaryRun.recommendation:type_name -> console.v1.ComputerMissionCanaryRecommendation
 	42,   // 346: console.v1.ComputerMissionCanaryEffect.state:type_name -> console.v1.ComputerMissionEffectState
-	528,  // 347: console.v1.ComputerMissionCanaryEffect.evidence_refs:type_name -> console.v1.RelatedResource
-	821,  // 348: console.v1.ComputerMissionCanaryEffect.recorded_at:type_name -> google.protobuf.Timestamp
+	529,  // 347: console.v1.ComputerMissionCanaryEffect.evidence_refs:type_name -> console.v1.RelatedResource
+	822,  // 348: console.v1.ComputerMissionCanaryEffect.recorded_at:type_name -> google.protobuf.Timestamp
 	44,   // 349: console.v1.ComputerMissionCanaryDimensionResult.dimension:type_name -> console.v1.ComputerMissionCanaryScoreDimension
 	45,   // 350: console.v1.ComputerMissionCanaryEvaluation.recommendation:type_name -> console.v1.ComputerMissionCanaryRecommendation
-	528,  // 351: console.v1.ComputerMissionCanaryEvaluation.evidence_refs:type_name -> console.v1.RelatedResource
+	529,  // 351: console.v1.ComputerMissionCanaryEvaluation.evidence_refs:type_name -> console.v1.RelatedResource
 	262,  // 352: console.v1.ComputerMissionCanaryEvaluation.dimensions:type_name -> console.v1.ComputerMissionCanaryDimensionResult
 	263,  // 353: console.v1.ComputerMissionCanaryEvaluation.hard_gates:type_name -> console.v1.ComputerMissionCanaryHardGateResult
 	110,  // 354: console.v1.ListComputerMissionCanaryDefinitionsRequest.query:type_name -> console.v1.ConsoleQuery
@@ -71979,16 +72230,16 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	46,   // 370: console.v1.OperateComputerMissionCanaryRunRequest.kind:type_name -> console.v1.ComputerMissionCanaryOperatorActionKind
 	238,  // 371: console.v1.OperateComputerMissionCanaryRunRequest.narrowed_scope:type_name -> console.v1.ComputerMissionScope
 	235,  // 372: console.v1.OperateComputerMissionCanaryRunRequest.extended_budget:type_name -> console.v1.ComputerMissionBudget
-	821,  // 373: console.v1.OperateComputerMissionCanaryRunRequest.extended_grant_expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 373: console.v1.OperateComputerMissionCanaryRunRequest.extended_grant_expires_at:type_name -> google.protobuf.Timestamp
 	260,  // 374: console.v1.OperateComputerMissionCanaryRunResponse.run:type_name -> console.v1.ComputerMissionCanaryRun
 	234,  // 375: console.v1.OperateComputerMissionCanaryRunResponse.action:type_name -> console.v1.ComputerMissionCanaryOperatorAction
 	39,   // 376: console.v1.MissionScheduleTemplate.authority_mode:type_name -> console.v1.ComputerMissionAuthorityMode
 	235,  // 377: console.v1.MissionScheduleTemplate.budget:type_name -> console.v1.ComputerMissionBudget
 	277,  // 378: console.v1.MissionSchedule.template:type_name -> console.v1.MissionScheduleTemplate
-	821,  // 379: console.v1.MissionSchedule.next_run_at:type_name -> google.protobuf.Timestamp
-	821,  // 380: console.v1.MissionSchedule.last_run_at:type_name -> google.protobuf.Timestamp
-	821,  // 381: console.v1.MissionSchedule.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 382: console.v1.MissionSchedule.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 379: console.v1.MissionSchedule.next_run_at:type_name -> google.protobuf.Timestamp
+	822,  // 380: console.v1.MissionSchedule.last_run_at:type_name -> google.protobuf.Timestamp
+	822,  // 381: console.v1.MissionSchedule.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 382: console.v1.MissionSchedule.updated_at:type_name -> google.protobuf.Timestamp
 	110,  // 383: console.v1.CreateMissionScheduleRequest.query:type_name -> console.v1.ConsoleQuery
 	277,  // 384: console.v1.CreateMissionScheduleRequest.template:type_name -> console.v1.MissionScheduleTemplate
 	278,  // 385: console.v1.CreateMissionScheduleResponse.schedule:type_name -> console.v1.MissionSchedule
@@ -71999,13 +72250,13 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	278,  // 390: console.v1.SetMissionScheduleEnabledResponse.schedule:type_name -> console.v1.MissionSchedule
 	110,  // 391: console.v1.ListMissionSchedulesRequest.query:type_name -> console.v1.ConsoleQuery
 	278,  // 392: console.v1.ListMissionSchedulesResponse.schedules:type_name -> console.v1.MissionSchedule
-	590,  // 393: console.v1.ListMissionSchedulesResponse.available_capabilities:type_name -> console.v1.MissionScheduleCapability
+	591,  // 393: console.v1.ListMissionSchedulesResponse.available_capabilities:type_name -> console.v1.MissionScheduleCapability
 	49,   // 394: console.v1.ConnectorTrigger.source:type_name -> console.v1.ConnectorTriggerSource
 	277,  // 395: console.v1.ConnectorTrigger.template:type_name -> console.v1.MissionScheduleTemplate
-	821,  // 396: console.v1.ConnectorTrigger.next_run_at:type_name -> google.protobuf.Timestamp
-	821,  // 397: console.v1.ConnectorTrigger.last_run_at:type_name -> google.protobuf.Timestamp
-	821,  // 398: console.v1.ConnectorTrigger.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 399: console.v1.ConnectorTrigger.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 396: console.v1.ConnectorTrigger.next_run_at:type_name -> google.protobuf.Timestamp
+	822,  // 397: console.v1.ConnectorTrigger.last_run_at:type_name -> google.protobuf.Timestamp
+	822,  // 398: console.v1.ConnectorTrigger.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 399: console.v1.ConnectorTrigger.updated_at:type_name -> google.protobuf.Timestamp
 	110,  // 400: console.v1.CreateConnectorTriggerRequest.query:type_name -> console.v1.ConsoleQuery
 	49,   // 401: console.v1.CreateConnectorTriggerRequest.source:type_name -> console.v1.ConnectorTriggerSource
 	277,  // 402: console.v1.CreateConnectorTriggerRequest.template:type_name -> console.v1.MissionScheduleTemplate
@@ -72019,21 +72270,21 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	110,  // 410: console.v1.DeleteConnectorTriggerRequest.query:type_name -> console.v1.ConsoleQuery
 	110,  // 411: console.v1.SetConnectorTriggerEnabledRequest.query:type_name -> console.v1.ConsoleQuery
 	287,  // 412: console.v1.SetConnectorTriggerEnabledResponse.trigger:type_name -> console.v1.ConnectorTrigger
-	821,  // 413: console.v1.ComputerMissionApexSessionReservation.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 413: console.v1.ComputerMissionApexSessionReservation.expires_at:type_name -> google.protobuf.Timestamp
 	298,  // 414: console.v1.ReserveComputerMissionApexSessionResponse.reservation:type_name -> console.v1.ComputerMissionApexSessionReservation
 	298,  // 415: console.v1.BindComputerMissionApexSessionReservationResponse.reservation:type_name -> console.v1.ComputerMissionApexSessionReservation
 	303,  // 416: console.v1.BindComputerMissionApexInstructionMetadataResponse.metadata:type_name -> console.v1.ComputerMissionApexInstructionMetadata
-	831,  // 417: console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse.owner_binding:type_name -> remoterunner.v1.RunnerSessionOwnerBinding
+	832,  // 417: console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse.owner_binding:type_name -> remoterunner.v1.RunnerSessionOwnerBinding
 	110,  // 418: console.v1.GetOverviewRequest.query:type_name -> console.v1.ConsoleQuery
-	821,  // 419: console.v1.GetOverviewResponse.generated_at:type_name -> google.protobuf.Timestamp
+	822,  // 419: console.v1.GetOverviewResponse.generated_at:type_name -> google.protobuf.Timestamp
 	493,  // 420: console.v1.GetOverviewResponse.metrics:type_name -> console.v1.ConsoleMetric
 	494,  // 421: console.v1.GetOverviewResponse.top_assets:type_name -> console.v1.AiAsset
 	518,  // 422: console.v1.GetOverviewResponse.top_findings:type_name -> console.v1.RiskFinding
 	495,  // 423: console.v1.GetOverviewResponse.recent_activity:type_name -> console.v1.ActivityEvent
-	520,  // 424: console.v1.GetOverviewResponse.integration_tiles:type_name -> console.v1.IntegrationTile
-	521,  // 425: console.v1.GetOverviewResponse.onboarding_tasks:type_name -> console.v1.OnboardingTask
+	521,  // 424: console.v1.GetOverviewResponse.integration_tiles:type_name -> console.v1.IntegrationTile
+	522,  // 425: console.v1.GetOverviewResponse.onboarding_tasks:type_name -> console.v1.OnboardingTask
 	110,  // 426: console.v1.GetConsoleBootSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
-	821,  // 427: console.v1.ConsoleSnapshotFreshness.generated_at:type_name -> google.protobuf.Timestamp
+	822,  // 427: console.v1.ConsoleSnapshotFreshness.generated_at:type_name -> google.protobuf.Timestamp
 	356,  // 428: console.v1.GetConsoleBootSnapshotResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
 	359,  // 429: console.v1.GetConsoleBootSnapshotResponse.billing_subscription:type_name -> console.v1.GetBillingSubscriptionResponse
 	329,  // 430: console.v1.GetConsoleBootSnapshotResponse.workforce:type_name -> console.v1.ListAgentWorkforceRecordsResponse
@@ -72043,7 +72294,7 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	110,  // 434: console.v1.ListAssetsRequest.query:type_name -> console.v1.ConsoleQuery
 	494,  // 435: console.v1.ListAssetsResponse.assets:type_name -> console.v1.AiAsset
 	494,  // 436: console.v1.GetAssetResponse.asset:type_name -> console.v1.AiAsset
-	528,  // 437: console.v1.GetAssetResponse.related_resources:type_name -> console.v1.RelatedResource
+	529,  // 437: console.v1.GetAssetResponse.related_resources:type_name -> console.v1.RelatedResource
 	495,  // 438: console.v1.GetAssetResponse.recent_activity:type_name -> console.v1.ActivityEvent
 	518,  // 439: console.v1.GetAssetResponse.findings:type_name -> console.v1.RiskFinding
 	110,  // 440: console.v1.ListActivityRequest.query:type_name -> console.v1.ConsoleQuery
@@ -72052,17 +72303,17 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	496,  // 443: console.v1.ListEvalResultsResponse.results:type_name -> console.v1.EvalResult
 	110,  // 444: console.v1.ListCostUsageRequest.query:type_name -> console.v1.ConsoleQuery
 	497,  // 445: console.v1.ListCostUsageResponse.rows:type_name -> console.v1.CostUsage
-	577,  // 446: console.v1.ListCostUsageResponse.summary:type_name -> console.v1.CostUsageSummary
+	578,  // 446: console.v1.ListCostUsageResponse.summary:type_name -> console.v1.CostUsageSummary
 	323,  // 447: console.v1.ListCostUsageResponse.run_summary:type_name -> console.v1.CostUsageRunSummary
-	821,  // 448: console.v1.RecordProviderCostSnapshotRequest.observed_at:type_name -> google.protobuf.Timestamp
+	822,  // 448: console.v1.RecordProviderCostSnapshotRequest.observed_at:type_name -> google.protobuf.Timestamp
 	110,  // 449: console.v1.ListAuthorityPostureRequest.query:type_name -> console.v1.ConsoleQuery
 	498,  // 450: console.v1.ListAuthorityPostureResponse.rows:type_name -> console.v1.AuthorityLedger
 	110,  // 451: console.v1.ListAgentWorkforceRecordsRequest.query:type_name -> console.v1.ConsoleQuery
 	502,  // 452: console.v1.ListAgentWorkforceRecordsResponse.records:type_name -> console.v1.AgentWorkforceRecord
 	505,  // 453: console.v1.ListAgentWorkforceRecordsResponse.approval_queue_summary:type_name -> console.v1.AgentWorkforceApprovalQueueSummary
 	503,  // 454: console.v1.ListAgentWorkforceRecordsResponse.source_readiness:type_name -> console.v1.AgentWorkforceSourceReadiness
-	832,  // 455: console.v1.OrbControlTarget.lifecycle:type_name -> orbcontrol.v1.OrbObservedLifecycle
-	821,  // 456: console.v1.OrbControlTarget.observed_at:type_name -> google.protobuf.Timestamp
+	833,  // 455: console.v1.OrbControlTarget.lifecycle:type_name -> orbcontrol.v1.OrbObservedLifecycle
+	822,  // 456: console.v1.OrbControlTarget.observed_at:type_name -> google.protobuf.Timestamp
 	127,  // 457: console.v1.OrbControlTarget.allowed_actions:type_name -> console.v1.OperatingReceiptAction
 	126,  // 458: console.v1.OrbControlTarget.receipt:type_name -> console.v1.OperatingReceipt
 	110,  // 459: console.v1.ListOrbControlTargetsRequest.query:type_name -> console.v1.ConsoleQuery
@@ -72071,23 +72322,23 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	330,  // 462: console.v1.GetOrbControlTargetResponse.target:type_name -> console.v1.OrbControlTarget
 	126,  // 463: console.v1.GetOrbControlTargetResponse.receipt:type_name -> console.v1.OperatingReceipt
 	110,  // 464: console.v1.SubmitOrbControlActionRequest.query:type_name -> console.v1.ConsoleQuery
-	833,  // 465: console.v1.SubmitOrbControlActionRequest.action:type_name -> orbcontrol.v1.OrbCommandKind
+	834,  // 465: console.v1.SubmitOrbControlActionRequest.action:type_name -> orbcontrol.v1.OrbCommandKind
 	330,  // 466: console.v1.SubmitOrbControlActionResponse.target:type_name -> console.v1.OrbControlTarget
 	126,  // 467: console.v1.SubmitOrbControlActionResponse.receipt:type_name -> console.v1.OperatingReceipt
 	110,  // 468: console.v1.SubmitAgentWorkforceEvidenceRequest.query:type_name -> console.v1.ConsoleQuery
 	339,  // 469: console.v1.SubmitAgentWorkforceEvidenceResponse.submitted_evidence:type_name -> console.v1.AgentWorkforceSubmittedEvidence
 	502,  // 470: console.v1.SubmitAgentWorkforceEvidenceResponse.record:type_name -> console.v1.AgentWorkforceRecord
 	329,  // 471: console.v1.SubmitAgentWorkforceEvidenceResponse.records_response:type_name -> console.v1.ListAgentWorkforceRecordsResponse
-	528,  // 472: console.v1.AgentWorkforceSubmittedEvidence.evidence_ref:type_name -> console.v1.RelatedResource
+	529,  // 472: console.v1.AgentWorkforceSubmittedEvidence.evidence_ref:type_name -> console.v1.RelatedResource
 	110,  // 473: console.v1.ListFindingsRequest.query:type_name -> console.v1.ConsoleQuery
 	518,  // 474: console.v1.ListFindingsResponse.findings:type_name -> console.v1.RiskFinding
-	522,  // 475: console.v1.GetTraceDrilldownResponse.trace:type_name -> console.v1.TraceDrilldown
+	523,  // 475: console.v1.GetTraceDrilldownResponse.trace:type_name -> console.v1.TraceDrilldown
 	110,  // 476: console.v1.ListIntegrationTilesRequest.query:type_name -> console.v1.ConsoleQuery
-	520,  // 477: console.v1.ListIntegrationTilesResponse.tiles:type_name -> console.v1.IntegrationTile
+	521,  // 477: console.v1.ListIntegrationTilesResponse.tiles:type_name -> console.v1.IntegrationTile
 	348,  // 478: console.v1.ListPinnedSourcesResponse.pins:type_name -> console.v1.PinnedSource
-	821,  // 479: console.v1.PinnedSource.pinned_at:type_name -> google.protobuf.Timestamp
+	822,  // 479: console.v1.PinnedSource.pinned_at:type_name -> google.protobuf.Timestamp
 	348,  // 480: console.v1.SetPinnedSourceResponse.pin:type_name -> console.v1.PinnedSource
-	521,  // 481: console.v1.GetOnboardingPlanResponse.tasks:type_name -> console.v1.OnboardingTask
+	522,  // 481: console.v1.GetOnboardingPlanResponse.tasks:type_name -> console.v1.OnboardingTask
 	110,  // 482: console.v1.GetWorkspaceSettingsRequest.query:type_name -> console.v1.ConsoleQuery
 	439,  // 483: console.v1.GetWorkspaceSettingsResponse.workspace:type_name -> console.v1.WorkspaceSettingsProfile
 	440,  // 484: console.v1.GetWorkspaceSettingsResponse.current_principal:type_name -> console.v1.WorkspaceSettingsPrincipal
@@ -72109,7 +72360,7 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	110,  // 500: console.v1.UpdateWorkspaceProfileRequest.query:type_name -> console.v1.ConsoleQuery
 	439,  // 501: console.v1.UpdateWorkspaceProfileRequest.profile:type_name -> console.v1.WorkspaceSettingsProfile
 	356,  // 502: console.v1.UpdateWorkspaceProfileResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
-	821,  // 503: console.v1.OperatorPreferences.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 503: console.v1.OperatorPreferences.updated_at:type_name -> google.protobuf.Timestamp
 	366,  // 504: console.v1.OperatorPreferences.model_preferences:type_name -> console.v1.OperatorModelPreference
 	110,  // 505: console.v1.GetOperatorPreferencesRequest.query:type_name -> console.v1.ConsoleQuery
 	368,  // 506: console.v1.GetOperatorPreferencesResponse.preferences:type_name -> console.v1.OperatorPreferences
@@ -72118,14 +72369,14 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	368,  // 509: console.v1.UpdateOperatorPreferencesResponse.preferences:type_name -> console.v1.OperatorPreferences
 	58,   // 510: console.v1.WorkspaceGuardrailRule.detector_kind:type_name -> console.v1.GuardrailDetectorKind
 	59,   // 511: console.v1.WorkspaceGuardrailRule.action:type_name -> console.v1.GuardrailAction
-	821,  // 512: console.v1.WorkspaceGuardrailRule.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 512: console.v1.WorkspaceGuardrailRule.updated_at:type_name -> google.protobuf.Timestamp
 	110,  // 513: console.v1.ListWorkspaceGuardrailRulesRequest.query:type_name -> console.v1.ConsoleQuery
 	373,  // 514: console.v1.ListWorkspaceGuardrailRulesResponse.rules:type_name -> console.v1.WorkspaceGuardrailRule
 	110,  // 515: console.v1.UpsertWorkspaceGuardrailRuleRequest.query:type_name -> console.v1.ConsoleQuery
 	373,  // 516: console.v1.UpsertWorkspaceGuardrailRuleRequest.rule:type_name -> console.v1.WorkspaceGuardrailRule
 	110,  // 517: console.v1.RemoveWorkspaceGuardrailRuleRequest.query:type_name -> console.v1.ConsoleQuery
-	821,  // 518: console.v1.ConnectorProfile.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 519: console.v1.ConnectorProfile.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 518: console.v1.ConnectorProfile.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 519: console.v1.ConnectorProfile.updated_at:type_name -> google.protobuf.Timestamp
 	110,  // 520: console.v1.CreateConnectorProfileRequest.query:type_name -> console.v1.ConsoleQuery
 	378,  // 521: console.v1.CreateConnectorProfileResponse.profile:type_name -> console.v1.ConnectorProfile
 	110,  // 522: console.v1.ListConnectorProfilesRequest.query:type_name -> console.v1.ConsoleQuery
@@ -72168,8 +72419,8 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	110,  // 559: console.v1.EnableWorkspaceBreakGlassRequest.query:type_name -> console.v1.ConsoleQuery
 	457,  // 560: console.v1.EnableWorkspaceBreakGlassRequest.grant:type_name -> console.v1.WorkspaceSettingsBreakGlassGrant
 	110,  // 561: console.v1.DisableWorkspaceBreakGlassRequest.query:type_name -> console.v1.ConsoleQuery
-	821,  // 562: console.v1.OperatingSkill.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 563: console.v1.OperatingSkill.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 562: console.v1.OperatingSkill.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 563: console.v1.OperatingSkill.updated_at:type_name -> google.protobuf.Timestamp
 	417,  // 564: console.v1.OperatingSkill.analysis:type_name -> console.v1.SkillAnalysisReport
 	420,  // 565: console.v1.OperatingSkill.package_manifest:type_name -> console.v1.DexSkillPackageFile
 	418,  // 566: console.v1.OperatingSkill.inputs:type_name -> console.v1.DexSkillInputDeclaration
@@ -72181,13 +72432,13 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	425,  // 572: console.v1.OperatingSkill.update_diff:type_name -> console.v1.DexSkillUpdateDiff
 	110,  // 573: console.v1.ListWorkspaceSkillsRequest.query:type_name -> console.v1.ConsoleQuery
 	413,  // 574: console.v1.ListWorkspaceSkillsResponse.skills:type_name -> console.v1.OperatingSkill
-	822,  // 575: console.v1.SkillAnalysisFinding.severity:type_name -> common.v1.RiskLevel
+	823,  // 575: console.v1.SkillAnalysisFinding.severity:type_name -> common.v1.RiskLevel
 	60,   // 576: console.v1.SkillAnalysisReport.verdict:type_name -> console.v1.SkillAnalysisVerdict
 	416,  // 577: console.v1.SkillAnalysisReport.findings:type_name -> console.v1.SkillAnalysisFinding
 	61,   // 578: console.v1.DexSkillPackageFile.kind:type_name -> console.v1.DexSkillPackageFileKind
 	62,   // 579: console.v1.DexSkillQualityFixture.kind:type_name -> console.v1.DexSkillFixtureKind
 	423,  // 580: console.v1.DexSkillQualityEvidence.fixtures:type_name -> console.v1.DexSkillQualityFixture
-	822,  // 581: console.v1.DexSkillCatalogEntry.risk_level:type_name -> common.v1.RiskLevel
+	823,  // 581: console.v1.DexSkillCatalogEntry.risk_level:type_name -> common.v1.RiskLevel
 	417,  // 582: console.v1.DexSkillCatalogEntry.analysis:type_name -> console.v1.SkillAnalysisReport
 	65,   // 583: console.v1.DexSkillCatalogEntry.exposure:type_name -> console.v1.DexSkillCatalogExposure
 	420,  // 584: console.v1.DexSkillCatalogEntry.package_manifest:type_name -> console.v1.DexSkillPackageFile
@@ -72210,22 +72461,22 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	110,  // 601: console.v1.UpdateWorkspaceSkillRequest.query:type_name -> console.v1.ConsoleQuery
 	413,  // 602: console.v1.UpdateWorkspaceSkillResponse.skill:type_name -> console.v1.OperatingSkill
 	110,  // 603: console.v1.DeleteWorkspaceSkillRequest.query:type_name -> console.v1.ConsoleQuery
-	821,  // 604: console.v1.WorkspaceSettingsProfile.archived_at:type_name -> google.protobuf.Timestamp
+	822,  // 604: console.v1.WorkspaceSettingsProfile.archived_at:type_name -> google.protobuf.Timestamp
 	441,  // 605: console.v1.WorkspaceSettingsProfile.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	441,  // 606: console.v1.WorkspaceSettingsProfile.archive_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	50,   // 607: console.v1.WorkspaceSettingsPrincipal.rbac_role:type_name -> console.v1.WorkspaceSettingsRole
-	821,  // 608: console.v1.WorkspaceSettingsWorkspace.archived_at:type_name -> google.protobuf.Timestamp
+	822,  // 608: console.v1.WorkspaceSettingsWorkspace.archived_at:type_name -> google.protobuf.Timestamp
 	50,   // 609: console.v1.WorkspaceSettingsWorkspace.rbac_role:type_name -> console.v1.WorkspaceSettingsRole
 	441,  // 610: console.v1.WorkspaceSettingsWorkspace.capabilities:type_name -> console.v1.WorkspaceSettingsCapability
-	821,  // 611: console.v1.WorkspaceSettingsActivityEntry.created_at:type_name -> google.protobuf.Timestamp
-	818,  // 612: console.v1.WorkspaceSettingsActivityEntry.details:type_name -> console.v1.WorkspaceSettingsActivityEntry.DetailsEntry
+	822,  // 611: console.v1.WorkspaceSettingsActivityEntry.created_at:type_name -> google.protobuf.Timestamp
+	819,  // 612: console.v1.WorkspaceSettingsActivityEntry.details:type_name -> console.v1.WorkspaceSettingsActivityEntry.DetailsEntry
 	441,  // 613: console.v1.WorkspaceSettingsMember.manage_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	50,   // 614: console.v1.WorkspaceSettingsMember.rbac_role:type_name -> console.v1.WorkspaceSettingsRole
-	821,  // 615: console.v1.WorkspaceSettingsMember.last_seen_at:type_name -> google.protobuf.Timestamp
+	822,  // 615: console.v1.WorkspaceSettingsMember.last_seen_at:type_name -> google.protobuf.Timestamp
 	53,   // 616: console.v1.WorkspaceSettingsMember.status_enum:type_name -> console.v1.WorkspaceSettingsMemberStatus
 	57,   // 617: console.v1.WorkspaceSettingsMember.source_enum:type_name -> console.v1.WorkspaceSettingsSource
 	57,   // 618: console.v1.WorkspaceSettingsMember.provisioning_source_enum:type_name -> console.v1.WorkspaceSettingsSource
-	821,  // 619: console.v1.WorkspaceSettingsBilling.renewal_at:type_name -> google.protobuf.Timestamp
+	822,  // 619: console.v1.WorkspaceSettingsBilling.renewal_at:type_name -> google.protobuf.Timestamp
 	441,  // 620: console.v1.WorkspaceSettingsBilling.manage_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	52,   // 621: console.v1.WorkspaceSettingsBilling.status_enum:type_name -> console.v1.WorkspaceSettingsBillingStatus
 	441,  // 622: console.v1.WorkspaceSettingsPolicy.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
@@ -72237,9 +72488,9 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	67,   // 628: console.v1.WorkspaceDexPolicy.external_action_mode:type_name -> console.v1.DexExternalActionMode
 	441,  // 629: console.v1.WorkspaceDexPolicy.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	441,  // 630: console.v1.WorkspaceDexPolicy.review_corrections_capability:type_name -> console.v1.WorkspaceSettingsCapability
-	821,  // 631: console.v1.WorkspaceArtifactStyleGuide.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 631: console.v1.WorkspaceArtifactStyleGuide.updated_at:type_name -> google.protobuf.Timestamp
 	441,  // 632: console.v1.WorkspaceArtifactStyleGuide.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
-	816,  // 633: console.v1.WorkspaceArtifactStyleGuide.brand_voices:type_name -> console.v1.WorkspaceBrandVoice
+	817,  // 633: console.v1.WorkspaceArtifactStyleGuide.brand_voices:type_name -> console.v1.WorkspaceBrandVoice
 	441,  // 634: console.v1.WorkspaceSettingsNotificationPreference.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	68,   // 635: console.v1.WorkspaceSpendBeatSettings.cadence:type_name -> console.v1.WorkspaceSpendBeatCadence
 	441,  // 636: console.v1.WorkspaceSpendBeatSettings.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
@@ -72253,19 +72504,19 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	55,   // 644: console.v1.WorkspaceSettingsIntegration.status_enum:type_name -> console.v1.WorkspaceSettingsIntegrationStatus
 	57,   // 645: console.v1.WorkspaceSettingsIntegration.source_enum:type_name -> console.v1.WorkspaceSettingsSource
 	441,  // 646: console.v1.WorkspaceSettingsOwnerStatus.capability:type_name -> console.v1.WorkspaceSettingsCapability
-	821,  // 647: console.v1.WorkspaceSettingsOwnerStatus.checked_at:type_name -> google.protobuf.Timestamp
+	822,  // 647: console.v1.WorkspaceSettingsOwnerStatus.checked_at:type_name -> google.protobuf.Timestamp
 	56,   // 648: console.v1.WorkspaceSettingsOwnerStatus.status_enum:type_name -> console.v1.WorkspaceSettingsOwnerServiceStatus
-	821,  // 649: console.v1.WorkspaceSettingsBreakGlassGrant.enabled_at:type_name -> google.protobuf.Timestamp
-	821,  // 650: console.v1.WorkspaceSettingsBreakGlassGrant.disabled_at:type_name -> google.protobuf.Timestamp
+	822,  // 649: console.v1.WorkspaceSettingsBreakGlassGrant.enabled_at:type_name -> google.protobuf.Timestamp
+	822,  // 650: console.v1.WorkspaceSettingsBreakGlassGrant.disabled_at:type_name -> google.protobuf.Timestamp
 	441,  // 651: console.v1.WorkspaceSettingsBreakGlassGrant.manage_capability:type_name -> console.v1.WorkspaceSettingsCapability
-	821,  // 652: console.v1.WorkspaceSettingsBreakGlassGrant.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 652: console.v1.WorkspaceSettingsBreakGlassGrant.expires_at:type_name -> google.protobuf.Timestamp
 	69,   // 653: console.v1.StaffWorkspaceDirectoryEntry.access_state:type_name -> console.v1.StaffWorkspaceAccessState
 	460,  // 654: console.v1.SearchStaffWorkspaceDirectoryResponse.entries:type_name -> console.v1.StaffWorkspaceDirectoryEntry
-	821,  // 655: console.v1.StaffGrantEventSummary.occurred_at:type_name -> google.protobuf.Timestamp
-	821,  // 656: console.v1.StaffGrantEventSummary.expires_at:type_name -> google.protobuf.Timestamp
-	821,  // 657: console.v1.StaffReceiptSummary.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 658: console.v1.StaffTraceSummary.occurred_at:type_name -> google.protobuf.Timestamp
-	821,  // 659: console.v1.StaffFailureSummary.occurred_at:type_name -> google.protobuf.Timestamp
+	822,  // 655: console.v1.StaffGrantEventSummary.occurred_at:type_name -> google.protobuf.Timestamp
+	822,  // 656: console.v1.StaffGrantEventSummary.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 657: console.v1.StaffReceiptSummary.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 658: console.v1.StaffTraceSummary.occurred_at:type_name -> google.protobuf.Timestamp
+	822,  // 659: console.v1.StaffFailureSummary.occurred_at:type_name -> google.protobuf.Timestamp
 	69,   // 660: console.v1.StaffWorkspaceContext.access_state:type_name -> console.v1.StaffWorkspaceAccessState
 	463,  // 661: console.v1.StaffWorkspaceContext.grant_events:type_name -> console.v1.StaffGrantEventSummary
 	464,  // 662: console.v1.StaffWorkspaceContext.receipts:type_name -> console.v1.StaffReceiptSummary
@@ -72277,24 +72528,24 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	458,  // 668: console.v1.StaffWorkspaceContext.traces_capability:type_name -> console.v1.StaffContextCapability
 	458,  // 669: console.v1.StaffWorkspaceContext.failures_capability:type_name -> console.v1.StaffContextCapability
 	458,  // 670: console.v1.StaffWorkspaceContext.computer_environment_capability:type_name -> console.v1.StaffContextCapability
-	821,  // 671: console.v1.StaffWorkspaceContext.active_grant_expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 671: console.v1.StaffWorkspaceContext.active_grant_expires_at:type_name -> google.protobuf.Timestamp
 	468,  // 672: console.v1.GetStaffWorkspaceContextResponse.context:type_name -> console.v1.StaffWorkspaceContext
-	821,  // 673: console.v1.ManagedProviderAccessGrant.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 674: console.v1.ManagedProviderAccessGrant.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 673: console.v1.ManagedProviderAccessGrant.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 674: console.v1.ManagedProviderAccessGrant.updated_at:type_name -> google.protobuf.Timestamp
 	70,   // 675: console.v1.ManagedProviderAccessGrant.state:type_name -> console.v1.ManagedProviderAccessState
-	821,  // 676: console.v1.ManagedProviderAccessGrant.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 676: console.v1.ManagedProviderAccessGrant.expires_at:type_name -> google.protobuf.Timestamp
 	470,  // 677: console.v1.ListManagedProviderAccessGrantsResponse.grants:type_name -> console.v1.ManagedProviderAccessGrant
 	70,   // 678: console.v1.UpsertManagedProviderAccessGrantRequest.state:type_name -> console.v1.ManagedProviderAccessState
-	821,  // 679: console.v1.UpsertManagedProviderAccessGrantRequest.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 679: console.v1.UpsertManagedProviderAccessGrantRequest.expires_at:type_name -> google.protobuf.Timestamp
 	470,  // 680: console.v1.UpsertManagedProviderAccessGrantResponse.grant:type_name -> console.v1.ManagedProviderAccessGrant
 	470,  // 681: console.v1.RevokeManagedProviderAccessGrantResponse.grant:type_name -> console.v1.ManagedProviderAccessGrant
 	71,   // 682: console.v1.StaffInferencePurposeRoute.purpose:type_name -> console.v1.StaffInferenceRoutingPurpose
 	477,  // 683: console.v1.StaffInferencePurposeRoute.primary_target:type_name -> console.v1.InferenceProviderTarget
 	477,  // 684: console.v1.StaffInferencePurposeRoute.canary_target:type_name -> console.v1.InferenceProviderTarget
-	821,  // 685: console.v1.StaffInferenceRoutingProfile.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 685: console.v1.StaffInferenceRoutingProfile.updated_at:type_name -> google.protobuf.Timestamp
 	478,  // 686: console.v1.StaffInferenceRoutingProfile.routes:type_name -> console.v1.StaffInferencePurposeRoute
 	478,  // 687: console.v1.StaffInferenceRoutingEvent.routes:type_name -> console.v1.StaffInferencePurposeRoute
-	821,  // 688: console.v1.StaffInferenceRoutingEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	822,  // 688: console.v1.StaffInferenceRoutingEvent.occurred_at:type_name -> google.protobuf.Timestamp
 	477,  // 689: console.v1.GetStaffInferenceRoutingProfileResponse.available_targets:type_name -> console.v1.InferenceProviderTarget
 	477,  // 690: console.v1.GetStaffInferenceRoutingProfileResponse.default_target:type_name -> console.v1.InferenceProviderTarget
 	477,  // 691: console.v1.GetStaffInferenceRoutingProfileResponse.effective_target:type_name -> console.v1.InferenceProviderTarget
@@ -72309,38 +72560,38 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	492,  // 700: console.v1.CompareScenarioFixturesResponse.base_fixture:type_name -> console.v1.ScenarioFixture
 	492,  // 701: console.v1.CompareScenarioFixturesResponse.target_fixture:type_name -> console.v1.ScenarioFixture
 	491,  // 702: console.v1.CompareScenarioFixturesResponse.differences:type_name -> console.v1.ScenarioFixtureDifference
-	821,  // 703: console.v1.ScenarioFixture.recorded_at:type_name -> google.protobuf.Timestamp
-	821,  // 704: console.v1.ScenarioFixture.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 705: console.v1.ScenarioFixture.updated_at:type_name -> google.protobuf.Timestamp
-	822,  // 706: console.v1.AiAsset.risk_level:type_name -> common.v1.RiskLevel
-	821,  // 707: console.v1.AiAsset.last_seen_at:type_name -> google.protobuf.Timestamp
-	528,  // 708: console.v1.AiAsset.related_resources:type_name -> console.v1.RelatedResource
-	822,  // 709: console.v1.ActivityEvent.risk_level:type_name -> common.v1.RiskLevel
-	821,  // 710: console.v1.ActivityEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	528,  // 711: console.v1.ActivityEvent.related_resources:type_name -> console.v1.RelatedResource
-	822,  // 712: console.v1.EvalResult.risk_level:type_name -> common.v1.RiskLevel
-	821,  // 713: console.v1.EvalResult.occurred_at:type_name -> google.protobuf.Timestamp
-	528,  // 714: console.v1.EvalResult.related_resources:type_name -> console.v1.RelatedResource
-	822,  // 715: console.v1.CostUsage.risk_level:type_name -> common.v1.RiskLevel
-	821,  // 716: console.v1.CostUsage.occurred_at:type_name -> google.protobuf.Timestamp
-	528,  // 717: console.v1.CostUsage.related_resources:type_name -> console.v1.RelatedResource
-	821,  // 718: console.v1.CostUsage.ingested_at:type_name -> google.protobuf.Timestamp
-	821,  // 719: console.v1.AuthorityLedger.expires_at:type_name -> google.protobuf.Timestamp
-	822,  // 720: console.v1.AuthorityLedger.risk_level:type_name -> common.v1.RiskLevel
-	821,  // 721: console.v1.AuthorityLedger.occurred_at:type_name -> google.protobuf.Timestamp
+	822,  // 703: console.v1.ScenarioFixture.recorded_at:type_name -> google.protobuf.Timestamp
+	822,  // 704: console.v1.ScenarioFixture.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 705: console.v1.ScenarioFixture.updated_at:type_name -> google.protobuf.Timestamp
+	823,  // 706: console.v1.AiAsset.risk_level:type_name -> common.v1.RiskLevel
+	822,  // 707: console.v1.AiAsset.last_seen_at:type_name -> google.protobuf.Timestamp
+	529,  // 708: console.v1.AiAsset.related_resources:type_name -> console.v1.RelatedResource
+	823,  // 709: console.v1.ActivityEvent.risk_level:type_name -> common.v1.RiskLevel
+	822,  // 710: console.v1.ActivityEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	529,  // 711: console.v1.ActivityEvent.related_resources:type_name -> console.v1.RelatedResource
+	823,  // 712: console.v1.EvalResult.risk_level:type_name -> common.v1.RiskLevel
+	822,  // 713: console.v1.EvalResult.occurred_at:type_name -> google.protobuf.Timestamp
+	529,  // 714: console.v1.EvalResult.related_resources:type_name -> console.v1.RelatedResource
+	823,  // 715: console.v1.CostUsage.risk_level:type_name -> common.v1.RiskLevel
+	822,  // 716: console.v1.CostUsage.occurred_at:type_name -> google.protobuf.Timestamp
+	529,  // 717: console.v1.CostUsage.related_resources:type_name -> console.v1.RelatedResource
+	822,  // 718: console.v1.CostUsage.ingested_at:type_name -> google.protobuf.Timestamp
+	822,  // 719: console.v1.AuthorityLedger.expires_at:type_name -> google.protobuf.Timestamp
+	823,  // 720: console.v1.AuthorityLedger.risk_level:type_name -> common.v1.RiskLevel
+	822,  // 721: console.v1.AuthorityLedger.occurred_at:type_name -> google.protobuf.Timestamp
 	499,  // 722: console.v1.AuthorityLedger.scope_ledger:type_name -> console.v1.AuthorityScopeLedger
 	500,  // 723: console.v1.AuthorityLedger.missing_evidence:type_name -> console.v1.AuthorityMissingEvidence
 	501,  // 724: console.v1.AuthorityLedger.denied_actions:type_name -> console.v1.AuthorityDeniedAction
-	528,  // 725: console.v1.AuthorityLedger.evidence_refs:type_name -> console.v1.RelatedResource
-	527,  // 726: console.v1.AuthorityLedger.evidence_gaps:type_name -> console.v1.SecurityDecisionEvidenceGap
-	528,  // 727: console.v1.AuthorityDeniedAction.evidence_refs:type_name -> console.v1.RelatedResource
-	822,  // 728: console.v1.AgentWorkforceRecord.risk_level:type_name -> common.v1.RiskLevel
+	529,  // 725: console.v1.AuthorityLedger.evidence_refs:type_name -> console.v1.RelatedResource
+	528,  // 726: console.v1.AuthorityLedger.evidence_gaps:type_name -> console.v1.SecurityDecisionEvidenceGap
+	529,  // 727: console.v1.AuthorityDeniedAction.evidence_refs:type_name -> console.v1.RelatedResource
+	823,  // 728: console.v1.AgentWorkforceRecord.risk_level:type_name -> common.v1.RiskLevel
 	513,  // 729: console.v1.AgentWorkforceRecord.run_as_identity:type_name -> console.v1.RunAsIdentitySummary
-	526,  // 730: console.v1.AgentWorkforceRecord.security_decision:type_name -> console.v1.SecurityDecisionPacket
+	527,  // 730: console.v1.AgentWorkforceRecord.security_decision:type_name -> console.v1.SecurityDecisionPacket
 	514,  // 731: console.v1.AgentWorkforceRecord.action_evidence:type_name -> console.v1.AgentWorkforceActionEvidence
 	515,  // 732: console.v1.AgentWorkforceRecord.credential_authority:type_name -> console.v1.CredentialAuthoritySummary
 	516,  // 733: console.v1.AgentWorkforceRecord.cost_evidence:type_name -> console.v1.CostEvidenceSummary
-	821,  // 734: console.v1.AgentWorkforceRecord.occurred_at:type_name -> google.protobuf.Timestamp
+	822,  // 734: console.v1.AgentWorkforceRecord.occurred_at:type_name -> google.protobuf.Timestamp
 	517,  // 735: console.v1.AgentWorkforceRecord.debug_identifiers:type_name -> console.v1.AgentWorkforceDebugIdentifiers
 	511,  // 736: console.v1.AgentWorkforceRecord.question_summary:type_name -> console.v1.AgentWorkforceQuestionSummary
 	512,  // 737: console.v1.AgentWorkforceRecord.approval_disablement:type_name -> console.v1.AgentWorkforceApprovalDisablement
@@ -72348,872 +72599,873 @@ var file_console_v1_console_proto_depIdxs = []int32{
 	504,  // 739: console.v1.AgentWorkforceRecord.proof_summary:type_name -> console.v1.AgentWorkforceProofSummary
 	508,  // 740: console.v1.AgentWorkforceRecord.action_authority_boundaries:type_name -> console.v1.AgentWorkforceActionAuthorityBoundary
 	503,  // 741: console.v1.AgentWorkforceRecord.source_readiness:type_name -> console.v1.AgentWorkforceSourceReadiness
-	528,  // 742: console.v1.AgentWorkforceSourceReadiness.evidence_refs:type_name -> console.v1.RelatedResource
-	528,  // 743: console.v1.AgentWorkforceProofSummary.evidence_refs:type_name -> console.v1.RelatedResource
+	529,  // 742: console.v1.AgentWorkforceSourceReadiness.evidence_refs:type_name -> console.v1.RelatedResource
+	529,  // 743: console.v1.AgentWorkforceProofSummary.evidence_refs:type_name -> console.v1.RelatedResource
 	506,  // 744: console.v1.AgentWorkforceApprovalQueueSummary.state_buckets:type_name -> console.v1.AgentWorkforceApprovalStateBucket
 	507,  // 745: console.v1.AgentWorkforceApprovalQueueSummary.blocker_buckets:type_name -> console.v1.AgentWorkforceApprovalBlockerBucket
 	509,  // 746: console.v1.AgentWorkforceApprovalQueueSummary.missing_evidence_buckets:type_name -> console.v1.AgentWorkforceMissingEvidenceBucket
-	528,  // 747: console.v1.EndpointGuardrailSummary.evidence_refs:type_name -> console.v1.RelatedResource
-	528,  // 748: console.v1.AgentWorkforceApprovalDisablement.evidence_refs:type_name -> console.v1.RelatedResource
-	528,  // 749: console.v1.RunAsIdentitySummary.evidence_refs:type_name -> console.v1.RelatedResource
-	822,  // 750: console.v1.AgentWorkforceActionEvidence.risk_level:type_name -> common.v1.RiskLevel
-	528,  // 751: console.v1.AgentWorkforceActionEvidence.evidence_refs:type_name -> console.v1.RelatedResource
-	821,  // 752: console.v1.AgentWorkforceActionEvidence.occurred_at:type_name -> google.protobuf.Timestamp
-	821,  // 753: console.v1.CredentialAuthoritySummary.expires_at:type_name -> google.protobuf.Timestamp
-	528,  // 754: console.v1.CredentialAuthoritySummary.evidence_refs:type_name -> console.v1.RelatedResource
-	824,  // 755: console.v1.AgentWorkforceDebugIdentifiers.attributes:type_name -> google.protobuf.Struct
-	822,  // 756: console.v1.RiskFinding.risk_level:type_name -> common.v1.RiskLevel
-	821,  // 757: console.v1.RiskFinding.detected_at:type_name -> google.protobuf.Timestamp
-	821,  // 758: console.v1.IntegrationTile.last_seen_at:type_name -> google.protobuf.Timestamp
-	821,  // 759: console.v1.IntegrationTile.last_sync_at:type_name -> google.protobuf.Timestamp
-	821,  // 760: console.v1.IntegrationTile.next_sync_at:type_name -> google.protobuf.Timestamp
+	529,  // 747: console.v1.EndpointGuardrailSummary.evidence_refs:type_name -> console.v1.RelatedResource
+	529,  // 748: console.v1.AgentWorkforceApprovalDisablement.evidence_refs:type_name -> console.v1.RelatedResource
+	529,  // 749: console.v1.RunAsIdentitySummary.evidence_refs:type_name -> console.v1.RelatedResource
+	823,  // 750: console.v1.AgentWorkforceActionEvidence.risk_level:type_name -> common.v1.RiskLevel
+	529,  // 751: console.v1.AgentWorkforceActionEvidence.evidence_refs:type_name -> console.v1.RelatedResource
+	822,  // 752: console.v1.AgentWorkforceActionEvidence.occurred_at:type_name -> google.protobuf.Timestamp
+	822,  // 753: console.v1.CredentialAuthoritySummary.expires_at:type_name -> google.protobuf.Timestamp
+	529,  // 754: console.v1.CredentialAuthoritySummary.evidence_refs:type_name -> console.v1.RelatedResource
+	825,  // 755: console.v1.AgentWorkforceDebugIdentifiers.attributes:type_name -> google.protobuf.Struct
+	823,  // 756: console.v1.RiskFinding.risk_level:type_name -> common.v1.RiskLevel
+	822,  // 757: console.v1.RiskFinding.detected_at:type_name -> google.protobuf.Timestamp
+	822,  // 758: console.v1.IntegrationTile.last_seen_at:type_name -> google.protobuf.Timestamp
+	822,  // 759: console.v1.IntegrationTile.last_sync_at:type_name -> google.protobuf.Timestamp
+	822,  // 760: console.v1.IntegrationTile.next_sync_at:type_name -> google.protobuf.Timestamp
 	519,  // 761: console.v1.IntegrationTile.credential_fields:type_name -> console.v1.IntegrationCredentialField
-	834,  // 762: console.v1.IntegrationTile.catalog_provenance:type_name -> connectors.v1.ConnectorCatalogProvenance
-	822,  // 763: console.v1.TraceDrilldown.risk_level:type_name -> common.v1.RiskLevel
-	523,  // 764: console.v1.TraceDrilldown.spans:type_name -> console.v1.TraceSpan
-	821,  // 765: console.v1.TraceDrilldown.occurred_at:type_name -> google.protobuf.Timestamp
-	835,  // 766: console.v1.TraceDrilldown.annotations:type_name -> traces.v1.TraceAnnotation
-	525,  // 767: console.v1.TraceDrilldown.completeness_signals:type_name -> console.v1.TraceCompletenessSignal
-	526,  // 768: console.v1.TraceDrilldown.security_decision_packet:type_name -> console.v1.SecurityDecisionPacket
-	821,  // 769: console.v1.TraceSpan.started_at:type_name -> google.protobuf.Timestamp
-	821,  // 770: console.v1.TraceSpan.ended_at:type_name -> google.protobuf.Timestamp
-	824,  // 771: console.v1.TraceSpan.attributes:type_name -> google.protobuf.Struct
-	524,  // 772: console.v1.TraceSpan.references:type_name -> console.v1.TraceSpanReference
-	822,  // 773: console.v1.SecurityDecisionPacket.risk_level:type_name -> common.v1.RiskLevel
-	527,  // 774: console.v1.SecurityDecisionPacket.evidence_gaps:type_name -> console.v1.SecurityDecisionEvidenceGap
-	528,  // 775: console.v1.SecurityDecisionPacket.evidence_refs:type_name -> console.v1.RelatedResource
-	528,  // 776: console.v1.OperatingHomepageSuggestion.evidence_refs:type_name -> console.v1.RelatedResource
-	821,  // 777: console.v1.OperatingHomepageSuggestion.generated_at:type_name -> google.protobuf.Timestamp
-	821,  // 778: console.v1.OperatingHomepageSuggestion.expires_at:type_name -> google.protobuf.Timestamp
-	821,  // 779: console.v1.DexMcpServer.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 780: console.v1.DexMcpServer.updated_at:type_name -> google.protobuf.Timestamp
-	821,  // 781: console.v1.DexMcpServer.catalog_discovered_at:type_name -> google.protobuf.Timestamp
-	531,  // 782: console.v1.DexMcpServer.catalog_tools:type_name -> console.v1.DexMcpCatalogTool
-	821,  // 783: console.v1.DexMcpServer.credential_observed_at:type_name -> google.protobuf.Timestamp
-	821,  // 784: console.v1.DexMcpServer.credential_expires_at:type_name -> google.protobuf.Timestamp
-	821,  // 785: console.v1.DexMcpServer.route_observed_at:type_name -> google.protobuf.Timestamp
-	821,  // 786: console.v1.DexMcpServer.route_expires_at:type_name -> google.protobuf.Timestamp
-	836,  // 787: console.v1.DexMcpServer.source_authority:type_name -> connectors.v1.SourceAuthorityObservation
-	110,  // 788: console.v1.CreateDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
-	530,  // 789: console.v1.CreateDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
-	110,  // 790: console.v1.ListDexMcpServersRequest.query:type_name -> console.v1.ConsoleQuery
-	530,  // 791: console.v1.ListDexMcpServersResponse.servers:type_name -> console.v1.DexMcpServer
-	110,  // 792: console.v1.GetDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
-	530,  // 793: console.v1.GetDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
-	110,  // 794: console.v1.DiscoverDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
-	530,  // 795: console.v1.DiscoverDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
-	110,  // 796: console.v1.UpdateDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
-	530,  // 797: console.v1.UpdateDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
-	110,  // 798: console.v1.DeleteDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
-	821,  // 799: console.v1.DexMcpOAuthProfile.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 800: console.v1.DexMcpOAuthProfile.updated_at:type_name -> google.protobuf.Timestamp
-	110,  // 801: console.v1.InitiateDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	544,  // 802: console.v1.InitiateDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
-	821,  // 803: console.v1.InitiateDexMcpOAuthProfileResponse.expires_at:type_name -> google.protobuf.Timestamp
-	110,  // 804: console.v1.CompleteDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	544,  // 805: console.v1.CompleteDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
-	110,  // 806: console.v1.ListDexMcpOAuthProfilesRequest.query:type_name -> console.v1.ConsoleQuery
-	544,  // 807: console.v1.ListDexMcpOAuthProfilesResponse.profiles:type_name -> console.v1.DexMcpOAuthProfile
-	110,  // 808: console.v1.RevokeDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	544,  // 809: console.v1.RevokeDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
-	110,  // 810: console.v1.ReauthorizeDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	544,  // 811: console.v1.ReauthorizeDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
-	821,  // 812: console.v1.ReauthorizeDexMcpOAuthProfileResponse.expires_at:type_name -> google.protobuf.Timestamp
-	821,  // 813: console.v1.PrivateEndpoint.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 814: console.v1.PrivateEndpoint.updated_at:type_name -> google.protobuf.Timestamp
-	821,  // 815: console.v1.PrivateEndpoint.revoked_at:type_name -> google.protobuf.Timestamp
-	110,  // 816: console.v1.RegisterPrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
-	555,  // 817: console.v1.RegisterPrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
-	110,  // 818: console.v1.VerifyPrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
-	555,  // 819: console.v1.VerifyPrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
-	110,  // 820: console.v1.ListPrivateEndpointsRequest.query:type_name -> console.v1.ConsoleQuery
-	555,  // 821: console.v1.ListPrivateEndpointsResponse.endpoints:type_name -> console.v1.PrivateEndpoint
-	110,  // 822: console.v1.DeletePrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
-	555,  // 823: console.v1.DeletePrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
-	110,  // 824: console.v1.AttachPrivateEndpointToProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	556,  // 825: console.v1.AttachPrivateEndpointToProfileResponse.route:type_name -> console.v1.PrivateProfileRoute
-	110,  // 826: console.v1.ListGatewayEgressOriginsRequest.query:type_name -> console.v1.ConsoleQuery
-	110,  // 827: console.v1.PrewarmOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
-	821,  // 828: console.v1.PrewarmOperatingThreadResponse.expires_at:type_name -> google.protobuf.Timestamp
-	72,   // 829: console.v1.BootstrapThreadGatewayRequest.permissions:type_name -> console.v1.ThreadGatewayPermission
-	821,  // 830: console.v1.BootstrapThreadGatewayResponse.expires_at:type_name -> google.protobuf.Timestamp
-	72,   // 831: console.v1.BootstrapThreadGatewayResponse.permissions:type_name -> console.v1.ThreadGatewayPermission
-	110,  // 832: console.v1.SetOperatingThreadControllerRequest.query:type_name -> console.v1.ConsoleQuery
-	121,  // 833: console.v1.SetOperatingThreadControllerResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
-	578,  // 834: console.v1.CostUsageSummary.attributions:type_name -> console.v1.CostUsageAttributionSummary
-	821,  // 835: console.v1.CostUsageSummary.as_of:type_name -> google.protobuf.Timestamp
-	73,   // 836: console.v1.TenantPrivacySetting.mode:type_name -> console.v1.TenantPrivacyMode
-	821,  // 837: console.v1.TenantPrivacySetting.updated_at:type_name -> google.protobuf.Timestamp
-	110,  // 838: console.v1.GetPrivacySettingsRequest.query:type_name -> console.v1.ConsoleQuery
-	73,   // 839: console.v1.GetPrivacySettingsResponse.effective_mode:type_name -> console.v1.TenantPrivacyMode
-	579,  // 840: console.v1.GetPrivacySettingsResponse.organization:type_name -> console.v1.TenantPrivacySetting
-	579,  // 841: console.v1.GetPrivacySettingsResponse.workspace:type_name -> console.v1.TenantPrivacySetting
-	110,  // 842: console.v1.SetPrivacySettingsRequest.query:type_name -> console.v1.ConsoleQuery
-	74,   // 843: console.v1.SetPrivacySettingsRequest.scope:type_name -> console.v1.PrivacySettingScope
-	73,   // 844: console.v1.SetPrivacySettingsRequest.mode:type_name -> console.v1.TenantPrivacyMode
-	75,   // 845: console.v1.ManagedRule.scope:type_name -> console.v1.RuleScope
-	76,   // 846: console.v1.McpPolicy.mode:type_name -> console.v1.McpPolicyMode
-	585,  // 847: console.v1.McpPolicy.servers:type_name -> console.v1.McpServerRef
-	821,  // 848: console.v1.ManagedSetup.issued_at:type_name -> google.protobuf.Timestamp
-	583,  // 849: console.v1.ManagedSetup.rules:type_name -> console.v1.ManagedRule
-	584,  // 850: console.v1.ManagedSetup.skills:type_name -> console.v1.ManagedSkillRef
-	586,  // 851: console.v1.ManagedSetup.mcp:type_name -> console.v1.McpPolicy
-	587,  // 852: console.v1.SetManagedSetupRequest.setup:type_name -> console.v1.ManagedSetup
-	110,  // 853: console.v1.StartMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
-	110,  // 854: console.v1.ListConnectedCallsRequest.query:type_name -> console.v1.ConsoleQuery
-	594,  // 855: console.v1.ListConnectedCallsResponse.calls:type_name -> console.v1.ConnectedCall
-	77,   // 856: console.v1.ListConnectedCallsResponse.source_state:type_name -> console.v1.ConnectedCallSourceState
-	821,  // 857: console.v1.ConnectedCall.starts_at:type_name -> google.protobuf.Timestamp
-	821,  // 858: console.v1.ConnectedCall.ends_at:type_name -> google.protobuf.Timestamp
-	602,  // 859: console.v1.StartMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
-	110,  // 860: console.v1.GetMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
-	602,  // 861: console.v1.GetMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
-	110,  // 862: console.v1.ListMeetingCapturesRequest.query:type_name -> console.v1.ConsoleQuery
-	602,  // 863: console.v1.ListMeetingCapturesResponse.captures:type_name -> console.v1.MeetingCapture
-	110,  // 864: console.v1.StopMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
-	602,  // 865: console.v1.StopMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
-	821,  // 866: console.v1.MeetingCapture.join_at:type_name -> google.protobuf.Timestamp
-	821,  // 867: console.v1.MeetingCapture.leave_at:type_name -> google.protobuf.Timestamp
-	821,  // 868: console.v1.MeetingCapture.updated_at:type_name -> google.protobuf.Timestamp
-	821,  // 869: console.v1.MeetingCapture.occurrence_start_at:type_name -> google.protobuf.Timestamp
-	824,  // 870: console.v1.ProspectingWatchProgram.config:type_name -> google.protobuf.Struct
-	78,   // 871: console.v1.ProspectingWatchProgram.lifecycle:type_name -> console.v1.ProspectingWatchProgramLifecycle
-	821,  // 872: console.v1.ProspectingWatchProgram.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 873: console.v1.ProspectingWatchProgram.updated_at:type_name -> google.protobuf.Timestamp
-	110,  // 874: console.v1.CreateProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
-	824,  // 875: console.v1.CreateProspectingWatchProgramRequest.config:type_name -> google.protobuf.Struct
-	603,  // 876: console.v1.CreateProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
-	604,  // 877: console.v1.CreateProspectingWatchProgramResponse.receipt:type_name -> console.v1.ProspectingWatchProgramMutationReceipt
-	110,  // 878: console.v1.GetProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
-	603,  // 879: console.v1.GetProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
-	110,  // 880: console.v1.ListProspectingWatchProgramsRequest.query:type_name -> console.v1.ConsoleQuery
-	603,  // 881: console.v1.ListProspectingWatchProgramsResponse.programs:type_name -> console.v1.ProspectingWatchProgram
-	110,  // 882: console.v1.UpdateProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
-	824,  // 883: console.v1.UpdateProspectingWatchProgramRequest.config:type_name -> google.protobuf.Struct
-	78,   // 884: console.v1.UpdateProspectingWatchProgramRequest.lifecycle:type_name -> console.v1.ProspectingWatchProgramLifecycle
-	603,  // 885: console.v1.UpdateProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
-	604,  // 886: console.v1.UpdateProspectingWatchProgramResponse.receipt:type_name -> console.v1.ProspectingWatchProgramMutationReceipt
-	110,  // 887: console.v1.ListCommitmentsRequest.query:type_name -> console.v1.ConsoleQuery
-	615,  // 888: console.v1.ListCommitmentsResponse.commitments:type_name -> console.v1.Commitment
-	79,   // 889: console.v1.ListCommitmentsResponse.source_state:type_name -> console.v1.CommitmentSourceState
-	821,  // 890: console.v1.Commitment.due_at:type_name -> google.protobuf.Timestamp
-	616,  // 891: console.v1.Commitment.citations:type_name -> console.v1.CommitmentCitation
-	821,  // 892: console.v1.Commitment.observed_at:type_name -> google.protobuf.Timestamp
-	821,  // 893: console.v1.CommitmentCitation.observed_at:type_name -> google.protobuf.Timestamp
-	837,  // 894: console.v1.OperatingJobRecordLink.record:type_name -> platform.v1.RecordRef
-	80,   // 895: console.v1.OperatingJob.state:type_name -> console.v1.OperatingJobState
-	81,   // 896: console.v1.OperatingJob.verification_state:type_name -> console.v1.OperatingJobVerificationState
-	82,   // 897: console.v1.OperatingJob.origin:type_name -> console.v1.OperatingJobOrigin
-	821,  // 898: console.v1.OperatingJob.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 899: console.v1.OperatingJob.updated_at:type_name -> google.protobuf.Timestamp
-	617,  // 900: console.v1.OperatingJob.record_links:type_name -> console.v1.OperatingJobRecordLink
-	83,   // 901: console.v1.OperatingJob.proof_state:type_name -> console.v1.OperatingJobProofState
-	110,  // 902: console.v1.ListOperatingJobsRequest.query:type_name -> console.v1.ConsoleQuery
-	618,  // 903: console.v1.ListOperatingJobsResponse.jobs:type_name -> console.v1.OperatingJob
-	110,  // 904: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest.query:type_name -> console.v1.ConsoleQuery
-	84,   // 905: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest.action:type_name -> console.v1.OperatingHomepageSuggestionFeedbackAction
-	623,  // 906: console.v1.GetInferenceCreditBalanceResponse.balance:type_name -> console.v1.InferenceCreditBalance
-	625,  // 907: console.v1.GetInferenceCreditBalanceResponse.blocks:type_name -> console.v1.InferenceCreditBlock
-	626,  // 908: console.v1.GetInferenceCreditBalanceResponse.pricing:type_name -> console.v1.InferenceCreditPricing
-	629,  // 909: console.v1.GetInferenceCreditBalanceResponse.reconciliation:type_name -> console.v1.InferenceCreditReconciliation
-	628,  // 910: console.v1.GetInferenceCreditBalanceResponse.run_balance:type_name -> console.v1.InferenceRunCreditBalance
-	821,  // 911: console.v1.InferenceRunCreditBalance.oldest_pending_at:type_name -> google.protobuf.Timestamp
-	821,  // 912: console.v1.InferenceCreditReconciliation.oldest_pending_at:type_name -> google.protobuf.Timestamp
-	623,  // 913: console.v1.FulfillInferenceCreditCheckoutResponse.balance:type_name -> console.v1.InferenceCreditBalance
-	115,  // 914: console.v1.OperatingAutoModelRoute.target:type_name -> console.v1.OperatingModelSelection
-	71,   // 915: console.v1.OperatingAutoModelRoute.purpose:type_name -> console.v1.StaffInferenceRoutingPurpose
-	85,   // 916: console.v1.BusinessFieldDefinition.kind:type_name -> console.v1.BusinessFieldKind
-	635,  // 917: console.v1.BusinessObjectType.fields:type_name -> console.v1.BusinessFieldDefinition
-	636,  // 918: console.v1.BusinessObjectType.relationships:type_name -> console.v1.BusinessRelationshipDefinition
-	779,  // 919: console.v1.BusinessObjectType.blueprint_source:type_name -> console.v1.BusinessBlueprintSource
-	86,   // 920: console.v1.BusinessObjectType.record_kind:type_name -> console.v1.BusinessObjectRecordKind
-	638,  // 921: console.v1.BusinessFieldValue.money:type_name -> console.v1.BusinessMoney
-	639,  // 922: console.v1.BusinessFieldValue.reference:type_name -> console.v1.BusinessObjectReference
-	640,  // 923: console.v1.BusinessFieldValue.artifact:type_name -> console.v1.BusinessArtifactReference
-	641,  // 924: console.v1.BusinessFieldValue.text_list:type_name -> console.v1.BusinessTextList
-	87,   // 925: console.v1.BusinessSourceField.property:type_name -> console.v1.BusinessSourceProperty
-	643,  // 926: console.v1.BusinessSourceBinding.fields:type_name -> console.v1.BusinessSourceField
-	88,   // 927: console.v1.BusinessSourceBinding.state:type_name -> console.v1.BusinessSourceState
-	838,  // 928: console.v1.BusinessSourceBinding.envelope:type_name -> connectors.v1.ProviderResourceEnvelope
-	642,  // 929: console.v1.BusinessObject.values:type_name -> console.v1.BusinessFieldValue
-	644,  // 930: console.v1.BusinessObject.source:type_name -> console.v1.BusinessSourceBinding
-	645,  // 931: console.v1.BusinessObjectRevision.object:type_name -> console.v1.BusinessObject
-	637,  // 932: console.v1.DefineBusinessObjectTypeRequest.definition:type_name -> console.v1.BusinessObjectType
-	637,  // 933: console.v1.DefineBusinessObjectTypeResponse.definition:type_name -> console.v1.BusinessObjectType
-	637,  // 934: console.v1.ListBusinessObjectTypesResponse.definitions:type_name -> console.v1.BusinessObjectType
-	642,  // 935: console.v1.CreateBusinessObjectRequest.values:type_name -> console.v1.BusinessFieldValue
-	645,  // 936: console.v1.CreateBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
-	645,  // 937: console.v1.GetBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
-	656,  // 938: console.v1.GetBusinessObjectResponse.source_recovery:type_name -> console.v1.BusinessObjectSourceRecovery
-	88,   // 939: console.v1.BusinessObjectSourceRecovery.source_state:type_name -> console.v1.BusinessSourceState
-	658,  // 940: console.v1.ListBusinessObjectsRequest.filter:type_name -> console.v1.BusinessObjectFilter
-	642,  // 941: console.v1.BusinessObjectFilter.unique_value:type_name -> console.v1.BusinessFieldValue
-	659,  // 942: console.v1.BusinessObjectFilter.reference:type_name -> console.v1.BusinessObjectReferenceFilter
-	645,  // 943: console.v1.ListBusinessObjectsResponse.objects:type_name -> console.v1.BusinessObject
-	642,  // 944: console.v1.UpdateBusinessObjectRequest.values:type_name -> console.v1.BusinessFieldValue
-	645,  // 945: console.v1.UpdateBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
-	645,  // 946: console.v1.DeleteBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
-	646,  // 947: console.v1.ListBusinessObjectRevisionsResponse.revisions:type_name -> console.v1.BusinessObjectRevision
-	643,  // 948: console.v1.BindBusinessObjectSourceRequest.fields:type_name -> console.v1.BusinessSourceField
-	645,  // 949: console.v1.BindBusinessObjectSourceResponse.object:type_name -> console.v1.BusinessObject
-	645,  // 950: console.v1.AdmitBusinessObjectObservationResponse.object:type_name -> console.v1.BusinessObject
-	89,   // 951: console.v1.ListBusinessObjectRelationshipsRequest.direction:type_name -> console.v1.BusinessObjectRelationshipDirection
-	647,  // 952: console.v1.ListBusinessObjectRelationshipsResponse.relationships:type_name -> console.v1.BusinessObjectRelationship
-	647,  // 953: console.v1.CreateBusinessObjectRelationshipRequest.relationship:type_name -> console.v1.BusinessObjectRelationship
-	645,  // 954: console.v1.CreateBusinessObjectRelationshipResponse.object:type_name -> console.v1.BusinessObject
-	647,  // 955: console.v1.DeleteBusinessObjectRelationshipRequest.relationship:type_name -> console.v1.BusinessObjectRelationship
-	645,  // 956: console.v1.DeleteBusinessObjectRelationshipResponse.object:type_name -> console.v1.BusinessObject
-	678,  // 957: console.v1.CaptureFormBrandingInput.logo:type_name -> console.v1.CaptureFormAssetRef
-	678,  // 958: console.v1.CaptureFormBrandingInput.favicon:type_name -> console.v1.CaptureFormAssetRef
-	678,  // 959: console.v1.CaptureFormBranding.logo:type_name -> console.v1.CaptureFormAssetRef
-	678,  // 960: console.v1.CaptureFormBranding.favicon:type_name -> console.v1.CaptureFormAssetRef
-	682,  // 961: console.v1.CaptureFormSelectSpec.options:type_name -> console.v1.CaptureFormSelectOption
-	98,   // 962: console.v1.CaptureFormUpload.state:type_name -> console.v1.CaptureFormUploadState
-	678,  // 963: console.v1.CaptureFormUpload.asset:type_name -> console.v1.CaptureFormAssetRef
-	821,  // 964: console.v1.CaptureFormUpload.expires_at:type_name -> google.protobuf.Timestamp
-	821,  // 965: console.v1.CaptureFormTypedValue.datetime:type_name -> google.protobuf.Timestamp
-	819,  // 966: console.v1.CaptureFormTypedValue.option_values:type_name -> console.v1.CaptureFormTypedValue.OptionValues
-	678,  // 967: console.v1.CaptureFormTypedValue.artifact:type_name -> console.v1.CaptureFormAssetRef
-	94,   // 968: console.v1.CaptureFormField.kind:type_name -> console.v1.CaptureFormFieldKind
-	95,   // 969: console.v1.CaptureFormField.mapping_state:type_name -> console.v1.CaptureFormMappingState
-	686,  // 970: console.v1.CaptureFormField.default_value:type_name -> console.v1.CaptureFormTypedValue
-	683,  // 971: console.v1.CaptureFormField.select:type_name -> console.v1.CaptureFormSelectSpec
-	684,  // 972: console.v1.CaptureFormField.upload:type_name -> console.v1.CaptureFormUploadSpec
-	94,   // 973: console.v1.CaptureFormPublicField.kind:type_name -> console.v1.CaptureFormFieldKind
-	683,  // 974: console.v1.CaptureFormPublicField.select:type_name -> console.v1.CaptureFormSelectSpec
-	684,  // 975: console.v1.CaptureFormPublicField.upload:type_name -> console.v1.CaptureFormUploadSpec
-	677,  // 976: console.v1.CaptureFormVersionInput.object_target:type_name -> console.v1.CaptureFormObjectTarget
-	687,  // 977: console.v1.CaptureFormVersionInput.fields:type_name -> console.v1.CaptureFormField
-	679,  // 978: console.v1.CaptureFormVersionInput.branding:type_name -> console.v1.CaptureFormBrandingInput
-	677,  // 979: console.v1.CaptureFormVersion.object_target:type_name -> console.v1.CaptureFormObjectTarget
-	687,  // 980: console.v1.CaptureFormVersion.fields:type_name -> console.v1.CaptureFormField
-	680,  // 981: console.v1.CaptureFormVersion.branding:type_name -> console.v1.CaptureFormBranding
-	821,  // 982: console.v1.CaptureFormVersion.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 983: console.v1.CaptureFormPublicationInput.expires_at:type_name -> google.protobuf.Timestamp
-	91,   // 984: console.v1.CaptureFormPublication.state:type_name -> console.v1.CaptureFormPublicationState
-	692,  // 985: console.v1.CaptureFormPublication.route:type_name -> console.v1.CaptureFormPublicRoute
-	821,  // 986: console.v1.CaptureFormPublication.published_at:type_name -> google.protobuf.Timestamp
-	821,  // 987: console.v1.CaptureFormPublication.expires_at:type_name -> google.protobuf.Timestamp
-	821,  // 988: console.v1.CaptureFormPublication.revoked_at:type_name -> google.protobuf.Timestamp
-	90,   // 989: console.v1.CaptureForm.state:type_name -> console.v1.CaptureFormState
-	677,  // 990: console.v1.CaptureForm.object_target:type_name -> console.v1.CaptureFormObjectTarget
-	680,  // 991: console.v1.CaptureForm.branding:type_name -> console.v1.CaptureFormBranding
-	693,  // 992: console.v1.CaptureForm.publications:type_name -> console.v1.CaptureFormPublication
-	821,  // 993: console.v1.CaptureForm.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 994: console.v1.CaptureForm.updated_at:type_name -> google.protobuf.Timestamp
-	681,  // 995: console.v1.PublishedCaptureForm.branding:type_name -> console.v1.CaptureFormPublicBranding
-	688,  // 996: console.v1.PublishedCaptureForm.fields:type_name -> console.v1.CaptureFormPublicField
-	692,  // 997: console.v1.PublishedCaptureForm.route:type_name -> console.v1.CaptureFormPublicRoute
-	821,  // 998: console.v1.PublishedCaptureForm.expires_at:type_name -> google.protobuf.Timestamp
-	686,  // 999: console.v1.CaptureFormAnswer.value:type_name -> console.v1.CaptureFormTypedValue
-	93,   // 1000: console.v1.CaptureFormReview.decision:type_name -> console.v1.CaptureFormReviewDecision
-	821,  // 1001: console.v1.CaptureFormReview.reviewed_at:type_name -> google.protobuf.Timestamp
-	642,  // 1002: console.v1.CaptureFormReview.supplemental_values:type_name -> console.v1.BusinessFieldValue
-	96,   // 1003: console.v1.CaptureFormObjectResult.state:type_name -> console.v1.CaptureFormObjectResultState
-	92,   // 1004: console.v1.CaptureFormSubmission.state:type_name -> console.v1.CaptureFormSubmissionState
-	696,  // 1005: console.v1.CaptureFormSubmission.answers:type_name -> console.v1.CaptureFormAnswer
-	697,  // 1006: console.v1.CaptureFormSubmission.review:type_name -> console.v1.CaptureFormReview
-	698,  // 1007: console.v1.CaptureFormSubmission.object_result:type_name -> console.v1.CaptureFormObjectResult
-	821,  // 1008: console.v1.CaptureFormSubmission.submitted_at:type_name -> google.protobuf.Timestamp
-	821,  // 1009: console.v1.CaptureFormSubmission.updated_at:type_name -> google.protobuf.Timestamp
-	92,   // 1010: console.v1.CaptureFormPublicSubmissionReceipt.state:type_name -> console.v1.CaptureFormSubmissionState
-	821,  // 1011: console.v1.CaptureFormPublicSubmissionReceipt.submitted_at:type_name -> google.protobuf.Timestamp
-	689,  // 1012: console.v1.CreateCaptureFormRequest.version:type_name -> console.v1.CaptureFormVersionInput
-	694,  // 1013: console.v1.CreateCaptureFormResponse.form:type_name -> console.v1.CaptureForm
-	690,  // 1014: console.v1.CreateCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
-	90,   // 1015: console.v1.ListCaptureFormsRequest.state:type_name -> console.v1.CaptureFormState
-	694,  // 1016: console.v1.ListCaptureFormsResponse.forms:type_name -> console.v1.CaptureForm
-	694,  // 1017: console.v1.GetCaptureFormResponse.form:type_name -> console.v1.CaptureForm
-	690,  // 1018: console.v1.GetCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
-	689,  // 1019: console.v1.UpdateCaptureFormRequest.version:type_name -> console.v1.CaptureFormVersionInput
-	694,  // 1020: console.v1.UpdateCaptureFormResponse.form:type_name -> console.v1.CaptureForm
-	690,  // 1021: console.v1.UpdateCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
-	691,  // 1022: console.v1.PublishCaptureFormRequest.publication:type_name -> console.v1.CaptureFormPublicationInput
-	694,  // 1023: console.v1.PublishCaptureFormResponse.form:type_name -> console.v1.CaptureForm
-	690,  // 1024: console.v1.PublishCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
-	693,  // 1025: console.v1.PublishCaptureFormResponse.publication:type_name -> console.v1.CaptureFormPublication
-	694,  // 1026: console.v1.RevokeCaptureFormPublicationResponse.form:type_name -> console.v1.CaptureForm
-	693,  // 1027: console.v1.RevokeCaptureFormPublicationResponse.publication:type_name -> console.v1.CaptureFormPublication
-	695,  // 1028: console.v1.GetPublishedCaptureFormResponse.form:type_name -> console.v1.PublishedCaptureForm
-	97,   // 1029: console.v1.GetPublishedCaptureFormBrandingAssetRequest.role:type_name -> console.v1.CaptureFormBrandingAssetRole
-	696,  // 1030: console.v1.SubmitPublishedCaptureFormRequest.answers:type_name -> console.v1.CaptureFormAnswer
-	700,  // 1031: console.v1.SubmitPublishedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
-	685,  // 1032: console.v1.BeginPublishedCaptureFormUploadResponse.grant:type_name -> console.v1.CaptureFormUpload
-	825,  // 1033: console.v1.BeginPublishedCaptureFormUploadResponse.upload:type_name -> vfs.v1.VfsUploadTarget
-	826,  // 1034: console.v1.CompletePublishedCaptureFormUploadRequest.completed_parts:type_name -> vfs.v1.VfsCompletedUploadPart
-	685,  // 1035: console.v1.CompletePublishedCaptureFormUploadResponse.upload:type_name -> console.v1.CaptureFormUpload
-	699,  // 1036: console.v1.GetCaptureFormSubmissionResponse.submission:type_name -> console.v1.CaptureFormSubmission
-	92,   // 1037: console.v1.ListCaptureFormSubmissionsRequest.state:type_name -> console.v1.CaptureFormSubmissionState
-	699,  // 1038: console.v1.ListCaptureFormSubmissionsResponse.submissions:type_name -> console.v1.CaptureFormSubmission
-	93,   // 1039: console.v1.ReviewCaptureFormSubmissionRequest.decision:type_name -> console.v1.CaptureFormReviewDecision
-	642,  // 1040: console.v1.ReviewCaptureFormSubmissionRequest.supplemental_values:type_name -> console.v1.BusinessFieldValue
-	699,  // 1041: console.v1.ReviewCaptureFormSubmissionResponse.submission:type_name -> console.v1.CaptureFormSubmission
-	698,  // 1042: console.v1.ReviewCaptureFormSubmissionResponse.object_result:type_name -> console.v1.CaptureFormObjectResult
-	637,  // 1043: console.v1.GetBusinessObjectTypeResponse.definition:type_name -> console.v1.BusinessObjectType
-	731,  // 1044: console.v1.ListInferenceCreditReceiptsResponse.receipts:type_name -> console.v1.InferenceCreditReceipt
-	734,  // 1045: console.v1.GetInferenceCreditAutoRefillResponse.settings:type_name -> console.v1.InferenceCreditAutoRefill
-	645,  // 1046: console.v1.PrepareBusinessObjectAuthorityTransferResponse.object:type_name -> console.v1.BusinessObject
-	645,  // 1047: console.v1.FinalizeBusinessObjectAuthorityTransferResponse.object:type_name -> console.v1.BusinessObject
-	642,  // 1048: console.v1.BusinessProcessRequirement.expected:type_name -> console.v1.BusinessFieldValue
-	747,  // 1049: console.v1.BusinessProcessTransition.requirements:type_name -> console.v1.BusinessProcessRequirement
-	749,  // 1050: console.v1.BusinessProcessTransition.follow_ups:type_name -> console.v1.BusinessProcessFollowUp
-	745,  // 1051: console.v1.BusinessProcessDefinition.participants:type_name -> console.v1.BusinessProcessParticipantType
-	748,  // 1052: console.v1.BusinessProcessDefinition.transitions:type_name -> console.v1.BusinessProcessTransition
-	746,  // 1053: console.v1.BusinessProcessReceipt.evidence:type_name -> console.v1.BusinessProcessParticipant
-	746,  // 1054: console.v1.BusinessProcess.participants:type_name -> console.v1.BusinessProcessParticipant
-	751,  // 1055: console.v1.BusinessProcess.receipts:type_name -> console.v1.BusinessProcessReceipt
-	750,  // 1056: console.v1.DefineBusinessProcessRequest.definition:type_name -> console.v1.BusinessProcessDefinition
-	750,  // 1057: console.v1.DefineBusinessProcessResponse.definition:type_name -> console.v1.BusinessProcessDefinition
-	746,  // 1058: console.v1.StartBusinessProcessRequest.participants:type_name -> console.v1.BusinessProcessParticipant
-	752,  // 1059: console.v1.StartBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
-	752,  // 1060: console.v1.GetBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
-	750,  // 1061: console.v1.GetBusinessProcessResponse.definition:type_name -> console.v1.BusinessProcessDefinition
-	752,  // 1062: console.v1.ListBusinessProcessesResponse.processes:type_name -> console.v1.BusinessProcess
-	746,  // 1063: console.v1.TransitionBusinessProcessRequest.participants:type_name -> console.v1.BusinessProcessParticipant
-	752,  // 1064: console.v1.TransitionBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
-	750,  // 1065: console.v1.GetBusinessProcessDefinitionResponse.definition:type_name -> console.v1.BusinessProcessDefinition
-	750,  // 1066: console.v1.ListBusinessProcessDefinitionsResponse.definitions:type_name -> console.v1.BusinessProcessDefinition
-	125,  // 1067: console.v1.OperatingProjectSnapshotFileInput.attachment:type_name -> console.v1.OperatingAttachmentRef
-	110,  // 1068: console.v1.AcceptOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
-	767,  // 1069: console.v1.AcceptOperatingProjectSnapshotRequest.files:type_name -> console.v1.OperatingProjectSnapshotFileInput
-	823,  // 1070: console.v1.AcceptOperatingProjectSnapshotResponse.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
-	110,  // 1071: console.v1.GetOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
-	110,  // 1072: console.v1.GetOperatingTaskEnvironmentRequest.query:type_name -> console.v1.ConsoleQuery
-	821,  // 1073: console.v1.GetOperatingTaskEnvironmentResponse.last_activity_at:type_name -> google.protobuf.Timestamp
-	821,  // 1074: console.v1.GetOperatingTaskEnvironmentResponse.expires_at:type_name -> google.protobuf.Timestamp
-	110,  // 1075: console.v1.ImportOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
-	637,  // 1076: console.v1.BusinessBlueprint.object_types:type_name -> console.v1.BusinessObjectType
-	750,  // 1077: console.v1.BusinessBlueprint.process:type_name -> console.v1.BusinessProcessDefinition
-	689,  // 1078: console.v1.BusinessBlueprint.intake:type_name -> console.v1.CaptureFormVersionInput
-	774,  // 1079: console.v1.ListBusinessBlueprintsResponse.blueprints:type_name -> console.v1.BusinessBlueprint
-	637,  // 1080: console.v1.CloneBusinessBlueprintResponse.object_types:type_name -> console.v1.BusinessObjectType
-	750,  // 1081: console.v1.CloneBusinessBlueprintResponse.process:type_name -> console.v1.BusinessProcessDefinition
-	694,  // 1082: console.v1.CloneBusinessBlueprintResponse.form:type_name -> console.v1.CaptureForm
-	821,  // 1083: console.v1.CaptureFormInvitation.expires_at:type_name -> google.protobuf.Timestamp
-	821,  // 1084: console.v1.CreateCaptureFormInvitationRequest.expires_at:type_name -> google.protobuf.Timestamp
-	642,  // 1085: console.v1.CreateCaptureFormInvitationRequest.bound_values:type_name -> console.v1.BusinessFieldValue
-	780,  // 1086: console.v1.CreateCaptureFormInvitationResponse.invitation:type_name -> console.v1.CaptureFormInvitation
-	780,  // 1087: console.v1.RevokeCaptureFormInvitationResponse.invitation:type_name -> console.v1.CaptureFormInvitation
-	695,  // 1088: console.v1.GetInvitedCaptureFormResponse.form:type_name -> console.v1.PublishedCaptureForm
-	700,  // 1089: console.v1.GetInvitedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
-	696,  // 1090: console.v1.SubmitInvitedCaptureFormRequest.answers:type_name -> console.v1.CaptureFormAnswer
-	700,  // 1091: console.v1.SubmitInvitedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
-	99,   // 1092: console.v1.GetManagedInferenceReadinessResponse.status:type_name -> console.v1.ManagedInferenceReadinessStatus
-	100,  // 1093: console.v1.GetManagedInferenceReadinessResponse.blockers:type_name -> console.v1.ManagedInferenceBlocker
-	101,  // 1094: console.v1.GetManagedInferenceReadinessResponse.next_actions:type_name -> console.v1.ManagedInferenceNextAction
-	70,   // 1095: console.v1.GetManagedInferenceReadinessResponse.enrollment_state:type_name -> console.v1.ManagedProviderAccessState
-	623,  // 1096: console.v1.GetManagedInferenceReadinessResponse.funding:type_name -> console.v1.InferenceCreditBalance
-	477,  // 1097: console.v1.GetManagedInferenceReadinessResponse.target:type_name -> console.v1.InferenceProviderTarget
-	821,  // 1098: console.v1.GetManagedInferenceReadinessResponse.evaluated_at:type_name -> google.protobuf.Timestamp
-	839,  // 1099: console.v1.GetManagedInferenceReadinessResponse.budget:type_name -> meter.v1.GetBudgetDashboardResponse
-	840,  // 1100: console.v1.GetStaffManagedInferenceFundingRequest.request:type_name -> meter.v1.GetPrepaidCreditBalanceRequest
-	841,  // 1101: console.v1.GrantStaffManagedInferenceCreditsRequest.request:type_name -> meter.v1.GrantDevelopmentCreditsRequest
-	842,  // 1102: console.v1.GetStaffManagedInferenceUsageRequest.request:type_name -> meter.v1.QueryUsageRequest
-	843,  // 1103: console.v1.GetStaffManagedInferenceBudgetRequest.request:type_name -> meter.v1.GetBudgetDashboardRequest
-	844,  // 1104: console.v1.SetStaffManagedInferenceBudgetRequest.request:type_name -> meter.v1.SetBudgetRequest
-	821,  // 1105: console.v1.ManagedProviderAccessEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	798,  // 1106: console.v1.ListManagedProviderAccessEventsResponse.events:type_name -> console.v1.ManagedProviderAccessEvent
-	845,  // 1107: console.v1.ListStaffManagedInferenceAdminEventsRequest.request:type_name -> meter.v1.ListManagedInferenceAdminEventsRequest
-	821,  // 1108: console.v1.ManagedExecutionGrantEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	802,  // 1109: console.v1.ListStaffManagedExecutionGrantEventsResponse.events:type_name -> console.v1.ManagedExecutionGrantEvent
-	805,  // 1110: console.v1.ListStaffManagedExecutionOutcomesResponse.records:type_name -> console.v1.ManagedExecutionOutcome
-	807,  // 1111: console.v1.ProspectingDraft.target_account:type_name -> console.v1.ProspectingDraftTargetAccount
-	102,  // 1112: console.v1.ProspectingDraft.channel:type_name -> console.v1.ProspectingDraftChannel
-	103,  // 1113: console.v1.ProspectingDraft.tone:type_name -> console.v1.ProspectingDraftTone
-	104,  // 1114: console.v1.ProspectingDraft.review_state:type_name -> console.v1.ProspectingDraftReviewState
-	821,  // 1115: console.v1.ProspectingDraft.created_at:type_name -> google.protobuf.Timestamp
-	821,  // 1116: console.v1.ProspectingDraft.updated_at:type_name -> google.protobuf.Timestamp
-	110,  // 1117: console.v1.CreateProspectingDraftRequest.query:type_name -> console.v1.ConsoleQuery
-	807,  // 1118: console.v1.CreateProspectingDraftRequest.target_account:type_name -> console.v1.ProspectingDraftTargetAccount
-	102,  // 1119: console.v1.CreateProspectingDraftRequest.channel:type_name -> console.v1.ProspectingDraftChannel
-	103,  // 1120: console.v1.CreateProspectingDraftRequest.tone:type_name -> console.v1.ProspectingDraftTone
-	808,  // 1121: console.v1.CreateProspectingDraftResponse.draft:type_name -> console.v1.ProspectingDraft
-	809,  // 1122: console.v1.CreateProspectingDraftResponse.receipt:type_name -> console.v1.ProspectingDraftMutationReceipt
-	110,  // 1123: console.v1.ListProspectingDraftsRequest.query:type_name -> console.v1.ConsoleQuery
-	808,  // 1124: console.v1.ListProspectingDraftsResponse.drafts:type_name -> console.v1.ProspectingDraft
-	110,  // 1125: console.v1.ReviewProspectingDraftRequest.query:type_name -> console.v1.ConsoleQuery
-	104,  // 1126: console.v1.ReviewProspectingDraftRequest.decision:type_name -> console.v1.ProspectingDraftReviewState
-	808,  // 1127: console.v1.ReviewProspectingDraftResponse.draft:type_name -> console.v1.ProspectingDraft
-	809,  // 1128: console.v1.ReviewProspectingDraftResponse.receipt:type_name -> console.v1.ProspectingDraftMutationReceipt
-	820,  // 1129: console.v1.WorkspaceBrandVoice.scopes:type_name -> console.v1.WorkspaceBrandVoice.Scope
-	821,  // 1130: console.v1.WorkspaceBrandVoice.updated_at:type_name -> google.protobuf.Timestamp
-	775,  // 1131: console.v1.ConsoleService.ListBusinessBlueprints:input_type -> console.v1.ListBusinessBlueprintsRequest
-	777,  // 1132: console.v1.ConsoleService.CloneBusinessBlueprint:input_type -> console.v1.CloneBusinessBlueprintRequest
-	763,  // 1133: console.v1.ConsoleService.GetBusinessProcessDefinition:input_type -> console.v1.GetBusinessProcessDefinitionRequest
-	765,  // 1134: console.v1.ConsoleService.ListBusinessProcessDefinitions:input_type -> console.v1.ListBusinessProcessDefinitionsRequest
-	753,  // 1135: console.v1.ConsoleService.DefineBusinessProcess:input_type -> console.v1.DefineBusinessProcessRequest
-	755,  // 1136: console.v1.ConsoleService.StartBusinessProcess:input_type -> console.v1.StartBusinessProcessRequest
-	757,  // 1137: console.v1.ConsoleService.GetBusinessProcess:input_type -> console.v1.GetBusinessProcessRequest
-	759,  // 1138: console.v1.ConsoleService.ListBusinessProcesses:input_type -> console.v1.ListBusinessProcessesRequest
-	761,  // 1139: console.v1.ConsoleService.TransitionBusinessProcess:input_type -> console.v1.TransitionBusinessProcessRequest
-	741,  // 1140: console.v1.ConsoleService.PrepareBusinessObjectAuthorityTransfer:input_type -> console.v1.PrepareBusinessObjectAuthorityTransferRequest
-	743,  // 1141: console.v1.ConsoleService.FinalizeBusinessObjectAuthorityTransfer:input_type -> console.v1.FinalizeBusinessObjectAuthorityTransferRequest
-	648,  // 1142: console.v1.ConsoleService.DefineBusinessObjectType:input_type -> console.v1.DefineBusinessObjectTypeRequest
-	729,  // 1143: console.v1.ConsoleService.GetBusinessObjectType:input_type -> console.v1.GetBusinessObjectTypeRequest
-	650,  // 1144: console.v1.ConsoleService.ListBusinessObjectTypes:input_type -> console.v1.ListBusinessObjectTypesRequest
-	652,  // 1145: console.v1.ConsoleService.CreateBusinessObject:input_type -> console.v1.CreateBusinessObjectRequest
-	654,  // 1146: console.v1.ConsoleService.GetBusinessObject:input_type -> console.v1.GetBusinessObjectRequest
-	657,  // 1147: console.v1.ConsoleService.ListBusinessObjects:input_type -> console.v1.ListBusinessObjectsRequest
-	661,  // 1148: console.v1.ConsoleService.UpdateBusinessObject:input_type -> console.v1.UpdateBusinessObjectRequest
-	663,  // 1149: console.v1.ConsoleService.DeleteBusinessObject:input_type -> console.v1.DeleteBusinessObjectRequest
-	665,  // 1150: console.v1.ConsoleService.ListBusinessObjectRevisions:input_type -> console.v1.ListBusinessObjectRevisionsRequest
-	667,  // 1151: console.v1.ConsoleService.BindBusinessObjectSource:input_type -> console.v1.BindBusinessObjectSourceRequest
-	669,  // 1152: console.v1.ConsoleService.AdmitBusinessObjectObservation:input_type -> console.v1.AdmitBusinessObjectObservationRequest
-	671,  // 1153: console.v1.ConsoleService.ListBusinessObjectRelationships:input_type -> console.v1.ListBusinessObjectRelationshipsRequest
-	673,  // 1154: console.v1.ConsoleService.CreateBusinessObjectRelationship:input_type -> console.v1.CreateBusinessObjectRelationshipRequest
-	675,  // 1155: console.v1.ConsoleService.DeleteBusinessObjectRelationship:input_type -> console.v1.DeleteBusinessObjectRelationshipRequest
-	701,  // 1156: console.v1.ConsoleService.CreateCaptureForm:input_type -> console.v1.CreateCaptureFormRequest
-	703,  // 1157: console.v1.ConsoleService.ListCaptureForms:input_type -> console.v1.ListCaptureFormsRequest
-	705,  // 1158: console.v1.ConsoleService.GetCaptureForm:input_type -> console.v1.GetCaptureFormRequest
-	707,  // 1159: console.v1.ConsoleService.UpdateCaptureForm:input_type -> console.v1.UpdateCaptureFormRequest
-	709,  // 1160: console.v1.ConsoleService.PublishCaptureForm:input_type -> console.v1.PublishCaptureFormRequest
-	711,  // 1161: console.v1.ConsoleService.RevokeCaptureFormPublication:input_type -> console.v1.RevokeCaptureFormPublicationRequest
-	781,  // 1162: console.v1.ConsoleService.CreateCaptureFormInvitation:input_type -> console.v1.CreateCaptureFormInvitationRequest
-	783,  // 1163: console.v1.ConsoleService.RevokeCaptureFormInvitation:input_type -> console.v1.RevokeCaptureFormInvitationRequest
-	785,  // 1164: console.v1.ConsoleService.GetInvitedCaptureForm:input_type -> console.v1.GetInvitedCaptureFormRequest
-	787,  // 1165: console.v1.ConsoleService.SubmitInvitedCaptureForm:input_type -> console.v1.SubmitInvitedCaptureFormRequest
-	713,  // 1166: console.v1.ConsoleService.GetPublishedCaptureForm:input_type -> console.v1.GetPublishedCaptureFormRequest
-	715,  // 1167: console.v1.ConsoleService.GetPublishedCaptureFormBrandingAsset:input_type -> console.v1.GetPublishedCaptureFormBrandingAssetRequest
-	717,  // 1168: console.v1.ConsoleService.SubmitPublishedCaptureForm:input_type -> console.v1.SubmitPublishedCaptureFormRequest
-	719,  // 1169: console.v1.ConsoleService.BeginPublishedCaptureFormUpload:input_type -> console.v1.BeginPublishedCaptureFormUploadRequest
-	721,  // 1170: console.v1.ConsoleService.CompletePublishedCaptureFormUpload:input_type -> console.v1.CompletePublishedCaptureFormUploadRequest
-	723,  // 1171: console.v1.ConsoleService.GetCaptureFormSubmission:input_type -> console.v1.GetCaptureFormSubmissionRequest
-	725,  // 1172: console.v1.ConsoleService.ListCaptureFormSubmissions:input_type -> console.v1.ListCaptureFormSubmissionsRequest
-	727,  // 1173: console.v1.ConsoleService.ReviewCaptureFormSubmission:input_type -> console.v1.ReviewCaptureFormSubmissionRequest
-	735,  // 1174: console.v1.ConsoleService.GetInferenceCreditAutoRefill:input_type -> console.v1.GetInferenceCreditAutoRefillRequest
-	737,  // 1175: console.v1.ConsoleService.UpdateInferenceCreditAutoRefill:input_type -> console.v1.UpdateInferenceCreditAutoRefillRequest
-	739,  // 1176: console.v1.ConsoleService.CompleteInferenceCreditAutoRefill:input_type -> console.v1.CompleteInferenceCreditAutoRefillRequest
-	732,  // 1177: console.v1.ConsoleService.ListInferenceCreditReceipts:input_type -> console.v1.ListInferenceCreditReceiptsRequest
-	308,  // 1178: console.v1.ConsoleService.GetOverview:input_type -> console.v1.GetOverviewRequest
-	310,  // 1179: console.v1.ConsoleService.GetConsoleBootSnapshot:input_type -> console.v1.GetConsoleBootSnapshotRequest
-	313,  // 1180: console.v1.ConsoleService.ListAssets:input_type -> console.v1.ListAssetsRequest
-	315,  // 1181: console.v1.ConsoleService.GetAsset:input_type -> console.v1.GetAssetRequest
-	317,  // 1182: console.v1.ConsoleService.ListActivity:input_type -> console.v1.ListActivityRequest
-	459,  // 1183: console.v1.ConsoleService.SearchStaffWorkspaceDirectory:input_type -> console.v1.SearchStaffWorkspaceDirectoryRequest
-	462,  // 1184: console.v1.ConsoleService.GetStaffWorkspaceContext:input_type -> console.v1.GetStaffWorkspaceContextRequest
-	792,  // 1185: console.v1.ConsoleService.GetStaffManagedInferenceFunding:input_type -> console.v1.GetStaffManagedInferenceFundingRequest
-	793,  // 1186: console.v1.ConsoleService.GrantStaffManagedInferenceCredits:input_type -> console.v1.GrantStaffManagedInferenceCreditsRequest
-	794,  // 1187: console.v1.ConsoleService.GetStaffManagedInferenceUsage:input_type -> console.v1.GetStaffManagedInferenceUsageRequest
-	795,  // 1188: console.v1.ConsoleService.GetStaffManagedInferenceBudget:input_type -> console.v1.GetStaffManagedInferenceBudgetRequest
-	796,  // 1189: console.v1.ConsoleService.SetStaffManagedInferenceBudget:input_type -> console.v1.SetStaffManagedInferenceBudgetRequest
-	789,  // 1190: console.v1.ConsoleService.GetStaffManagedInferenceReadiness:input_type -> console.v1.GetStaffManagedInferenceReadinessRequest
-	790,  // 1191: console.v1.ConsoleService.GetManagedInferenceReadiness:input_type -> console.v1.GetManagedInferenceReadinessRequest
-	471,  // 1192: console.v1.ConsoleService.ListManagedProviderAccessGrants:input_type -> console.v1.ListManagedProviderAccessGrantsRequest
-	797,  // 1193: console.v1.ConsoleService.ListManagedProviderAccessEvents:input_type -> console.v1.ListManagedProviderAccessEventsRequest
-	800,  // 1194: console.v1.ConsoleService.ListStaffManagedInferenceAdminEvents:input_type -> console.v1.ListStaffManagedInferenceAdminEventsRequest
-	801,  // 1195: console.v1.ConsoleService.ListStaffManagedExecutionGrantEvents:input_type -> console.v1.ListStaffManagedExecutionGrantEventsRequest
-	804,  // 1196: console.v1.ConsoleService.ListStaffManagedExecutionOutcomes:input_type -> console.v1.ListStaffManagedExecutionOutcomesRequest
-	473,  // 1197: console.v1.ConsoleService.UpsertManagedProviderAccessGrant:input_type -> console.v1.UpsertManagedProviderAccessGrantRequest
-	475,  // 1198: console.v1.ConsoleService.RevokeManagedProviderAccessGrant:input_type -> console.v1.RevokeManagedProviderAccessGrantRequest
-	481,  // 1199: console.v1.ConsoleService.GetStaffInferenceRoutingProfile:input_type -> console.v1.GetStaffInferenceRoutingProfileRequest
-	483,  // 1200: console.v1.ConsoleService.UpdateStaffInferenceRoutingProfile:input_type -> console.v1.UpdateStaffInferenceRoutingProfileRequest
-	319,  // 1201: console.v1.ConsoleService.ListEvalResults:input_type -> console.v1.ListEvalResultsRequest
-	321,  // 1202: console.v1.ConsoleService.ListCostUsage:input_type -> console.v1.ListCostUsageRequest
-	324,  // 1203: console.v1.ConsoleService.RecordProviderCostSnapshot:input_type -> console.v1.RecordProviderCostSnapshotRequest
-	326,  // 1204: console.v1.ConsoleService.ListAuthorityPosture:input_type -> console.v1.ListAuthorityPostureRequest
-	328,  // 1205: console.v1.ConsoleService.ListAgentWorkforceRecords:input_type -> console.v1.ListAgentWorkforceRecordsRequest
-	331,  // 1206: console.v1.ConsoleService.ListOrbControlTargets:input_type -> console.v1.ListOrbControlTargetsRequest
-	333,  // 1207: console.v1.ConsoleService.GetOrbControlTarget:input_type -> console.v1.GetOrbControlTargetRequest
-	335,  // 1208: console.v1.ConsoleService.SubmitOrbControlAction:input_type -> console.v1.SubmitOrbControlActionRequest
-	337,  // 1209: console.v1.ConsoleService.SubmitAgentWorkforceEvidence:input_type -> console.v1.SubmitAgentWorkforceEvidenceRequest
-	340,  // 1210: console.v1.ConsoleService.ListFindings:input_type -> console.v1.ListFindingsRequest
-	342,  // 1211: console.v1.ConsoleService.GetTraceDrilldown:input_type -> console.v1.GetTraceDrilldownRequest
-	344,  // 1212: console.v1.ConsoleService.ListIntegrationTiles:input_type -> console.v1.ListIntegrationTilesRequest
-	346,  // 1213: console.v1.ConsoleService.ListPinnedSources:input_type -> console.v1.ListPinnedSourcesRequest
-	349,  // 1214: console.v1.ConsoleService.SetPinnedSource:input_type -> console.v1.SetPinnedSourceRequest
-	351,  // 1215: console.v1.ConsoleService.UnpinSource:input_type -> console.v1.UnpinSourceRequest
-	532,  // 1216: console.v1.ConsoleService.CreateDexMcpServer:input_type -> console.v1.CreateDexMcpServerRequest
-	534,  // 1217: console.v1.ConsoleService.ListDexMcpServers:input_type -> console.v1.ListDexMcpServersRequest
-	536,  // 1218: console.v1.ConsoleService.GetDexMcpServer:input_type -> console.v1.GetDexMcpServerRequest
-	538,  // 1219: console.v1.ConsoleService.DiscoverDexMcpServer:input_type -> console.v1.DiscoverDexMcpServerRequest
-	540,  // 1220: console.v1.ConsoleService.UpdateDexMcpServer:input_type -> console.v1.UpdateDexMcpServerRequest
-	542,  // 1221: console.v1.ConsoleService.DeleteDexMcpServer:input_type -> console.v1.DeleteDexMcpServerRequest
-	545,  // 1222: console.v1.ConsoleService.InitiateDexMcpOAuthProfile:input_type -> console.v1.InitiateDexMcpOAuthProfileRequest
-	547,  // 1223: console.v1.ConsoleService.CompleteDexMcpOAuthProfile:input_type -> console.v1.CompleteDexMcpOAuthProfileRequest
-	549,  // 1224: console.v1.ConsoleService.ListDexMcpOAuthProfiles:input_type -> console.v1.ListDexMcpOAuthProfilesRequest
-	551,  // 1225: console.v1.ConsoleService.RevokeDexMcpOAuthProfile:input_type -> console.v1.RevokeDexMcpOAuthProfileRequest
-	553,  // 1226: console.v1.ConsoleService.ReauthorizeDexMcpOAuthProfile:input_type -> console.v1.ReauthorizeDexMcpOAuthProfileRequest
-	557,  // 1227: console.v1.ConsoleService.RegisterPrivateEndpoint:input_type -> console.v1.RegisterPrivateEndpointRequest
-	559,  // 1228: console.v1.ConsoleService.VerifyPrivateEndpoint:input_type -> console.v1.VerifyPrivateEndpointRequest
-	561,  // 1229: console.v1.ConsoleService.ListPrivateEndpoints:input_type -> console.v1.ListPrivateEndpointsRequest
-	563,  // 1230: console.v1.ConsoleService.DeletePrivateEndpoint:input_type -> console.v1.DeletePrivateEndpointRequest
-	565,  // 1231: console.v1.ConsoleService.AttachPrivateEndpointToProfile:input_type -> console.v1.AttachPrivateEndpointToProfileRequest
-	567,  // 1232: console.v1.ConsoleService.ListGatewayEgressOrigins:input_type -> console.v1.ListGatewayEgressOriginsRequest
-	353,  // 1233: console.v1.ConsoleService.GetOnboardingPlan:input_type -> console.v1.GetOnboardingPlanRequest
-	128,  // 1234: console.v1.ConsoleService.ListOperatingChannels:input_type -> console.v1.ListOperatingChannelsRequest
-	619,  // 1235: console.v1.ConsoleService.ListOperatingJobs:input_type -> console.v1.ListOperatingJobsRequest
-	130,  // 1236: console.v1.ConsoleService.ArchiveOperatingThread:input_type -> console.v1.ArchiveOperatingThreadRequest
-	132,  // 1237: console.v1.ConsoleService.RenameOperatingThread:input_type -> console.v1.RenameOperatingThreadRequest
-	134,  // 1238: console.v1.ConsoleService.GetOperatingThread:input_type -> console.v1.GetOperatingThreadRequest
-	573,  // 1239: console.v1.ConsoleService.BootstrapThreadGateway:input_type -> console.v1.BootstrapThreadGatewayRequest
-	570,  // 1240: console.v1.ConsoleService.PrewarmOperatingThread:input_type -> console.v1.PrewarmOperatingThreadRequest
-	140,  // 1241: console.v1.ConsoleService.ListOperatingThreadEvents:input_type -> console.v1.ListOperatingThreadEventsRequest
-	142,  // 1242: console.v1.ConsoleService.WatchOperatingThread:input_type -> console.v1.WatchOperatingThreadRequest
-	136,  // 1243: console.v1.ConsoleService.RespondOperatingThread:input_type -> console.v1.RespondOperatingThreadRequest
-	138,  // 1244: console.v1.ConsoleService.InterruptOperatingThread:input_type -> console.v1.InterruptOperatingThreadRequest
-	206,  // 1245: console.v1.ConsoleService.SearchOperatingHistory:input_type -> console.v1.SearchOperatingHistoryRequest
-	209,  // 1246: console.v1.ConsoleService.GetOperatingHistoryContext:input_type -> console.v1.GetOperatingHistoryContextRequest
-	768,  // 1247: console.v1.ConsoleService.AcceptOperatingProjectSnapshot:input_type -> console.v1.AcceptOperatingProjectSnapshotRequest
-	773,  // 1248: console.v1.ConsoleService.ImportOperatingProjectSnapshot:input_type -> console.v1.ImportOperatingProjectSnapshotRequest
-	771,  // 1249: console.v1.ConsoleService.GetOperatingTaskEnvironment:input_type -> console.v1.GetOperatingTaskEnvironmentRequest
-	770,  // 1250: console.v1.ConsoleService.GetOperatingProjectSnapshot:input_type -> console.v1.GetOperatingProjectSnapshotRequest
-	145,  // 1251: console.v1.ConsoleService.SubmitOperatingMessage:input_type -> console.v1.SubmitOperatingMessageRequest
-	155,  // 1252: console.v1.ConsoleService.SubmitOperatingCorrection:input_type -> console.v1.SubmitOperatingCorrectionRequest
-	158,  // 1253: console.v1.ConsoleService.SubmitOperatingFeedback:input_type -> console.v1.SubmitOperatingFeedbackRequest
-	161,  // 1254: console.v1.ConsoleService.SubmitProductIssueReport:input_type -> console.v1.SubmitProductIssueReportRequest
-	162,  // 1255: console.v1.ConsoleService.SubmitNativeProductIssueReport:input_type -> console.v1.SubmitNativeProductIssueReportRequest
-	167,  // 1256: console.v1.ConsoleService.ListStaffProductIssueReports:input_type -> console.v1.ListStaffProductIssueReportsRequest
-	169,  // 1257: console.v1.ConsoleService.EngageStaffProductIssueReport:input_type -> console.v1.EngageStaffProductIssueReportRequest
-	171,  // 1258: console.v1.ConsoleService.GetOperatingFeedback:input_type -> console.v1.GetOperatingFeedbackRequest
-	173,  // 1259: console.v1.ConsoleService.ResolveOperatingFeedbackRemediation:input_type -> console.v1.ResolveOperatingFeedbackRemediationRequest
-	179,  // 1260: console.v1.ConsoleService.ListCustomerIntelligenceFacts:input_type -> console.v1.ListCustomerIntelligenceFactsRequest
-	181,  // 1261: console.v1.ConsoleService.GetCustomerIntelligenceFact:input_type -> console.v1.GetCustomerIntelligenceFactRequest
-	183,  // 1262: console.v1.ConsoleService.ReviewCustomerIntelligenceFact:input_type -> console.v1.ReviewCustomerIntelligenceFactRequest
-	185,  // 1263: console.v1.ConsoleService.ProposeCustomerIntelligenceFact:input_type -> console.v1.ProposeCustomerIntelligenceFactRequest
-	187,  // 1264: console.v1.ConsoleService.RespondToCustomerFactConfirmation:input_type -> console.v1.RespondToCustomerFactConfirmationRequest
-	189,  // 1265: console.v1.ConsoleService.AggregateCustomerIntelligencePatterns:input_type -> console.v1.AggregateCustomerIntelligencePatternsRequest
-	192,  // 1266: console.v1.ConsoleService.ListOperatingCorrections:input_type -> console.v1.ListOperatingCorrectionsRequest
-	194,  // 1267: console.v1.ConsoleService.ReviewOperatingCorrection:input_type -> console.v1.ReviewOperatingCorrectionRequest
-	196,  // 1268: console.v1.ConsoleService.ListWorkspaceMemories:input_type -> console.v1.ListWorkspaceMemoriesRequest
-	199,  // 1269: console.v1.ConsoleService.CorrectWorkspaceMemory:input_type -> console.v1.CorrectWorkspaceMemoryRequest
-	201,  // 1270: console.v1.ConsoleService.ReviewWorkspaceMemory:input_type -> console.v1.ReviewWorkspaceMemoryRequest
-	203,  // 1271: console.v1.ConsoleService.ForgetWorkspaceMemory:input_type -> console.v1.ForgetWorkspaceMemoryRequest
-	146,  // 1272: console.v1.ConsoleService.BeginOperatingAttachmentUpload:input_type -> console.v1.BeginOperatingAttachmentUploadRequest
-	148,  // 1273: console.v1.ConsoleService.CompleteOperatingAttachmentUpload:input_type -> console.v1.CompleteOperatingAttachmentUploadRequest
-	150,  // 1274: console.v1.ConsoleService.ListOperatingAttachments:input_type -> console.v1.ListOperatingAttachmentsRequest
-	223,  // 1275: console.v1.ConsoleService.ResolveOperatingReceiptAction:input_type -> console.v1.ResolveOperatingReceiptActionRequest
-	225,  // 1276: console.v1.ConsoleService.GetOperatingReceipt:input_type -> console.v1.GetOperatingReceiptRequest
-	244,  // 1277: console.v1.ConsoleService.SubmitComputerMission:input_type -> console.v1.SubmitComputerMissionRequest
-	246,  // 1278: console.v1.ConsoleService.GetComputerMission:input_type -> console.v1.GetComputerMissionRequest
-	248,  // 1279: console.v1.ConsoleService.CancelComputerMission:input_type -> console.v1.CancelComputerMissionRequest
-	250,  // 1280: console.v1.ConsoleService.ContinueComputerMission:input_type -> console.v1.ContinueComputerMissionRequest
-	252,  // 1281: console.v1.ConsoleService.PauseComputerMission:input_type -> console.v1.PauseComputerMissionRequest
-	254,  // 1282: console.v1.ConsoleService.ResumeComputerMission:input_type -> console.v1.ResumeComputerMissionRequest
-	256,  // 1283: console.v1.ConsoleService.WakeComputerMission:input_type -> console.v1.WakeComputerMissionRequest
-	258,  // 1284: console.v1.ConsoleService.GuideComputerMission:input_type -> console.v1.GuideComputerMissionRequest
-	265,  // 1285: console.v1.ConsoleService.ListComputerMissionCanaryDefinitions:input_type -> console.v1.ListComputerMissionCanaryDefinitionsRequest
-	267,  // 1286: console.v1.ConsoleService.StartComputerMissionCanaryRun:input_type -> console.v1.StartComputerMissionCanaryRunRequest
-	269,  // 1287: console.v1.ConsoleService.GetComputerMissionCanaryRun:input_type -> console.v1.GetComputerMissionCanaryRunRequest
-	271,  // 1288: console.v1.ConsoleService.ListComputerMissionCanaryRuns:input_type -> console.v1.ListComputerMissionCanaryRunsRequest
-	273,  // 1289: console.v1.ConsoleService.GetComputerMissionCanaryEvidence:input_type -> console.v1.GetComputerMissionCanaryEvidenceRequest
-	275,  // 1290: console.v1.ConsoleService.OperateComputerMissionCanaryRun:input_type -> console.v1.OperateComputerMissionCanaryRunRequest
-	279,  // 1291: console.v1.ConsoleService.CreateMissionSchedule:input_type -> console.v1.CreateMissionScheduleRequest
-	281,  // 1292: console.v1.ConsoleService.UpdateMissionSchedule:input_type -> console.v1.UpdateMissionScheduleRequest
-	283,  // 1293: console.v1.ConsoleService.SetMissionScheduleEnabled:input_type -> console.v1.SetMissionScheduleEnabledRequest
-	285,  // 1294: console.v1.ConsoleService.ListMissionSchedules:input_type -> console.v1.ListMissionSchedulesRequest
-	288,  // 1295: console.v1.ConsoleService.CreateConnectorTrigger:input_type -> console.v1.CreateConnectorTriggerRequest
-	290,  // 1296: console.v1.ConsoleService.UpdateConnectorTrigger:input_type -> console.v1.UpdateConnectorTriggerRequest
-	292,  // 1297: console.v1.ConsoleService.ListConnectorTriggers:input_type -> console.v1.ListConnectorTriggersRequest
-	294,  // 1298: console.v1.ConsoleService.DeleteConnectorTrigger:input_type -> console.v1.DeleteConnectorTriggerRequest
-	296,  // 1299: console.v1.ConsoleService.SetConnectorTriggerEnabled:input_type -> console.v1.SetConnectorTriggerEnabledRequest
-	299,  // 1300: console.v1.ConsoleService.ReserveComputerMissionApexSession:input_type -> console.v1.ReserveComputerMissionApexSessionRequest
-	301,  // 1301: console.v1.ConsoleService.BindComputerMissionApexSessionReservation:input_type -> console.v1.BindComputerMissionApexSessionReservationRequest
-	304,  // 1302: console.v1.ConsoleService.BindComputerMissionApexInstructionMetadata:input_type -> console.v1.BindComputerMissionApexInstructionMetadataRequest
-	306,  // 1303: console.v1.ConsoleService.AuthorizeComputerMissionApexSessionAdoption:input_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionRequest
-	355,  // 1304: console.v1.ConsoleService.GetWorkspaceSettings:input_type -> console.v1.GetWorkspaceSettingsRequest
-	369,  // 1305: console.v1.ConsoleService.GetOperatorPreferences:input_type -> console.v1.GetOperatorPreferencesRequest
-	371,  // 1306: console.v1.ConsoleService.UpdateOperatorPreferences:input_type -> console.v1.UpdateOperatorPreferencesRequest
-	380,  // 1307: console.v1.ConsoleService.CreateConnectorProfile:input_type -> console.v1.CreateConnectorProfileRequest
-	382,  // 1308: console.v1.ConsoleService.ListConnectorProfiles:input_type -> console.v1.ListConnectorProfilesRequest
-	384,  // 1309: console.v1.ConsoleService.UpdateConnectorProfile:input_type -> console.v1.UpdateConnectorProfileRequest
-	386,  // 1310: console.v1.ConsoleService.DeleteConnectorProfile:input_type -> console.v1.DeleteConnectorProfileRequest
-	592,  // 1311: console.v1.ConsoleService.ListConnectedCalls:input_type -> console.v1.ListConnectedCallsRequest
-	591,  // 1312: console.v1.ConsoleService.StartMeetingCapture:input_type -> console.v1.StartMeetingCaptureRequest
-	596,  // 1313: console.v1.ConsoleService.GetMeetingCapture:input_type -> console.v1.GetMeetingCaptureRequest
-	598,  // 1314: console.v1.ConsoleService.ListMeetingCaptures:input_type -> console.v1.ListMeetingCapturesRequest
-	600,  // 1315: console.v1.ConsoleService.StopMeetingCapture:input_type -> console.v1.StopMeetingCaptureRequest
-	613,  // 1316: console.v1.ConsoleService.ListCommitments:input_type -> console.v1.ListCommitmentsRequest
-	358,  // 1317: console.v1.ConsoleService.GetBillingSubscription:input_type -> console.v1.GetBillingSubscriptionRequest
-	360,  // 1318: console.v1.ConsoleService.CreateBillingPortalSession:input_type -> console.v1.CreateBillingPortalSessionRequest
-	362,  // 1319: console.v1.ConsoleService.CreateBillingCheckoutSession:input_type -> console.v1.CreateBillingCheckoutSessionRequest
-	624,  // 1320: console.v1.ConsoleService.GetInferenceCreditBalance:input_type -> console.v1.GetInferenceCreditBalanceRequest
-	630,  // 1321: console.v1.ConsoleService.CreateInferenceCreditCheckout:input_type -> console.v1.CreateInferenceCreditCheckoutRequest
-	632,  // 1322: console.v1.ConsoleService.FulfillInferenceCreditCheckout:input_type -> console.v1.FulfillInferenceCreditCheckoutRequest
-	364,  // 1323: console.v1.ConsoleService.UpdateWorkspaceProfile:input_type -> console.v1.UpdateWorkspaceProfileRequest
-	388,  // 1324: console.v1.ConsoleService.ArchiveWorkspace:input_type -> console.v1.ArchiveWorkspaceRequest
-	390,  // 1325: console.v1.ConsoleService.UpdateWorkspacePolicy:input_type -> console.v1.UpdateWorkspacePolicyRequest
-	392,  // 1326: console.v1.ConsoleService.UpdateWorkspaceDexPolicy:input_type -> console.v1.UpdateWorkspaceDexPolicyRequest
-	394,  // 1327: console.v1.ConsoleService.UpdateWorkspaceArtifactStyleGuide:input_type -> console.v1.UpdateWorkspaceArtifactStyleGuideRequest
-	396,  // 1328: console.v1.ConsoleService.EvaluateWorkspaceArtifactStyleGuide:input_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideRequest
-	399,  // 1329: console.v1.ConsoleService.UpsertWorkspaceIdentityProvider:input_type -> console.v1.UpsertWorkspaceIdentityProviderRequest
-	401,  // 1330: console.v1.ConsoleService.RemoveWorkspaceIdentityProvider:input_type -> console.v1.RemoveWorkspaceIdentityProviderRequest
-	403,  // 1331: console.v1.ConsoleService.UpsertWorkspaceIntegration:input_type -> console.v1.UpsertWorkspaceIntegrationRequest
-	405,  // 1332: console.v1.ConsoleService.RemoveWorkspaceIntegration:input_type -> console.v1.RemoveWorkspaceIntegrationRequest
-	407,  // 1333: console.v1.ConsoleService.UpdateWorkspaceBilling:input_type -> console.v1.UpdateWorkspaceBillingRequest
-	408,  // 1334: console.v1.ConsoleService.UpsertWorkspaceMember:input_type -> console.v1.UpsertWorkspaceMemberRequest
-	409,  // 1335: console.v1.ConsoleService.RemoveWorkspaceMember:input_type -> console.v1.RemoveWorkspaceMemberRequest
-	410,  // 1336: console.v1.ConsoleService.UpdateWorkspaceNotificationPreferences:input_type -> console.v1.UpdateWorkspaceNotificationPreferencesRequest
-	411,  // 1337: console.v1.ConsoleService.EnableWorkspaceBreakGlass:input_type -> console.v1.EnableWorkspaceBreakGlassRequest
-	412,  // 1338: console.v1.ConsoleService.DisableWorkspaceBreakGlass:input_type -> console.v1.DisableWorkspaceBreakGlassRequest
-	414,  // 1339: console.v1.ConsoleService.ListWorkspaceSkills:input_type -> console.v1.ListWorkspaceSkillsRequest
-	429,  // 1340: console.v1.ConsoleService.BrowseDexSkillCatalog:input_type -> console.v1.BrowseDexSkillCatalogRequest
-	431,  // 1341: console.v1.ConsoleService.InstallDexSkillCatalogEntry:input_type -> console.v1.InstallDexSkillCatalogEntryRequest
-	433,  // 1342: console.v1.ConsoleService.CreateWorkspaceSkill:input_type -> console.v1.CreateWorkspaceSkillRequest
-	435,  // 1343: console.v1.ConsoleService.UpdateWorkspaceSkill:input_type -> console.v1.UpdateWorkspaceSkillRequest
-	437,  // 1344: console.v1.ConsoleService.DeleteWorkspaceSkill:input_type -> console.v1.DeleteWorkspaceSkillRequest
-	485,  // 1345: console.v1.ConsoleService.ListScenarioFixtures:input_type -> console.v1.ListScenarioFixturesRequest
-	487,  // 1346: console.v1.ConsoleService.PromoteScenarioFixture:input_type -> console.v1.PromoteScenarioFixtureRequest
-	489,  // 1347: console.v1.ConsoleService.CompareScenarioFixtures:input_type -> console.v1.CompareScenarioFixturesRequest
-	374,  // 1348: console.v1.ConsoleService.ListWorkspaceGuardrailRules:input_type -> console.v1.ListWorkspaceGuardrailRulesRequest
-	376,  // 1349: console.v1.ConsoleService.UpsertWorkspaceGuardrailRule:input_type -> console.v1.UpsertWorkspaceGuardrailRuleRequest
-	377,  // 1350: console.v1.ConsoleService.RemoveWorkspaceGuardrailRule:input_type -> console.v1.RemoveWorkspaceGuardrailRuleRequest
-	575,  // 1351: console.v1.ConsoleService.SetOperatingThreadController:input_type -> console.v1.SetOperatingThreadControllerRequest
-	580,  // 1352: console.v1.ConsoleService.GetPrivacySettings:input_type -> console.v1.GetPrivacySettingsRequest
-	582,  // 1353: console.v1.ConsoleService.SetPrivacySettings:input_type -> console.v1.SetPrivacySettingsRequest
-	605,  // 1354: console.v1.ConsoleService.CreateProspectingWatchProgram:input_type -> console.v1.CreateProspectingWatchProgramRequest
-	607,  // 1355: console.v1.ConsoleService.GetProspectingWatchProgram:input_type -> console.v1.GetProspectingWatchProgramRequest
-	609,  // 1356: console.v1.ConsoleService.ListProspectingWatchPrograms:input_type -> console.v1.ListProspectingWatchProgramsRequest
-	611,  // 1357: console.v1.ConsoleService.UpdateProspectingWatchProgram:input_type -> console.v1.UpdateProspectingWatchProgramRequest
-	810,  // 1358: console.v1.ConsoleService.CreateProspectingDraft:input_type -> console.v1.CreateProspectingDraftRequest
-	812,  // 1359: console.v1.ConsoleService.ListProspectingDrafts:input_type -> console.v1.ListProspectingDraftsRequest
-	814,  // 1360: console.v1.ConsoleService.ReviewProspectingDraft:input_type -> console.v1.ReviewProspectingDraftRequest
-	621,  // 1361: console.v1.ConsoleService.RecordOperatingHomepageSuggestionFeedback:input_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
-	105,  // 1362: console.v1.WorkspaceKeyService.GetWorkspaceKeyConfig:input_type -> console.v1.GetWorkspaceKeyConfigRequest
-	106,  // 1363: console.v1.WorkspaceKeyService.PutWorkspaceKeyConfig:input_type -> console.v1.PutWorkspaceKeyConfigRequest
-	107,  // 1364: console.v1.WorkspaceKeyService.DeleteWorkspaceKeyConfig:input_type -> console.v1.DeleteWorkspaceKeyConfigRequest
-	588,  // 1365: console.v1.ManagedSetupService.GetManagedSetup:input_type -> console.v1.GetManagedSetupRequest
-	589,  // 1366: console.v1.ManagedSetupService.SetManagedSetup:input_type -> console.v1.SetManagedSetupRequest
-	776,  // 1367: console.v1.ConsoleService.ListBusinessBlueprints:output_type -> console.v1.ListBusinessBlueprintsResponse
-	778,  // 1368: console.v1.ConsoleService.CloneBusinessBlueprint:output_type -> console.v1.CloneBusinessBlueprintResponse
-	764,  // 1369: console.v1.ConsoleService.GetBusinessProcessDefinition:output_type -> console.v1.GetBusinessProcessDefinitionResponse
-	766,  // 1370: console.v1.ConsoleService.ListBusinessProcessDefinitions:output_type -> console.v1.ListBusinessProcessDefinitionsResponse
-	754,  // 1371: console.v1.ConsoleService.DefineBusinessProcess:output_type -> console.v1.DefineBusinessProcessResponse
-	756,  // 1372: console.v1.ConsoleService.StartBusinessProcess:output_type -> console.v1.StartBusinessProcessResponse
-	758,  // 1373: console.v1.ConsoleService.GetBusinessProcess:output_type -> console.v1.GetBusinessProcessResponse
-	760,  // 1374: console.v1.ConsoleService.ListBusinessProcesses:output_type -> console.v1.ListBusinessProcessesResponse
-	762,  // 1375: console.v1.ConsoleService.TransitionBusinessProcess:output_type -> console.v1.TransitionBusinessProcessResponse
-	742,  // 1376: console.v1.ConsoleService.PrepareBusinessObjectAuthorityTransfer:output_type -> console.v1.PrepareBusinessObjectAuthorityTransferResponse
-	744,  // 1377: console.v1.ConsoleService.FinalizeBusinessObjectAuthorityTransfer:output_type -> console.v1.FinalizeBusinessObjectAuthorityTransferResponse
-	649,  // 1378: console.v1.ConsoleService.DefineBusinessObjectType:output_type -> console.v1.DefineBusinessObjectTypeResponse
-	730,  // 1379: console.v1.ConsoleService.GetBusinessObjectType:output_type -> console.v1.GetBusinessObjectTypeResponse
-	651,  // 1380: console.v1.ConsoleService.ListBusinessObjectTypes:output_type -> console.v1.ListBusinessObjectTypesResponse
-	653,  // 1381: console.v1.ConsoleService.CreateBusinessObject:output_type -> console.v1.CreateBusinessObjectResponse
-	655,  // 1382: console.v1.ConsoleService.GetBusinessObject:output_type -> console.v1.GetBusinessObjectResponse
-	660,  // 1383: console.v1.ConsoleService.ListBusinessObjects:output_type -> console.v1.ListBusinessObjectsResponse
-	662,  // 1384: console.v1.ConsoleService.UpdateBusinessObject:output_type -> console.v1.UpdateBusinessObjectResponse
-	664,  // 1385: console.v1.ConsoleService.DeleteBusinessObject:output_type -> console.v1.DeleteBusinessObjectResponse
-	666,  // 1386: console.v1.ConsoleService.ListBusinessObjectRevisions:output_type -> console.v1.ListBusinessObjectRevisionsResponse
-	668,  // 1387: console.v1.ConsoleService.BindBusinessObjectSource:output_type -> console.v1.BindBusinessObjectSourceResponse
-	670,  // 1388: console.v1.ConsoleService.AdmitBusinessObjectObservation:output_type -> console.v1.AdmitBusinessObjectObservationResponse
-	672,  // 1389: console.v1.ConsoleService.ListBusinessObjectRelationships:output_type -> console.v1.ListBusinessObjectRelationshipsResponse
-	674,  // 1390: console.v1.ConsoleService.CreateBusinessObjectRelationship:output_type -> console.v1.CreateBusinessObjectRelationshipResponse
-	676,  // 1391: console.v1.ConsoleService.DeleteBusinessObjectRelationship:output_type -> console.v1.DeleteBusinessObjectRelationshipResponse
-	702,  // 1392: console.v1.ConsoleService.CreateCaptureForm:output_type -> console.v1.CreateCaptureFormResponse
-	704,  // 1393: console.v1.ConsoleService.ListCaptureForms:output_type -> console.v1.ListCaptureFormsResponse
-	706,  // 1394: console.v1.ConsoleService.GetCaptureForm:output_type -> console.v1.GetCaptureFormResponse
-	708,  // 1395: console.v1.ConsoleService.UpdateCaptureForm:output_type -> console.v1.UpdateCaptureFormResponse
-	710,  // 1396: console.v1.ConsoleService.PublishCaptureForm:output_type -> console.v1.PublishCaptureFormResponse
-	712,  // 1397: console.v1.ConsoleService.RevokeCaptureFormPublication:output_type -> console.v1.RevokeCaptureFormPublicationResponse
-	782,  // 1398: console.v1.ConsoleService.CreateCaptureFormInvitation:output_type -> console.v1.CreateCaptureFormInvitationResponse
-	784,  // 1399: console.v1.ConsoleService.RevokeCaptureFormInvitation:output_type -> console.v1.RevokeCaptureFormInvitationResponse
-	786,  // 1400: console.v1.ConsoleService.GetInvitedCaptureForm:output_type -> console.v1.GetInvitedCaptureFormResponse
-	788,  // 1401: console.v1.ConsoleService.SubmitInvitedCaptureForm:output_type -> console.v1.SubmitInvitedCaptureFormResponse
-	714,  // 1402: console.v1.ConsoleService.GetPublishedCaptureForm:output_type -> console.v1.GetPublishedCaptureFormResponse
-	716,  // 1403: console.v1.ConsoleService.GetPublishedCaptureFormBrandingAsset:output_type -> console.v1.GetPublishedCaptureFormBrandingAssetResponse
-	718,  // 1404: console.v1.ConsoleService.SubmitPublishedCaptureForm:output_type -> console.v1.SubmitPublishedCaptureFormResponse
-	720,  // 1405: console.v1.ConsoleService.BeginPublishedCaptureFormUpload:output_type -> console.v1.BeginPublishedCaptureFormUploadResponse
-	722,  // 1406: console.v1.ConsoleService.CompletePublishedCaptureFormUpload:output_type -> console.v1.CompletePublishedCaptureFormUploadResponse
-	724,  // 1407: console.v1.ConsoleService.GetCaptureFormSubmission:output_type -> console.v1.GetCaptureFormSubmissionResponse
-	726,  // 1408: console.v1.ConsoleService.ListCaptureFormSubmissions:output_type -> console.v1.ListCaptureFormSubmissionsResponse
-	728,  // 1409: console.v1.ConsoleService.ReviewCaptureFormSubmission:output_type -> console.v1.ReviewCaptureFormSubmissionResponse
-	736,  // 1410: console.v1.ConsoleService.GetInferenceCreditAutoRefill:output_type -> console.v1.GetInferenceCreditAutoRefillResponse
-	738,  // 1411: console.v1.ConsoleService.UpdateInferenceCreditAutoRefill:output_type -> console.v1.UpdateInferenceCreditAutoRefillResponse
-	740,  // 1412: console.v1.ConsoleService.CompleteInferenceCreditAutoRefill:output_type -> console.v1.CompleteInferenceCreditAutoRefillResponse
-	733,  // 1413: console.v1.ConsoleService.ListInferenceCreditReceipts:output_type -> console.v1.ListInferenceCreditReceiptsResponse
-	309,  // 1414: console.v1.ConsoleService.GetOverview:output_type -> console.v1.GetOverviewResponse
-	312,  // 1415: console.v1.ConsoleService.GetConsoleBootSnapshot:output_type -> console.v1.GetConsoleBootSnapshotResponse
-	314,  // 1416: console.v1.ConsoleService.ListAssets:output_type -> console.v1.ListAssetsResponse
-	316,  // 1417: console.v1.ConsoleService.GetAsset:output_type -> console.v1.GetAssetResponse
-	318,  // 1418: console.v1.ConsoleService.ListActivity:output_type -> console.v1.ListActivityResponse
-	461,  // 1419: console.v1.ConsoleService.SearchStaffWorkspaceDirectory:output_type -> console.v1.SearchStaffWorkspaceDirectoryResponse
-	469,  // 1420: console.v1.ConsoleService.GetStaffWorkspaceContext:output_type -> console.v1.GetStaffWorkspaceContextResponse
-	846,  // 1421: console.v1.ConsoleService.GetStaffManagedInferenceFunding:output_type -> meter.v1.GetPrepaidCreditBalanceResponse
-	847,  // 1422: console.v1.ConsoleService.GrantStaffManagedInferenceCredits:output_type -> meter.v1.GrantDevelopmentCreditsResponse
-	848,  // 1423: console.v1.ConsoleService.GetStaffManagedInferenceUsage:output_type -> meter.v1.QueryUsageResponse
-	839,  // 1424: console.v1.ConsoleService.GetStaffManagedInferenceBudget:output_type -> meter.v1.GetBudgetDashboardResponse
-	849,  // 1425: console.v1.ConsoleService.SetStaffManagedInferenceBudget:output_type -> meter.v1.SetBudgetResponse
-	791,  // 1426: console.v1.ConsoleService.GetStaffManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
-	791,  // 1427: console.v1.ConsoleService.GetManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
-	472,  // 1428: console.v1.ConsoleService.ListManagedProviderAccessGrants:output_type -> console.v1.ListManagedProviderAccessGrantsResponse
-	799,  // 1429: console.v1.ConsoleService.ListManagedProviderAccessEvents:output_type -> console.v1.ListManagedProviderAccessEventsResponse
-	850,  // 1430: console.v1.ConsoleService.ListStaffManagedInferenceAdminEvents:output_type -> meter.v1.ListManagedInferenceAdminEventsResponse
-	803,  // 1431: console.v1.ConsoleService.ListStaffManagedExecutionGrantEvents:output_type -> console.v1.ListStaffManagedExecutionGrantEventsResponse
-	806,  // 1432: console.v1.ConsoleService.ListStaffManagedExecutionOutcomes:output_type -> console.v1.ListStaffManagedExecutionOutcomesResponse
-	474,  // 1433: console.v1.ConsoleService.UpsertManagedProviderAccessGrant:output_type -> console.v1.UpsertManagedProviderAccessGrantResponse
-	476,  // 1434: console.v1.ConsoleService.RevokeManagedProviderAccessGrant:output_type -> console.v1.RevokeManagedProviderAccessGrantResponse
-	482,  // 1435: console.v1.ConsoleService.GetStaffInferenceRoutingProfile:output_type -> console.v1.GetStaffInferenceRoutingProfileResponse
-	484,  // 1436: console.v1.ConsoleService.UpdateStaffInferenceRoutingProfile:output_type -> console.v1.UpdateStaffInferenceRoutingProfileResponse
-	320,  // 1437: console.v1.ConsoleService.ListEvalResults:output_type -> console.v1.ListEvalResultsResponse
-	322,  // 1438: console.v1.ConsoleService.ListCostUsage:output_type -> console.v1.ListCostUsageResponse
-	325,  // 1439: console.v1.ConsoleService.RecordProviderCostSnapshot:output_type -> console.v1.RecordProviderCostSnapshotResponse
-	327,  // 1440: console.v1.ConsoleService.ListAuthorityPosture:output_type -> console.v1.ListAuthorityPostureResponse
-	329,  // 1441: console.v1.ConsoleService.ListAgentWorkforceRecords:output_type -> console.v1.ListAgentWorkforceRecordsResponse
-	332,  // 1442: console.v1.ConsoleService.ListOrbControlTargets:output_type -> console.v1.ListOrbControlTargetsResponse
-	334,  // 1443: console.v1.ConsoleService.GetOrbControlTarget:output_type -> console.v1.GetOrbControlTargetResponse
-	336,  // 1444: console.v1.ConsoleService.SubmitOrbControlAction:output_type -> console.v1.SubmitOrbControlActionResponse
-	338,  // 1445: console.v1.ConsoleService.SubmitAgentWorkforceEvidence:output_type -> console.v1.SubmitAgentWorkforceEvidenceResponse
-	341,  // 1446: console.v1.ConsoleService.ListFindings:output_type -> console.v1.ListFindingsResponse
-	343,  // 1447: console.v1.ConsoleService.GetTraceDrilldown:output_type -> console.v1.GetTraceDrilldownResponse
-	345,  // 1448: console.v1.ConsoleService.ListIntegrationTiles:output_type -> console.v1.ListIntegrationTilesResponse
-	347,  // 1449: console.v1.ConsoleService.ListPinnedSources:output_type -> console.v1.ListPinnedSourcesResponse
-	350,  // 1450: console.v1.ConsoleService.SetPinnedSource:output_type -> console.v1.SetPinnedSourceResponse
-	352,  // 1451: console.v1.ConsoleService.UnpinSource:output_type -> console.v1.UnpinSourceResponse
-	533,  // 1452: console.v1.ConsoleService.CreateDexMcpServer:output_type -> console.v1.CreateDexMcpServerResponse
-	535,  // 1453: console.v1.ConsoleService.ListDexMcpServers:output_type -> console.v1.ListDexMcpServersResponse
-	537,  // 1454: console.v1.ConsoleService.GetDexMcpServer:output_type -> console.v1.GetDexMcpServerResponse
-	539,  // 1455: console.v1.ConsoleService.DiscoverDexMcpServer:output_type -> console.v1.DiscoverDexMcpServerResponse
-	541,  // 1456: console.v1.ConsoleService.UpdateDexMcpServer:output_type -> console.v1.UpdateDexMcpServerResponse
-	543,  // 1457: console.v1.ConsoleService.DeleteDexMcpServer:output_type -> console.v1.DeleteDexMcpServerResponse
-	546,  // 1458: console.v1.ConsoleService.InitiateDexMcpOAuthProfile:output_type -> console.v1.InitiateDexMcpOAuthProfileResponse
-	548,  // 1459: console.v1.ConsoleService.CompleteDexMcpOAuthProfile:output_type -> console.v1.CompleteDexMcpOAuthProfileResponse
-	550,  // 1460: console.v1.ConsoleService.ListDexMcpOAuthProfiles:output_type -> console.v1.ListDexMcpOAuthProfilesResponse
-	552,  // 1461: console.v1.ConsoleService.RevokeDexMcpOAuthProfile:output_type -> console.v1.RevokeDexMcpOAuthProfileResponse
-	554,  // 1462: console.v1.ConsoleService.ReauthorizeDexMcpOAuthProfile:output_type -> console.v1.ReauthorizeDexMcpOAuthProfileResponse
-	558,  // 1463: console.v1.ConsoleService.RegisterPrivateEndpoint:output_type -> console.v1.RegisterPrivateEndpointResponse
-	560,  // 1464: console.v1.ConsoleService.VerifyPrivateEndpoint:output_type -> console.v1.VerifyPrivateEndpointResponse
-	562,  // 1465: console.v1.ConsoleService.ListPrivateEndpoints:output_type -> console.v1.ListPrivateEndpointsResponse
-	564,  // 1466: console.v1.ConsoleService.DeletePrivateEndpoint:output_type -> console.v1.DeletePrivateEndpointResponse
-	566,  // 1467: console.v1.ConsoleService.AttachPrivateEndpointToProfile:output_type -> console.v1.AttachPrivateEndpointToProfileResponse
-	568,  // 1468: console.v1.ConsoleService.ListGatewayEgressOrigins:output_type -> console.v1.ListGatewayEgressOriginsResponse
-	354,  // 1469: console.v1.ConsoleService.GetOnboardingPlan:output_type -> console.v1.GetOnboardingPlanResponse
-	129,  // 1470: console.v1.ConsoleService.ListOperatingChannels:output_type -> console.v1.ListOperatingChannelsResponse
-	620,  // 1471: console.v1.ConsoleService.ListOperatingJobs:output_type -> console.v1.ListOperatingJobsResponse
-	131,  // 1472: console.v1.ConsoleService.ArchiveOperatingThread:output_type -> console.v1.ArchiveOperatingThreadResponse
-	133,  // 1473: console.v1.ConsoleService.RenameOperatingThread:output_type -> console.v1.RenameOperatingThreadResponse
-	135,  // 1474: console.v1.ConsoleService.GetOperatingThread:output_type -> console.v1.GetOperatingThreadResponse
-	574,  // 1475: console.v1.ConsoleService.BootstrapThreadGateway:output_type -> console.v1.BootstrapThreadGatewayResponse
-	571,  // 1476: console.v1.ConsoleService.PrewarmOperatingThread:output_type -> console.v1.PrewarmOperatingThreadResponse
-	141,  // 1477: console.v1.ConsoleService.ListOperatingThreadEvents:output_type -> console.v1.ListOperatingThreadEventsResponse
-	143,  // 1478: console.v1.ConsoleService.WatchOperatingThread:output_type -> console.v1.WatchOperatingThreadResponse
-	137,  // 1479: console.v1.ConsoleService.RespondOperatingThread:output_type -> console.v1.RespondOperatingThreadResponse
-	139,  // 1480: console.v1.ConsoleService.InterruptOperatingThread:output_type -> console.v1.InterruptOperatingThreadResponse
-	208,  // 1481: console.v1.ConsoleService.SearchOperatingHistory:output_type -> console.v1.SearchOperatingHistoryResponse
-	211,  // 1482: console.v1.ConsoleService.GetOperatingHistoryContext:output_type -> console.v1.GetOperatingHistoryContextResponse
-	769,  // 1483: console.v1.ConsoleService.AcceptOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
-	769,  // 1484: console.v1.ConsoleService.ImportOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
-	772,  // 1485: console.v1.ConsoleService.GetOperatingTaskEnvironment:output_type -> console.v1.GetOperatingTaskEnvironmentResponse
-	769,  // 1486: console.v1.ConsoleService.GetOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
-	152,  // 1487: console.v1.ConsoleService.SubmitOperatingMessage:output_type -> console.v1.SubmitOperatingMessageResponse
-	156,  // 1488: console.v1.ConsoleService.SubmitOperatingCorrection:output_type -> console.v1.SubmitOperatingCorrectionResponse
-	159,  // 1489: console.v1.ConsoleService.SubmitOperatingFeedback:output_type -> console.v1.SubmitOperatingFeedbackResponse
-	165,  // 1490: console.v1.ConsoleService.SubmitProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
-	165,  // 1491: console.v1.ConsoleService.SubmitNativeProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
-	168,  // 1492: console.v1.ConsoleService.ListStaffProductIssueReports:output_type -> console.v1.ListStaffProductIssueReportsResponse
-	170,  // 1493: console.v1.ConsoleService.EngageStaffProductIssueReport:output_type -> console.v1.EngageStaffProductIssueReportResponse
-	172,  // 1494: console.v1.ConsoleService.GetOperatingFeedback:output_type -> console.v1.GetOperatingFeedbackResponse
-	174,  // 1495: console.v1.ConsoleService.ResolveOperatingFeedbackRemediation:output_type -> console.v1.ResolveOperatingFeedbackRemediationResponse
-	180,  // 1496: console.v1.ConsoleService.ListCustomerIntelligenceFacts:output_type -> console.v1.ListCustomerIntelligenceFactsResponse
-	182,  // 1497: console.v1.ConsoleService.GetCustomerIntelligenceFact:output_type -> console.v1.GetCustomerIntelligenceFactResponse
-	184,  // 1498: console.v1.ConsoleService.ReviewCustomerIntelligenceFact:output_type -> console.v1.ReviewCustomerIntelligenceFactResponse
-	186,  // 1499: console.v1.ConsoleService.ProposeCustomerIntelligenceFact:output_type -> console.v1.ProposeCustomerIntelligenceFactResponse
-	188,  // 1500: console.v1.ConsoleService.RespondToCustomerFactConfirmation:output_type -> console.v1.RespondToCustomerFactConfirmationResponse
-	191,  // 1501: console.v1.ConsoleService.AggregateCustomerIntelligencePatterns:output_type -> console.v1.AggregateCustomerIntelligencePatternsResponse
-	193,  // 1502: console.v1.ConsoleService.ListOperatingCorrections:output_type -> console.v1.ListOperatingCorrectionsResponse
-	195,  // 1503: console.v1.ConsoleService.ReviewOperatingCorrection:output_type -> console.v1.ReviewOperatingCorrectionResponse
-	197,  // 1504: console.v1.ConsoleService.ListWorkspaceMemories:output_type -> console.v1.ListWorkspaceMemoriesResponse
-	200,  // 1505: console.v1.ConsoleService.CorrectWorkspaceMemory:output_type -> console.v1.CorrectWorkspaceMemoryResponse
-	202,  // 1506: console.v1.ConsoleService.ReviewWorkspaceMemory:output_type -> console.v1.ReviewWorkspaceMemoryResponse
-	204,  // 1507: console.v1.ConsoleService.ForgetWorkspaceMemory:output_type -> console.v1.ForgetWorkspaceMemoryResponse
-	147,  // 1508: console.v1.ConsoleService.BeginOperatingAttachmentUpload:output_type -> console.v1.BeginOperatingAttachmentUploadResponse
-	149,  // 1509: console.v1.ConsoleService.CompleteOperatingAttachmentUpload:output_type -> console.v1.CompleteOperatingAttachmentUploadResponse
-	151,  // 1510: console.v1.ConsoleService.ListOperatingAttachments:output_type -> console.v1.ListOperatingAttachmentsResponse
-	224,  // 1511: console.v1.ConsoleService.ResolveOperatingReceiptAction:output_type -> console.v1.ResolveOperatingReceiptActionResponse
-	228,  // 1512: console.v1.ConsoleService.GetOperatingReceipt:output_type -> console.v1.GetOperatingReceiptResponse
-	245,  // 1513: console.v1.ConsoleService.SubmitComputerMission:output_type -> console.v1.SubmitComputerMissionResponse
-	247,  // 1514: console.v1.ConsoleService.GetComputerMission:output_type -> console.v1.GetComputerMissionResponse
-	249,  // 1515: console.v1.ConsoleService.CancelComputerMission:output_type -> console.v1.CancelComputerMissionResponse
-	251,  // 1516: console.v1.ConsoleService.ContinueComputerMission:output_type -> console.v1.ContinueComputerMissionResponse
-	253,  // 1517: console.v1.ConsoleService.PauseComputerMission:output_type -> console.v1.PauseComputerMissionResponse
-	255,  // 1518: console.v1.ConsoleService.ResumeComputerMission:output_type -> console.v1.ResumeComputerMissionResponse
-	257,  // 1519: console.v1.ConsoleService.WakeComputerMission:output_type -> console.v1.WakeComputerMissionResponse
-	259,  // 1520: console.v1.ConsoleService.GuideComputerMission:output_type -> console.v1.GuideComputerMissionResponse
-	266,  // 1521: console.v1.ConsoleService.ListComputerMissionCanaryDefinitions:output_type -> console.v1.ListComputerMissionCanaryDefinitionsResponse
-	268,  // 1522: console.v1.ConsoleService.StartComputerMissionCanaryRun:output_type -> console.v1.StartComputerMissionCanaryRunResponse
-	270,  // 1523: console.v1.ConsoleService.GetComputerMissionCanaryRun:output_type -> console.v1.GetComputerMissionCanaryRunResponse
-	272,  // 1524: console.v1.ConsoleService.ListComputerMissionCanaryRuns:output_type -> console.v1.ListComputerMissionCanaryRunsResponse
-	274,  // 1525: console.v1.ConsoleService.GetComputerMissionCanaryEvidence:output_type -> console.v1.GetComputerMissionCanaryEvidenceResponse
-	276,  // 1526: console.v1.ConsoleService.OperateComputerMissionCanaryRun:output_type -> console.v1.OperateComputerMissionCanaryRunResponse
-	280,  // 1527: console.v1.ConsoleService.CreateMissionSchedule:output_type -> console.v1.CreateMissionScheduleResponse
-	282,  // 1528: console.v1.ConsoleService.UpdateMissionSchedule:output_type -> console.v1.UpdateMissionScheduleResponse
-	284,  // 1529: console.v1.ConsoleService.SetMissionScheduleEnabled:output_type -> console.v1.SetMissionScheduleEnabledResponse
-	286,  // 1530: console.v1.ConsoleService.ListMissionSchedules:output_type -> console.v1.ListMissionSchedulesResponse
-	289,  // 1531: console.v1.ConsoleService.CreateConnectorTrigger:output_type -> console.v1.CreateConnectorTriggerResponse
-	291,  // 1532: console.v1.ConsoleService.UpdateConnectorTrigger:output_type -> console.v1.UpdateConnectorTriggerResponse
-	293,  // 1533: console.v1.ConsoleService.ListConnectorTriggers:output_type -> console.v1.ListConnectorTriggersResponse
-	295,  // 1534: console.v1.ConsoleService.DeleteConnectorTrigger:output_type -> console.v1.DeleteConnectorTriggerResponse
-	297,  // 1535: console.v1.ConsoleService.SetConnectorTriggerEnabled:output_type -> console.v1.SetConnectorTriggerEnabledResponse
-	300,  // 1536: console.v1.ConsoleService.ReserveComputerMissionApexSession:output_type -> console.v1.ReserveComputerMissionApexSessionResponse
-	302,  // 1537: console.v1.ConsoleService.BindComputerMissionApexSessionReservation:output_type -> console.v1.BindComputerMissionApexSessionReservationResponse
-	305,  // 1538: console.v1.ConsoleService.BindComputerMissionApexInstructionMetadata:output_type -> console.v1.BindComputerMissionApexInstructionMetadataResponse
-	307,  // 1539: console.v1.ConsoleService.AuthorizeComputerMissionApexSessionAdoption:output_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse
-	356,  // 1540: console.v1.ConsoleService.GetWorkspaceSettings:output_type -> console.v1.GetWorkspaceSettingsResponse
-	370,  // 1541: console.v1.ConsoleService.GetOperatorPreferences:output_type -> console.v1.GetOperatorPreferencesResponse
-	372,  // 1542: console.v1.ConsoleService.UpdateOperatorPreferences:output_type -> console.v1.UpdateOperatorPreferencesResponse
-	381,  // 1543: console.v1.ConsoleService.CreateConnectorProfile:output_type -> console.v1.CreateConnectorProfileResponse
-	383,  // 1544: console.v1.ConsoleService.ListConnectorProfiles:output_type -> console.v1.ListConnectorProfilesResponse
-	385,  // 1545: console.v1.ConsoleService.UpdateConnectorProfile:output_type -> console.v1.UpdateConnectorProfileResponse
-	387,  // 1546: console.v1.ConsoleService.DeleteConnectorProfile:output_type -> console.v1.DeleteConnectorProfileResponse
-	593,  // 1547: console.v1.ConsoleService.ListConnectedCalls:output_type -> console.v1.ListConnectedCallsResponse
-	595,  // 1548: console.v1.ConsoleService.StartMeetingCapture:output_type -> console.v1.StartMeetingCaptureResponse
-	597,  // 1549: console.v1.ConsoleService.GetMeetingCapture:output_type -> console.v1.GetMeetingCaptureResponse
-	599,  // 1550: console.v1.ConsoleService.ListMeetingCaptures:output_type -> console.v1.ListMeetingCapturesResponse
-	601,  // 1551: console.v1.ConsoleService.StopMeetingCapture:output_type -> console.v1.StopMeetingCaptureResponse
-	614,  // 1552: console.v1.ConsoleService.ListCommitments:output_type -> console.v1.ListCommitmentsResponse
-	359,  // 1553: console.v1.ConsoleService.GetBillingSubscription:output_type -> console.v1.GetBillingSubscriptionResponse
-	361,  // 1554: console.v1.ConsoleService.CreateBillingPortalSession:output_type -> console.v1.CreateBillingPortalSessionResponse
-	363,  // 1555: console.v1.ConsoleService.CreateBillingCheckoutSession:output_type -> console.v1.CreateBillingCheckoutSessionResponse
-	627,  // 1556: console.v1.ConsoleService.GetInferenceCreditBalance:output_type -> console.v1.GetInferenceCreditBalanceResponse
-	631,  // 1557: console.v1.ConsoleService.CreateInferenceCreditCheckout:output_type -> console.v1.CreateInferenceCreditCheckoutResponse
-	633,  // 1558: console.v1.ConsoleService.FulfillInferenceCreditCheckout:output_type -> console.v1.FulfillInferenceCreditCheckoutResponse
-	365,  // 1559: console.v1.ConsoleService.UpdateWorkspaceProfile:output_type -> console.v1.UpdateWorkspaceProfileResponse
-	389,  // 1560: console.v1.ConsoleService.ArchiveWorkspace:output_type -> console.v1.ArchiveWorkspaceResponse
-	391,  // 1561: console.v1.ConsoleService.UpdateWorkspacePolicy:output_type -> console.v1.UpdateWorkspacePolicyResponse
-	393,  // 1562: console.v1.ConsoleService.UpdateWorkspaceDexPolicy:output_type -> console.v1.UpdateWorkspaceDexPolicyResponse
-	395,  // 1563: console.v1.ConsoleService.UpdateWorkspaceArtifactStyleGuide:output_type -> console.v1.UpdateWorkspaceArtifactStyleGuideResponse
-	397,  // 1564: console.v1.ConsoleService.EvaluateWorkspaceArtifactStyleGuide:output_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideResponse
-	400,  // 1565: console.v1.ConsoleService.UpsertWorkspaceIdentityProvider:output_type -> console.v1.UpsertWorkspaceIdentityProviderResponse
-	402,  // 1566: console.v1.ConsoleService.RemoveWorkspaceIdentityProvider:output_type -> console.v1.RemoveWorkspaceIdentityProviderResponse
-	404,  // 1567: console.v1.ConsoleService.UpsertWorkspaceIntegration:output_type -> console.v1.UpsertWorkspaceIntegrationResponse
-	406,  // 1568: console.v1.ConsoleService.RemoveWorkspaceIntegration:output_type -> console.v1.RemoveWorkspaceIntegrationResponse
-	356,  // 1569: console.v1.ConsoleService.UpdateWorkspaceBilling:output_type -> console.v1.GetWorkspaceSettingsResponse
-	356,  // 1570: console.v1.ConsoleService.UpsertWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
-	356,  // 1571: console.v1.ConsoleService.RemoveWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
-	356,  // 1572: console.v1.ConsoleService.UpdateWorkspaceNotificationPreferences:output_type -> console.v1.GetWorkspaceSettingsResponse
-	356,  // 1573: console.v1.ConsoleService.EnableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
-	356,  // 1574: console.v1.ConsoleService.DisableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
-	415,  // 1575: console.v1.ConsoleService.ListWorkspaceSkills:output_type -> console.v1.ListWorkspaceSkillsResponse
-	430,  // 1576: console.v1.ConsoleService.BrowseDexSkillCatalog:output_type -> console.v1.BrowseDexSkillCatalogResponse
-	432,  // 1577: console.v1.ConsoleService.InstallDexSkillCatalogEntry:output_type -> console.v1.InstallDexSkillCatalogEntryResponse
-	434,  // 1578: console.v1.ConsoleService.CreateWorkspaceSkill:output_type -> console.v1.CreateWorkspaceSkillResponse
-	436,  // 1579: console.v1.ConsoleService.UpdateWorkspaceSkill:output_type -> console.v1.UpdateWorkspaceSkillResponse
-	438,  // 1580: console.v1.ConsoleService.DeleteWorkspaceSkill:output_type -> console.v1.DeleteWorkspaceSkillResponse
-	486,  // 1581: console.v1.ConsoleService.ListScenarioFixtures:output_type -> console.v1.ListScenarioFixturesResponse
-	488,  // 1582: console.v1.ConsoleService.PromoteScenarioFixture:output_type -> console.v1.PromoteScenarioFixtureResponse
-	490,  // 1583: console.v1.ConsoleService.CompareScenarioFixtures:output_type -> console.v1.CompareScenarioFixturesResponse
-	375,  // 1584: console.v1.ConsoleService.ListWorkspaceGuardrailRules:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
-	375,  // 1585: console.v1.ConsoleService.UpsertWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
-	375,  // 1586: console.v1.ConsoleService.RemoveWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
-	576,  // 1587: console.v1.ConsoleService.SetOperatingThreadController:output_type -> console.v1.SetOperatingThreadControllerResponse
-	581,  // 1588: console.v1.ConsoleService.GetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
-	581,  // 1589: console.v1.ConsoleService.SetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
-	606,  // 1590: console.v1.ConsoleService.CreateProspectingWatchProgram:output_type -> console.v1.CreateProspectingWatchProgramResponse
-	608,  // 1591: console.v1.ConsoleService.GetProspectingWatchProgram:output_type -> console.v1.GetProspectingWatchProgramResponse
-	610,  // 1592: console.v1.ConsoleService.ListProspectingWatchPrograms:output_type -> console.v1.ListProspectingWatchProgramsResponse
-	612,  // 1593: console.v1.ConsoleService.UpdateProspectingWatchProgram:output_type -> console.v1.UpdateProspectingWatchProgramResponse
-	811,  // 1594: console.v1.ConsoleService.CreateProspectingDraft:output_type -> console.v1.CreateProspectingDraftResponse
-	813,  // 1595: console.v1.ConsoleService.ListProspectingDrafts:output_type -> console.v1.ListProspectingDraftsResponse
-	815,  // 1596: console.v1.ConsoleService.ReviewProspectingDraft:output_type -> console.v1.ReviewProspectingDraftResponse
-	622,  // 1597: console.v1.ConsoleService.RecordOperatingHomepageSuggestionFeedback:output_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
-	108,  // 1598: console.v1.WorkspaceKeyService.GetWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
-	108,  // 1599: console.v1.WorkspaceKeyService.PutWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
-	108,  // 1600: console.v1.WorkspaceKeyService.DeleteWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
-	587,  // 1601: console.v1.ManagedSetupService.GetManagedSetup:output_type -> console.v1.ManagedSetup
-	587,  // 1602: console.v1.ManagedSetupService.SetManagedSetup:output_type -> console.v1.ManagedSetup
-	1367, // [1367:1603] is the sub-list for method output_type
-	1131, // [1131:1367] is the sub-list for method input_type
-	1131, // [1131:1131] is the sub-list for extension type_name
-	1131, // [1131:1131] is the sub-list for extension extendee
-	0,    // [0:1131] is the sub-list for field type_name
+	835,  // 762: console.v1.IntegrationTile.catalog_provenance:type_name -> connectors.v1.ConnectorCatalogProvenance
+	520,  // 763: console.v1.IntegrationTile.resource_types:type_name -> console.v1.IntegrationResourceType
+	823,  // 764: console.v1.TraceDrilldown.risk_level:type_name -> common.v1.RiskLevel
+	524,  // 765: console.v1.TraceDrilldown.spans:type_name -> console.v1.TraceSpan
+	822,  // 766: console.v1.TraceDrilldown.occurred_at:type_name -> google.protobuf.Timestamp
+	836,  // 767: console.v1.TraceDrilldown.annotations:type_name -> traces.v1.TraceAnnotation
+	526,  // 768: console.v1.TraceDrilldown.completeness_signals:type_name -> console.v1.TraceCompletenessSignal
+	527,  // 769: console.v1.TraceDrilldown.security_decision_packet:type_name -> console.v1.SecurityDecisionPacket
+	822,  // 770: console.v1.TraceSpan.started_at:type_name -> google.protobuf.Timestamp
+	822,  // 771: console.v1.TraceSpan.ended_at:type_name -> google.protobuf.Timestamp
+	825,  // 772: console.v1.TraceSpan.attributes:type_name -> google.protobuf.Struct
+	525,  // 773: console.v1.TraceSpan.references:type_name -> console.v1.TraceSpanReference
+	823,  // 774: console.v1.SecurityDecisionPacket.risk_level:type_name -> common.v1.RiskLevel
+	528,  // 775: console.v1.SecurityDecisionPacket.evidence_gaps:type_name -> console.v1.SecurityDecisionEvidenceGap
+	529,  // 776: console.v1.SecurityDecisionPacket.evidence_refs:type_name -> console.v1.RelatedResource
+	529,  // 777: console.v1.OperatingHomepageSuggestion.evidence_refs:type_name -> console.v1.RelatedResource
+	822,  // 778: console.v1.OperatingHomepageSuggestion.generated_at:type_name -> google.protobuf.Timestamp
+	822,  // 779: console.v1.OperatingHomepageSuggestion.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 780: console.v1.DexMcpServer.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 781: console.v1.DexMcpServer.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 782: console.v1.DexMcpServer.catalog_discovered_at:type_name -> google.protobuf.Timestamp
+	532,  // 783: console.v1.DexMcpServer.catalog_tools:type_name -> console.v1.DexMcpCatalogTool
+	822,  // 784: console.v1.DexMcpServer.credential_observed_at:type_name -> google.protobuf.Timestamp
+	822,  // 785: console.v1.DexMcpServer.credential_expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 786: console.v1.DexMcpServer.route_observed_at:type_name -> google.protobuf.Timestamp
+	822,  // 787: console.v1.DexMcpServer.route_expires_at:type_name -> google.protobuf.Timestamp
+	837,  // 788: console.v1.DexMcpServer.source_authority:type_name -> connectors.v1.SourceAuthorityObservation
+	110,  // 789: console.v1.CreateDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
+	531,  // 790: console.v1.CreateDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
+	110,  // 791: console.v1.ListDexMcpServersRequest.query:type_name -> console.v1.ConsoleQuery
+	531,  // 792: console.v1.ListDexMcpServersResponse.servers:type_name -> console.v1.DexMcpServer
+	110,  // 793: console.v1.GetDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
+	531,  // 794: console.v1.GetDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
+	110,  // 795: console.v1.DiscoverDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
+	531,  // 796: console.v1.DiscoverDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
+	110,  // 797: console.v1.UpdateDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
+	531,  // 798: console.v1.UpdateDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
+	110,  // 799: console.v1.DeleteDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
+	822,  // 800: console.v1.DexMcpOAuthProfile.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 801: console.v1.DexMcpOAuthProfile.updated_at:type_name -> google.protobuf.Timestamp
+	110,  // 802: console.v1.InitiateDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	545,  // 803: console.v1.InitiateDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
+	822,  // 804: console.v1.InitiateDexMcpOAuthProfileResponse.expires_at:type_name -> google.protobuf.Timestamp
+	110,  // 805: console.v1.CompleteDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	545,  // 806: console.v1.CompleteDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
+	110,  // 807: console.v1.ListDexMcpOAuthProfilesRequest.query:type_name -> console.v1.ConsoleQuery
+	545,  // 808: console.v1.ListDexMcpOAuthProfilesResponse.profiles:type_name -> console.v1.DexMcpOAuthProfile
+	110,  // 809: console.v1.RevokeDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	545,  // 810: console.v1.RevokeDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
+	110,  // 811: console.v1.ReauthorizeDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	545,  // 812: console.v1.ReauthorizeDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
+	822,  // 813: console.v1.ReauthorizeDexMcpOAuthProfileResponse.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 814: console.v1.PrivateEndpoint.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 815: console.v1.PrivateEndpoint.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 816: console.v1.PrivateEndpoint.revoked_at:type_name -> google.protobuf.Timestamp
+	110,  // 817: console.v1.RegisterPrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
+	556,  // 818: console.v1.RegisterPrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
+	110,  // 819: console.v1.VerifyPrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
+	556,  // 820: console.v1.VerifyPrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
+	110,  // 821: console.v1.ListPrivateEndpointsRequest.query:type_name -> console.v1.ConsoleQuery
+	556,  // 822: console.v1.ListPrivateEndpointsResponse.endpoints:type_name -> console.v1.PrivateEndpoint
+	110,  // 823: console.v1.DeletePrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
+	556,  // 824: console.v1.DeletePrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
+	110,  // 825: console.v1.AttachPrivateEndpointToProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	557,  // 826: console.v1.AttachPrivateEndpointToProfileResponse.route:type_name -> console.v1.PrivateProfileRoute
+	110,  // 827: console.v1.ListGatewayEgressOriginsRequest.query:type_name -> console.v1.ConsoleQuery
+	110,  // 828: console.v1.PrewarmOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
+	822,  // 829: console.v1.PrewarmOperatingThreadResponse.expires_at:type_name -> google.protobuf.Timestamp
+	72,   // 830: console.v1.BootstrapThreadGatewayRequest.permissions:type_name -> console.v1.ThreadGatewayPermission
+	822,  // 831: console.v1.BootstrapThreadGatewayResponse.expires_at:type_name -> google.protobuf.Timestamp
+	72,   // 832: console.v1.BootstrapThreadGatewayResponse.permissions:type_name -> console.v1.ThreadGatewayPermission
+	110,  // 833: console.v1.SetOperatingThreadControllerRequest.query:type_name -> console.v1.ConsoleQuery
+	121,  // 834: console.v1.SetOperatingThreadControllerResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
+	579,  // 835: console.v1.CostUsageSummary.attributions:type_name -> console.v1.CostUsageAttributionSummary
+	822,  // 836: console.v1.CostUsageSummary.as_of:type_name -> google.protobuf.Timestamp
+	73,   // 837: console.v1.TenantPrivacySetting.mode:type_name -> console.v1.TenantPrivacyMode
+	822,  // 838: console.v1.TenantPrivacySetting.updated_at:type_name -> google.protobuf.Timestamp
+	110,  // 839: console.v1.GetPrivacySettingsRequest.query:type_name -> console.v1.ConsoleQuery
+	73,   // 840: console.v1.GetPrivacySettingsResponse.effective_mode:type_name -> console.v1.TenantPrivacyMode
+	580,  // 841: console.v1.GetPrivacySettingsResponse.organization:type_name -> console.v1.TenantPrivacySetting
+	580,  // 842: console.v1.GetPrivacySettingsResponse.workspace:type_name -> console.v1.TenantPrivacySetting
+	110,  // 843: console.v1.SetPrivacySettingsRequest.query:type_name -> console.v1.ConsoleQuery
+	74,   // 844: console.v1.SetPrivacySettingsRequest.scope:type_name -> console.v1.PrivacySettingScope
+	73,   // 845: console.v1.SetPrivacySettingsRequest.mode:type_name -> console.v1.TenantPrivacyMode
+	75,   // 846: console.v1.ManagedRule.scope:type_name -> console.v1.RuleScope
+	76,   // 847: console.v1.McpPolicy.mode:type_name -> console.v1.McpPolicyMode
+	586,  // 848: console.v1.McpPolicy.servers:type_name -> console.v1.McpServerRef
+	822,  // 849: console.v1.ManagedSetup.issued_at:type_name -> google.protobuf.Timestamp
+	584,  // 850: console.v1.ManagedSetup.rules:type_name -> console.v1.ManagedRule
+	585,  // 851: console.v1.ManagedSetup.skills:type_name -> console.v1.ManagedSkillRef
+	587,  // 852: console.v1.ManagedSetup.mcp:type_name -> console.v1.McpPolicy
+	588,  // 853: console.v1.SetManagedSetupRequest.setup:type_name -> console.v1.ManagedSetup
+	110,  // 854: console.v1.StartMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
+	110,  // 855: console.v1.ListConnectedCallsRequest.query:type_name -> console.v1.ConsoleQuery
+	595,  // 856: console.v1.ListConnectedCallsResponse.calls:type_name -> console.v1.ConnectedCall
+	77,   // 857: console.v1.ListConnectedCallsResponse.source_state:type_name -> console.v1.ConnectedCallSourceState
+	822,  // 858: console.v1.ConnectedCall.starts_at:type_name -> google.protobuf.Timestamp
+	822,  // 859: console.v1.ConnectedCall.ends_at:type_name -> google.protobuf.Timestamp
+	603,  // 860: console.v1.StartMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
+	110,  // 861: console.v1.GetMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
+	603,  // 862: console.v1.GetMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
+	110,  // 863: console.v1.ListMeetingCapturesRequest.query:type_name -> console.v1.ConsoleQuery
+	603,  // 864: console.v1.ListMeetingCapturesResponse.captures:type_name -> console.v1.MeetingCapture
+	110,  // 865: console.v1.StopMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
+	603,  // 866: console.v1.StopMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
+	822,  // 867: console.v1.MeetingCapture.join_at:type_name -> google.protobuf.Timestamp
+	822,  // 868: console.v1.MeetingCapture.leave_at:type_name -> google.protobuf.Timestamp
+	822,  // 869: console.v1.MeetingCapture.updated_at:type_name -> google.protobuf.Timestamp
+	822,  // 870: console.v1.MeetingCapture.occurrence_start_at:type_name -> google.protobuf.Timestamp
+	825,  // 871: console.v1.ProspectingWatchProgram.config:type_name -> google.protobuf.Struct
+	78,   // 872: console.v1.ProspectingWatchProgram.lifecycle:type_name -> console.v1.ProspectingWatchProgramLifecycle
+	822,  // 873: console.v1.ProspectingWatchProgram.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 874: console.v1.ProspectingWatchProgram.updated_at:type_name -> google.protobuf.Timestamp
+	110,  // 875: console.v1.CreateProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
+	825,  // 876: console.v1.CreateProspectingWatchProgramRequest.config:type_name -> google.protobuf.Struct
+	604,  // 877: console.v1.CreateProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
+	605,  // 878: console.v1.CreateProspectingWatchProgramResponse.receipt:type_name -> console.v1.ProspectingWatchProgramMutationReceipt
+	110,  // 879: console.v1.GetProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
+	604,  // 880: console.v1.GetProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
+	110,  // 881: console.v1.ListProspectingWatchProgramsRequest.query:type_name -> console.v1.ConsoleQuery
+	604,  // 882: console.v1.ListProspectingWatchProgramsResponse.programs:type_name -> console.v1.ProspectingWatchProgram
+	110,  // 883: console.v1.UpdateProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
+	825,  // 884: console.v1.UpdateProspectingWatchProgramRequest.config:type_name -> google.protobuf.Struct
+	78,   // 885: console.v1.UpdateProspectingWatchProgramRequest.lifecycle:type_name -> console.v1.ProspectingWatchProgramLifecycle
+	604,  // 886: console.v1.UpdateProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
+	605,  // 887: console.v1.UpdateProspectingWatchProgramResponse.receipt:type_name -> console.v1.ProspectingWatchProgramMutationReceipt
+	110,  // 888: console.v1.ListCommitmentsRequest.query:type_name -> console.v1.ConsoleQuery
+	616,  // 889: console.v1.ListCommitmentsResponse.commitments:type_name -> console.v1.Commitment
+	79,   // 890: console.v1.ListCommitmentsResponse.source_state:type_name -> console.v1.CommitmentSourceState
+	822,  // 891: console.v1.Commitment.due_at:type_name -> google.protobuf.Timestamp
+	617,  // 892: console.v1.Commitment.citations:type_name -> console.v1.CommitmentCitation
+	822,  // 893: console.v1.Commitment.observed_at:type_name -> google.protobuf.Timestamp
+	822,  // 894: console.v1.CommitmentCitation.observed_at:type_name -> google.protobuf.Timestamp
+	838,  // 895: console.v1.OperatingJobRecordLink.record:type_name -> platform.v1.RecordRef
+	80,   // 896: console.v1.OperatingJob.state:type_name -> console.v1.OperatingJobState
+	81,   // 897: console.v1.OperatingJob.verification_state:type_name -> console.v1.OperatingJobVerificationState
+	82,   // 898: console.v1.OperatingJob.origin:type_name -> console.v1.OperatingJobOrigin
+	822,  // 899: console.v1.OperatingJob.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 900: console.v1.OperatingJob.updated_at:type_name -> google.protobuf.Timestamp
+	618,  // 901: console.v1.OperatingJob.record_links:type_name -> console.v1.OperatingJobRecordLink
+	83,   // 902: console.v1.OperatingJob.proof_state:type_name -> console.v1.OperatingJobProofState
+	110,  // 903: console.v1.ListOperatingJobsRequest.query:type_name -> console.v1.ConsoleQuery
+	619,  // 904: console.v1.ListOperatingJobsResponse.jobs:type_name -> console.v1.OperatingJob
+	110,  // 905: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest.query:type_name -> console.v1.ConsoleQuery
+	84,   // 906: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest.action:type_name -> console.v1.OperatingHomepageSuggestionFeedbackAction
+	624,  // 907: console.v1.GetInferenceCreditBalanceResponse.balance:type_name -> console.v1.InferenceCreditBalance
+	626,  // 908: console.v1.GetInferenceCreditBalanceResponse.blocks:type_name -> console.v1.InferenceCreditBlock
+	627,  // 909: console.v1.GetInferenceCreditBalanceResponse.pricing:type_name -> console.v1.InferenceCreditPricing
+	630,  // 910: console.v1.GetInferenceCreditBalanceResponse.reconciliation:type_name -> console.v1.InferenceCreditReconciliation
+	629,  // 911: console.v1.GetInferenceCreditBalanceResponse.run_balance:type_name -> console.v1.InferenceRunCreditBalance
+	822,  // 912: console.v1.InferenceRunCreditBalance.oldest_pending_at:type_name -> google.protobuf.Timestamp
+	822,  // 913: console.v1.InferenceCreditReconciliation.oldest_pending_at:type_name -> google.protobuf.Timestamp
+	624,  // 914: console.v1.FulfillInferenceCreditCheckoutResponse.balance:type_name -> console.v1.InferenceCreditBalance
+	115,  // 915: console.v1.OperatingAutoModelRoute.target:type_name -> console.v1.OperatingModelSelection
+	71,   // 916: console.v1.OperatingAutoModelRoute.purpose:type_name -> console.v1.StaffInferenceRoutingPurpose
+	85,   // 917: console.v1.BusinessFieldDefinition.kind:type_name -> console.v1.BusinessFieldKind
+	636,  // 918: console.v1.BusinessObjectType.fields:type_name -> console.v1.BusinessFieldDefinition
+	637,  // 919: console.v1.BusinessObjectType.relationships:type_name -> console.v1.BusinessRelationshipDefinition
+	780,  // 920: console.v1.BusinessObjectType.blueprint_source:type_name -> console.v1.BusinessBlueprintSource
+	86,   // 921: console.v1.BusinessObjectType.record_kind:type_name -> console.v1.BusinessObjectRecordKind
+	639,  // 922: console.v1.BusinessFieldValue.money:type_name -> console.v1.BusinessMoney
+	640,  // 923: console.v1.BusinessFieldValue.reference:type_name -> console.v1.BusinessObjectReference
+	641,  // 924: console.v1.BusinessFieldValue.artifact:type_name -> console.v1.BusinessArtifactReference
+	642,  // 925: console.v1.BusinessFieldValue.text_list:type_name -> console.v1.BusinessTextList
+	87,   // 926: console.v1.BusinessSourceField.property:type_name -> console.v1.BusinessSourceProperty
+	644,  // 927: console.v1.BusinessSourceBinding.fields:type_name -> console.v1.BusinessSourceField
+	88,   // 928: console.v1.BusinessSourceBinding.state:type_name -> console.v1.BusinessSourceState
+	839,  // 929: console.v1.BusinessSourceBinding.envelope:type_name -> connectors.v1.ProviderResourceEnvelope
+	643,  // 930: console.v1.BusinessObject.values:type_name -> console.v1.BusinessFieldValue
+	645,  // 931: console.v1.BusinessObject.source:type_name -> console.v1.BusinessSourceBinding
+	646,  // 932: console.v1.BusinessObjectRevision.object:type_name -> console.v1.BusinessObject
+	638,  // 933: console.v1.DefineBusinessObjectTypeRequest.definition:type_name -> console.v1.BusinessObjectType
+	638,  // 934: console.v1.DefineBusinessObjectTypeResponse.definition:type_name -> console.v1.BusinessObjectType
+	638,  // 935: console.v1.ListBusinessObjectTypesResponse.definitions:type_name -> console.v1.BusinessObjectType
+	643,  // 936: console.v1.CreateBusinessObjectRequest.values:type_name -> console.v1.BusinessFieldValue
+	646,  // 937: console.v1.CreateBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
+	646,  // 938: console.v1.GetBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
+	657,  // 939: console.v1.GetBusinessObjectResponse.source_recovery:type_name -> console.v1.BusinessObjectSourceRecovery
+	88,   // 940: console.v1.BusinessObjectSourceRecovery.source_state:type_name -> console.v1.BusinessSourceState
+	659,  // 941: console.v1.ListBusinessObjectsRequest.filter:type_name -> console.v1.BusinessObjectFilter
+	643,  // 942: console.v1.BusinessObjectFilter.unique_value:type_name -> console.v1.BusinessFieldValue
+	660,  // 943: console.v1.BusinessObjectFilter.reference:type_name -> console.v1.BusinessObjectReferenceFilter
+	646,  // 944: console.v1.ListBusinessObjectsResponse.objects:type_name -> console.v1.BusinessObject
+	643,  // 945: console.v1.UpdateBusinessObjectRequest.values:type_name -> console.v1.BusinessFieldValue
+	646,  // 946: console.v1.UpdateBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
+	646,  // 947: console.v1.DeleteBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
+	647,  // 948: console.v1.ListBusinessObjectRevisionsResponse.revisions:type_name -> console.v1.BusinessObjectRevision
+	644,  // 949: console.v1.BindBusinessObjectSourceRequest.fields:type_name -> console.v1.BusinessSourceField
+	646,  // 950: console.v1.BindBusinessObjectSourceResponse.object:type_name -> console.v1.BusinessObject
+	646,  // 951: console.v1.AdmitBusinessObjectObservationResponse.object:type_name -> console.v1.BusinessObject
+	89,   // 952: console.v1.ListBusinessObjectRelationshipsRequest.direction:type_name -> console.v1.BusinessObjectRelationshipDirection
+	648,  // 953: console.v1.ListBusinessObjectRelationshipsResponse.relationships:type_name -> console.v1.BusinessObjectRelationship
+	648,  // 954: console.v1.CreateBusinessObjectRelationshipRequest.relationship:type_name -> console.v1.BusinessObjectRelationship
+	646,  // 955: console.v1.CreateBusinessObjectRelationshipResponse.object:type_name -> console.v1.BusinessObject
+	648,  // 956: console.v1.DeleteBusinessObjectRelationshipRequest.relationship:type_name -> console.v1.BusinessObjectRelationship
+	646,  // 957: console.v1.DeleteBusinessObjectRelationshipResponse.object:type_name -> console.v1.BusinessObject
+	679,  // 958: console.v1.CaptureFormBrandingInput.logo:type_name -> console.v1.CaptureFormAssetRef
+	679,  // 959: console.v1.CaptureFormBrandingInput.favicon:type_name -> console.v1.CaptureFormAssetRef
+	679,  // 960: console.v1.CaptureFormBranding.logo:type_name -> console.v1.CaptureFormAssetRef
+	679,  // 961: console.v1.CaptureFormBranding.favicon:type_name -> console.v1.CaptureFormAssetRef
+	683,  // 962: console.v1.CaptureFormSelectSpec.options:type_name -> console.v1.CaptureFormSelectOption
+	98,   // 963: console.v1.CaptureFormUpload.state:type_name -> console.v1.CaptureFormUploadState
+	679,  // 964: console.v1.CaptureFormUpload.asset:type_name -> console.v1.CaptureFormAssetRef
+	822,  // 965: console.v1.CaptureFormUpload.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 966: console.v1.CaptureFormTypedValue.datetime:type_name -> google.protobuf.Timestamp
+	820,  // 967: console.v1.CaptureFormTypedValue.option_values:type_name -> console.v1.CaptureFormTypedValue.OptionValues
+	679,  // 968: console.v1.CaptureFormTypedValue.artifact:type_name -> console.v1.CaptureFormAssetRef
+	94,   // 969: console.v1.CaptureFormField.kind:type_name -> console.v1.CaptureFormFieldKind
+	95,   // 970: console.v1.CaptureFormField.mapping_state:type_name -> console.v1.CaptureFormMappingState
+	687,  // 971: console.v1.CaptureFormField.default_value:type_name -> console.v1.CaptureFormTypedValue
+	684,  // 972: console.v1.CaptureFormField.select:type_name -> console.v1.CaptureFormSelectSpec
+	685,  // 973: console.v1.CaptureFormField.upload:type_name -> console.v1.CaptureFormUploadSpec
+	94,   // 974: console.v1.CaptureFormPublicField.kind:type_name -> console.v1.CaptureFormFieldKind
+	684,  // 975: console.v1.CaptureFormPublicField.select:type_name -> console.v1.CaptureFormSelectSpec
+	685,  // 976: console.v1.CaptureFormPublicField.upload:type_name -> console.v1.CaptureFormUploadSpec
+	678,  // 977: console.v1.CaptureFormVersionInput.object_target:type_name -> console.v1.CaptureFormObjectTarget
+	688,  // 978: console.v1.CaptureFormVersionInput.fields:type_name -> console.v1.CaptureFormField
+	680,  // 979: console.v1.CaptureFormVersionInput.branding:type_name -> console.v1.CaptureFormBrandingInput
+	678,  // 980: console.v1.CaptureFormVersion.object_target:type_name -> console.v1.CaptureFormObjectTarget
+	688,  // 981: console.v1.CaptureFormVersion.fields:type_name -> console.v1.CaptureFormField
+	681,  // 982: console.v1.CaptureFormVersion.branding:type_name -> console.v1.CaptureFormBranding
+	822,  // 983: console.v1.CaptureFormVersion.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 984: console.v1.CaptureFormPublicationInput.expires_at:type_name -> google.protobuf.Timestamp
+	91,   // 985: console.v1.CaptureFormPublication.state:type_name -> console.v1.CaptureFormPublicationState
+	693,  // 986: console.v1.CaptureFormPublication.route:type_name -> console.v1.CaptureFormPublicRoute
+	822,  // 987: console.v1.CaptureFormPublication.published_at:type_name -> google.protobuf.Timestamp
+	822,  // 988: console.v1.CaptureFormPublication.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 989: console.v1.CaptureFormPublication.revoked_at:type_name -> google.protobuf.Timestamp
+	90,   // 990: console.v1.CaptureForm.state:type_name -> console.v1.CaptureFormState
+	678,  // 991: console.v1.CaptureForm.object_target:type_name -> console.v1.CaptureFormObjectTarget
+	681,  // 992: console.v1.CaptureForm.branding:type_name -> console.v1.CaptureFormBranding
+	694,  // 993: console.v1.CaptureForm.publications:type_name -> console.v1.CaptureFormPublication
+	822,  // 994: console.v1.CaptureForm.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 995: console.v1.CaptureForm.updated_at:type_name -> google.protobuf.Timestamp
+	682,  // 996: console.v1.PublishedCaptureForm.branding:type_name -> console.v1.CaptureFormPublicBranding
+	689,  // 997: console.v1.PublishedCaptureForm.fields:type_name -> console.v1.CaptureFormPublicField
+	693,  // 998: console.v1.PublishedCaptureForm.route:type_name -> console.v1.CaptureFormPublicRoute
+	822,  // 999: console.v1.PublishedCaptureForm.expires_at:type_name -> google.protobuf.Timestamp
+	687,  // 1000: console.v1.CaptureFormAnswer.value:type_name -> console.v1.CaptureFormTypedValue
+	93,   // 1001: console.v1.CaptureFormReview.decision:type_name -> console.v1.CaptureFormReviewDecision
+	822,  // 1002: console.v1.CaptureFormReview.reviewed_at:type_name -> google.protobuf.Timestamp
+	643,  // 1003: console.v1.CaptureFormReview.supplemental_values:type_name -> console.v1.BusinessFieldValue
+	96,   // 1004: console.v1.CaptureFormObjectResult.state:type_name -> console.v1.CaptureFormObjectResultState
+	92,   // 1005: console.v1.CaptureFormSubmission.state:type_name -> console.v1.CaptureFormSubmissionState
+	697,  // 1006: console.v1.CaptureFormSubmission.answers:type_name -> console.v1.CaptureFormAnswer
+	698,  // 1007: console.v1.CaptureFormSubmission.review:type_name -> console.v1.CaptureFormReview
+	699,  // 1008: console.v1.CaptureFormSubmission.object_result:type_name -> console.v1.CaptureFormObjectResult
+	822,  // 1009: console.v1.CaptureFormSubmission.submitted_at:type_name -> google.protobuf.Timestamp
+	822,  // 1010: console.v1.CaptureFormSubmission.updated_at:type_name -> google.protobuf.Timestamp
+	92,   // 1011: console.v1.CaptureFormPublicSubmissionReceipt.state:type_name -> console.v1.CaptureFormSubmissionState
+	822,  // 1012: console.v1.CaptureFormPublicSubmissionReceipt.submitted_at:type_name -> google.protobuf.Timestamp
+	690,  // 1013: console.v1.CreateCaptureFormRequest.version:type_name -> console.v1.CaptureFormVersionInput
+	695,  // 1014: console.v1.CreateCaptureFormResponse.form:type_name -> console.v1.CaptureForm
+	691,  // 1015: console.v1.CreateCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
+	90,   // 1016: console.v1.ListCaptureFormsRequest.state:type_name -> console.v1.CaptureFormState
+	695,  // 1017: console.v1.ListCaptureFormsResponse.forms:type_name -> console.v1.CaptureForm
+	695,  // 1018: console.v1.GetCaptureFormResponse.form:type_name -> console.v1.CaptureForm
+	691,  // 1019: console.v1.GetCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
+	690,  // 1020: console.v1.UpdateCaptureFormRequest.version:type_name -> console.v1.CaptureFormVersionInput
+	695,  // 1021: console.v1.UpdateCaptureFormResponse.form:type_name -> console.v1.CaptureForm
+	691,  // 1022: console.v1.UpdateCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
+	692,  // 1023: console.v1.PublishCaptureFormRequest.publication:type_name -> console.v1.CaptureFormPublicationInput
+	695,  // 1024: console.v1.PublishCaptureFormResponse.form:type_name -> console.v1.CaptureForm
+	691,  // 1025: console.v1.PublishCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
+	694,  // 1026: console.v1.PublishCaptureFormResponse.publication:type_name -> console.v1.CaptureFormPublication
+	695,  // 1027: console.v1.RevokeCaptureFormPublicationResponse.form:type_name -> console.v1.CaptureForm
+	694,  // 1028: console.v1.RevokeCaptureFormPublicationResponse.publication:type_name -> console.v1.CaptureFormPublication
+	696,  // 1029: console.v1.GetPublishedCaptureFormResponse.form:type_name -> console.v1.PublishedCaptureForm
+	97,   // 1030: console.v1.GetPublishedCaptureFormBrandingAssetRequest.role:type_name -> console.v1.CaptureFormBrandingAssetRole
+	697,  // 1031: console.v1.SubmitPublishedCaptureFormRequest.answers:type_name -> console.v1.CaptureFormAnswer
+	701,  // 1032: console.v1.SubmitPublishedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
+	686,  // 1033: console.v1.BeginPublishedCaptureFormUploadResponse.grant:type_name -> console.v1.CaptureFormUpload
+	826,  // 1034: console.v1.BeginPublishedCaptureFormUploadResponse.upload:type_name -> vfs.v1.VfsUploadTarget
+	827,  // 1035: console.v1.CompletePublishedCaptureFormUploadRequest.completed_parts:type_name -> vfs.v1.VfsCompletedUploadPart
+	686,  // 1036: console.v1.CompletePublishedCaptureFormUploadResponse.upload:type_name -> console.v1.CaptureFormUpload
+	700,  // 1037: console.v1.GetCaptureFormSubmissionResponse.submission:type_name -> console.v1.CaptureFormSubmission
+	92,   // 1038: console.v1.ListCaptureFormSubmissionsRequest.state:type_name -> console.v1.CaptureFormSubmissionState
+	700,  // 1039: console.v1.ListCaptureFormSubmissionsResponse.submissions:type_name -> console.v1.CaptureFormSubmission
+	93,   // 1040: console.v1.ReviewCaptureFormSubmissionRequest.decision:type_name -> console.v1.CaptureFormReviewDecision
+	643,  // 1041: console.v1.ReviewCaptureFormSubmissionRequest.supplemental_values:type_name -> console.v1.BusinessFieldValue
+	700,  // 1042: console.v1.ReviewCaptureFormSubmissionResponse.submission:type_name -> console.v1.CaptureFormSubmission
+	699,  // 1043: console.v1.ReviewCaptureFormSubmissionResponse.object_result:type_name -> console.v1.CaptureFormObjectResult
+	638,  // 1044: console.v1.GetBusinessObjectTypeResponse.definition:type_name -> console.v1.BusinessObjectType
+	732,  // 1045: console.v1.ListInferenceCreditReceiptsResponse.receipts:type_name -> console.v1.InferenceCreditReceipt
+	735,  // 1046: console.v1.GetInferenceCreditAutoRefillResponse.settings:type_name -> console.v1.InferenceCreditAutoRefill
+	646,  // 1047: console.v1.PrepareBusinessObjectAuthorityTransferResponse.object:type_name -> console.v1.BusinessObject
+	646,  // 1048: console.v1.FinalizeBusinessObjectAuthorityTransferResponse.object:type_name -> console.v1.BusinessObject
+	643,  // 1049: console.v1.BusinessProcessRequirement.expected:type_name -> console.v1.BusinessFieldValue
+	748,  // 1050: console.v1.BusinessProcessTransition.requirements:type_name -> console.v1.BusinessProcessRequirement
+	750,  // 1051: console.v1.BusinessProcessTransition.follow_ups:type_name -> console.v1.BusinessProcessFollowUp
+	746,  // 1052: console.v1.BusinessProcessDefinition.participants:type_name -> console.v1.BusinessProcessParticipantType
+	749,  // 1053: console.v1.BusinessProcessDefinition.transitions:type_name -> console.v1.BusinessProcessTransition
+	747,  // 1054: console.v1.BusinessProcessReceipt.evidence:type_name -> console.v1.BusinessProcessParticipant
+	747,  // 1055: console.v1.BusinessProcess.participants:type_name -> console.v1.BusinessProcessParticipant
+	752,  // 1056: console.v1.BusinessProcess.receipts:type_name -> console.v1.BusinessProcessReceipt
+	751,  // 1057: console.v1.DefineBusinessProcessRequest.definition:type_name -> console.v1.BusinessProcessDefinition
+	751,  // 1058: console.v1.DefineBusinessProcessResponse.definition:type_name -> console.v1.BusinessProcessDefinition
+	747,  // 1059: console.v1.StartBusinessProcessRequest.participants:type_name -> console.v1.BusinessProcessParticipant
+	753,  // 1060: console.v1.StartBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
+	753,  // 1061: console.v1.GetBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
+	751,  // 1062: console.v1.GetBusinessProcessResponse.definition:type_name -> console.v1.BusinessProcessDefinition
+	753,  // 1063: console.v1.ListBusinessProcessesResponse.processes:type_name -> console.v1.BusinessProcess
+	747,  // 1064: console.v1.TransitionBusinessProcessRequest.participants:type_name -> console.v1.BusinessProcessParticipant
+	753,  // 1065: console.v1.TransitionBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
+	751,  // 1066: console.v1.GetBusinessProcessDefinitionResponse.definition:type_name -> console.v1.BusinessProcessDefinition
+	751,  // 1067: console.v1.ListBusinessProcessDefinitionsResponse.definitions:type_name -> console.v1.BusinessProcessDefinition
+	125,  // 1068: console.v1.OperatingProjectSnapshotFileInput.attachment:type_name -> console.v1.OperatingAttachmentRef
+	110,  // 1069: console.v1.AcceptOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
+	768,  // 1070: console.v1.AcceptOperatingProjectSnapshotRequest.files:type_name -> console.v1.OperatingProjectSnapshotFileInput
+	824,  // 1071: console.v1.AcceptOperatingProjectSnapshotResponse.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
+	110,  // 1072: console.v1.GetOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
+	110,  // 1073: console.v1.GetOperatingTaskEnvironmentRequest.query:type_name -> console.v1.ConsoleQuery
+	822,  // 1074: console.v1.GetOperatingTaskEnvironmentResponse.last_activity_at:type_name -> google.protobuf.Timestamp
+	822,  // 1075: console.v1.GetOperatingTaskEnvironmentResponse.expires_at:type_name -> google.protobuf.Timestamp
+	110,  // 1076: console.v1.ImportOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
+	638,  // 1077: console.v1.BusinessBlueprint.object_types:type_name -> console.v1.BusinessObjectType
+	751,  // 1078: console.v1.BusinessBlueprint.process:type_name -> console.v1.BusinessProcessDefinition
+	690,  // 1079: console.v1.BusinessBlueprint.intake:type_name -> console.v1.CaptureFormVersionInput
+	775,  // 1080: console.v1.ListBusinessBlueprintsResponse.blueprints:type_name -> console.v1.BusinessBlueprint
+	638,  // 1081: console.v1.CloneBusinessBlueprintResponse.object_types:type_name -> console.v1.BusinessObjectType
+	751,  // 1082: console.v1.CloneBusinessBlueprintResponse.process:type_name -> console.v1.BusinessProcessDefinition
+	695,  // 1083: console.v1.CloneBusinessBlueprintResponse.form:type_name -> console.v1.CaptureForm
+	822,  // 1084: console.v1.CaptureFormInvitation.expires_at:type_name -> google.protobuf.Timestamp
+	822,  // 1085: console.v1.CreateCaptureFormInvitationRequest.expires_at:type_name -> google.protobuf.Timestamp
+	643,  // 1086: console.v1.CreateCaptureFormInvitationRequest.bound_values:type_name -> console.v1.BusinessFieldValue
+	781,  // 1087: console.v1.CreateCaptureFormInvitationResponse.invitation:type_name -> console.v1.CaptureFormInvitation
+	781,  // 1088: console.v1.RevokeCaptureFormInvitationResponse.invitation:type_name -> console.v1.CaptureFormInvitation
+	696,  // 1089: console.v1.GetInvitedCaptureFormResponse.form:type_name -> console.v1.PublishedCaptureForm
+	701,  // 1090: console.v1.GetInvitedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
+	697,  // 1091: console.v1.SubmitInvitedCaptureFormRequest.answers:type_name -> console.v1.CaptureFormAnswer
+	701,  // 1092: console.v1.SubmitInvitedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
+	99,   // 1093: console.v1.GetManagedInferenceReadinessResponse.status:type_name -> console.v1.ManagedInferenceReadinessStatus
+	100,  // 1094: console.v1.GetManagedInferenceReadinessResponse.blockers:type_name -> console.v1.ManagedInferenceBlocker
+	101,  // 1095: console.v1.GetManagedInferenceReadinessResponse.next_actions:type_name -> console.v1.ManagedInferenceNextAction
+	70,   // 1096: console.v1.GetManagedInferenceReadinessResponse.enrollment_state:type_name -> console.v1.ManagedProviderAccessState
+	624,  // 1097: console.v1.GetManagedInferenceReadinessResponse.funding:type_name -> console.v1.InferenceCreditBalance
+	477,  // 1098: console.v1.GetManagedInferenceReadinessResponse.target:type_name -> console.v1.InferenceProviderTarget
+	822,  // 1099: console.v1.GetManagedInferenceReadinessResponse.evaluated_at:type_name -> google.protobuf.Timestamp
+	840,  // 1100: console.v1.GetManagedInferenceReadinessResponse.budget:type_name -> meter.v1.GetBudgetDashboardResponse
+	841,  // 1101: console.v1.GetStaffManagedInferenceFundingRequest.request:type_name -> meter.v1.GetPrepaidCreditBalanceRequest
+	842,  // 1102: console.v1.GrantStaffManagedInferenceCreditsRequest.request:type_name -> meter.v1.GrantDevelopmentCreditsRequest
+	843,  // 1103: console.v1.GetStaffManagedInferenceUsageRequest.request:type_name -> meter.v1.QueryUsageRequest
+	844,  // 1104: console.v1.GetStaffManagedInferenceBudgetRequest.request:type_name -> meter.v1.GetBudgetDashboardRequest
+	845,  // 1105: console.v1.SetStaffManagedInferenceBudgetRequest.request:type_name -> meter.v1.SetBudgetRequest
+	822,  // 1106: console.v1.ManagedProviderAccessEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	799,  // 1107: console.v1.ListManagedProviderAccessEventsResponse.events:type_name -> console.v1.ManagedProviderAccessEvent
+	846,  // 1108: console.v1.ListStaffManagedInferenceAdminEventsRequest.request:type_name -> meter.v1.ListManagedInferenceAdminEventsRequest
+	822,  // 1109: console.v1.ManagedExecutionGrantEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	803,  // 1110: console.v1.ListStaffManagedExecutionGrantEventsResponse.events:type_name -> console.v1.ManagedExecutionGrantEvent
+	806,  // 1111: console.v1.ListStaffManagedExecutionOutcomesResponse.records:type_name -> console.v1.ManagedExecutionOutcome
+	808,  // 1112: console.v1.ProspectingDraft.target_account:type_name -> console.v1.ProspectingDraftTargetAccount
+	102,  // 1113: console.v1.ProspectingDraft.channel:type_name -> console.v1.ProspectingDraftChannel
+	103,  // 1114: console.v1.ProspectingDraft.tone:type_name -> console.v1.ProspectingDraftTone
+	104,  // 1115: console.v1.ProspectingDraft.review_state:type_name -> console.v1.ProspectingDraftReviewState
+	822,  // 1116: console.v1.ProspectingDraft.created_at:type_name -> google.protobuf.Timestamp
+	822,  // 1117: console.v1.ProspectingDraft.updated_at:type_name -> google.protobuf.Timestamp
+	110,  // 1118: console.v1.CreateProspectingDraftRequest.query:type_name -> console.v1.ConsoleQuery
+	808,  // 1119: console.v1.CreateProspectingDraftRequest.target_account:type_name -> console.v1.ProspectingDraftTargetAccount
+	102,  // 1120: console.v1.CreateProspectingDraftRequest.channel:type_name -> console.v1.ProspectingDraftChannel
+	103,  // 1121: console.v1.CreateProspectingDraftRequest.tone:type_name -> console.v1.ProspectingDraftTone
+	809,  // 1122: console.v1.CreateProspectingDraftResponse.draft:type_name -> console.v1.ProspectingDraft
+	810,  // 1123: console.v1.CreateProspectingDraftResponse.receipt:type_name -> console.v1.ProspectingDraftMutationReceipt
+	110,  // 1124: console.v1.ListProspectingDraftsRequest.query:type_name -> console.v1.ConsoleQuery
+	809,  // 1125: console.v1.ListProspectingDraftsResponse.drafts:type_name -> console.v1.ProspectingDraft
+	110,  // 1126: console.v1.ReviewProspectingDraftRequest.query:type_name -> console.v1.ConsoleQuery
+	104,  // 1127: console.v1.ReviewProspectingDraftRequest.decision:type_name -> console.v1.ProspectingDraftReviewState
+	809,  // 1128: console.v1.ReviewProspectingDraftResponse.draft:type_name -> console.v1.ProspectingDraft
+	810,  // 1129: console.v1.ReviewProspectingDraftResponse.receipt:type_name -> console.v1.ProspectingDraftMutationReceipt
+	821,  // 1130: console.v1.WorkspaceBrandVoice.scopes:type_name -> console.v1.WorkspaceBrandVoice.Scope
+	822,  // 1131: console.v1.WorkspaceBrandVoice.updated_at:type_name -> google.protobuf.Timestamp
+	776,  // 1132: console.v1.ConsoleService.ListBusinessBlueprints:input_type -> console.v1.ListBusinessBlueprintsRequest
+	778,  // 1133: console.v1.ConsoleService.CloneBusinessBlueprint:input_type -> console.v1.CloneBusinessBlueprintRequest
+	764,  // 1134: console.v1.ConsoleService.GetBusinessProcessDefinition:input_type -> console.v1.GetBusinessProcessDefinitionRequest
+	766,  // 1135: console.v1.ConsoleService.ListBusinessProcessDefinitions:input_type -> console.v1.ListBusinessProcessDefinitionsRequest
+	754,  // 1136: console.v1.ConsoleService.DefineBusinessProcess:input_type -> console.v1.DefineBusinessProcessRequest
+	756,  // 1137: console.v1.ConsoleService.StartBusinessProcess:input_type -> console.v1.StartBusinessProcessRequest
+	758,  // 1138: console.v1.ConsoleService.GetBusinessProcess:input_type -> console.v1.GetBusinessProcessRequest
+	760,  // 1139: console.v1.ConsoleService.ListBusinessProcesses:input_type -> console.v1.ListBusinessProcessesRequest
+	762,  // 1140: console.v1.ConsoleService.TransitionBusinessProcess:input_type -> console.v1.TransitionBusinessProcessRequest
+	742,  // 1141: console.v1.ConsoleService.PrepareBusinessObjectAuthorityTransfer:input_type -> console.v1.PrepareBusinessObjectAuthorityTransferRequest
+	744,  // 1142: console.v1.ConsoleService.FinalizeBusinessObjectAuthorityTransfer:input_type -> console.v1.FinalizeBusinessObjectAuthorityTransferRequest
+	649,  // 1143: console.v1.ConsoleService.DefineBusinessObjectType:input_type -> console.v1.DefineBusinessObjectTypeRequest
+	730,  // 1144: console.v1.ConsoleService.GetBusinessObjectType:input_type -> console.v1.GetBusinessObjectTypeRequest
+	651,  // 1145: console.v1.ConsoleService.ListBusinessObjectTypes:input_type -> console.v1.ListBusinessObjectTypesRequest
+	653,  // 1146: console.v1.ConsoleService.CreateBusinessObject:input_type -> console.v1.CreateBusinessObjectRequest
+	655,  // 1147: console.v1.ConsoleService.GetBusinessObject:input_type -> console.v1.GetBusinessObjectRequest
+	658,  // 1148: console.v1.ConsoleService.ListBusinessObjects:input_type -> console.v1.ListBusinessObjectsRequest
+	662,  // 1149: console.v1.ConsoleService.UpdateBusinessObject:input_type -> console.v1.UpdateBusinessObjectRequest
+	664,  // 1150: console.v1.ConsoleService.DeleteBusinessObject:input_type -> console.v1.DeleteBusinessObjectRequest
+	666,  // 1151: console.v1.ConsoleService.ListBusinessObjectRevisions:input_type -> console.v1.ListBusinessObjectRevisionsRequest
+	668,  // 1152: console.v1.ConsoleService.BindBusinessObjectSource:input_type -> console.v1.BindBusinessObjectSourceRequest
+	670,  // 1153: console.v1.ConsoleService.AdmitBusinessObjectObservation:input_type -> console.v1.AdmitBusinessObjectObservationRequest
+	672,  // 1154: console.v1.ConsoleService.ListBusinessObjectRelationships:input_type -> console.v1.ListBusinessObjectRelationshipsRequest
+	674,  // 1155: console.v1.ConsoleService.CreateBusinessObjectRelationship:input_type -> console.v1.CreateBusinessObjectRelationshipRequest
+	676,  // 1156: console.v1.ConsoleService.DeleteBusinessObjectRelationship:input_type -> console.v1.DeleteBusinessObjectRelationshipRequest
+	702,  // 1157: console.v1.ConsoleService.CreateCaptureForm:input_type -> console.v1.CreateCaptureFormRequest
+	704,  // 1158: console.v1.ConsoleService.ListCaptureForms:input_type -> console.v1.ListCaptureFormsRequest
+	706,  // 1159: console.v1.ConsoleService.GetCaptureForm:input_type -> console.v1.GetCaptureFormRequest
+	708,  // 1160: console.v1.ConsoleService.UpdateCaptureForm:input_type -> console.v1.UpdateCaptureFormRequest
+	710,  // 1161: console.v1.ConsoleService.PublishCaptureForm:input_type -> console.v1.PublishCaptureFormRequest
+	712,  // 1162: console.v1.ConsoleService.RevokeCaptureFormPublication:input_type -> console.v1.RevokeCaptureFormPublicationRequest
+	782,  // 1163: console.v1.ConsoleService.CreateCaptureFormInvitation:input_type -> console.v1.CreateCaptureFormInvitationRequest
+	784,  // 1164: console.v1.ConsoleService.RevokeCaptureFormInvitation:input_type -> console.v1.RevokeCaptureFormInvitationRequest
+	786,  // 1165: console.v1.ConsoleService.GetInvitedCaptureForm:input_type -> console.v1.GetInvitedCaptureFormRequest
+	788,  // 1166: console.v1.ConsoleService.SubmitInvitedCaptureForm:input_type -> console.v1.SubmitInvitedCaptureFormRequest
+	714,  // 1167: console.v1.ConsoleService.GetPublishedCaptureForm:input_type -> console.v1.GetPublishedCaptureFormRequest
+	716,  // 1168: console.v1.ConsoleService.GetPublishedCaptureFormBrandingAsset:input_type -> console.v1.GetPublishedCaptureFormBrandingAssetRequest
+	718,  // 1169: console.v1.ConsoleService.SubmitPublishedCaptureForm:input_type -> console.v1.SubmitPublishedCaptureFormRequest
+	720,  // 1170: console.v1.ConsoleService.BeginPublishedCaptureFormUpload:input_type -> console.v1.BeginPublishedCaptureFormUploadRequest
+	722,  // 1171: console.v1.ConsoleService.CompletePublishedCaptureFormUpload:input_type -> console.v1.CompletePublishedCaptureFormUploadRequest
+	724,  // 1172: console.v1.ConsoleService.GetCaptureFormSubmission:input_type -> console.v1.GetCaptureFormSubmissionRequest
+	726,  // 1173: console.v1.ConsoleService.ListCaptureFormSubmissions:input_type -> console.v1.ListCaptureFormSubmissionsRequest
+	728,  // 1174: console.v1.ConsoleService.ReviewCaptureFormSubmission:input_type -> console.v1.ReviewCaptureFormSubmissionRequest
+	736,  // 1175: console.v1.ConsoleService.GetInferenceCreditAutoRefill:input_type -> console.v1.GetInferenceCreditAutoRefillRequest
+	738,  // 1176: console.v1.ConsoleService.UpdateInferenceCreditAutoRefill:input_type -> console.v1.UpdateInferenceCreditAutoRefillRequest
+	740,  // 1177: console.v1.ConsoleService.CompleteInferenceCreditAutoRefill:input_type -> console.v1.CompleteInferenceCreditAutoRefillRequest
+	733,  // 1178: console.v1.ConsoleService.ListInferenceCreditReceipts:input_type -> console.v1.ListInferenceCreditReceiptsRequest
+	308,  // 1179: console.v1.ConsoleService.GetOverview:input_type -> console.v1.GetOverviewRequest
+	310,  // 1180: console.v1.ConsoleService.GetConsoleBootSnapshot:input_type -> console.v1.GetConsoleBootSnapshotRequest
+	313,  // 1181: console.v1.ConsoleService.ListAssets:input_type -> console.v1.ListAssetsRequest
+	315,  // 1182: console.v1.ConsoleService.GetAsset:input_type -> console.v1.GetAssetRequest
+	317,  // 1183: console.v1.ConsoleService.ListActivity:input_type -> console.v1.ListActivityRequest
+	459,  // 1184: console.v1.ConsoleService.SearchStaffWorkspaceDirectory:input_type -> console.v1.SearchStaffWorkspaceDirectoryRequest
+	462,  // 1185: console.v1.ConsoleService.GetStaffWorkspaceContext:input_type -> console.v1.GetStaffWorkspaceContextRequest
+	793,  // 1186: console.v1.ConsoleService.GetStaffManagedInferenceFunding:input_type -> console.v1.GetStaffManagedInferenceFundingRequest
+	794,  // 1187: console.v1.ConsoleService.GrantStaffManagedInferenceCredits:input_type -> console.v1.GrantStaffManagedInferenceCreditsRequest
+	795,  // 1188: console.v1.ConsoleService.GetStaffManagedInferenceUsage:input_type -> console.v1.GetStaffManagedInferenceUsageRequest
+	796,  // 1189: console.v1.ConsoleService.GetStaffManagedInferenceBudget:input_type -> console.v1.GetStaffManagedInferenceBudgetRequest
+	797,  // 1190: console.v1.ConsoleService.SetStaffManagedInferenceBudget:input_type -> console.v1.SetStaffManagedInferenceBudgetRequest
+	790,  // 1191: console.v1.ConsoleService.GetStaffManagedInferenceReadiness:input_type -> console.v1.GetStaffManagedInferenceReadinessRequest
+	791,  // 1192: console.v1.ConsoleService.GetManagedInferenceReadiness:input_type -> console.v1.GetManagedInferenceReadinessRequest
+	471,  // 1193: console.v1.ConsoleService.ListManagedProviderAccessGrants:input_type -> console.v1.ListManagedProviderAccessGrantsRequest
+	798,  // 1194: console.v1.ConsoleService.ListManagedProviderAccessEvents:input_type -> console.v1.ListManagedProviderAccessEventsRequest
+	801,  // 1195: console.v1.ConsoleService.ListStaffManagedInferenceAdminEvents:input_type -> console.v1.ListStaffManagedInferenceAdminEventsRequest
+	802,  // 1196: console.v1.ConsoleService.ListStaffManagedExecutionGrantEvents:input_type -> console.v1.ListStaffManagedExecutionGrantEventsRequest
+	805,  // 1197: console.v1.ConsoleService.ListStaffManagedExecutionOutcomes:input_type -> console.v1.ListStaffManagedExecutionOutcomesRequest
+	473,  // 1198: console.v1.ConsoleService.UpsertManagedProviderAccessGrant:input_type -> console.v1.UpsertManagedProviderAccessGrantRequest
+	475,  // 1199: console.v1.ConsoleService.RevokeManagedProviderAccessGrant:input_type -> console.v1.RevokeManagedProviderAccessGrantRequest
+	481,  // 1200: console.v1.ConsoleService.GetStaffInferenceRoutingProfile:input_type -> console.v1.GetStaffInferenceRoutingProfileRequest
+	483,  // 1201: console.v1.ConsoleService.UpdateStaffInferenceRoutingProfile:input_type -> console.v1.UpdateStaffInferenceRoutingProfileRequest
+	319,  // 1202: console.v1.ConsoleService.ListEvalResults:input_type -> console.v1.ListEvalResultsRequest
+	321,  // 1203: console.v1.ConsoleService.ListCostUsage:input_type -> console.v1.ListCostUsageRequest
+	324,  // 1204: console.v1.ConsoleService.RecordProviderCostSnapshot:input_type -> console.v1.RecordProviderCostSnapshotRequest
+	326,  // 1205: console.v1.ConsoleService.ListAuthorityPosture:input_type -> console.v1.ListAuthorityPostureRequest
+	328,  // 1206: console.v1.ConsoleService.ListAgentWorkforceRecords:input_type -> console.v1.ListAgentWorkforceRecordsRequest
+	331,  // 1207: console.v1.ConsoleService.ListOrbControlTargets:input_type -> console.v1.ListOrbControlTargetsRequest
+	333,  // 1208: console.v1.ConsoleService.GetOrbControlTarget:input_type -> console.v1.GetOrbControlTargetRequest
+	335,  // 1209: console.v1.ConsoleService.SubmitOrbControlAction:input_type -> console.v1.SubmitOrbControlActionRequest
+	337,  // 1210: console.v1.ConsoleService.SubmitAgentWorkforceEvidence:input_type -> console.v1.SubmitAgentWorkforceEvidenceRequest
+	340,  // 1211: console.v1.ConsoleService.ListFindings:input_type -> console.v1.ListFindingsRequest
+	342,  // 1212: console.v1.ConsoleService.GetTraceDrilldown:input_type -> console.v1.GetTraceDrilldownRequest
+	344,  // 1213: console.v1.ConsoleService.ListIntegrationTiles:input_type -> console.v1.ListIntegrationTilesRequest
+	346,  // 1214: console.v1.ConsoleService.ListPinnedSources:input_type -> console.v1.ListPinnedSourcesRequest
+	349,  // 1215: console.v1.ConsoleService.SetPinnedSource:input_type -> console.v1.SetPinnedSourceRequest
+	351,  // 1216: console.v1.ConsoleService.UnpinSource:input_type -> console.v1.UnpinSourceRequest
+	533,  // 1217: console.v1.ConsoleService.CreateDexMcpServer:input_type -> console.v1.CreateDexMcpServerRequest
+	535,  // 1218: console.v1.ConsoleService.ListDexMcpServers:input_type -> console.v1.ListDexMcpServersRequest
+	537,  // 1219: console.v1.ConsoleService.GetDexMcpServer:input_type -> console.v1.GetDexMcpServerRequest
+	539,  // 1220: console.v1.ConsoleService.DiscoverDexMcpServer:input_type -> console.v1.DiscoverDexMcpServerRequest
+	541,  // 1221: console.v1.ConsoleService.UpdateDexMcpServer:input_type -> console.v1.UpdateDexMcpServerRequest
+	543,  // 1222: console.v1.ConsoleService.DeleteDexMcpServer:input_type -> console.v1.DeleteDexMcpServerRequest
+	546,  // 1223: console.v1.ConsoleService.InitiateDexMcpOAuthProfile:input_type -> console.v1.InitiateDexMcpOAuthProfileRequest
+	548,  // 1224: console.v1.ConsoleService.CompleteDexMcpOAuthProfile:input_type -> console.v1.CompleteDexMcpOAuthProfileRequest
+	550,  // 1225: console.v1.ConsoleService.ListDexMcpOAuthProfiles:input_type -> console.v1.ListDexMcpOAuthProfilesRequest
+	552,  // 1226: console.v1.ConsoleService.RevokeDexMcpOAuthProfile:input_type -> console.v1.RevokeDexMcpOAuthProfileRequest
+	554,  // 1227: console.v1.ConsoleService.ReauthorizeDexMcpOAuthProfile:input_type -> console.v1.ReauthorizeDexMcpOAuthProfileRequest
+	558,  // 1228: console.v1.ConsoleService.RegisterPrivateEndpoint:input_type -> console.v1.RegisterPrivateEndpointRequest
+	560,  // 1229: console.v1.ConsoleService.VerifyPrivateEndpoint:input_type -> console.v1.VerifyPrivateEndpointRequest
+	562,  // 1230: console.v1.ConsoleService.ListPrivateEndpoints:input_type -> console.v1.ListPrivateEndpointsRequest
+	564,  // 1231: console.v1.ConsoleService.DeletePrivateEndpoint:input_type -> console.v1.DeletePrivateEndpointRequest
+	566,  // 1232: console.v1.ConsoleService.AttachPrivateEndpointToProfile:input_type -> console.v1.AttachPrivateEndpointToProfileRequest
+	568,  // 1233: console.v1.ConsoleService.ListGatewayEgressOrigins:input_type -> console.v1.ListGatewayEgressOriginsRequest
+	353,  // 1234: console.v1.ConsoleService.GetOnboardingPlan:input_type -> console.v1.GetOnboardingPlanRequest
+	128,  // 1235: console.v1.ConsoleService.ListOperatingChannels:input_type -> console.v1.ListOperatingChannelsRequest
+	620,  // 1236: console.v1.ConsoleService.ListOperatingJobs:input_type -> console.v1.ListOperatingJobsRequest
+	130,  // 1237: console.v1.ConsoleService.ArchiveOperatingThread:input_type -> console.v1.ArchiveOperatingThreadRequest
+	132,  // 1238: console.v1.ConsoleService.RenameOperatingThread:input_type -> console.v1.RenameOperatingThreadRequest
+	134,  // 1239: console.v1.ConsoleService.GetOperatingThread:input_type -> console.v1.GetOperatingThreadRequest
+	574,  // 1240: console.v1.ConsoleService.BootstrapThreadGateway:input_type -> console.v1.BootstrapThreadGatewayRequest
+	571,  // 1241: console.v1.ConsoleService.PrewarmOperatingThread:input_type -> console.v1.PrewarmOperatingThreadRequest
+	140,  // 1242: console.v1.ConsoleService.ListOperatingThreadEvents:input_type -> console.v1.ListOperatingThreadEventsRequest
+	142,  // 1243: console.v1.ConsoleService.WatchOperatingThread:input_type -> console.v1.WatchOperatingThreadRequest
+	136,  // 1244: console.v1.ConsoleService.RespondOperatingThread:input_type -> console.v1.RespondOperatingThreadRequest
+	138,  // 1245: console.v1.ConsoleService.InterruptOperatingThread:input_type -> console.v1.InterruptOperatingThreadRequest
+	206,  // 1246: console.v1.ConsoleService.SearchOperatingHistory:input_type -> console.v1.SearchOperatingHistoryRequest
+	209,  // 1247: console.v1.ConsoleService.GetOperatingHistoryContext:input_type -> console.v1.GetOperatingHistoryContextRequest
+	769,  // 1248: console.v1.ConsoleService.AcceptOperatingProjectSnapshot:input_type -> console.v1.AcceptOperatingProjectSnapshotRequest
+	774,  // 1249: console.v1.ConsoleService.ImportOperatingProjectSnapshot:input_type -> console.v1.ImportOperatingProjectSnapshotRequest
+	772,  // 1250: console.v1.ConsoleService.GetOperatingTaskEnvironment:input_type -> console.v1.GetOperatingTaskEnvironmentRequest
+	771,  // 1251: console.v1.ConsoleService.GetOperatingProjectSnapshot:input_type -> console.v1.GetOperatingProjectSnapshotRequest
+	145,  // 1252: console.v1.ConsoleService.SubmitOperatingMessage:input_type -> console.v1.SubmitOperatingMessageRequest
+	155,  // 1253: console.v1.ConsoleService.SubmitOperatingCorrection:input_type -> console.v1.SubmitOperatingCorrectionRequest
+	158,  // 1254: console.v1.ConsoleService.SubmitOperatingFeedback:input_type -> console.v1.SubmitOperatingFeedbackRequest
+	161,  // 1255: console.v1.ConsoleService.SubmitProductIssueReport:input_type -> console.v1.SubmitProductIssueReportRequest
+	162,  // 1256: console.v1.ConsoleService.SubmitNativeProductIssueReport:input_type -> console.v1.SubmitNativeProductIssueReportRequest
+	167,  // 1257: console.v1.ConsoleService.ListStaffProductIssueReports:input_type -> console.v1.ListStaffProductIssueReportsRequest
+	169,  // 1258: console.v1.ConsoleService.EngageStaffProductIssueReport:input_type -> console.v1.EngageStaffProductIssueReportRequest
+	171,  // 1259: console.v1.ConsoleService.GetOperatingFeedback:input_type -> console.v1.GetOperatingFeedbackRequest
+	173,  // 1260: console.v1.ConsoleService.ResolveOperatingFeedbackRemediation:input_type -> console.v1.ResolveOperatingFeedbackRemediationRequest
+	179,  // 1261: console.v1.ConsoleService.ListCustomerIntelligenceFacts:input_type -> console.v1.ListCustomerIntelligenceFactsRequest
+	181,  // 1262: console.v1.ConsoleService.GetCustomerIntelligenceFact:input_type -> console.v1.GetCustomerIntelligenceFactRequest
+	183,  // 1263: console.v1.ConsoleService.ReviewCustomerIntelligenceFact:input_type -> console.v1.ReviewCustomerIntelligenceFactRequest
+	185,  // 1264: console.v1.ConsoleService.ProposeCustomerIntelligenceFact:input_type -> console.v1.ProposeCustomerIntelligenceFactRequest
+	187,  // 1265: console.v1.ConsoleService.RespondToCustomerFactConfirmation:input_type -> console.v1.RespondToCustomerFactConfirmationRequest
+	189,  // 1266: console.v1.ConsoleService.AggregateCustomerIntelligencePatterns:input_type -> console.v1.AggregateCustomerIntelligencePatternsRequest
+	192,  // 1267: console.v1.ConsoleService.ListOperatingCorrections:input_type -> console.v1.ListOperatingCorrectionsRequest
+	194,  // 1268: console.v1.ConsoleService.ReviewOperatingCorrection:input_type -> console.v1.ReviewOperatingCorrectionRequest
+	196,  // 1269: console.v1.ConsoleService.ListWorkspaceMemories:input_type -> console.v1.ListWorkspaceMemoriesRequest
+	199,  // 1270: console.v1.ConsoleService.CorrectWorkspaceMemory:input_type -> console.v1.CorrectWorkspaceMemoryRequest
+	201,  // 1271: console.v1.ConsoleService.ReviewWorkspaceMemory:input_type -> console.v1.ReviewWorkspaceMemoryRequest
+	203,  // 1272: console.v1.ConsoleService.ForgetWorkspaceMemory:input_type -> console.v1.ForgetWorkspaceMemoryRequest
+	146,  // 1273: console.v1.ConsoleService.BeginOperatingAttachmentUpload:input_type -> console.v1.BeginOperatingAttachmentUploadRequest
+	148,  // 1274: console.v1.ConsoleService.CompleteOperatingAttachmentUpload:input_type -> console.v1.CompleteOperatingAttachmentUploadRequest
+	150,  // 1275: console.v1.ConsoleService.ListOperatingAttachments:input_type -> console.v1.ListOperatingAttachmentsRequest
+	223,  // 1276: console.v1.ConsoleService.ResolveOperatingReceiptAction:input_type -> console.v1.ResolveOperatingReceiptActionRequest
+	225,  // 1277: console.v1.ConsoleService.GetOperatingReceipt:input_type -> console.v1.GetOperatingReceiptRequest
+	244,  // 1278: console.v1.ConsoleService.SubmitComputerMission:input_type -> console.v1.SubmitComputerMissionRequest
+	246,  // 1279: console.v1.ConsoleService.GetComputerMission:input_type -> console.v1.GetComputerMissionRequest
+	248,  // 1280: console.v1.ConsoleService.CancelComputerMission:input_type -> console.v1.CancelComputerMissionRequest
+	250,  // 1281: console.v1.ConsoleService.ContinueComputerMission:input_type -> console.v1.ContinueComputerMissionRequest
+	252,  // 1282: console.v1.ConsoleService.PauseComputerMission:input_type -> console.v1.PauseComputerMissionRequest
+	254,  // 1283: console.v1.ConsoleService.ResumeComputerMission:input_type -> console.v1.ResumeComputerMissionRequest
+	256,  // 1284: console.v1.ConsoleService.WakeComputerMission:input_type -> console.v1.WakeComputerMissionRequest
+	258,  // 1285: console.v1.ConsoleService.GuideComputerMission:input_type -> console.v1.GuideComputerMissionRequest
+	265,  // 1286: console.v1.ConsoleService.ListComputerMissionCanaryDefinitions:input_type -> console.v1.ListComputerMissionCanaryDefinitionsRequest
+	267,  // 1287: console.v1.ConsoleService.StartComputerMissionCanaryRun:input_type -> console.v1.StartComputerMissionCanaryRunRequest
+	269,  // 1288: console.v1.ConsoleService.GetComputerMissionCanaryRun:input_type -> console.v1.GetComputerMissionCanaryRunRequest
+	271,  // 1289: console.v1.ConsoleService.ListComputerMissionCanaryRuns:input_type -> console.v1.ListComputerMissionCanaryRunsRequest
+	273,  // 1290: console.v1.ConsoleService.GetComputerMissionCanaryEvidence:input_type -> console.v1.GetComputerMissionCanaryEvidenceRequest
+	275,  // 1291: console.v1.ConsoleService.OperateComputerMissionCanaryRun:input_type -> console.v1.OperateComputerMissionCanaryRunRequest
+	279,  // 1292: console.v1.ConsoleService.CreateMissionSchedule:input_type -> console.v1.CreateMissionScheduleRequest
+	281,  // 1293: console.v1.ConsoleService.UpdateMissionSchedule:input_type -> console.v1.UpdateMissionScheduleRequest
+	283,  // 1294: console.v1.ConsoleService.SetMissionScheduleEnabled:input_type -> console.v1.SetMissionScheduleEnabledRequest
+	285,  // 1295: console.v1.ConsoleService.ListMissionSchedules:input_type -> console.v1.ListMissionSchedulesRequest
+	288,  // 1296: console.v1.ConsoleService.CreateConnectorTrigger:input_type -> console.v1.CreateConnectorTriggerRequest
+	290,  // 1297: console.v1.ConsoleService.UpdateConnectorTrigger:input_type -> console.v1.UpdateConnectorTriggerRequest
+	292,  // 1298: console.v1.ConsoleService.ListConnectorTriggers:input_type -> console.v1.ListConnectorTriggersRequest
+	294,  // 1299: console.v1.ConsoleService.DeleteConnectorTrigger:input_type -> console.v1.DeleteConnectorTriggerRequest
+	296,  // 1300: console.v1.ConsoleService.SetConnectorTriggerEnabled:input_type -> console.v1.SetConnectorTriggerEnabledRequest
+	299,  // 1301: console.v1.ConsoleService.ReserveComputerMissionApexSession:input_type -> console.v1.ReserveComputerMissionApexSessionRequest
+	301,  // 1302: console.v1.ConsoleService.BindComputerMissionApexSessionReservation:input_type -> console.v1.BindComputerMissionApexSessionReservationRequest
+	304,  // 1303: console.v1.ConsoleService.BindComputerMissionApexInstructionMetadata:input_type -> console.v1.BindComputerMissionApexInstructionMetadataRequest
+	306,  // 1304: console.v1.ConsoleService.AuthorizeComputerMissionApexSessionAdoption:input_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionRequest
+	355,  // 1305: console.v1.ConsoleService.GetWorkspaceSettings:input_type -> console.v1.GetWorkspaceSettingsRequest
+	369,  // 1306: console.v1.ConsoleService.GetOperatorPreferences:input_type -> console.v1.GetOperatorPreferencesRequest
+	371,  // 1307: console.v1.ConsoleService.UpdateOperatorPreferences:input_type -> console.v1.UpdateOperatorPreferencesRequest
+	380,  // 1308: console.v1.ConsoleService.CreateConnectorProfile:input_type -> console.v1.CreateConnectorProfileRequest
+	382,  // 1309: console.v1.ConsoleService.ListConnectorProfiles:input_type -> console.v1.ListConnectorProfilesRequest
+	384,  // 1310: console.v1.ConsoleService.UpdateConnectorProfile:input_type -> console.v1.UpdateConnectorProfileRequest
+	386,  // 1311: console.v1.ConsoleService.DeleteConnectorProfile:input_type -> console.v1.DeleteConnectorProfileRequest
+	593,  // 1312: console.v1.ConsoleService.ListConnectedCalls:input_type -> console.v1.ListConnectedCallsRequest
+	592,  // 1313: console.v1.ConsoleService.StartMeetingCapture:input_type -> console.v1.StartMeetingCaptureRequest
+	597,  // 1314: console.v1.ConsoleService.GetMeetingCapture:input_type -> console.v1.GetMeetingCaptureRequest
+	599,  // 1315: console.v1.ConsoleService.ListMeetingCaptures:input_type -> console.v1.ListMeetingCapturesRequest
+	601,  // 1316: console.v1.ConsoleService.StopMeetingCapture:input_type -> console.v1.StopMeetingCaptureRequest
+	614,  // 1317: console.v1.ConsoleService.ListCommitments:input_type -> console.v1.ListCommitmentsRequest
+	358,  // 1318: console.v1.ConsoleService.GetBillingSubscription:input_type -> console.v1.GetBillingSubscriptionRequest
+	360,  // 1319: console.v1.ConsoleService.CreateBillingPortalSession:input_type -> console.v1.CreateBillingPortalSessionRequest
+	362,  // 1320: console.v1.ConsoleService.CreateBillingCheckoutSession:input_type -> console.v1.CreateBillingCheckoutSessionRequest
+	625,  // 1321: console.v1.ConsoleService.GetInferenceCreditBalance:input_type -> console.v1.GetInferenceCreditBalanceRequest
+	631,  // 1322: console.v1.ConsoleService.CreateInferenceCreditCheckout:input_type -> console.v1.CreateInferenceCreditCheckoutRequest
+	633,  // 1323: console.v1.ConsoleService.FulfillInferenceCreditCheckout:input_type -> console.v1.FulfillInferenceCreditCheckoutRequest
+	364,  // 1324: console.v1.ConsoleService.UpdateWorkspaceProfile:input_type -> console.v1.UpdateWorkspaceProfileRequest
+	388,  // 1325: console.v1.ConsoleService.ArchiveWorkspace:input_type -> console.v1.ArchiveWorkspaceRequest
+	390,  // 1326: console.v1.ConsoleService.UpdateWorkspacePolicy:input_type -> console.v1.UpdateWorkspacePolicyRequest
+	392,  // 1327: console.v1.ConsoleService.UpdateWorkspaceDexPolicy:input_type -> console.v1.UpdateWorkspaceDexPolicyRequest
+	394,  // 1328: console.v1.ConsoleService.UpdateWorkspaceArtifactStyleGuide:input_type -> console.v1.UpdateWorkspaceArtifactStyleGuideRequest
+	396,  // 1329: console.v1.ConsoleService.EvaluateWorkspaceArtifactStyleGuide:input_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideRequest
+	399,  // 1330: console.v1.ConsoleService.UpsertWorkspaceIdentityProvider:input_type -> console.v1.UpsertWorkspaceIdentityProviderRequest
+	401,  // 1331: console.v1.ConsoleService.RemoveWorkspaceIdentityProvider:input_type -> console.v1.RemoveWorkspaceIdentityProviderRequest
+	403,  // 1332: console.v1.ConsoleService.UpsertWorkspaceIntegration:input_type -> console.v1.UpsertWorkspaceIntegrationRequest
+	405,  // 1333: console.v1.ConsoleService.RemoveWorkspaceIntegration:input_type -> console.v1.RemoveWorkspaceIntegrationRequest
+	407,  // 1334: console.v1.ConsoleService.UpdateWorkspaceBilling:input_type -> console.v1.UpdateWorkspaceBillingRequest
+	408,  // 1335: console.v1.ConsoleService.UpsertWorkspaceMember:input_type -> console.v1.UpsertWorkspaceMemberRequest
+	409,  // 1336: console.v1.ConsoleService.RemoveWorkspaceMember:input_type -> console.v1.RemoveWorkspaceMemberRequest
+	410,  // 1337: console.v1.ConsoleService.UpdateWorkspaceNotificationPreferences:input_type -> console.v1.UpdateWorkspaceNotificationPreferencesRequest
+	411,  // 1338: console.v1.ConsoleService.EnableWorkspaceBreakGlass:input_type -> console.v1.EnableWorkspaceBreakGlassRequest
+	412,  // 1339: console.v1.ConsoleService.DisableWorkspaceBreakGlass:input_type -> console.v1.DisableWorkspaceBreakGlassRequest
+	414,  // 1340: console.v1.ConsoleService.ListWorkspaceSkills:input_type -> console.v1.ListWorkspaceSkillsRequest
+	429,  // 1341: console.v1.ConsoleService.BrowseDexSkillCatalog:input_type -> console.v1.BrowseDexSkillCatalogRequest
+	431,  // 1342: console.v1.ConsoleService.InstallDexSkillCatalogEntry:input_type -> console.v1.InstallDexSkillCatalogEntryRequest
+	433,  // 1343: console.v1.ConsoleService.CreateWorkspaceSkill:input_type -> console.v1.CreateWorkspaceSkillRequest
+	435,  // 1344: console.v1.ConsoleService.UpdateWorkspaceSkill:input_type -> console.v1.UpdateWorkspaceSkillRequest
+	437,  // 1345: console.v1.ConsoleService.DeleteWorkspaceSkill:input_type -> console.v1.DeleteWorkspaceSkillRequest
+	485,  // 1346: console.v1.ConsoleService.ListScenarioFixtures:input_type -> console.v1.ListScenarioFixturesRequest
+	487,  // 1347: console.v1.ConsoleService.PromoteScenarioFixture:input_type -> console.v1.PromoteScenarioFixtureRequest
+	489,  // 1348: console.v1.ConsoleService.CompareScenarioFixtures:input_type -> console.v1.CompareScenarioFixturesRequest
+	374,  // 1349: console.v1.ConsoleService.ListWorkspaceGuardrailRules:input_type -> console.v1.ListWorkspaceGuardrailRulesRequest
+	376,  // 1350: console.v1.ConsoleService.UpsertWorkspaceGuardrailRule:input_type -> console.v1.UpsertWorkspaceGuardrailRuleRequest
+	377,  // 1351: console.v1.ConsoleService.RemoveWorkspaceGuardrailRule:input_type -> console.v1.RemoveWorkspaceGuardrailRuleRequest
+	576,  // 1352: console.v1.ConsoleService.SetOperatingThreadController:input_type -> console.v1.SetOperatingThreadControllerRequest
+	581,  // 1353: console.v1.ConsoleService.GetPrivacySettings:input_type -> console.v1.GetPrivacySettingsRequest
+	583,  // 1354: console.v1.ConsoleService.SetPrivacySettings:input_type -> console.v1.SetPrivacySettingsRequest
+	606,  // 1355: console.v1.ConsoleService.CreateProspectingWatchProgram:input_type -> console.v1.CreateProspectingWatchProgramRequest
+	608,  // 1356: console.v1.ConsoleService.GetProspectingWatchProgram:input_type -> console.v1.GetProspectingWatchProgramRequest
+	610,  // 1357: console.v1.ConsoleService.ListProspectingWatchPrograms:input_type -> console.v1.ListProspectingWatchProgramsRequest
+	612,  // 1358: console.v1.ConsoleService.UpdateProspectingWatchProgram:input_type -> console.v1.UpdateProspectingWatchProgramRequest
+	811,  // 1359: console.v1.ConsoleService.CreateProspectingDraft:input_type -> console.v1.CreateProspectingDraftRequest
+	813,  // 1360: console.v1.ConsoleService.ListProspectingDrafts:input_type -> console.v1.ListProspectingDraftsRequest
+	815,  // 1361: console.v1.ConsoleService.ReviewProspectingDraft:input_type -> console.v1.ReviewProspectingDraftRequest
+	622,  // 1362: console.v1.ConsoleService.RecordOperatingHomepageSuggestionFeedback:input_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
+	105,  // 1363: console.v1.WorkspaceKeyService.GetWorkspaceKeyConfig:input_type -> console.v1.GetWorkspaceKeyConfigRequest
+	106,  // 1364: console.v1.WorkspaceKeyService.PutWorkspaceKeyConfig:input_type -> console.v1.PutWorkspaceKeyConfigRequest
+	107,  // 1365: console.v1.WorkspaceKeyService.DeleteWorkspaceKeyConfig:input_type -> console.v1.DeleteWorkspaceKeyConfigRequest
+	589,  // 1366: console.v1.ManagedSetupService.GetManagedSetup:input_type -> console.v1.GetManagedSetupRequest
+	590,  // 1367: console.v1.ManagedSetupService.SetManagedSetup:input_type -> console.v1.SetManagedSetupRequest
+	777,  // 1368: console.v1.ConsoleService.ListBusinessBlueprints:output_type -> console.v1.ListBusinessBlueprintsResponse
+	779,  // 1369: console.v1.ConsoleService.CloneBusinessBlueprint:output_type -> console.v1.CloneBusinessBlueprintResponse
+	765,  // 1370: console.v1.ConsoleService.GetBusinessProcessDefinition:output_type -> console.v1.GetBusinessProcessDefinitionResponse
+	767,  // 1371: console.v1.ConsoleService.ListBusinessProcessDefinitions:output_type -> console.v1.ListBusinessProcessDefinitionsResponse
+	755,  // 1372: console.v1.ConsoleService.DefineBusinessProcess:output_type -> console.v1.DefineBusinessProcessResponse
+	757,  // 1373: console.v1.ConsoleService.StartBusinessProcess:output_type -> console.v1.StartBusinessProcessResponse
+	759,  // 1374: console.v1.ConsoleService.GetBusinessProcess:output_type -> console.v1.GetBusinessProcessResponse
+	761,  // 1375: console.v1.ConsoleService.ListBusinessProcesses:output_type -> console.v1.ListBusinessProcessesResponse
+	763,  // 1376: console.v1.ConsoleService.TransitionBusinessProcess:output_type -> console.v1.TransitionBusinessProcessResponse
+	743,  // 1377: console.v1.ConsoleService.PrepareBusinessObjectAuthorityTransfer:output_type -> console.v1.PrepareBusinessObjectAuthorityTransferResponse
+	745,  // 1378: console.v1.ConsoleService.FinalizeBusinessObjectAuthorityTransfer:output_type -> console.v1.FinalizeBusinessObjectAuthorityTransferResponse
+	650,  // 1379: console.v1.ConsoleService.DefineBusinessObjectType:output_type -> console.v1.DefineBusinessObjectTypeResponse
+	731,  // 1380: console.v1.ConsoleService.GetBusinessObjectType:output_type -> console.v1.GetBusinessObjectTypeResponse
+	652,  // 1381: console.v1.ConsoleService.ListBusinessObjectTypes:output_type -> console.v1.ListBusinessObjectTypesResponse
+	654,  // 1382: console.v1.ConsoleService.CreateBusinessObject:output_type -> console.v1.CreateBusinessObjectResponse
+	656,  // 1383: console.v1.ConsoleService.GetBusinessObject:output_type -> console.v1.GetBusinessObjectResponse
+	661,  // 1384: console.v1.ConsoleService.ListBusinessObjects:output_type -> console.v1.ListBusinessObjectsResponse
+	663,  // 1385: console.v1.ConsoleService.UpdateBusinessObject:output_type -> console.v1.UpdateBusinessObjectResponse
+	665,  // 1386: console.v1.ConsoleService.DeleteBusinessObject:output_type -> console.v1.DeleteBusinessObjectResponse
+	667,  // 1387: console.v1.ConsoleService.ListBusinessObjectRevisions:output_type -> console.v1.ListBusinessObjectRevisionsResponse
+	669,  // 1388: console.v1.ConsoleService.BindBusinessObjectSource:output_type -> console.v1.BindBusinessObjectSourceResponse
+	671,  // 1389: console.v1.ConsoleService.AdmitBusinessObjectObservation:output_type -> console.v1.AdmitBusinessObjectObservationResponse
+	673,  // 1390: console.v1.ConsoleService.ListBusinessObjectRelationships:output_type -> console.v1.ListBusinessObjectRelationshipsResponse
+	675,  // 1391: console.v1.ConsoleService.CreateBusinessObjectRelationship:output_type -> console.v1.CreateBusinessObjectRelationshipResponse
+	677,  // 1392: console.v1.ConsoleService.DeleteBusinessObjectRelationship:output_type -> console.v1.DeleteBusinessObjectRelationshipResponse
+	703,  // 1393: console.v1.ConsoleService.CreateCaptureForm:output_type -> console.v1.CreateCaptureFormResponse
+	705,  // 1394: console.v1.ConsoleService.ListCaptureForms:output_type -> console.v1.ListCaptureFormsResponse
+	707,  // 1395: console.v1.ConsoleService.GetCaptureForm:output_type -> console.v1.GetCaptureFormResponse
+	709,  // 1396: console.v1.ConsoleService.UpdateCaptureForm:output_type -> console.v1.UpdateCaptureFormResponse
+	711,  // 1397: console.v1.ConsoleService.PublishCaptureForm:output_type -> console.v1.PublishCaptureFormResponse
+	713,  // 1398: console.v1.ConsoleService.RevokeCaptureFormPublication:output_type -> console.v1.RevokeCaptureFormPublicationResponse
+	783,  // 1399: console.v1.ConsoleService.CreateCaptureFormInvitation:output_type -> console.v1.CreateCaptureFormInvitationResponse
+	785,  // 1400: console.v1.ConsoleService.RevokeCaptureFormInvitation:output_type -> console.v1.RevokeCaptureFormInvitationResponse
+	787,  // 1401: console.v1.ConsoleService.GetInvitedCaptureForm:output_type -> console.v1.GetInvitedCaptureFormResponse
+	789,  // 1402: console.v1.ConsoleService.SubmitInvitedCaptureForm:output_type -> console.v1.SubmitInvitedCaptureFormResponse
+	715,  // 1403: console.v1.ConsoleService.GetPublishedCaptureForm:output_type -> console.v1.GetPublishedCaptureFormResponse
+	717,  // 1404: console.v1.ConsoleService.GetPublishedCaptureFormBrandingAsset:output_type -> console.v1.GetPublishedCaptureFormBrandingAssetResponse
+	719,  // 1405: console.v1.ConsoleService.SubmitPublishedCaptureForm:output_type -> console.v1.SubmitPublishedCaptureFormResponse
+	721,  // 1406: console.v1.ConsoleService.BeginPublishedCaptureFormUpload:output_type -> console.v1.BeginPublishedCaptureFormUploadResponse
+	723,  // 1407: console.v1.ConsoleService.CompletePublishedCaptureFormUpload:output_type -> console.v1.CompletePublishedCaptureFormUploadResponse
+	725,  // 1408: console.v1.ConsoleService.GetCaptureFormSubmission:output_type -> console.v1.GetCaptureFormSubmissionResponse
+	727,  // 1409: console.v1.ConsoleService.ListCaptureFormSubmissions:output_type -> console.v1.ListCaptureFormSubmissionsResponse
+	729,  // 1410: console.v1.ConsoleService.ReviewCaptureFormSubmission:output_type -> console.v1.ReviewCaptureFormSubmissionResponse
+	737,  // 1411: console.v1.ConsoleService.GetInferenceCreditAutoRefill:output_type -> console.v1.GetInferenceCreditAutoRefillResponse
+	739,  // 1412: console.v1.ConsoleService.UpdateInferenceCreditAutoRefill:output_type -> console.v1.UpdateInferenceCreditAutoRefillResponse
+	741,  // 1413: console.v1.ConsoleService.CompleteInferenceCreditAutoRefill:output_type -> console.v1.CompleteInferenceCreditAutoRefillResponse
+	734,  // 1414: console.v1.ConsoleService.ListInferenceCreditReceipts:output_type -> console.v1.ListInferenceCreditReceiptsResponse
+	309,  // 1415: console.v1.ConsoleService.GetOverview:output_type -> console.v1.GetOverviewResponse
+	312,  // 1416: console.v1.ConsoleService.GetConsoleBootSnapshot:output_type -> console.v1.GetConsoleBootSnapshotResponse
+	314,  // 1417: console.v1.ConsoleService.ListAssets:output_type -> console.v1.ListAssetsResponse
+	316,  // 1418: console.v1.ConsoleService.GetAsset:output_type -> console.v1.GetAssetResponse
+	318,  // 1419: console.v1.ConsoleService.ListActivity:output_type -> console.v1.ListActivityResponse
+	461,  // 1420: console.v1.ConsoleService.SearchStaffWorkspaceDirectory:output_type -> console.v1.SearchStaffWorkspaceDirectoryResponse
+	469,  // 1421: console.v1.ConsoleService.GetStaffWorkspaceContext:output_type -> console.v1.GetStaffWorkspaceContextResponse
+	847,  // 1422: console.v1.ConsoleService.GetStaffManagedInferenceFunding:output_type -> meter.v1.GetPrepaidCreditBalanceResponse
+	848,  // 1423: console.v1.ConsoleService.GrantStaffManagedInferenceCredits:output_type -> meter.v1.GrantDevelopmentCreditsResponse
+	849,  // 1424: console.v1.ConsoleService.GetStaffManagedInferenceUsage:output_type -> meter.v1.QueryUsageResponse
+	840,  // 1425: console.v1.ConsoleService.GetStaffManagedInferenceBudget:output_type -> meter.v1.GetBudgetDashboardResponse
+	850,  // 1426: console.v1.ConsoleService.SetStaffManagedInferenceBudget:output_type -> meter.v1.SetBudgetResponse
+	792,  // 1427: console.v1.ConsoleService.GetStaffManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
+	792,  // 1428: console.v1.ConsoleService.GetManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
+	472,  // 1429: console.v1.ConsoleService.ListManagedProviderAccessGrants:output_type -> console.v1.ListManagedProviderAccessGrantsResponse
+	800,  // 1430: console.v1.ConsoleService.ListManagedProviderAccessEvents:output_type -> console.v1.ListManagedProviderAccessEventsResponse
+	851,  // 1431: console.v1.ConsoleService.ListStaffManagedInferenceAdminEvents:output_type -> meter.v1.ListManagedInferenceAdminEventsResponse
+	804,  // 1432: console.v1.ConsoleService.ListStaffManagedExecutionGrantEvents:output_type -> console.v1.ListStaffManagedExecutionGrantEventsResponse
+	807,  // 1433: console.v1.ConsoleService.ListStaffManagedExecutionOutcomes:output_type -> console.v1.ListStaffManagedExecutionOutcomesResponse
+	474,  // 1434: console.v1.ConsoleService.UpsertManagedProviderAccessGrant:output_type -> console.v1.UpsertManagedProviderAccessGrantResponse
+	476,  // 1435: console.v1.ConsoleService.RevokeManagedProviderAccessGrant:output_type -> console.v1.RevokeManagedProviderAccessGrantResponse
+	482,  // 1436: console.v1.ConsoleService.GetStaffInferenceRoutingProfile:output_type -> console.v1.GetStaffInferenceRoutingProfileResponse
+	484,  // 1437: console.v1.ConsoleService.UpdateStaffInferenceRoutingProfile:output_type -> console.v1.UpdateStaffInferenceRoutingProfileResponse
+	320,  // 1438: console.v1.ConsoleService.ListEvalResults:output_type -> console.v1.ListEvalResultsResponse
+	322,  // 1439: console.v1.ConsoleService.ListCostUsage:output_type -> console.v1.ListCostUsageResponse
+	325,  // 1440: console.v1.ConsoleService.RecordProviderCostSnapshot:output_type -> console.v1.RecordProviderCostSnapshotResponse
+	327,  // 1441: console.v1.ConsoleService.ListAuthorityPosture:output_type -> console.v1.ListAuthorityPostureResponse
+	329,  // 1442: console.v1.ConsoleService.ListAgentWorkforceRecords:output_type -> console.v1.ListAgentWorkforceRecordsResponse
+	332,  // 1443: console.v1.ConsoleService.ListOrbControlTargets:output_type -> console.v1.ListOrbControlTargetsResponse
+	334,  // 1444: console.v1.ConsoleService.GetOrbControlTarget:output_type -> console.v1.GetOrbControlTargetResponse
+	336,  // 1445: console.v1.ConsoleService.SubmitOrbControlAction:output_type -> console.v1.SubmitOrbControlActionResponse
+	338,  // 1446: console.v1.ConsoleService.SubmitAgentWorkforceEvidence:output_type -> console.v1.SubmitAgentWorkforceEvidenceResponse
+	341,  // 1447: console.v1.ConsoleService.ListFindings:output_type -> console.v1.ListFindingsResponse
+	343,  // 1448: console.v1.ConsoleService.GetTraceDrilldown:output_type -> console.v1.GetTraceDrilldownResponse
+	345,  // 1449: console.v1.ConsoleService.ListIntegrationTiles:output_type -> console.v1.ListIntegrationTilesResponse
+	347,  // 1450: console.v1.ConsoleService.ListPinnedSources:output_type -> console.v1.ListPinnedSourcesResponse
+	350,  // 1451: console.v1.ConsoleService.SetPinnedSource:output_type -> console.v1.SetPinnedSourceResponse
+	352,  // 1452: console.v1.ConsoleService.UnpinSource:output_type -> console.v1.UnpinSourceResponse
+	534,  // 1453: console.v1.ConsoleService.CreateDexMcpServer:output_type -> console.v1.CreateDexMcpServerResponse
+	536,  // 1454: console.v1.ConsoleService.ListDexMcpServers:output_type -> console.v1.ListDexMcpServersResponse
+	538,  // 1455: console.v1.ConsoleService.GetDexMcpServer:output_type -> console.v1.GetDexMcpServerResponse
+	540,  // 1456: console.v1.ConsoleService.DiscoverDexMcpServer:output_type -> console.v1.DiscoverDexMcpServerResponse
+	542,  // 1457: console.v1.ConsoleService.UpdateDexMcpServer:output_type -> console.v1.UpdateDexMcpServerResponse
+	544,  // 1458: console.v1.ConsoleService.DeleteDexMcpServer:output_type -> console.v1.DeleteDexMcpServerResponse
+	547,  // 1459: console.v1.ConsoleService.InitiateDexMcpOAuthProfile:output_type -> console.v1.InitiateDexMcpOAuthProfileResponse
+	549,  // 1460: console.v1.ConsoleService.CompleteDexMcpOAuthProfile:output_type -> console.v1.CompleteDexMcpOAuthProfileResponse
+	551,  // 1461: console.v1.ConsoleService.ListDexMcpOAuthProfiles:output_type -> console.v1.ListDexMcpOAuthProfilesResponse
+	553,  // 1462: console.v1.ConsoleService.RevokeDexMcpOAuthProfile:output_type -> console.v1.RevokeDexMcpOAuthProfileResponse
+	555,  // 1463: console.v1.ConsoleService.ReauthorizeDexMcpOAuthProfile:output_type -> console.v1.ReauthorizeDexMcpOAuthProfileResponse
+	559,  // 1464: console.v1.ConsoleService.RegisterPrivateEndpoint:output_type -> console.v1.RegisterPrivateEndpointResponse
+	561,  // 1465: console.v1.ConsoleService.VerifyPrivateEndpoint:output_type -> console.v1.VerifyPrivateEndpointResponse
+	563,  // 1466: console.v1.ConsoleService.ListPrivateEndpoints:output_type -> console.v1.ListPrivateEndpointsResponse
+	565,  // 1467: console.v1.ConsoleService.DeletePrivateEndpoint:output_type -> console.v1.DeletePrivateEndpointResponse
+	567,  // 1468: console.v1.ConsoleService.AttachPrivateEndpointToProfile:output_type -> console.v1.AttachPrivateEndpointToProfileResponse
+	569,  // 1469: console.v1.ConsoleService.ListGatewayEgressOrigins:output_type -> console.v1.ListGatewayEgressOriginsResponse
+	354,  // 1470: console.v1.ConsoleService.GetOnboardingPlan:output_type -> console.v1.GetOnboardingPlanResponse
+	129,  // 1471: console.v1.ConsoleService.ListOperatingChannels:output_type -> console.v1.ListOperatingChannelsResponse
+	621,  // 1472: console.v1.ConsoleService.ListOperatingJobs:output_type -> console.v1.ListOperatingJobsResponse
+	131,  // 1473: console.v1.ConsoleService.ArchiveOperatingThread:output_type -> console.v1.ArchiveOperatingThreadResponse
+	133,  // 1474: console.v1.ConsoleService.RenameOperatingThread:output_type -> console.v1.RenameOperatingThreadResponse
+	135,  // 1475: console.v1.ConsoleService.GetOperatingThread:output_type -> console.v1.GetOperatingThreadResponse
+	575,  // 1476: console.v1.ConsoleService.BootstrapThreadGateway:output_type -> console.v1.BootstrapThreadGatewayResponse
+	572,  // 1477: console.v1.ConsoleService.PrewarmOperatingThread:output_type -> console.v1.PrewarmOperatingThreadResponse
+	141,  // 1478: console.v1.ConsoleService.ListOperatingThreadEvents:output_type -> console.v1.ListOperatingThreadEventsResponse
+	143,  // 1479: console.v1.ConsoleService.WatchOperatingThread:output_type -> console.v1.WatchOperatingThreadResponse
+	137,  // 1480: console.v1.ConsoleService.RespondOperatingThread:output_type -> console.v1.RespondOperatingThreadResponse
+	139,  // 1481: console.v1.ConsoleService.InterruptOperatingThread:output_type -> console.v1.InterruptOperatingThreadResponse
+	208,  // 1482: console.v1.ConsoleService.SearchOperatingHistory:output_type -> console.v1.SearchOperatingHistoryResponse
+	211,  // 1483: console.v1.ConsoleService.GetOperatingHistoryContext:output_type -> console.v1.GetOperatingHistoryContextResponse
+	770,  // 1484: console.v1.ConsoleService.AcceptOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
+	770,  // 1485: console.v1.ConsoleService.ImportOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
+	773,  // 1486: console.v1.ConsoleService.GetOperatingTaskEnvironment:output_type -> console.v1.GetOperatingTaskEnvironmentResponse
+	770,  // 1487: console.v1.ConsoleService.GetOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
+	152,  // 1488: console.v1.ConsoleService.SubmitOperatingMessage:output_type -> console.v1.SubmitOperatingMessageResponse
+	156,  // 1489: console.v1.ConsoleService.SubmitOperatingCorrection:output_type -> console.v1.SubmitOperatingCorrectionResponse
+	159,  // 1490: console.v1.ConsoleService.SubmitOperatingFeedback:output_type -> console.v1.SubmitOperatingFeedbackResponse
+	165,  // 1491: console.v1.ConsoleService.SubmitProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
+	165,  // 1492: console.v1.ConsoleService.SubmitNativeProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
+	168,  // 1493: console.v1.ConsoleService.ListStaffProductIssueReports:output_type -> console.v1.ListStaffProductIssueReportsResponse
+	170,  // 1494: console.v1.ConsoleService.EngageStaffProductIssueReport:output_type -> console.v1.EngageStaffProductIssueReportResponse
+	172,  // 1495: console.v1.ConsoleService.GetOperatingFeedback:output_type -> console.v1.GetOperatingFeedbackResponse
+	174,  // 1496: console.v1.ConsoleService.ResolveOperatingFeedbackRemediation:output_type -> console.v1.ResolveOperatingFeedbackRemediationResponse
+	180,  // 1497: console.v1.ConsoleService.ListCustomerIntelligenceFacts:output_type -> console.v1.ListCustomerIntelligenceFactsResponse
+	182,  // 1498: console.v1.ConsoleService.GetCustomerIntelligenceFact:output_type -> console.v1.GetCustomerIntelligenceFactResponse
+	184,  // 1499: console.v1.ConsoleService.ReviewCustomerIntelligenceFact:output_type -> console.v1.ReviewCustomerIntelligenceFactResponse
+	186,  // 1500: console.v1.ConsoleService.ProposeCustomerIntelligenceFact:output_type -> console.v1.ProposeCustomerIntelligenceFactResponse
+	188,  // 1501: console.v1.ConsoleService.RespondToCustomerFactConfirmation:output_type -> console.v1.RespondToCustomerFactConfirmationResponse
+	191,  // 1502: console.v1.ConsoleService.AggregateCustomerIntelligencePatterns:output_type -> console.v1.AggregateCustomerIntelligencePatternsResponse
+	193,  // 1503: console.v1.ConsoleService.ListOperatingCorrections:output_type -> console.v1.ListOperatingCorrectionsResponse
+	195,  // 1504: console.v1.ConsoleService.ReviewOperatingCorrection:output_type -> console.v1.ReviewOperatingCorrectionResponse
+	197,  // 1505: console.v1.ConsoleService.ListWorkspaceMemories:output_type -> console.v1.ListWorkspaceMemoriesResponse
+	200,  // 1506: console.v1.ConsoleService.CorrectWorkspaceMemory:output_type -> console.v1.CorrectWorkspaceMemoryResponse
+	202,  // 1507: console.v1.ConsoleService.ReviewWorkspaceMemory:output_type -> console.v1.ReviewWorkspaceMemoryResponse
+	204,  // 1508: console.v1.ConsoleService.ForgetWorkspaceMemory:output_type -> console.v1.ForgetWorkspaceMemoryResponse
+	147,  // 1509: console.v1.ConsoleService.BeginOperatingAttachmentUpload:output_type -> console.v1.BeginOperatingAttachmentUploadResponse
+	149,  // 1510: console.v1.ConsoleService.CompleteOperatingAttachmentUpload:output_type -> console.v1.CompleteOperatingAttachmentUploadResponse
+	151,  // 1511: console.v1.ConsoleService.ListOperatingAttachments:output_type -> console.v1.ListOperatingAttachmentsResponse
+	224,  // 1512: console.v1.ConsoleService.ResolveOperatingReceiptAction:output_type -> console.v1.ResolveOperatingReceiptActionResponse
+	228,  // 1513: console.v1.ConsoleService.GetOperatingReceipt:output_type -> console.v1.GetOperatingReceiptResponse
+	245,  // 1514: console.v1.ConsoleService.SubmitComputerMission:output_type -> console.v1.SubmitComputerMissionResponse
+	247,  // 1515: console.v1.ConsoleService.GetComputerMission:output_type -> console.v1.GetComputerMissionResponse
+	249,  // 1516: console.v1.ConsoleService.CancelComputerMission:output_type -> console.v1.CancelComputerMissionResponse
+	251,  // 1517: console.v1.ConsoleService.ContinueComputerMission:output_type -> console.v1.ContinueComputerMissionResponse
+	253,  // 1518: console.v1.ConsoleService.PauseComputerMission:output_type -> console.v1.PauseComputerMissionResponse
+	255,  // 1519: console.v1.ConsoleService.ResumeComputerMission:output_type -> console.v1.ResumeComputerMissionResponse
+	257,  // 1520: console.v1.ConsoleService.WakeComputerMission:output_type -> console.v1.WakeComputerMissionResponse
+	259,  // 1521: console.v1.ConsoleService.GuideComputerMission:output_type -> console.v1.GuideComputerMissionResponse
+	266,  // 1522: console.v1.ConsoleService.ListComputerMissionCanaryDefinitions:output_type -> console.v1.ListComputerMissionCanaryDefinitionsResponse
+	268,  // 1523: console.v1.ConsoleService.StartComputerMissionCanaryRun:output_type -> console.v1.StartComputerMissionCanaryRunResponse
+	270,  // 1524: console.v1.ConsoleService.GetComputerMissionCanaryRun:output_type -> console.v1.GetComputerMissionCanaryRunResponse
+	272,  // 1525: console.v1.ConsoleService.ListComputerMissionCanaryRuns:output_type -> console.v1.ListComputerMissionCanaryRunsResponse
+	274,  // 1526: console.v1.ConsoleService.GetComputerMissionCanaryEvidence:output_type -> console.v1.GetComputerMissionCanaryEvidenceResponse
+	276,  // 1527: console.v1.ConsoleService.OperateComputerMissionCanaryRun:output_type -> console.v1.OperateComputerMissionCanaryRunResponse
+	280,  // 1528: console.v1.ConsoleService.CreateMissionSchedule:output_type -> console.v1.CreateMissionScheduleResponse
+	282,  // 1529: console.v1.ConsoleService.UpdateMissionSchedule:output_type -> console.v1.UpdateMissionScheduleResponse
+	284,  // 1530: console.v1.ConsoleService.SetMissionScheduleEnabled:output_type -> console.v1.SetMissionScheduleEnabledResponse
+	286,  // 1531: console.v1.ConsoleService.ListMissionSchedules:output_type -> console.v1.ListMissionSchedulesResponse
+	289,  // 1532: console.v1.ConsoleService.CreateConnectorTrigger:output_type -> console.v1.CreateConnectorTriggerResponse
+	291,  // 1533: console.v1.ConsoleService.UpdateConnectorTrigger:output_type -> console.v1.UpdateConnectorTriggerResponse
+	293,  // 1534: console.v1.ConsoleService.ListConnectorTriggers:output_type -> console.v1.ListConnectorTriggersResponse
+	295,  // 1535: console.v1.ConsoleService.DeleteConnectorTrigger:output_type -> console.v1.DeleteConnectorTriggerResponse
+	297,  // 1536: console.v1.ConsoleService.SetConnectorTriggerEnabled:output_type -> console.v1.SetConnectorTriggerEnabledResponse
+	300,  // 1537: console.v1.ConsoleService.ReserveComputerMissionApexSession:output_type -> console.v1.ReserveComputerMissionApexSessionResponse
+	302,  // 1538: console.v1.ConsoleService.BindComputerMissionApexSessionReservation:output_type -> console.v1.BindComputerMissionApexSessionReservationResponse
+	305,  // 1539: console.v1.ConsoleService.BindComputerMissionApexInstructionMetadata:output_type -> console.v1.BindComputerMissionApexInstructionMetadataResponse
+	307,  // 1540: console.v1.ConsoleService.AuthorizeComputerMissionApexSessionAdoption:output_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse
+	356,  // 1541: console.v1.ConsoleService.GetWorkspaceSettings:output_type -> console.v1.GetWorkspaceSettingsResponse
+	370,  // 1542: console.v1.ConsoleService.GetOperatorPreferences:output_type -> console.v1.GetOperatorPreferencesResponse
+	372,  // 1543: console.v1.ConsoleService.UpdateOperatorPreferences:output_type -> console.v1.UpdateOperatorPreferencesResponse
+	381,  // 1544: console.v1.ConsoleService.CreateConnectorProfile:output_type -> console.v1.CreateConnectorProfileResponse
+	383,  // 1545: console.v1.ConsoleService.ListConnectorProfiles:output_type -> console.v1.ListConnectorProfilesResponse
+	385,  // 1546: console.v1.ConsoleService.UpdateConnectorProfile:output_type -> console.v1.UpdateConnectorProfileResponse
+	387,  // 1547: console.v1.ConsoleService.DeleteConnectorProfile:output_type -> console.v1.DeleteConnectorProfileResponse
+	594,  // 1548: console.v1.ConsoleService.ListConnectedCalls:output_type -> console.v1.ListConnectedCallsResponse
+	596,  // 1549: console.v1.ConsoleService.StartMeetingCapture:output_type -> console.v1.StartMeetingCaptureResponse
+	598,  // 1550: console.v1.ConsoleService.GetMeetingCapture:output_type -> console.v1.GetMeetingCaptureResponse
+	600,  // 1551: console.v1.ConsoleService.ListMeetingCaptures:output_type -> console.v1.ListMeetingCapturesResponse
+	602,  // 1552: console.v1.ConsoleService.StopMeetingCapture:output_type -> console.v1.StopMeetingCaptureResponse
+	615,  // 1553: console.v1.ConsoleService.ListCommitments:output_type -> console.v1.ListCommitmentsResponse
+	359,  // 1554: console.v1.ConsoleService.GetBillingSubscription:output_type -> console.v1.GetBillingSubscriptionResponse
+	361,  // 1555: console.v1.ConsoleService.CreateBillingPortalSession:output_type -> console.v1.CreateBillingPortalSessionResponse
+	363,  // 1556: console.v1.ConsoleService.CreateBillingCheckoutSession:output_type -> console.v1.CreateBillingCheckoutSessionResponse
+	628,  // 1557: console.v1.ConsoleService.GetInferenceCreditBalance:output_type -> console.v1.GetInferenceCreditBalanceResponse
+	632,  // 1558: console.v1.ConsoleService.CreateInferenceCreditCheckout:output_type -> console.v1.CreateInferenceCreditCheckoutResponse
+	634,  // 1559: console.v1.ConsoleService.FulfillInferenceCreditCheckout:output_type -> console.v1.FulfillInferenceCreditCheckoutResponse
+	365,  // 1560: console.v1.ConsoleService.UpdateWorkspaceProfile:output_type -> console.v1.UpdateWorkspaceProfileResponse
+	389,  // 1561: console.v1.ConsoleService.ArchiveWorkspace:output_type -> console.v1.ArchiveWorkspaceResponse
+	391,  // 1562: console.v1.ConsoleService.UpdateWorkspacePolicy:output_type -> console.v1.UpdateWorkspacePolicyResponse
+	393,  // 1563: console.v1.ConsoleService.UpdateWorkspaceDexPolicy:output_type -> console.v1.UpdateWorkspaceDexPolicyResponse
+	395,  // 1564: console.v1.ConsoleService.UpdateWorkspaceArtifactStyleGuide:output_type -> console.v1.UpdateWorkspaceArtifactStyleGuideResponse
+	397,  // 1565: console.v1.ConsoleService.EvaluateWorkspaceArtifactStyleGuide:output_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideResponse
+	400,  // 1566: console.v1.ConsoleService.UpsertWorkspaceIdentityProvider:output_type -> console.v1.UpsertWorkspaceIdentityProviderResponse
+	402,  // 1567: console.v1.ConsoleService.RemoveWorkspaceIdentityProvider:output_type -> console.v1.RemoveWorkspaceIdentityProviderResponse
+	404,  // 1568: console.v1.ConsoleService.UpsertWorkspaceIntegration:output_type -> console.v1.UpsertWorkspaceIntegrationResponse
+	406,  // 1569: console.v1.ConsoleService.RemoveWorkspaceIntegration:output_type -> console.v1.RemoveWorkspaceIntegrationResponse
+	356,  // 1570: console.v1.ConsoleService.UpdateWorkspaceBilling:output_type -> console.v1.GetWorkspaceSettingsResponse
+	356,  // 1571: console.v1.ConsoleService.UpsertWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
+	356,  // 1572: console.v1.ConsoleService.RemoveWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
+	356,  // 1573: console.v1.ConsoleService.UpdateWorkspaceNotificationPreferences:output_type -> console.v1.GetWorkspaceSettingsResponse
+	356,  // 1574: console.v1.ConsoleService.EnableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
+	356,  // 1575: console.v1.ConsoleService.DisableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
+	415,  // 1576: console.v1.ConsoleService.ListWorkspaceSkills:output_type -> console.v1.ListWorkspaceSkillsResponse
+	430,  // 1577: console.v1.ConsoleService.BrowseDexSkillCatalog:output_type -> console.v1.BrowseDexSkillCatalogResponse
+	432,  // 1578: console.v1.ConsoleService.InstallDexSkillCatalogEntry:output_type -> console.v1.InstallDexSkillCatalogEntryResponse
+	434,  // 1579: console.v1.ConsoleService.CreateWorkspaceSkill:output_type -> console.v1.CreateWorkspaceSkillResponse
+	436,  // 1580: console.v1.ConsoleService.UpdateWorkspaceSkill:output_type -> console.v1.UpdateWorkspaceSkillResponse
+	438,  // 1581: console.v1.ConsoleService.DeleteWorkspaceSkill:output_type -> console.v1.DeleteWorkspaceSkillResponse
+	486,  // 1582: console.v1.ConsoleService.ListScenarioFixtures:output_type -> console.v1.ListScenarioFixturesResponse
+	488,  // 1583: console.v1.ConsoleService.PromoteScenarioFixture:output_type -> console.v1.PromoteScenarioFixtureResponse
+	490,  // 1584: console.v1.ConsoleService.CompareScenarioFixtures:output_type -> console.v1.CompareScenarioFixturesResponse
+	375,  // 1585: console.v1.ConsoleService.ListWorkspaceGuardrailRules:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
+	375,  // 1586: console.v1.ConsoleService.UpsertWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
+	375,  // 1587: console.v1.ConsoleService.RemoveWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
+	577,  // 1588: console.v1.ConsoleService.SetOperatingThreadController:output_type -> console.v1.SetOperatingThreadControllerResponse
+	582,  // 1589: console.v1.ConsoleService.GetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
+	582,  // 1590: console.v1.ConsoleService.SetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
+	607,  // 1591: console.v1.ConsoleService.CreateProspectingWatchProgram:output_type -> console.v1.CreateProspectingWatchProgramResponse
+	609,  // 1592: console.v1.ConsoleService.GetProspectingWatchProgram:output_type -> console.v1.GetProspectingWatchProgramResponse
+	611,  // 1593: console.v1.ConsoleService.ListProspectingWatchPrograms:output_type -> console.v1.ListProspectingWatchProgramsResponse
+	613,  // 1594: console.v1.ConsoleService.UpdateProspectingWatchProgram:output_type -> console.v1.UpdateProspectingWatchProgramResponse
+	812,  // 1595: console.v1.ConsoleService.CreateProspectingDraft:output_type -> console.v1.CreateProspectingDraftResponse
+	814,  // 1596: console.v1.ConsoleService.ListProspectingDrafts:output_type -> console.v1.ListProspectingDraftsResponse
+	816,  // 1597: console.v1.ConsoleService.ReviewProspectingDraft:output_type -> console.v1.ReviewProspectingDraftResponse
+	623,  // 1598: console.v1.ConsoleService.RecordOperatingHomepageSuggestionFeedback:output_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
+	108,  // 1599: console.v1.WorkspaceKeyService.GetWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
+	108,  // 1600: console.v1.WorkspaceKeyService.PutWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
+	108,  // 1601: console.v1.WorkspaceKeyService.DeleteWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
+	588,  // 1602: console.v1.ManagedSetupService.GetManagedSetup:output_type -> console.v1.ManagedSetup
+	588,  // 1603: console.v1.ManagedSetupService.SetManagedSetup:output_type -> console.v1.ManagedSetup
+	1368, // [1368:1604] is the sub-list for method output_type
+	1132, // [1132:1368] is the sub-list for method input_type
+	1132, // [1132:1132] is the sub-list for extension type_name
+	1132, // [1132:1132] is the sub-list for extension extendee
+	0,    // [0:1132] is the sub-list for field type_name
 }
 
 func init() { file_console_v1_console_proto_init() }
@@ -73223,14 +73475,15 @@ func file_console_v1_console_proto_init() {
 	}
 	file_console_v1_console_proto_msgTypes[40].OneofWrappers = []any{}
 	file_console_v1_console_proto_msgTypes[113].OneofWrappers = []any{}
+	file_console_v1_console_proto_msgTypes[240].OneofWrappers = []any{}
 	file_console_v1_console_proto_msgTypes[262].OneofWrappers = []any{}
 	file_console_v1_console_proto_msgTypes[266].OneofWrappers = []any{}
 	file_console_v1_console_proto_msgTypes[275].OneofWrappers = []any{}
 	file_console_v1_console_proto_msgTypes[279].OneofWrappers = []any{}
 	file_console_v1_console_proto_msgTypes[342].OneofWrappers = []any{}
-	file_console_v1_console_proto_msgTypes[435].OneofWrappers = []any{}
-	file_console_v1_console_proto_msgTypes[530].OneofWrappers = []any{}
-	file_console_v1_console_proto_msgTypes[537].OneofWrappers = []any{
+	file_console_v1_console_proto_msgTypes[436].OneofWrappers = []any{}
+	file_console_v1_console_proto_msgTypes[531].OneofWrappers = []any{}
+	file_console_v1_console_proto_msgTypes[538].OneofWrappers = []any{
 		(*BusinessFieldValue_Text)(nil),
 		(*BusinessFieldValue_Integer)(nil),
 		(*BusinessFieldValue_Boolean)(nil),
@@ -73243,11 +73496,11 @@ func file_console_v1_console_proto_init() {
 		(*BusinessFieldValue_Artifact)(nil),
 		(*BusinessFieldValue_TextList)(nil),
 	}
-	file_console_v1_console_proto_msgTypes[553].OneofWrappers = []any{
+	file_console_v1_console_proto_msgTypes[554].OneofWrappers = []any{
 		(*BusinessObjectFilter_UniqueValue)(nil),
 		(*BusinessObjectFilter_Reference)(nil),
 	}
-	file_console_v1_console_proto_msgTypes[581].OneofWrappers = []any{
+	file_console_v1_console_proto_msgTypes[582].OneofWrappers = []any{
 		(*CaptureFormTypedValue_Text)(nil),
 		(*CaptureFormTypedValue_Integer)(nil),
 		(*CaptureFormTypedValue_Decimal)(nil),
@@ -73261,24 +73514,24 @@ func file_console_v1_console_proto_init() {
 		(*CaptureFormTypedValue_OptionValues_)(nil),
 		(*CaptureFormTypedValue_Artifact)(nil),
 	}
-	file_console_v1_console_proto_msgTypes[582].OneofWrappers = []any{
+	file_console_v1_console_proto_msgTypes[583].OneofWrappers = []any{
 		(*CaptureFormField_Select)(nil),
 		(*CaptureFormField_Upload)(nil),
 	}
-	file_console_v1_console_proto_msgTypes[583].OneofWrappers = []any{
+	file_console_v1_console_proto_msgTypes[584].OneofWrappers = []any{
 		(*CaptureFormPublicField_Select)(nil),
 		(*CaptureFormPublicField_Upload)(nil),
 	}
-	file_console_v1_console_proto_msgTypes[663].OneofWrappers = []any{}
-	file_console_v1_console_proto_msgTypes[665].OneofWrappers = []any{}
-	file_console_v1_console_proto_msgTypes[668].OneofWrappers = []any{}
+	file_console_v1_console_proto_msgTypes[664].OneofWrappers = []any{}
+	file_console_v1_console_proto_msgTypes[666].OneofWrappers = []any{}
+	file_console_v1_console_proto_msgTypes[669].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_console_v1_console_proto_rawDesc), len(file_console_v1_console_proto_rawDesc)),
 			NumEnums:      105,
-			NumMessages:   716,
+			NumMessages:   717,
 			NumExtensions: 0,
 			NumServices:   3,
 		},
