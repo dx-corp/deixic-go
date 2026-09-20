@@ -26424,11 +26424,16 @@ func (x *ListIntegrationTilesRequest) GetQuery() *ConsoleQuery {
 }
 
 type ListIntegrationTilesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Tiles         []*IntegrationTile     `protobuf:"bytes,1,rep,name=tiles,proto3" json:"tiles,omitempty"`
-	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                       protoimpl.MessageState `protogen:"open.v1"`
+	Tiles                       []*IntegrationTile     `protobuf:"bytes,1,rep,name=tiles,proto3" json:"tiles,omitempty"`
+	Total                       int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	InstalledTotal              *int32                 `protobuf:"varint,3,opt,name=installed_total,json=installedTotal,proto3,oneof" json:"installed_total,omitempty"`
+	PreviewTotal                *int32                 `protobuf:"varint,4,opt,name=preview_total,json=previewTotal,proto3,oneof" json:"preview_total,omitempty"`
+	ReadyTotal                  int32                  `protobuf:"varint,5,opt,name=ready_total,json=readyTotal,proto3" json:"ready_total,omitempty"`
+	ConfiguredTotal             int32                  `protobuf:"varint,6,opt,name=configured_total,json=configuredTotal,proto3" json:"configured_total,omitempty"`
+	PreviewInventoryUnavailable bool                   `protobuf:"varint,7,opt,name=preview_inventory_unavailable,json=previewInventoryUnavailable,proto3" json:"preview_inventory_unavailable,omitempty"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *ListIntegrationTilesResponse) Reset() {
@@ -26473,6 +26478,41 @@ func (x *ListIntegrationTilesResponse) GetTotal() int32 {
 		return x.Total
 	}
 	return 0
+}
+
+func (x *ListIntegrationTilesResponse) GetInstalledTotal() int32 {
+	if x != nil && x.InstalledTotal != nil {
+		return *x.InstalledTotal
+	}
+	return 0
+}
+
+func (x *ListIntegrationTilesResponse) GetPreviewTotal() int32 {
+	if x != nil && x.PreviewTotal != nil {
+		return *x.PreviewTotal
+	}
+	return 0
+}
+
+func (x *ListIntegrationTilesResponse) GetReadyTotal() int32 {
+	if x != nil {
+		return x.ReadyTotal
+	}
+	return 0
+}
+
+func (x *ListIntegrationTilesResponse) GetConfiguredTotal() int32 {
+	if x != nil {
+		return x.ConfiguredTotal
+	}
+	return 0
+}
+
+func (x *ListIntegrationTilesResponse) GetPreviewInventoryUnavailable() bool {
+	if x != nil {
+		return x.PreviewInventoryUnavailable
+	}
+	return false
 }
 
 type ListPinnedSourcesRequest struct {
@@ -40841,6 +40881,23 @@ type IntegrationTile struct {
 	OauthSupported       bool                            `protobuf:"varint,28,opt,name=oauth_supported,json=oauthSupported,proto3" json:"oauth_supported,omitempty"`
 	CredentialFields     []*IntegrationCredentialField   `protobuf:"bytes,29,rep,name=credential_fields,json=credentialFields,proto3" json:"credential_fields,omitempty"`
 	CatalogProvenance    *v16.ConnectorCatalogProvenance `protobuf:"bytes,30,opt,name=catalog_provenance,json=catalogProvenance,proto3" json:"catalog_provenance,omitempty"`
+	// catalog_tier is the connector catalog owner's shape-derived tier. Console
+	// carries it verbatim and never promotes a provider's readiness.
+	CatalogTier string `protobuf:"bytes,31,opt,name=catalog_tier,json=catalogTier,proto3" json:"catalog_tier,omitempty"`
+	// provider_actions names the typed runtime actions exposed by the published
+	// provider. Together with resource_families this distinguishes sync,
+	// action-only, and combined providers without inferring support from labels.
+	ProviderActions []string `protobuf:"bytes,32,rep,name=provider_actions,json=providerActions,proto3" json:"provider_actions,omitempty"`
+	// catalog_status is either ready (published and connectable) or
+	// qualification_pending (installed preview, not connectable).
+	CatalogStatus        string `protobuf:"bytes,33,opt,name=catalog_status,json=catalogStatus,proto3" json:"catalog_status,omitempty"`
+	SetupAllowed         bool   `protobuf:"varint,34,opt,name=setup_allowed,json=setupAllowed,proto3" json:"setup_allowed,omitempty"`
+	Configured           bool   `protobuf:"varint,35,opt,name=configured,proto3" json:"configured,omitempty"`
+	ProviderActionCount  int32  `protobuf:"varint,36,opt,name=provider_action_count,json=providerActionCount,proto3" json:"provider_action_count,omitempty"`
+	ResourceFamilyCount  int32  `protobuf:"varint,37,opt,name=resource_family_count,json=resourceFamilyCount,proto3" json:"resource_family_count,omitempty"`
+	RequiredFamilyCount  int32  `protobuf:"varint,38,opt,name=required_family_count,json=requiredFamilyCount,proto3" json:"required_family_count,omitempty"`
+	QualifiedFamilyCount int32  `protobuf:"varint,39,opt,name=qualified_family_count,json=qualifiedFamilyCount,proto3" json:"qualified_family_count,omitempty"`
+	RolloutKind          string `protobuf:"bytes,40,opt,name=rollout_kind,json=rolloutKind,proto3" json:"rollout_kind,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -41083,6 +41140,76 @@ func (x *IntegrationTile) GetCatalogProvenance() *v16.ConnectorCatalogProvenance
 		return x.CatalogProvenance
 	}
 	return nil
+}
+
+func (x *IntegrationTile) GetCatalogTier() string {
+	if x != nil {
+		return x.CatalogTier
+	}
+	return ""
+}
+
+func (x *IntegrationTile) GetProviderActions() []string {
+	if x != nil {
+		return x.ProviderActions
+	}
+	return nil
+}
+
+func (x *IntegrationTile) GetCatalogStatus() string {
+	if x != nil {
+		return x.CatalogStatus
+	}
+	return ""
+}
+
+func (x *IntegrationTile) GetSetupAllowed() bool {
+	if x != nil {
+		return x.SetupAllowed
+	}
+	return false
+}
+
+func (x *IntegrationTile) GetConfigured() bool {
+	if x != nil {
+		return x.Configured
+	}
+	return false
+}
+
+func (x *IntegrationTile) GetProviderActionCount() int32 {
+	if x != nil {
+		return x.ProviderActionCount
+	}
+	return 0
+}
+
+func (x *IntegrationTile) GetResourceFamilyCount() int32 {
+	if x != nil {
+		return x.ResourceFamilyCount
+	}
+	return 0
+}
+
+func (x *IntegrationTile) GetRequiredFamilyCount() int32 {
+	if x != nil {
+		return x.RequiredFamilyCount
+	}
+	return 0
+}
+
+func (x *IntegrationTile) GetQualifiedFamilyCount() int32 {
+	if x != nil {
+		return x.QualifiedFamilyCount
+	}
+	return 0
+}
+
+func (x *IntegrationTile) GetRolloutKind() string {
+	if x != nil {
+		return x.RolloutKind
+	}
+	return ""
 }
 
 type OnboardingTask struct {
@@ -66277,10 +66404,18 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"\x19GetTraceDrilldownResponse\x120\n" +
 	"\x05trace\x18\x01 \x01(\v2\x1a.console.v1.TraceDrilldownR\x05trace\"U\n" +
 	"\x1bListIntegrationTilesRequest\x126\n" +
-	"\x05query\x18\x01 \x01(\v2\x18.console.v1.ConsoleQueryB\x06\xbaH\x03\xc8\x01\x01R\x05query\"p\n" +
+	"\x05query\x18\x01 \x01(\v2\x18.console.v1.ConsoleQueryB\x06\xbaH\x03\xc8\x01\x01R\x05query\"\xa2\x03\n" +
 	"\x1cListIntegrationTilesResponse\x121\n" +
 	"\x05tiles\x18\x01 \x03(\v2\x1b.console.v1.IntegrationTileR\x05tiles\x12\x1d\n" +
-	"\x05total\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x05total\"F\n" +
+	"\x05total\x18\x02 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x05total\x125\n" +
+	"\x0finstalled_total\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00H\x00R\x0einstalledTotal\x88\x01\x01\x121\n" +
+	"\rpreview_total\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00H\x01R\fpreviewTotal\x88\x01\x01\x12(\n" +
+	"\vready_total\x18\x05 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\n" +
+	"readyTotal\x122\n" +
+	"\x10configured_total\x18\x06 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x0fconfiguredTotal\x12B\n" +
+	"\x1dpreview_inventory_unavailable\x18\a \x01(\bR\x1bpreviewInventoryUnavailableB\x12\n" +
+	"\x10_installed_totalB\x10\n" +
+	"\x0e_preview_total\"F\n" +
 	"\x18ListPinnedSourcesRequest\x12*\n" +
 	"\fworkspace_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vworkspaceId\"I\n" +
 	"\x19ListPinnedSourcesResponse\x12,\n" +
@@ -67640,8 +67775,7 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"\brequired\x18\x03 \x01(\bR\brequired\x12\x16\n" +
 	"\x06secret\x18\x04 \x01(\bR\x06secret\x12<\n" +
 	"\x1aaccepted_reference_schemes\x18\x05 \x03(\tR\x18acceptedReferenceSchemes\x12'\n" +
-	"\x0fcredential_type\x18\x06 \x01(\tR\x0ecredentialType\"\xa3\n" +
-	"\n" +
+	"\x0fcredential_type\x18\x06 \x01(\tR\x0ecredentialType\"\xf6\r\n" +
 	"\x0fIntegrationTile\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
@@ -67678,7 +67812,19 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"\tauth_type\x18\x1b \x01(\tR\bauthType\x12'\n" +
 	"\x0foauth_supported\x18\x1c \x01(\bR\x0eoauthSupported\x12S\n" +
 	"\x11credential_fields\x18\x1d \x03(\v2&.console.v1.IntegrationCredentialFieldR\x10credentialFields\x12X\n" +
-	"\x12catalog_provenance\x18\x1e \x01(\v2).connectors.v1.ConnectorCatalogProvenanceR\x11catalogProvenance\"\xd2\x01\n" +
+	"\x12catalog_provenance\x18\x1e \x01(\v2).connectors.v1.ConnectorCatalogProvenanceR\x11catalogProvenance\x12!\n" +
+	"\fcatalog_tier\x18\x1f \x01(\tR\vcatalogTier\x12)\n" +
+	"\x10provider_actions\x18  \x03(\tR\x0fproviderActions\x12%\n" +
+	"\x0ecatalog_status\x18! \x01(\tR\rcatalogStatus\x12#\n" +
+	"\rsetup_allowed\x18\" \x01(\bR\fsetupAllowed\x12\x1e\n" +
+	"\n" +
+	"configured\x18# \x01(\bR\n" +
+	"configured\x12;\n" +
+	"\x15provider_action_count\x18$ \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x13providerActionCount\x12;\n" +
+	"\x15resource_family_count\x18% \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x13resourceFamilyCount\x12;\n" +
+	"\x15required_family_count\x18& \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x13requiredFamilyCount\x12=\n" +
+	"\x16qualified_family_count\x18' \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x14qualifiedFamilyCount\x12!\n" +
+	"\frollout_kind\x18( \x01(\tR\vrolloutKind\"\xd2\x01\n" +
 	"\x0eOnboardingTask\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x16\n" +
@@ -73223,6 +73369,7 @@ func file_console_v1_console_proto_init() {
 	}
 	file_console_v1_console_proto_msgTypes[40].OneofWrappers = []any{}
 	file_console_v1_console_proto_msgTypes[113].OneofWrappers = []any{}
+	file_console_v1_console_proto_msgTypes[240].OneofWrappers = []any{}
 	file_console_v1_console_proto_msgTypes[262].OneofWrappers = []any{}
 	file_console_v1_console_proto_msgTypes[266].OneofWrappers = []any{}
 	file_console_v1_console_proto_msgTypes[275].OneofWrappers = []any{}
