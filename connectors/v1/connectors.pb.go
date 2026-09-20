@@ -6741,9 +6741,13 @@ type InitiateOAuthFlowRequest struct {
 	GithubExistingAccount string `protobuf:"bytes,6,opt,name=github_existing_account,json=githubExistingAccount,proto3" json:"github_existing_account,omitempty"`
 	// Selects the provider identity represented by the resulting token. The
 	// app actor is currently supported only by Linear agent installations.
-	ActorMode     OAuthActorMode `protobuf:"varint,7,opt,name=actor_mode,json=actorMode,proto3,enum=connectors.v1.OAuthActorMode" json:"actor_mode,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	ActorMode OAuthActorMode `protobuf:"varint,7,opt,name=actor_mode,json=actorMode,proto3,enum=connectors.v1.OAuthActorMode" json:"actor_mode,omitempty"`
+	// Existing connection whose provider actor should be privately linked to
+	// the authenticated Deixic principal. This runs user OAuth only, verifies
+	// the provider subject, and never replaces the connection's credentials.
+	ActorLinkConnectionId string `protobuf:"bytes,8,opt,name=actor_link_connection_id,json=actorLinkConnectionId,proto3" json:"actor_link_connection_id,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *InitiateOAuthFlowRequest) Reset() {
@@ -6823,6 +6827,13 @@ func (x *InitiateOAuthFlowRequest) GetActorMode() OAuthActorMode {
 		return x.ActorMode
 	}
 	return OAuthActorMode_O_AUTH_ACTOR_MODE_UNSPECIFIED
+}
+
+func (x *InitiateOAuthFlowRequest) GetActorLinkConnectionId() string {
+	if x != nil {
+		return x.ActorLinkConnectionId
+	}
+	return ""
 }
 
 type InitiateOAuthFlowResponse struct {
@@ -10061,7 +10072,7 @@ const file_connectors_v1_connectors_proto_rawDesc = "" +
 	"\x16GetCapabilitiesRequest\x12,\n" +
 	"\rconnection_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\fconnectionId\"=\n" +
 	"\x17GetCapabilitiesResponse\x12\"\n" +
-	"\fcapabilities\x18\x01 \x03(\tR\fcapabilities\"\xdc\x02\n" +
+	"\fcapabilities\x18\x01 \x03(\tR\fcapabilities\"\x95\x03\n" +
 	"\x18InitiateOAuthFlowRequest\x12*\n" +
 	"\fworkspace_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vworkspaceId\x120\n" +
 	"\x0forganization_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0eorganizationId\x12(\n" +
@@ -10071,7 +10082,8 @@ const file_connectors_v1_connectors_proto_rawDesc = "" +
 	"\fredirect_uri\x18\x05 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vredirectUri\x126\n" +
 	"\x17github_existing_account\x18\x06 \x01(\tR\x15githubExistingAccount\x12<\n" +
 	"\n" +
-	"actor_mode\x18\a \x01(\x0e2\x1d.connectors.v1.OAuthActorModeR\tactorMode\"\xc7\x01\n" +
+	"actor_mode\x18\a \x01(\x0e2\x1d.connectors.v1.OAuthActorModeR\tactorMode\x127\n" +
+	"\x18actor_link_connection_id\x18\b \x01(\tR\x15actorLinkConnectionId\"\xc7\x01\n" +
 	"\x19InitiateOAuthFlowResponse\x12#\n" +
 	"\rauthorize_url\x18\x01 \x01(\tR\fauthorizeUrl\x12\x14\n" +
 	"\x05state\x18\x02 \x01(\tR\x05state\x129\n" +
