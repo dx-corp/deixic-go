@@ -34,6 +34,10 @@ const (
 	AuthType_AUTH_TYPE_BASIC       AuthType = 3
 	AuthType_AUTH_TYPE_MTLS        AuthType = 4
 	AuthType_AUTH_TYPE_GITHUB_APP  AuthType = 5
+	// The provider endpoint is public and registration requires no credential.
+	// This is distinct from UNSPECIFIED, which asks the server to use the
+	// provider's configured default authentication type.
+	AuthType_AUTH_TYPE_NONE AuthType = 6
 )
 
 // Enum value maps for AuthType.
@@ -45,6 +49,7 @@ var (
 		3: "AUTH_TYPE_BASIC",
 		4: "AUTH_TYPE_MTLS",
 		5: "AUTH_TYPE_GITHUB_APP",
+		6: "AUTH_TYPE_NONE",
 	}
 	AuthType_value = map[string]int32{
 		"AUTH_TYPE_UNSPECIFIED": 0,
@@ -53,6 +58,7 @@ var (
 		"AUTH_TYPE_BASIC":       3,
 		"AUTH_TYPE_MTLS":        4,
 		"AUTH_TYPE_GITHUB_APP":  5,
+		"AUTH_TYPE_NONE":        6,
 	}
 )
 
@@ -6917,7 +6923,9 @@ type CompleteOAuthFlowRequest struct {
 	ProviderId     string                 `protobuf:"bytes,3,opt,name=provider_id,json=providerId,proto3" json:"provider_id,omitempty"`
 	// State token returned from InitiateOAuthFlow.
 	State string `protobuf:"bytes,4,opt,name=state,proto3" json:"state,omitempty"`
-	// Authorization code returned by the provider on the redirect.
+	// Authorization code returned by the provider on the redirect. Required on
+	// the first completion and empty only when selected_tenant_id completes an
+	// already-custodied multi-tenant authorization.
 	Code string `protobuf:"bytes,5,opt,name=code,proto3" json:"code,omitempty"`
 	// Same redirect_uri passed to InitiateOAuthFlow; providers verify it.
 	RedirectUri string `protobuf:"bytes,6,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`
@@ -6927,8 +6935,12 @@ type CompleteOAuthFlowRequest struct {
 	// Untrusted GitHub callback coordinate; verified against the authenticated
 	// provider user and configured product App before connection registration.
 	GithubInstallationId uint64 `protobuf:"varint,9,opt,name=github_installation_id,json=githubInstallationId,proto3" json:"github_installation_id,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	// Exact provider tenant selected from a prior CompleteOAuthFlow response.
+	// Leave empty on the authorization-code exchange. The server never chooses
+	// an authorized tenant implicitly.
+	SelectedTenantId string `protobuf:"bytes,10,opt,name=selected_tenant_id,json=selectedTenantId,proto3" json:"selected_tenant_id,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *CompleteOAuthFlowRequest) Reset() {
@@ -7024,11 +7036,22 @@ func (x *CompleteOAuthFlowRequest) GetGithubInstallationId() uint64 {
 	return 0
 }
 
+func (x *CompleteOAuthFlowRequest) GetSelectedTenantId() string {
+	if x != nil {
+		return x.SelectedTenantId
+	}
+	return ""
+}
+
 type CompleteOAuthFlowResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Connection    *Connection            `protobuf:"bytes,1,opt,name=connection,proto3" json:"connection,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	Connection *Connection            `protobuf:"bytes,1,opt,name=connection,proto3" json:"connection,omitempty"`
+	// Authorized provider tenants requiring explicit customer selection before
+	// the connection can be registered. Empty when connection is populated.
+	AuthorizedTenants       []*OAuthProviderTenant `protobuf:"bytes,2,rep,name=authorized_tenants,json=authorizedTenants,proto3" json:"authorized_tenants,omitempty"`
+	TenantSelectionRequired bool                   `protobuf:"varint,3,opt,name=tenant_selection_required,json=tenantSelectionRequired,proto3" json:"tenant_selection_required,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *CompleteOAuthFlowResponse) Reset() {
@@ -7068,6 +7091,80 @@ func (x *CompleteOAuthFlowResponse) GetConnection() *Connection {
 	return nil
 }
 
+func (x *CompleteOAuthFlowResponse) GetAuthorizedTenants() []*OAuthProviderTenant {
+	if x != nil {
+		return x.AuthorizedTenants
+	}
+	return nil
+}
+
+func (x *CompleteOAuthFlowResponse) GetTenantSelectionRequired() bool {
+	if x != nil {
+		return x.TenantSelectionRequired
+	}
+	return false
+}
+
+type OAuthProviderTenant struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TenantId      string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	TenantName    string                 `protobuf:"bytes,2,opt,name=tenant_name,json=tenantName,proto3" json:"tenant_name,omitempty"`
+	TenantType    string                 `protobuf:"bytes,3,opt,name=tenant_type,json=tenantType,proto3" json:"tenant_type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OAuthProviderTenant) Reset() {
+	*x = OAuthProviderTenant{}
+	mi := &file_connectors_v1_connectors_proto_msgTypes[75]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OAuthProviderTenant) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OAuthProviderTenant) ProtoMessage() {}
+
+func (x *OAuthProviderTenant) ProtoReflect() protoreflect.Message {
+	mi := &file_connectors_v1_connectors_proto_msgTypes[75]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OAuthProviderTenant.ProtoReflect.Descriptor instead.
+func (*OAuthProviderTenant) Descriptor() ([]byte, []int) {
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{75}
+}
+
+func (x *OAuthProviderTenant) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+func (x *OAuthProviderTenant) GetTenantName() string {
+	if x != nil {
+		return x.TenantName
+	}
+	return ""
+}
+
+func (x *OAuthProviderTenant) GetTenantType() string {
+	if x != nil {
+		return x.TenantType
+	}
+	return ""
+}
+
 type InitiateMcpOAuthFlowRequest struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	OrganizationId string                 `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
@@ -7096,7 +7193,7 @@ type InitiateMcpOAuthFlowRequest struct {
 
 func (x *InitiateMcpOAuthFlowRequest) Reset() {
 	*x = InitiateMcpOAuthFlowRequest{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[75]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7108,7 +7205,7 @@ func (x *InitiateMcpOAuthFlowRequest) String() string {
 func (*InitiateMcpOAuthFlowRequest) ProtoMessage() {}
 
 func (x *InitiateMcpOAuthFlowRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[75]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7121,7 +7218,7 @@ func (x *InitiateMcpOAuthFlowRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InitiateMcpOAuthFlowRequest.ProtoReflect.Descriptor instead.
 func (*InitiateMcpOAuthFlowRequest) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{75}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *InitiateMcpOAuthFlowRequest) GetOrganizationId() string {
@@ -7237,7 +7334,7 @@ type InitiateMcpOAuthFlowResponse struct {
 
 func (x *InitiateMcpOAuthFlowResponse) Reset() {
 	*x = InitiateMcpOAuthFlowResponse{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[76]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7249,7 +7346,7 @@ func (x *InitiateMcpOAuthFlowResponse) String() string {
 func (*InitiateMcpOAuthFlowResponse) ProtoMessage() {}
 
 func (x *InitiateMcpOAuthFlowResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[76]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7262,7 +7359,7 @@ func (x *InitiateMcpOAuthFlowResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InitiateMcpOAuthFlowResponse.ProtoReflect.Descriptor instead.
 func (*InitiateMcpOAuthFlowResponse) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{76}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *InitiateMcpOAuthFlowResponse) GetAuthorizeUrl() string {
@@ -7339,7 +7436,7 @@ type CompleteMcpOAuthFlowRequest struct {
 
 func (x *CompleteMcpOAuthFlowRequest) Reset() {
 	*x = CompleteMcpOAuthFlowRequest{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[77]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7351,7 +7448,7 @@ func (x *CompleteMcpOAuthFlowRequest) String() string {
 func (*CompleteMcpOAuthFlowRequest) ProtoMessage() {}
 
 func (x *CompleteMcpOAuthFlowRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[77]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7364,7 +7461,7 @@ func (x *CompleteMcpOAuthFlowRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CompleteMcpOAuthFlowRequest.ProtoReflect.Descriptor instead.
 func (*CompleteMcpOAuthFlowRequest) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{77}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{78}
 }
 
 func (x *CompleteMcpOAuthFlowRequest) GetOrganizationId() string {
@@ -7472,7 +7569,7 @@ type CompleteMcpOAuthFlowResponse struct {
 
 func (x *CompleteMcpOAuthFlowResponse) Reset() {
 	*x = CompleteMcpOAuthFlowResponse{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[78]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7484,7 +7581,7 @@ func (x *CompleteMcpOAuthFlowResponse) String() string {
 func (*CompleteMcpOAuthFlowResponse) ProtoMessage() {}
 
 func (x *CompleteMcpOAuthFlowResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[78]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7497,7 +7594,7 @@ func (x *CompleteMcpOAuthFlowResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CompleteMcpOAuthFlowResponse.ProtoReflect.Descriptor instead.
 func (*CompleteMcpOAuthFlowResponse) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{78}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *CompleteMcpOAuthFlowResponse) GetConnectionRef() string {
@@ -7557,7 +7654,7 @@ type RevokeMcpOAuthGrantRequest struct {
 
 func (x *RevokeMcpOAuthGrantRequest) Reset() {
 	*x = RevokeMcpOAuthGrantRequest{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[79]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7569,7 +7666,7 @@ func (x *RevokeMcpOAuthGrantRequest) String() string {
 func (*RevokeMcpOAuthGrantRequest) ProtoMessage() {}
 
 func (x *RevokeMcpOAuthGrantRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[79]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7582,7 +7679,7 @@ func (x *RevokeMcpOAuthGrantRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeMcpOAuthGrantRequest.ProtoReflect.Descriptor instead.
 func (*RevokeMcpOAuthGrantRequest) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{79}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *RevokeMcpOAuthGrantRequest) GetOrganizationId() string {
@@ -7644,7 +7741,7 @@ type RevokeMcpOAuthGrantResponse struct {
 
 func (x *RevokeMcpOAuthGrantResponse) Reset() {
 	*x = RevokeMcpOAuthGrantResponse{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[80]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7656,7 +7753,7 @@ func (x *RevokeMcpOAuthGrantResponse) String() string {
 func (*RevokeMcpOAuthGrantResponse) ProtoMessage() {}
 
 func (x *RevokeMcpOAuthGrantResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[80]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7669,7 +7766,7 @@ func (x *RevokeMcpOAuthGrantResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeMcpOAuthGrantResponse.ProtoReflect.Descriptor instead.
 func (*RevokeMcpOAuthGrantResponse) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{80}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *RevokeMcpOAuthGrantResponse) GetRevoked() bool {
@@ -7704,7 +7801,7 @@ type TriggerSyncRequest struct {
 
 func (x *TriggerSyncRequest) Reset() {
 	*x = TriggerSyncRequest{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[81]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7716,7 +7813,7 @@ func (x *TriggerSyncRequest) String() string {
 func (*TriggerSyncRequest) ProtoMessage() {}
 
 func (x *TriggerSyncRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[81]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7729,7 +7826,7 @@ func (x *TriggerSyncRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TriggerSyncRequest.ProtoReflect.Descriptor instead.
 func (*TriggerSyncRequest) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{81}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *TriggerSyncRequest) GetConnectionId() string {
@@ -7777,7 +7874,7 @@ type TriggerSyncResponse struct {
 
 func (x *TriggerSyncResponse) Reset() {
 	*x = TriggerSyncResponse{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[82]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7789,7 +7886,7 @@ func (x *TriggerSyncResponse) String() string {
 func (*TriggerSyncResponse) ProtoMessage() {}
 
 func (x *TriggerSyncResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[82]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7802,7 +7899,7 @@ func (x *TriggerSyncResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TriggerSyncResponse.ProtoReflect.Descriptor instead.
 func (*TriggerSyncResponse) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{82}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *TriggerSyncResponse) GetQueueId() string {
@@ -7872,7 +7969,7 @@ type ExecuteConnectorActionRequest struct {
 
 func (x *ExecuteConnectorActionRequest) Reset() {
 	*x = ExecuteConnectorActionRequest{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[83]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7884,7 +7981,7 @@ func (x *ExecuteConnectorActionRequest) String() string {
 func (*ExecuteConnectorActionRequest) ProtoMessage() {}
 
 func (x *ExecuteConnectorActionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[83]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7897,7 +7994,7 @@ func (x *ExecuteConnectorActionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecuteConnectorActionRequest.ProtoReflect.Descriptor instead.
 func (*ExecuteConnectorActionRequest) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{83}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *ExecuteConnectorActionRequest) GetOrganizationId() string {
@@ -8010,7 +8107,7 @@ type ExecuteConnectorActionResponse struct {
 
 func (x *ExecuteConnectorActionResponse) Reset() {
 	*x = ExecuteConnectorActionResponse{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[84]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[85]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8022,7 +8119,7 @@ func (x *ExecuteConnectorActionResponse) String() string {
 func (*ExecuteConnectorActionResponse) ProtoMessage() {}
 
 func (x *ExecuteConnectorActionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[84]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[85]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8035,7 +8132,7 @@ func (x *ExecuteConnectorActionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecuteConnectorActionResponse.ProtoReflect.Descriptor instead.
 func (*ExecuteConnectorActionResponse) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{84}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *ExecuteConnectorActionResponse) GetConnectorActionExecutionId() string {
@@ -8157,7 +8254,7 @@ type StreamCursorState struct {
 
 func (x *StreamCursorState) Reset() {
 	*x = StreamCursorState{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[85]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[86]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8169,7 +8266,7 @@ func (x *StreamCursorState) String() string {
 func (*StreamCursorState) ProtoMessage() {}
 
 func (x *StreamCursorState) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[85]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[86]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8182,7 +8279,7 @@ func (x *StreamCursorState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamCursorState.ProtoReflect.Descriptor instead.
 func (*StreamCursorState) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{85}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *StreamCursorState) GetStreamId() string {
@@ -8234,7 +8331,7 @@ type StreamRunSummary struct {
 
 func (x *StreamRunSummary) Reset() {
 	*x = StreamRunSummary{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[86]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[87]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8246,7 +8343,7 @@ func (x *StreamRunSummary) String() string {
 func (*StreamRunSummary) ProtoMessage() {}
 
 func (x *StreamRunSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[86]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[87]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8259,7 +8356,7 @@ func (x *StreamRunSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamRunSummary.ProtoReflect.Descriptor instead.
 func (*StreamRunSummary) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{86}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{87}
 }
 
 func (x *StreamRunSummary) GetConnectorRunId() string {
@@ -8320,7 +8417,7 @@ type ConnectionStream struct {
 
 func (x *ConnectionStream) Reset() {
 	*x = ConnectionStream{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[87]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[88]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8332,7 +8429,7 @@ func (x *ConnectionStream) String() string {
 func (*ConnectionStream) ProtoMessage() {}
 
 func (x *ConnectionStream) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[87]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[88]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8345,7 +8442,7 @@ func (x *ConnectionStream) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConnectionStream.ProtoReflect.Descriptor instead.
 func (*ConnectionStream) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{87}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{88}
 }
 
 func (x *ConnectionStream) GetStreamId() string {
@@ -8413,7 +8510,7 @@ type ListConnectionStreamsRequest struct {
 
 func (x *ListConnectionStreamsRequest) Reset() {
 	*x = ListConnectionStreamsRequest{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[88]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[89]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8425,7 +8522,7 @@ func (x *ListConnectionStreamsRequest) String() string {
 func (*ListConnectionStreamsRequest) ProtoMessage() {}
 
 func (x *ListConnectionStreamsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[88]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[89]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8438,7 +8535,7 @@ func (x *ListConnectionStreamsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConnectionStreamsRequest.ProtoReflect.Descriptor instead.
 func (*ListConnectionStreamsRequest) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{88}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{89}
 }
 
 func (x *ListConnectionStreamsRequest) GetConnectionId() string {
@@ -8457,7 +8554,7 @@ type ListConnectionStreamsResponse struct {
 
 func (x *ListConnectionStreamsResponse) Reset() {
 	*x = ListConnectionStreamsResponse{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[89]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[90]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8469,7 +8566,7 @@ func (x *ListConnectionStreamsResponse) String() string {
 func (*ListConnectionStreamsResponse) ProtoMessage() {}
 
 func (x *ListConnectionStreamsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[89]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[90]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8482,7 +8579,7 @@ func (x *ListConnectionStreamsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConnectionStreamsResponse.ProtoReflect.Descriptor instead.
 func (*ListConnectionStreamsResponse) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{89}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{90}
 }
 
 func (x *ListConnectionStreamsResponse) GetStreams() []*ConnectionStream {
@@ -8506,7 +8603,7 @@ type SyncPartitionState struct {
 
 func (x *SyncPartitionState) Reset() {
 	*x = SyncPartitionState{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[90]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[91]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8518,7 +8615,7 @@ func (x *SyncPartitionState) String() string {
 func (*SyncPartitionState) ProtoMessage() {}
 
 func (x *SyncPartitionState) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[90]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[91]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8531,7 +8628,7 @@ func (x *SyncPartitionState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncPartitionState.ProtoReflect.Descriptor instead.
 func (*SyncPartitionState) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{90}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{91}
 }
 
 func (x *SyncPartitionState) GetPartitionKey() string {
@@ -8586,7 +8683,7 @@ type GetStreamStateRequest struct {
 
 func (x *GetStreamStateRequest) Reset() {
 	*x = GetStreamStateRequest{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[91]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[92]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8598,7 +8695,7 @@ func (x *GetStreamStateRequest) String() string {
 func (*GetStreamStateRequest) ProtoMessage() {}
 
 func (x *GetStreamStateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[91]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[92]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8611,7 +8708,7 @@ func (x *GetStreamStateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetStreamStateRequest.ProtoReflect.Descriptor instead.
 func (*GetStreamStateRequest) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{91}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{92}
 }
 
 func (x *GetStreamStateRequest) GetConnectionId() string {
@@ -8639,7 +8736,7 @@ type GetStreamStateResponse struct {
 
 func (x *GetStreamStateResponse) Reset() {
 	*x = GetStreamStateResponse{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[92]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[93]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8651,7 +8748,7 @@ func (x *GetStreamStateResponse) String() string {
 func (*GetStreamStateResponse) ProtoMessage() {}
 
 func (x *GetStreamStateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[92]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[93]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8664,7 +8761,7 @@ func (x *GetStreamStateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetStreamStateResponse.ProtoReflect.Descriptor instead.
 func (*GetStreamStateResponse) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{92}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{93}
 }
 
 func (x *GetStreamStateResponse) GetStream() *ConnectionStream {
@@ -8700,7 +8797,7 @@ type ResetStreamStateRequest struct {
 
 func (x *ResetStreamStateRequest) Reset() {
 	*x = ResetStreamStateRequest{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[93]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[94]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8712,7 +8809,7 @@ func (x *ResetStreamStateRequest) String() string {
 func (*ResetStreamStateRequest) ProtoMessage() {}
 
 func (x *ResetStreamStateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[93]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[94]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8725,7 +8822,7 @@ func (x *ResetStreamStateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetStreamStateRequest.ProtoReflect.Descriptor instead.
 func (*ResetStreamStateRequest) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{93}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{94}
 }
 
 func (x *ResetStreamStateRequest) GetConnectionId() string {
@@ -8765,7 +8862,7 @@ type ResetStreamStateResponse struct {
 
 func (x *ResetStreamStateResponse) Reset() {
 	*x = ResetStreamStateResponse{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[94]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[95]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8777,7 +8874,7 @@ func (x *ResetStreamStateResponse) String() string {
 func (*ResetStreamStateResponse) ProtoMessage() {}
 
 func (x *ResetStreamStateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[94]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[95]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8790,7 +8887,7 @@ func (x *ResetStreamStateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetStreamStateResponse.ProtoReflect.Descriptor instead.
 func (*ResetStreamStateResponse) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{94}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{95}
 }
 
 func (x *ResetStreamStateResponse) GetCursor() *StreamCursorState {
@@ -8819,7 +8916,7 @@ type SyncSchedule struct {
 
 func (x *SyncSchedule) Reset() {
 	*x = SyncSchedule{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[95]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[96]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8831,7 +8928,7 @@ func (x *SyncSchedule) String() string {
 func (*SyncSchedule) ProtoMessage() {}
 
 func (x *SyncSchedule) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[95]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[96]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8844,7 +8941,7 @@ func (x *SyncSchedule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncSchedule.ProtoReflect.Descriptor instead.
 func (*SyncSchedule) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{95}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{96}
 }
 
 func (x *SyncSchedule) GetConnectionId() string {
@@ -8939,7 +9036,7 @@ type CreateSyncScheduleRequest struct {
 
 func (x *CreateSyncScheduleRequest) Reset() {
 	*x = CreateSyncScheduleRequest{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[96]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[97]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8951,7 +9048,7 @@ func (x *CreateSyncScheduleRequest) String() string {
 func (*CreateSyncScheduleRequest) ProtoMessage() {}
 
 func (x *CreateSyncScheduleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[96]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[97]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8964,7 +9061,7 @@ func (x *CreateSyncScheduleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateSyncScheduleRequest.ProtoReflect.Descriptor instead.
 func (*CreateSyncScheduleRequest) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{96}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{97}
 }
 
 func (x *CreateSyncScheduleRequest) GetOrganizationId() string {
@@ -9026,7 +9123,7 @@ type CreateSyncScheduleResponse struct {
 
 func (x *CreateSyncScheduleResponse) Reset() {
 	*x = CreateSyncScheduleResponse{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[97]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[98]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9038,7 +9135,7 @@ func (x *CreateSyncScheduleResponse) String() string {
 func (*CreateSyncScheduleResponse) ProtoMessage() {}
 
 func (x *CreateSyncScheduleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[97]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[98]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9051,7 +9148,7 @@ func (x *CreateSyncScheduleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateSyncScheduleResponse.ProtoReflect.Descriptor instead.
 func (*CreateSyncScheduleResponse) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{97}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{98}
 }
 
 func (x *CreateSyncScheduleResponse) GetSchedule() *SyncSchedule {
@@ -9077,7 +9174,7 @@ type ListSyncSchedulesRequest struct {
 
 func (x *ListSyncSchedulesRequest) Reset() {
 	*x = ListSyncSchedulesRequest{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[98]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[99]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9089,7 +9186,7 @@ func (x *ListSyncSchedulesRequest) String() string {
 func (*ListSyncSchedulesRequest) ProtoMessage() {}
 
 func (x *ListSyncSchedulesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[98]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[99]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9102,7 +9199,7 @@ func (x *ListSyncSchedulesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncSchedulesRequest.ProtoReflect.Descriptor instead.
 func (*ListSyncSchedulesRequest) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{98}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{99}
 }
 
 func (x *ListSyncSchedulesRequest) GetConnectionId() string {
@@ -9121,7 +9218,7 @@ type ListSyncSchedulesResponse struct {
 
 func (x *ListSyncSchedulesResponse) Reset() {
 	*x = ListSyncSchedulesResponse{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[99]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[100]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9133,7 +9230,7 @@ func (x *ListSyncSchedulesResponse) String() string {
 func (*ListSyncSchedulesResponse) ProtoMessage() {}
 
 func (x *ListSyncSchedulesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[99]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[100]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9146,7 +9243,7 @@ func (x *ListSyncSchedulesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncSchedulesResponse.ProtoReflect.Descriptor instead.
 func (*ListSyncSchedulesResponse) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{99}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{100}
 }
 
 func (x *ListSyncSchedulesResponse) GetSchedules() []*SyncSchedule {
@@ -9183,7 +9280,7 @@ type ProviderResourceEnvelope struct {
 
 func (x *ProviderResourceEnvelope) Reset() {
 	*x = ProviderResourceEnvelope{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[100]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[101]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9195,7 +9292,7 @@ func (x *ProviderResourceEnvelope) String() string {
 func (*ProviderResourceEnvelope) ProtoMessage() {}
 
 func (x *ProviderResourceEnvelope) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[100]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[101]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9208,7 +9305,7 @@ func (x *ProviderResourceEnvelope) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProviderResourceEnvelope.ProtoReflect.Descriptor instead.
 func (*ProviderResourceEnvelope) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{100}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{101}
 }
 
 func (x *ProviderResourceEnvelope) GetSchemaVersion() string {
@@ -9358,7 +9455,7 @@ type GetBusinessSourceRecordRequest struct {
 
 func (x *GetBusinessSourceRecordRequest) Reset() {
 	*x = GetBusinessSourceRecordRequest{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[101]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[102]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9370,7 +9467,7 @@ func (x *GetBusinessSourceRecordRequest) String() string {
 func (*GetBusinessSourceRecordRequest) ProtoMessage() {}
 
 func (x *GetBusinessSourceRecordRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[101]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[102]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9383,7 +9480,7 @@ func (x *GetBusinessSourceRecordRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBusinessSourceRecordRequest.ProtoReflect.Descriptor instead.
 func (*GetBusinessSourceRecordRequest) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{101}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{102}
 }
 
 func (x *GetBusinessSourceRecordRequest) GetOrganizationId() string {
@@ -9438,7 +9535,7 @@ type GetBusinessSourceRecordResponse struct {
 
 func (x *GetBusinessSourceRecordResponse) Reset() {
 	*x = GetBusinessSourceRecordResponse{}
-	mi := &file_connectors_v1_connectors_proto_msgTypes[102]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[103]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9450,7 +9547,7 @@ func (x *GetBusinessSourceRecordResponse) String() string {
 func (*GetBusinessSourceRecordResponse) ProtoMessage() {}
 
 func (x *GetBusinessSourceRecordResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_connectors_v1_connectors_proto_msgTypes[102]
+	mi := &file_connectors_v1_connectors_proto_msgTypes[103]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9463,7 +9560,7 @@ func (x *GetBusinessSourceRecordResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBusinessSourceRecordResponse.ProtoReflect.Descriptor instead.
 func (*GetBusinessSourceRecordResponse) Descriptor() ([]byte, []int) {
-	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{102}
+	return file_connectors_v1_connectors_proto_rawDescGZIP(), []int{103}
 }
 
 func (x *GetBusinessSourceRecordResponse) GetEnvelope() *ProviderResourceEnvelope {
@@ -10089,22 +10186,32 @@ const file_connectors_v1_connectors_proto_rawDesc = "" +
 	"\x05state\x18\x02 \x01(\tR\x05state\x129\n" +
 	"\n" +
 	"expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x124\n" +
-	"\x16github_installation_id\x18\x04 \x01(\x04R\x14githubInstallationId\"\x8c\x03\n" +
+	"\x16github_installation_id\x18\x04 \x01(\x04R\x14githubInstallationId\"\xb1\x03\n" +
 	"\x18CompleteOAuthFlowRequest\x12*\n" +
 	"\fworkspace_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vworkspaceId\x120\n" +
 	"\x0forganization_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0eorganizationId\x12(\n" +
 	"\vprovider_id\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\n" +
 	"providerId\x12\x1d\n" +
-	"\x05state\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05state\x12\x1b\n" +
-	"\x04code\x18\x05 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x04code\x12*\n" +
+	"\x05state\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05state\x12\x12\n" +
+	"\x04code\x18\x05 \x01(\tR\x04code\x12*\n" +
 	"\fredirect_uri\x18\x06 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vredirectUri\x12!\n" +
 	"\fdisplay_name\x18\a \x01(\tR\vdisplayName\x12'\n" +
 	"\x0fidempotency_key\x18\b \x01(\tR\x0eidempotencyKey\x124\n" +
-	"\x16github_installation_id\x18\t \x01(\x04R\x14githubInstallationId\"V\n" +
+	"\x16github_installation_id\x18\t \x01(\x04R\x14githubInstallationId\x12,\n" +
+	"\x12selected_tenant_id\x18\n" +
+	" \x01(\tR\x10selectedTenantId\"\xe5\x01\n" +
 	"\x19CompleteOAuthFlowResponse\x129\n" +
 	"\n" +
 	"connection\x18\x01 \x01(\v2\x19.connectors.v1.ConnectionR\n" +
-	"connection\"\xe5\x04\n" +
+	"connection\x12Q\n" +
+	"\x12authorized_tenants\x18\x02 \x03(\v2\".connectors.v1.OAuthProviderTenantR\x11authorizedTenants\x12:\n" +
+	"\x19tenant_selection_required\x18\x03 \x01(\bR\x17tenantSelectionRequired\"t\n" +
+	"\x13OAuthProviderTenant\x12\x1b\n" +
+	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x1f\n" +
+	"\vtenant_name\x18\x02 \x01(\tR\n" +
+	"tenantName\x12\x1f\n" +
+	"\vtenant_type\x18\x03 \x01(\tR\n" +
+	"tenantType\"\xe5\x04\n" +
 	"\x1bInitiateMcpOAuthFlowRequest\x120\n" +
 	"\x0forganization_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0eorganizationId\x12*\n" +
 	"\fworkspace_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vworkspaceId\x12$\n" +
@@ -10337,14 +10444,15 @@ const file_connectors_v1_connectors_proto_rawDesc = "" +
 	"\fdisplay_name\x18\x04 \x01(\tR\vdisplayName\x12;\n" +
 	"\vobserved_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"observedAt\x12\x18\n" +
-	"\awebsite\x18\x06 \x01(\tR\awebsite*\x95\x01\n" +
+	"\awebsite\x18\x06 \x01(\tR\awebsite*\xa9\x01\n" +
 	"\bAuthType\x12\x19\n" +
 	"\x15AUTH_TYPE_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10AUTH_TYPE_OAUTH2\x10\x01\x12\x15\n" +
 	"\x11AUTH_TYPE_API_KEY\x10\x02\x12\x13\n" +
 	"\x0fAUTH_TYPE_BASIC\x10\x03\x12\x12\n" +
 	"\x0eAUTH_TYPE_MTLS\x10\x04\x12\x18\n" +
-	"\x14AUTH_TYPE_GITHUB_APP\x10\x05*\x9c\x01\n" +
+	"\x14AUTH_TYPE_GITHUB_APP\x10\x05\x12\x12\n" +
+	"\x0eAUTH_TYPE_NONE\x10\x06*\x9c\x01\n" +
 	"\fHealthStatus\x12\x1d\n" +
 	"\x19HEALTH_STATUS_UNSPECIFIED\x10\x00\x12\x19\n" +
 	"\x15HEALTH_STATUS_HEALTHY\x10\x01\x12\x1a\n" +
@@ -10491,7 +10599,7 @@ func file_connectors_v1_connectors_proto_rawDescGZIP() []byte {
 }
 
 var file_connectors_v1_connectors_proto_enumTypes = make([]protoimpl.EnumInfo, 18)
-var file_connectors_v1_connectors_proto_msgTypes = make([]protoimpl.MessageInfo, 105)
+var file_connectors_v1_connectors_proto_msgTypes = make([]protoimpl.MessageInfo, 106)
 var file_connectors_v1_connectors_proto_goTypes = []any{
 	(AuthType)(0),                               // 0: connectors.v1.AuthType
 	(HealthStatus)(0),                           // 1: connectors.v1.HealthStatus
@@ -10586,62 +10694,63 @@ var file_connectors_v1_connectors_proto_goTypes = []any{
 	(*InitiateOAuthFlowResponse)(nil),           // 90: connectors.v1.InitiateOAuthFlowResponse
 	(*CompleteOAuthFlowRequest)(nil),            // 91: connectors.v1.CompleteOAuthFlowRequest
 	(*CompleteOAuthFlowResponse)(nil),           // 92: connectors.v1.CompleteOAuthFlowResponse
-	(*InitiateMcpOAuthFlowRequest)(nil),         // 93: connectors.v1.InitiateMcpOAuthFlowRequest
-	(*InitiateMcpOAuthFlowResponse)(nil),        // 94: connectors.v1.InitiateMcpOAuthFlowResponse
-	(*CompleteMcpOAuthFlowRequest)(nil),         // 95: connectors.v1.CompleteMcpOAuthFlowRequest
-	(*CompleteMcpOAuthFlowResponse)(nil),        // 96: connectors.v1.CompleteMcpOAuthFlowResponse
-	(*RevokeMcpOAuthGrantRequest)(nil),          // 97: connectors.v1.RevokeMcpOAuthGrantRequest
-	(*RevokeMcpOAuthGrantResponse)(nil),         // 98: connectors.v1.RevokeMcpOAuthGrantResponse
-	(*TriggerSyncRequest)(nil),                  // 99: connectors.v1.TriggerSyncRequest
-	(*TriggerSyncResponse)(nil),                 // 100: connectors.v1.TriggerSyncResponse
-	(*ExecuteConnectorActionRequest)(nil),       // 101: connectors.v1.ExecuteConnectorActionRequest
-	(*ExecuteConnectorActionResponse)(nil),      // 102: connectors.v1.ExecuteConnectorActionResponse
-	(*StreamCursorState)(nil),                   // 103: connectors.v1.StreamCursorState
-	(*StreamRunSummary)(nil),                    // 104: connectors.v1.StreamRunSummary
-	(*ConnectionStream)(nil),                    // 105: connectors.v1.ConnectionStream
-	(*ListConnectionStreamsRequest)(nil),        // 106: connectors.v1.ListConnectionStreamsRequest
-	(*ListConnectionStreamsResponse)(nil),       // 107: connectors.v1.ListConnectionStreamsResponse
-	(*SyncPartitionState)(nil),                  // 108: connectors.v1.SyncPartitionState
-	(*GetStreamStateRequest)(nil),               // 109: connectors.v1.GetStreamStateRequest
-	(*GetStreamStateResponse)(nil),              // 110: connectors.v1.GetStreamStateResponse
-	(*ResetStreamStateRequest)(nil),             // 111: connectors.v1.ResetStreamStateRequest
-	(*ResetStreamStateResponse)(nil),            // 112: connectors.v1.ResetStreamStateResponse
-	(*SyncSchedule)(nil),                        // 113: connectors.v1.SyncSchedule
-	(*CreateSyncScheduleRequest)(nil),           // 114: connectors.v1.CreateSyncScheduleRequest
-	(*CreateSyncScheduleResponse)(nil),          // 115: connectors.v1.CreateSyncScheduleResponse
-	(*ListSyncSchedulesRequest)(nil),            // 116: connectors.v1.ListSyncSchedulesRequest
-	(*ListSyncSchedulesResponse)(nil),           // 117: connectors.v1.ListSyncSchedulesResponse
-	(*ProviderResourceEnvelope)(nil),            // 118: connectors.v1.ProviderResourceEnvelope
-	(*GetBusinessSourceRecordRequest)(nil),      // 119: connectors.v1.GetBusinessSourceRecordRequest
-	(*GetBusinessSourceRecordResponse)(nil),     // 120: connectors.v1.GetBusinessSourceRecordResponse
-	nil,                                         // 121: connectors.v1.Connection.CredentialRefsEntry
-	nil,                                         // 122: connectors.v1.RegisterConnectionRequest.CredentialsEntry
-	(*timestamppb.Timestamp)(nil),               // 123: google.protobuf.Timestamp
+	(*OAuthProviderTenant)(nil),                 // 93: connectors.v1.OAuthProviderTenant
+	(*InitiateMcpOAuthFlowRequest)(nil),         // 94: connectors.v1.InitiateMcpOAuthFlowRequest
+	(*InitiateMcpOAuthFlowResponse)(nil),        // 95: connectors.v1.InitiateMcpOAuthFlowResponse
+	(*CompleteMcpOAuthFlowRequest)(nil),         // 96: connectors.v1.CompleteMcpOAuthFlowRequest
+	(*CompleteMcpOAuthFlowResponse)(nil),        // 97: connectors.v1.CompleteMcpOAuthFlowResponse
+	(*RevokeMcpOAuthGrantRequest)(nil),          // 98: connectors.v1.RevokeMcpOAuthGrantRequest
+	(*RevokeMcpOAuthGrantResponse)(nil),         // 99: connectors.v1.RevokeMcpOAuthGrantResponse
+	(*TriggerSyncRequest)(nil),                  // 100: connectors.v1.TriggerSyncRequest
+	(*TriggerSyncResponse)(nil),                 // 101: connectors.v1.TriggerSyncResponse
+	(*ExecuteConnectorActionRequest)(nil),       // 102: connectors.v1.ExecuteConnectorActionRequest
+	(*ExecuteConnectorActionResponse)(nil),      // 103: connectors.v1.ExecuteConnectorActionResponse
+	(*StreamCursorState)(nil),                   // 104: connectors.v1.StreamCursorState
+	(*StreamRunSummary)(nil),                    // 105: connectors.v1.StreamRunSummary
+	(*ConnectionStream)(nil),                    // 106: connectors.v1.ConnectionStream
+	(*ListConnectionStreamsRequest)(nil),        // 107: connectors.v1.ListConnectionStreamsRequest
+	(*ListConnectionStreamsResponse)(nil),       // 108: connectors.v1.ListConnectionStreamsResponse
+	(*SyncPartitionState)(nil),                  // 109: connectors.v1.SyncPartitionState
+	(*GetStreamStateRequest)(nil),               // 110: connectors.v1.GetStreamStateRequest
+	(*GetStreamStateResponse)(nil),              // 111: connectors.v1.GetStreamStateResponse
+	(*ResetStreamStateRequest)(nil),             // 112: connectors.v1.ResetStreamStateRequest
+	(*ResetStreamStateResponse)(nil),            // 113: connectors.v1.ResetStreamStateResponse
+	(*SyncSchedule)(nil),                        // 114: connectors.v1.SyncSchedule
+	(*CreateSyncScheduleRequest)(nil),           // 115: connectors.v1.CreateSyncScheduleRequest
+	(*CreateSyncScheduleResponse)(nil),          // 116: connectors.v1.CreateSyncScheduleResponse
+	(*ListSyncSchedulesRequest)(nil),            // 117: connectors.v1.ListSyncSchedulesRequest
+	(*ListSyncSchedulesResponse)(nil),           // 118: connectors.v1.ListSyncSchedulesResponse
+	(*ProviderResourceEnvelope)(nil),            // 119: connectors.v1.ProviderResourceEnvelope
+	(*GetBusinessSourceRecordRequest)(nil),      // 120: connectors.v1.GetBusinessSourceRecordRequest
+	(*GetBusinessSourceRecordResponse)(nil),     // 121: connectors.v1.GetBusinessSourceRecordResponse
+	nil,                                         // 122: connectors.v1.Connection.CredentialRefsEntry
+	nil,                                         // 123: connectors.v1.RegisterConnectionRequest.CredentialsEntry
+	(*timestamppb.Timestamp)(nil),               // 124: google.protobuf.Timestamp
 }
 var file_connectors_v1_connectors_proto_depIdxs = []int32{
 	0,   // 0: connectors.v1.Connection.auth_type:type_name -> connectors.v1.AuthType
 	1,   // 1: connectors.v1.Connection.health_status:type_name -> connectors.v1.HealthStatus
-	123, // 2: connectors.v1.Connection.last_healthy_at:type_name -> google.protobuf.Timestamp
-	123, // 3: connectors.v1.Connection.created_at:type_name -> google.protobuf.Timestamp
-	123, // 4: connectors.v1.Connection.updated_at:type_name -> google.protobuf.Timestamp
-	121, // 5: connectors.v1.Connection.credential_refs:type_name -> connectors.v1.Connection.CredentialRefsEntry
-	123, // 6: connectors.v1.Connection.credential_expires_at:type_name -> google.protobuf.Timestamp
+	124, // 2: connectors.v1.Connection.last_healthy_at:type_name -> google.protobuf.Timestamp
+	124, // 3: connectors.v1.Connection.created_at:type_name -> google.protobuf.Timestamp
+	124, // 4: connectors.v1.Connection.updated_at:type_name -> google.protobuf.Timestamp
+	122, // 5: connectors.v1.Connection.credential_refs:type_name -> connectors.v1.Connection.CredentialRefsEntry
+	124, // 6: connectors.v1.Connection.credential_expires_at:type_name -> google.protobuf.Timestamp
 	2,   // 7: connectors.v1.ProviderInstallation.install_state:type_name -> connectors.v1.ProviderInstallationState
 	1,   // 8: connectors.v1.ProviderInstallation.health_status:type_name -> connectors.v1.HealthStatus
-	123, // 9: connectors.v1.ProviderInstallation.installed_at:type_name -> google.protobuf.Timestamp
-	123, // 10: connectors.v1.ProviderInstallation.updated_at:type_name -> google.protobuf.Timestamp
-	123, // 11: connectors.v1.ProviderInstallation.revoked_at:type_name -> google.protobuf.Timestamp
+	124, // 9: connectors.v1.ProviderInstallation.installed_at:type_name -> google.protobuf.Timestamp
+	124, // 10: connectors.v1.ProviderInstallation.updated_at:type_name -> google.protobuf.Timestamp
+	124, // 11: connectors.v1.ProviderInstallation.revoked_at:type_name -> google.protobuf.Timestamp
 	18,  // 12: connectors.v1.ResolveProviderInstallationResponse.connection:type_name -> connectors.v1.Connection
 	19,  // 13: connectors.v1.ResolveProviderInstallationResponse.installation:type_name -> connectors.v1.ProviderInstallation
-	123, // 14: connectors.v1.VerifyConnectionActiveResponse.state_updated_at:type_name -> google.protobuf.Timestamp
-	123, // 15: connectors.v1.VerifyConnectionActiveResponse.verified_at:type_name -> google.protobuf.Timestamp
+	124, // 14: connectors.v1.VerifyConnectionActiveResponse.state_updated_at:type_name -> google.protobuf.Timestamp
+	124, // 15: connectors.v1.VerifyConnectionActiveResponse.verified_at:type_name -> google.protobuf.Timestamp
 	26,  // 16: connectors.v1.VerifyConnectionActiveResponse.source_authority:type_name -> connectors.v1.SourceAuthorityObservation
 	4,   // 17: connectors.v1.SourceAuthorityObservation.state:type_name -> connectors.v1.SourceAuthorityState
 	5,   // 18: connectors.v1.SourceAuthorityObservation.freshness_method:type_name -> connectors.v1.SourceAuthorityFreshnessMethod
-	123, // 19: connectors.v1.SourceAuthorityObservation.observed_at:type_name -> google.protobuf.Timestamp
-	123, // 20: connectors.v1.SourceAuthorityObservation.last_confirmed_at:type_name -> google.protobuf.Timestamp
+	124, // 19: connectors.v1.SourceAuthorityObservation.observed_at:type_name -> google.protobuf.Timestamp
+	124, // 20: connectors.v1.SourceAuthorityObservation.last_confirmed_at:type_name -> google.protobuf.Timestamp
 	1,   // 21: connectors.v1.ConnectionHealth.status:type_name -> connectors.v1.HealthStatus
-	123, // 22: connectors.v1.ConnectionHealth.last_check_at:type_name -> google.protobuf.Timestamp
+	124, // 22: connectors.v1.ConnectionHealth.last_check_at:type_name -> google.protobuf.Timestamp
 	33,  // 23: connectors.v1.ConnectorCredentialField.provenance:type_name -> connectors.v1.ConnectorCatalogProvenance
 	36,  // 24: connectors.v1.ConnectorRuntime.resource_families:type_name -> connectors.v1.ConnectorResourceFamily
 	42,  // 25: connectors.v1.ConnectorRuntime.child_resources:type_name -> connectors.v1.ConnectorChildResource
@@ -10666,8 +10775,8 @@ var file_connectors_v1_connectors_proto_depIdxs = []int32{
 	33,  // 44: connectors.v1.ConnectorProvider.provenance:type_name -> connectors.v1.ConnectorCatalogProvenance
 	34,  // 45: connectors.v1.ConnectorProvider.auth_bindings:type_name -> connectors.v1.ConnectorAuthBinding
 	45,  // 46: connectors.v1.CustomConnector.actions:type_name -> connectors.v1.CustomConnectorActionMetadata
-	123, // 47: connectors.v1.CustomConnector.created_at:type_name -> google.protobuf.Timestamp
-	123, // 48: connectors.v1.CustomConnector.updated_at:type_name -> google.protobuf.Timestamp
+	124, // 47: connectors.v1.CustomConnector.created_at:type_name -> google.protobuf.Timestamp
+	124, // 48: connectors.v1.CustomConnector.updated_at:type_name -> google.protobuf.Timestamp
 	45,  // 49: connectors.v1.PreviewCustomConnectorRequest.actions:type_name -> connectors.v1.CustomConnectorActionMetadata
 	46,  // 50: connectors.v1.PreviewCustomConnectorResponse.connector:type_name -> connectors.v1.CustomConnector
 	47,  // 51: connectors.v1.CreateCustomConnectorRequest.definition:type_name -> connectors.v1.PreviewCustomConnectorRequest
@@ -10678,7 +10787,7 @@ var file_connectors_v1_connectors_proto_depIdxs = []int32{
 	46,  // 56: connectors.v1.UpdateCustomConnectorResponse.connector:type_name -> connectors.v1.CustomConnector
 	6,   // 57: connectors.v1.SourceOfTruthPolicy.area:type_name -> connectors.v1.SourceOfTruthArea
 	0,   // 58: connectors.v1.RegisterConnectionRequest.auth_type:type_name -> connectors.v1.AuthType
-	122, // 59: connectors.v1.RegisterConnectionRequest.credentials:type_name -> connectors.v1.RegisterConnectionRequest.CredentialsEntry
+	123, // 59: connectors.v1.RegisterConnectionRequest.credentials:type_name -> connectors.v1.RegisterConnectionRequest.CredentialsEntry
 	18,  // 60: connectors.v1.RegisterConnectionResponse.connection:type_name -> connectors.v1.Connection
 	18,  // 61: connectors.v1.GetConnectionResponse.connection:type_name -> connectors.v1.Connection
 	0,   // 62: connectors.v1.ListConnectionsRequest.auth_type:type_name -> connectors.v1.AuthType
@@ -10687,8 +10796,8 @@ var file_connectors_v1_connectors_proto_depIdxs = []int32{
 	18,  // 65: connectors.v1.ListConnectionsResponse.connections:type_name -> connectors.v1.Connection
 	69,  // 66: connectors.v1.ListUpcomingCallsResponse.calls:type_name -> connectors.v1.UpcomingCall
 	10,  // 67: connectors.v1.ListUpcomingCallsResponse.source_state:type_name -> connectors.v1.UpcomingCallSourceState
-	123, // 68: connectors.v1.UpcomingCall.starts_at:type_name -> google.protobuf.Timestamp
-	123, // 69: connectors.v1.UpcomingCall.ends_at:type_name -> google.protobuf.Timestamp
+	124, // 68: connectors.v1.UpcomingCall.starts_at:type_name -> google.protobuf.Timestamp
+	124, // 69: connectors.v1.UpcomingCall.ends_at:type_name -> google.protobuf.Timestamp
 	0,   // 70: connectors.v1.ListProvidersRequest.auth_type:type_name -> connectors.v1.AuthType
 	44,  // 71: connectors.v1.ListProvidersResponse.providers:type_name -> connectors.v1.ConnectorProvider
 	11,  // 72: connectors.v1.ConnectorProviderPreview.qualification_state:type_name -> connectors.v1.ProviderQualificationState
@@ -10703,109 +10812,110 @@ var file_connectors_v1_connectors_proto_depIdxs = []int32{
 	59,  // 81: connectors.v1.SetSourceOfTruthPolicyRequest.policy:type_name -> connectors.v1.SourceOfTruthPolicy
 	59,  // 82: connectors.v1.SetSourceOfTruthPolicyResponse.policy:type_name -> connectors.v1.SourceOfTruthPolicy
 	12,  // 83: connectors.v1.InitiateOAuthFlowRequest.actor_mode:type_name -> connectors.v1.OAuthActorMode
-	123, // 84: connectors.v1.InitiateOAuthFlowResponse.expires_at:type_name -> google.protobuf.Timestamp
+	124, // 84: connectors.v1.InitiateOAuthFlowResponse.expires_at:type_name -> google.protobuf.Timestamp
 	18,  // 85: connectors.v1.CompleteOAuthFlowResponse.connection:type_name -> connectors.v1.Connection
-	123, // 86: connectors.v1.InitiateMcpOAuthFlowResponse.expires_at:type_name -> google.protobuf.Timestamp
-	123, // 87: connectors.v1.CompleteMcpOAuthFlowResponse.expires_at:type_name -> google.protobuf.Timestamp
-	13,  // 88: connectors.v1.ExecuteConnectorActionResponse.action_state:type_name -> connectors.v1.ConnectorActionExecutionState
-	14,  // 89: connectors.v1.ExecuteConnectorActionResponse.error_kind:type_name -> connectors.v1.ConnectorActionErrorKind
-	123, // 90: connectors.v1.StreamCursorState.updated_at:type_name -> google.protobuf.Timestamp
-	123, // 91: connectors.v1.StreamRunSummary.started_at:type_name -> google.protobuf.Timestamp
-	123, // 92: connectors.v1.StreamRunSummary.finished_at:type_name -> google.protobuf.Timestamp
-	7,   // 93: connectors.v1.ConnectionStream.replication_mode:type_name -> connectors.v1.ReplicationMode
-	103, // 94: connectors.v1.ConnectionStream.cursor:type_name -> connectors.v1.StreamCursorState
-	104, // 95: connectors.v1.ConnectionStream.last_run:type_name -> connectors.v1.StreamRunSummary
-	105, // 96: connectors.v1.ListConnectionStreamsResponse.streams:type_name -> connectors.v1.ConnectionStream
-	123, // 97: connectors.v1.SyncPartitionState.updated_at:type_name -> google.protobuf.Timestamp
-	105, // 98: connectors.v1.GetStreamStateResponse.stream:type_name -> connectors.v1.ConnectionStream
-	108, // 99: connectors.v1.GetStreamStateResponse.partitions:type_name -> connectors.v1.SyncPartitionState
-	103, // 100: connectors.v1.ResetStreamStateResponse.cursor:type_name -> connectors.v1.StreamCursorState
-	123, // 101: connectors.v1.SyncSchedule.last_scheduled_at:type_name -> google.protobuf.Timestamp
-	123, // 102: connectors.v1.SyncSchedule.created_at:type_name -> google.protobuf.Timestamp
-	123, // 103: connectors.v1.SyncSchedule.updated_at:type_name -> google.protobuf.Timestamp
-	123, // 104: connectors.v1.SyncSchedule.last_completed_at:type_name -> google.protobuf.Timestamp
-	113, // 105: connectors.v1.CreateSyncScheduleResponse.schedule:type_name -> connectors.v1.SyncSchedule
-	113, // 106: connectors.v1.ListSyncSchedulesResponse.schedules:type_name -> connectors.v1.SyncSchedule
-	15,  // 107: connectors.v1.ProviderResourceEnvelope.visibility_class:type_name -> connectors.v1.ProviderResourceVisibilityClass
-	17,  // 108: connectors.v1.ProviderResourceEnvelope.content_trust:type_name -> connectors.v1.ProviderContentTrust
-	16,  // 109: connectors.v1.ProviderResourceEnvelope.lifecycle_state:type_name -> connectors.v1.ProviderResourceLifecycleState
-	118, // 110: connectors.v1.GetBusinessSourceRecordResponse.envelope:type_name -> connectors.v1.ProviderResourceEnvelope
-	123, // 111: connectors.v1.GetBusinessSourceRecordResponse.observed_at:type_name -> google.protobuf.Timestamp
-	61,  // 112: connectors.v1.ConnectorService.RegisterConnection:input_type -> connectors.v1.RegisterConnectionRequest
-	63,  // 113: connectors.v1.ConnectorService.GetConnection:input_type -> connectors.v1.GetConnectionRequest
-	119, // 114: connectors.v1.ConnectorService.GetBusinessSourceRecord:input_type -> connectors.v1.GetBusinessSourceRecordRequest
-	65,  // 115: connectors.v1.ConnectorService.ListConnections:input_type -> connectors.v1.ListConnectionsRequest
-	67,  // 116: connectors.v1.ConnectorService.ListUpcomingCalls:input_type -> connectors.v1.ListUpcomingCallsRequest
-	70,  // 117: connectors.v1.ConnectorService.ListProviders:input_type -> connectors.v1.ListProvidersRequest
-	72,  // 118: connectors.v1.ConnectorService.ListProviderPreviews:input_type -> connectors.v1.ListProviderPreviewsRequest
-	47,  // 119: connectors.v1.ConnectorService.PreviewCustomConnector:input_type -> connectors.v1.PreviewCustomConnectorRequest
-	49,  // 120: connectors.v1.ConnectorService.CreateCustomConnector:input_type -> connectors.v1.CreateCustomConnectorRequest
-	51,  // 121: connectors.v1.ConnectorService.GetCustomConnector:input_type -> connectors.v1.GetCustomConnectorRequest
-	53,  // 122: connectors.v1.ConnectorService.ListCustomConnectors:input_type -> connectors.v1.ListCustomConnectorsRequest
-	55,  // 123: connectors.v1.ConnectorService.UpdateCustomConnector:input_type -> connectors.v1.UpdateCustomConnectorRequest
-	57,  // 124: connectors.v1.ConnectorService.DeleteCustomConnector:input_type -> connectors.v1.DeleteCustomConnectorRequest
-	20,  // 125: connectors.v1.ConnectorService.ResolveProviderInstallation:input_type -> connectors.v1.ResolveProviderInstallationRequest
-	22,  // 126: connectors.v1.ConnectorService.EnrollSurfaceTarget:input_type -> connectors.v1.EnrollSurfaceTargetRequest
-	24,  // 127: connectors.v1.ConnectorService.VerifyConnectionActive:input_type -> connectors.v1.VerifyConnectionActiveRequest
-	75,  // 128: connectors.v1.ConnectorService.RefreshConnection:input_type -> connectors.v1.RefreshConnectionRequest
-	77,  // 129: connectors.v1.ConnectorService.RevokeConnection:input_type -> connectors.v1.RevokeConnectionRequest
-	79,  // 130: connectors.v1.ConnectorService.GetHealth:input_type -> connectors.v1.GetHealthRequest
-	81,  // 131: connectors.v1.ConnectorService.ResolveSourceOfTruth:input_type -> connectors.v1.ResolveSourceOfTruthRequest
-	83,  // 132: connectors.v1.ConnectorService.GetDegradedReadPolicy:input_type -> connectors.v1.GetDegradedReadPolicyRequest
-	85,  // 133: connectors.v1.ConnectorService.SetSourceOfTruthPolicy:input_type -> connectors.v1.SetSourceOfTruthPolicyRequest
-	87,  // 134: connectors.v1.ConnectorService.GetCapabilities:input_type -> connectors.v1.GetCapabilitiesRequest
-	89,  // 135: connectors.v1.ConnectorService.InitiateOAuthFlow:input_type -> connectors.v1.InitiateOAuthFlowRequest
-	91,  // 136: connectors.v1.ConnectorService.CompleteOAuthFlow:input_type -> connectors.v1.CompleteOAuthFlowRequest
-	93,  // 137: connectors.v1.ConnectorService.InitiateMcpOAuthFlow:input_type -> connectors.v1.InitiateMcpOAuthFlowRequest
-	95,  // 138: connectors.v1.ConnectorService.CompleteMcpOAuthFlow:input_type -> connectors.v1.CompleteMcpOAuthFlowRequest
-	97,  // 139: connectors.v1.ConnectorService.RevokeMcpOAuthGrant:input_type -> connectors.v1.RevokeMcpOAuthGrantRequest
-	99,  // 140: connectors.v1.ConnectorService.TriggerSync:input_type -> connectors.v1.TriggerSyncRequest
-	106, // 141: connectors.v1.ConnectorService.ListConnectionStreams:input_type -> connectors.v1.ListConnectionStreamsRequest
-	109, // 142: connectors.v1.ConnectorService.GetStreamState:input_type -> connectors.v1.GetStreamStateRequest
-	111, // 143: connectors.v1.ConnectorService.ResetStreamState:input_type -> connectors.v1.ResetStreamStateRequest
-	101, // 144: connectors.v1.ConnectorService.ExecuteConnectorAction:input_type -> connectors.v1.ExecuteConnectorActionRequest
-	114, // 145: connectors.v1.ConnectorService.CreateSyncSchedule:input_type -> connectors.v1.CreateSyncScheduleRequest
-	116, // 146: connectors.v1.ConnectorService.ListSyncSchedules:input_type -> connectors.v1.ListSyncSchedulesRequest
-	62,  // 147: connectors.v1.ConnectorService.RegisterConnection:output_type -> connectors.v1.RegisterConnectionResponse
-	64,  // 148: connectors.v1.ConnectorService.GetConnection:output_type -> connectors.v1.GetConnectionResponse
-	120, // 149: connectors.v1.ConnectorService.GetBusinessSourceRecord:output_type -> connectors.v1.GetBusinessSourceRecordResponse
-	66,  // 150: connectors.v1.ConnectorService.ListConnections:output_type -> connectors.v1.ListConnectionsResponse
-	68,  // 151: connectors.v1.ConnectorService.ListUpcomingCalls:output_type -> connectors.v1.ListUpcomingCallsResponse
-	71,  // 152: connectors.v1.ConnectorService.ListProviders:output_type -> connectors.v1.ListProvidersResponse
-	74,  // 153: connectors.v1.ConnectorService.ListProviderPreviews:output_type -> connectors.v1.ListProviderPreviewsResponse
-	48,  // 154: connectors.v1.ConnectorService.PreviewCustomConnector:output_type -> connectors.v1.PreviewCustomConnectorResponse
-	50,  // 155: connectors.v1.ConnectorService.CreateCustomConnector:output_type -> connectors.v1.CreateCustomConnectorResponse
-	52,  // 156: connectors.v1.ConnectorService.GetCustomConnector:output_type -> connectors.v1.GetCustomConnectorResponse
-	54,  // 157: connectors.v1.ConnectorService.ListCustomConnectors:output_type -> connectors.v1.ListCustomConnectorsResponse
-	56,  // 158: connectors.v1.ConnectorService.UpdateCustomConnector:output_type -> connectors.v1.UpdateCustomConnectorResponse
-	58,  // 159: connectors.v1.ConnectorService.DeleteCustomConnector:output_type -> connectors.v1.DeleteCustomConnectorResponse
-	21,  // 160: connectors.v1.ConnectorService.ResolveProviderInstallation:output_type -> connectors.v1.ResolveProviderInstallationResponse
-	23,  // 161: connectors.v1.ConnectorService.EnrollSurfaceTarget:output_type -> connectors.v1.EnrollSurfaceTargetResponse
-	25,  // 162: connectors.v1.ConnectorService.VerifyConnectionActive:output_type -> connectors.v1.VerifyConnectionActiveResponse
-	76,  // 163: connectors.v1.ConnectorService.RefreshConnection:output_type -> connectors.v1.RefreshConnectionResponse
-	78,  // 164: connectors.v1.ConnectorService.RevokeConnection:output_type -> connectors.v1.RevokeConnectionResponse
-	80,  // 165: connectors.v1.ConnectorService.GetHealth:output_type -> connectors.v1.GetHealthResponse
-	82,  // 166: connectors.v1.ConnectorService.ResolveSourceOfTruth:output_type -> connectors.v1.ResolveSourceOfTruthResponse
-	84,  // 167: connectors.v1.ConnectorService.GetDegradedReadPolicy:output_type -> connectors.v1.GetDegradedReadPolicyResponse
-	86,  // 168: connectors.v1.ConnectorService.SetSourceOfTruthPolicy:output_type -> connectors.v1.SetSourceOfTruthPolicyResponse
-	88,  // 169: connectors.v1.ConnectorService.GetCapabilities:output_type -> connectors.v1.GetCapabilitiesResponse
-	90,  // 170: connectors.v1.ConnectorService.InitiateOAuthFlow:output_type -> connectors.v1.InitiateOAuthFlowResponse
-	92,  // 171: connectors.v1.ConnectorService.CompleteOAuthFlow:output_type -> connectors.v1.CompleteOAuthFlowResponse
-	94,  // 172: connectors.v1.ConnectorService.InitiateMcpOAuthFlow:output_type -> connectors.v1.InitiateMcpOAuthFlowResponse
-	96,  // 173: connectors.v1.ConnectorService.CompleteMcpOAuthFlow:output_type -> connectors.v1.CompleteMcpOAuthFlowResponse
-	98,  // 174: connectors.v1.ConnectorService.RevokeMcpOAuthGrant:output_type -> connectors.v1.RevokeMcpOAuthGrantResponse
-	100, // 175: connectors.v1.ConnectorService.TriggerSync:output_type -> connectors.v1.TriggerSyncResponse
-	107, // 176: connectors.v1.ConnectorService.ListConnectionStreams:output_type -> connectors.v1.ListConnectionStreamsResponse
-	110, // 177: connectors.v1.ConnectorService.GetStreamState:output_type -> connectors.v1.GetStreamStateResponse
-	112, // 178: connectors.v1.ConnectorService.ResetStreamState:output_type -> connectors.v1.ResetStreamStateResponse
-	102, // 179: connectors.v1.ConnectorService.ExecuteConnectorAction:output_type -> connectors.v1.ExecuteConnectorActionResponse
-	115, // 180: connectors.v1.ConnectorService.CreateSyncSchedule:output_type -> connectors.v1.CreateSyncScheduleResponse
-	117, // 181: connectors.v1.ConnectorService.ListSyncSchedules:output_type -> connectors.v1.ListSyncSchedulesResponse
-	147, // [147:182] is the sub-list for method output_type
-	112, // [112:147] is the sub-list for method input_type
-	112, // [112:112] is the sub-list for extension type_name
-	112, // [112:112] is the sub-list for extension extendee
-	0,   // [0:112] is the sub-list for field type_name
+	93,  // 86: connectors.v1.CompleteOAuthFlowResponse.authorized_tenants:type_name -> connectors.v1.OAuthProviderTenant
+	124, // 87: connectors.v1.InitiateMcpOAuthFlowResponse.expires_at:type_name -> google.protobuf.Timestamp
+	124, // 88: connectors.v1.CompleteMcpOAuthFlowResponse.expires_at:type_name -> google.protobuf.Timestamp
+	13,  // 89: connectors.v1.ExecuteConnectorActionResponse.action_state:type_name -> connectors.v1.ConnectorActionExecutionState
+	14,  // 90: connectors.v1.ExecuteConnectorActionResponse.error_kind:type_name -> connectors.v1.ConnectorActionErrorKind
+	124, // 91: connectors.v1.StreamCursorState.updated_at:type_name -> google.protobuf.Timestamp
+	124, // 92: connectors.v1.StreamRunSummary.started_at:type_name -> google.protobuf.Timestamp
+	124, // 93: connectors.v1.StreamRunSummary.finished_at:type_name -> google.protobuf.Timestamp
+	7,   // 94: connectors.v1.ConnectionStream.replication_mode:type_name -> connectors.v1.ReplicationMode
+	104, // 95: connectors.v1.ConnectionStream.cursor:type_name -> connectors.v1.StreamCursorState
+	105, // 96: connectors.v1.ConnectionStream.last_run:type_name -> connectors.v1.StreamRunSummary
+	106, // 97: connectors.v1.ListConnectionStreamsResponse.streams:type_name -> connectors.v1.ConnectionStream
+	124, // 98: connectors.v1.SyncPartitionState.updated_at:type_name -> google.protobuf.Timestamp
+	106, // 99: connectors.v1.GetStreamStateResponse.stream:type_name -> connectors.v1.ConnectionStream
+	109, // 100: connectors.v1.GetStreamStateResponse.partitions:type_name -> connectors.v1.SyncPartitionState
+	104, // 101: connectors.v1.ResetStreamStateResponse.cursor:type_name -> connectors.v1.StreamCursorState
+	124, // 102: connectors.v1.SyncSchedule.last_scheduled_at:type_name -> google.protobuf.Timestamp
+	124, // 103: connectors.v1.SyncSchedule.created_at:type_name -> google.protobuf.Timestamp
+	124, // 104: connectors.v1.SyncSchedule.updated_at:type_name -> google.protobuf.Timestamp
+	124, // 105: connectors.v1.SyncSchedule.last_completed_at:type_name -> google.protobuf.Timestamp
+	114, // 106: connectors.v1.CreateSyncScheduleResponse.schedule:type_name -> connectors.v1.SyncSchedule
+	114, // 107: connectors.v1.ListSyncSchedulesResponse.schedules:type_name -> connectors.v1.SyncSchedule
+	15,  // 108: connectors.v1.ProviderResourceEnvelope.visibility_class:type_name -> connectors.v1.ProviderResourceVisibilityClass
+	17,  // 109: connectors.v1.ProviderResourceEnvelope.content_trust:type_name -> connectors.v1.ProviderContentTrust
+	16,  // 110: connectors.v1.ProviderResourceEnvelope.lifecycle_state:type_name -> connectors.v1.ProviderResourceLifecycleState
+	119, // 111: connectors.v1.GetBusinessSourceRecordResponse.envelope:type_name -> connectors.v1.ProviderResourceEnvelope
+	124, // 112: connectors.v1.GetBusinessSourceRecordResponse.observed_at:type_name -> google.protobuf.Timestamp
+	61,  // 113: connectors.v1.ConnectorService.RegisterConnection:input_type -> connectors.v1.RegisterConnectionRequest
+	63,  // 114: connectors.v1.ConnectorService.GetConnection:input_type -> connectors.v1.GetConnectionRequest
+	120, // 115: connectors.v1.ConnectorService.GetBusinessSourceRecord:input_type -> connectors.v1.GetBusinessSourceRecordRequest
+	65,  // 116: connectors.v1.ConnectorService.ListConnections:input_type -> connectors.v1.ListConnectionsRequest
+	67,  // 117: connectors.v1.ConnectorService.ListUpcomingCalls:input_type -> connectors.v1.ListUpcomingCallsRequest
+	70,  // 118: connectors.v1.ConnectorService.ListProviders:input_type -> connectors.v1.ListProvidersRequest
+	72,  // 119: connectors.v1.ConnectorService.ListProviderPreviews:input_type -> connectors.v1.ListProviderPreviewsRequest
+	47,  // 120: connectors.v1.ConnectorService.PreviewCustomConnector:input_type -> connectors.v1.PreviewCustomConnectorRequest
+	49,  // 121: connectors.v1.ConnectorService.CreateCustomConnector:input_type -> connectors.v1.CreateCustomConnectorRequest
+	51,  // 122: connectors.v1.ConnectorService.GetCustomConnector:input_type -> connectors.v1.GetCustomConnectorRequest
+	53,  // 123: connectors.v1.ConnectorService.ListCustomConnectors:input_type -> connectors.v1.ListCustomConnectorsRequest
+	55,  // 124: connectors.v1.ConnectorService.UpdateCustomConnector:input_type -> connectors.v1.UpdateCustomConnectorRequest
+	57,  // 125: connectors.v1.ConnectorService.DeleteCustomConnector:input_type -> connectors.v1.DeleteCustomConnectorRequest
+	20,  // 126: connectors.v1.ConnectorService.ResolveProviderInstallation:input_type -> connectors.v1.ResolveProviderInstallationRequest
+	22,  // 127: connectors.v1.ConnectorService.EnrollSurfaceTarget:input_type -> connectors.v1.EnrollSurfaceTargetRequest
+	24,  // 128: connectors.v1.ConnectorService.VerifyConnectionActive:input_type -> connectors.v1.VerifyConnectionActiveRequest
+	75,  // 129: connectors.v1.ConnectorService.RefreshConnection:input_type -> connectors.v1.RefreshConnectionRequest
+	77,  // 130: connectors.v1.ConnectorService.RevokeConnection:input_type -> connectors.v1.RevokeConnectionRequest
+	79,  // 131: connectors.v1.ConnectorService.GetHealth:input_type -> connectors.v1.GetHealthRequest
+	81,  // 132: connectors.v1.ConnectorService.ResolveSourceOfTruth:input_type -> connectors.v1.ResolveSourceOfTruthRequest
+	83,  // 133: connectors.v1.ConnectorService.GetDegradedReadPolicy:input_type -> connectors.v1.GetDegradedReadPolicyRequest
+	85,  // 134: connectors.v1.ConnectorService.SetSourceOfTruthPolicy:input_type -> connectors.v1.SetSourceOfTruthPolicyRequest
+	87,  // 135: connectors.v1.ConnectorService.GetCapabilities:input_type -> connectors.v1.GetCapabilitiesRequest
+	89,  // 136: connectors.v1.ConnectorService.InitiateOAuthFlow:input_type -> connectors.v1.InitiateOAuthFlowRequest
+	91,  // 137: connectors.v1.ConnectorService.CompleteOAuthFlow:input_type -> connectors.v1.CompleteOAuthFlowRequest
+	94,  // 138: connectors.v1.ConnectorService.InitiateMcpOAuthFlow:input_type -> connectors.v1.InitiateMcpOAuthFlowRequest
+	96,  // 139: connectors.v1.ConnectorService.CompleteMcpOAuthFlow:input_type -> connectors.v1.CompleteMcpOAuthFlowRequest
+	98,  // 140: connectors.v1.ConnectorService.RevokeMcpOAuthGrant:input_type -> connectors.v1.RevokeMcpOAuthGrantRequest
+	100, // 141: connectors.v1.ConnectorService.TriggerSync:input_type -> connectors.v1.TriggerSyncRequest
+	107, // 142: connectors.v1.ConnectorService.ListConnectionStreams:input_type -> connectors.v1.ListConnectionStreamsRequest
+	110, // 143: connectors.v1.ConnectorService.GetStreamState:input_type -> connectors.v1.GetStreamStateRequest
+	112, // 144: connectors.v1.ConnectorService.ResetStreamState:input_type -> connectors.v1.ResetStreamStateRequest
+	102, // 145: connectors.v1.ConnectorService.ExecuteConnectorAction:input_type -> connectors.v1.ExecuteConnectorActionRequest
+	115, // 146: connectors.v1.ConnectorService.CreateSyncSchedule:input_type -> connectors.v1.CreateSyncScheduleRequest
+	117, // 147: connectors.v1.ConnectorService.ListSyncSchedules:input_type -> connectors.v1.ListSyncSchedulesRequest
+	62,  // 148: connectors.v1.ConnectorService.RegisterConnection:output_type -> connectors.v1.RegisterConnectionResponse
+	64,  // 149: connectors.v1.ConnectorService.GetConnection:output_type -> connectors.v1.GetConnectionResponse
+	121, // 150: connectors.v1.ConnectorService.GetBusinessSourceRecord:output_type -> connectors.v1.GetBusinessSourceRecordResponse
+	66,  // 151: connectors.v1.ConnectorService.ListConnections:output_type -> connectors.v1.ListConnectionsResponse
+	68,  // 152: connectors.v1.ConnectorService.ListUpcomingCalls:output_type -> connectors.v1.ListUpcomingCallsResponse
+	71,  // 153: connectors.v1.ConnectorService.ListProviders:output_type -> connectors.v1.ListProvidersResponse
+	74,  // 154: connectors.v1.ConnectorService.ListProviderPreviews:output_type -> connectors.v1.ListProviderPreviewsResponse
+	48,  // 155: connectors.v1.ConnectorService.PreviewCustomConnector:output_type -> connectors.v1.PreviewCustomConnectorResponse
+	50,  // 156: connectors.v1.ConnectorService.CreateCustomConnector:output_type -> connectors.v1.CreateCustomConnectorResponse
+	52,  // 157: connectors.v1.ConnectorService.GetCustomConnector:output_type -> connectors.v1.GetCustomConnectorResponse
+	54,  // 158: connectors.v1.ConnectorService.ListCustomConnectors:output_type -> connectors.v1.ListCustomConnectorsResponse
+	56,  // 159: connectors.v1.ConnectorService.UpdateCustomConnector:output_type -> connectors.v1.UpdateCustomConnectorResponse
+	58,  // 160: connectors.v1.ConnectorService.DeleteCustomConnector:output_type -> connectors.v1.DeleteCustomConnectorResponse
+	21,  // 161: connectors.v1.ConnectorService.ResolveProviderInstallation:output_type -> connectors.v1.ResolveProviderInstallationResponse
+	23,  // 162: connectors.v1.ConnectorService.EnrollSurfaceTarget:output_type -> connectors.v1.EnrollSurfaceTargetResponse
+	25,  // 163: connectors.v1.ConnectorService.VerifyConnectionActive:output_type -> connectors.v1.VerifyConnectionActiveResponse
+	76,  // 164: connectors.v1.ConnectorService.RefreshConnection:output_type -> connectors.v1.RefreshConnectionResponse
+	78,  // 165: connectors.v1.ConnectorService.RevokeConnection:output_type -> connectors.v1.RevokeConnectionResponse
+	80,  // 166: connectors.v1.ConnectorService.GetHealth:output_type -> connectors.v1.GetHealthResponse
+	82,  // 167: connectors.v1.ConnectorService.ResolveSourceOfTruth:output_type -> connectors.v1.ResolveSourceOfTruthResponse
+	84,  // 168: connectors.v1.ConnectorService.GetDegradedReadPolicy:output_type -> connectors.v1.GetDegradedReadPolicyResponse
+	86,  // 169: connectors.v1.ConnectorService.SetSourceOfTruthPolicy:output_type -> connectors.v1.SetSourceOfTruthPolicyResponse
+	88,  // 170: connectors.v1.ConnectorService.GetCapabilities:output_type -> connectors.v1.GetCapabilitiesResponse
+	90,  // 171: connectors.v1.ConnectorService.InitiateOAuthFlow:output_type -> connectors.v1.InitiateOAuthFlowResponse
+	92,  // 172: connectors.v1.ConnectorService.CompleteOAuthFlow:output_type -> connectors.v1.CompleteOAuthFlowResponse
+	95,  // 173: connectors.v1.ConnectorService.InitiateMcpOAuthFlow:output_type -> connectors.v1.InitiateMcpOAuthFlowResponse
+	97,  // 174: connectors.v1.ConnectorService.CompleteMcpOAuthFlow:output_type -> connectors.v1.CompleteMcpOAuthFlowResponse
+	99,  // 175: connectors.v1.ConnectorService.RevokeMcpOAuthGrant:output_type -> connectors.v1.RevokeMcpOAuthGrantResponse
+	101, // 176: connectors.v1.ConnectorService.TriggerSync:output_type -> connectors.v1.TriggerSyncResponse
+	108, // 177: connectors.v1.ConnectorService.ListConnectionStreams:output_type -> connectors.v1.ListConnectionStreamsResponse
+	111, // 178: connectors.v1.ConnectorService.GetStreamState:output_type -> connectors.v1.GetStreamStateResponse
+	113, // 179: connectors.v1.ConnectorService.ResetStreamState:output_type -> connectors.v1.ResetStreamStateResponse
+	103, // 180: connectors.v1.ConnectorService.ExecuteConnectorAction:output_type -> connectors.v1.ExecuteConnectorActionResponse
+	116, // 181: connectors.v1.ConnectorService.CreateSyncSchedule:output_type -> connectors.v1.CreateSyncScheduleResponse
+	118, // 182: connectors.v1.ConnectorService.ListSyncSchedules:output_type -> connectors.v1.ListSyncSchedulesResponse
+	148, // [148:183] is the sub-list for method output_type
+	113, // [113:148] is the sub-list for method input_type
+	113, // [113:113] is the sub-list for extension type_name
+	113, // [113:113] is the sub-list for extension extendee
+	0,   // [0:113] is the sub-list for field type_name
 }
 
 func init() { file_connectors_v1_connectors_proto_init() }
@@ -10817,15 +10927,15 @@ func file_connectors_v1_connectors_proto_init() {
 	file_connectors_v1_connectors_proto_msgTypes[18].OneofWrappers = []any{}
 	file_connectors_v1_connectors_proto_msgTypes[21].OneofWrappers = []any{}
 	file_connectors_v1_connectors_proto_msgTypes[23].OneofWrappers = []any{}
-	file_connectors_v1_connectors_proto_msgTypes[84].OneofWrappers = []any{}
-	file_connectors_v1_connectors_proto_msgTypes[93].OneofWrappers = []any{}
+	file_connectors_v1_connectors_proto_msgTypes[85].OneofWrappers = []any{}
+	file_connectors_v1_connectors_proto_msgTypes[94].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_connectors_v1_connectors_proto_rawDesc), len(file_connectors_v1_connectors_proto_rawDesc)),
 			NumEnums:      18,
-			NumMessages:   105,
+			NumMessages:   106,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
