@@ -71040,7 +71040,7 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"*PROSPECTING_DRAFT_REVIEW_STATE_UNSPECIFIED\x10\x00\x122\n" +
 	".PROSPECTING_DRAFT_REVIEW_STATE_REVIEW_REQUIRED\x10\x01\x12+\n" +
 	"'PROSPECTING_DRAFT_REVIEW_STATE_APPROVED\x10\x02\x12+\n" +
-	"'PROSPECTING_DRAFT_REVIEW_STATE_REJECTED\x10\x032ڱ\x02\n" +
+	"'PROSPECTING_DRAFT_REVIEW_STATE_REJECTED\x10\x032\xed\xb1\x02\n" +
 	"\x0eConsoleService\x12\xa8\x01\n" +
 	"\x16ListBusinessBlueprints\x12).console.v1.ListBusinessBlueprintsRequest\x1a*.console.v1.ListBusinessBlueprintsResponse\"7\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x0forganization_id\x12\xa9\x01\n" +
 	"\x16CloneBusinessBlueprint\x12).console.v1.CloneBusinessBlueprintRequest\x1a*.console.v1.CloneBusinessBlueprintResponse\"8\xca\xf3\x18\rconsole:write\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x02\xea\xf3\x18\x0forganization_id\x12\xba\x01\n" +
@@ -71126,8 +71126,8 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"\x16SubmitOrbControlAction\x12).console.v1.SubmitOrbControlActionRequest\x1a*.console.v1.SubmitOrbControlActionResponse\"D\xca\xf3\x18\rconsole:write\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x03\xea\xf3\x18\x15query.organization_id\x12\xae\x01\n" +
 	"\x1cSubmitAgentWorkforceEvidence\x12/.console.v1.SubmitAgentWorkforceEvidenceRequest\x1a0.console.v1.SubmitAgentWorkforceEvidenceResponse\"+\xca\xf3\x18\rconsole:write\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x03\x12}\n" +
 	"\fListFindings\x12\x1f.console.v1.ListFindingsRequest\x1a .console.v1.ListFindingsResponse\"*\xca\xf3\x18\fconsole:read\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x01\x12\x86\x01\n" +
-	"\x11GetTraceDrilldown\x12$.console.v1.GetTraceDrilldownRequest\x1a%.console.v1.GetTraceDrilldownResponse\"$\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\x12\x95\x01\n" +
-	"\x14ListIntegrationTiles\x12'.console.v1.ListIntegrationTilesRequest\x1a(.console.v1.ListIntegrationTilesResponse\"*\xca\xf3\x18\fconsole:read\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x01\x12\x86\x01\n" +
+	"\x11GetTraceDrilldown\x12$.console.v1.GetTraceDrilldownRequest\x1a%.console.v1.GetTraceDrilldownResponse\"$\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\x12\xa8\x01\n" +
+	"\x14ListIntegrationTiles\x12'.console.v1.ListIntegrationTilesRequest\x1a(.console.v1.ListIntegrationTilesResponse\"=\xca\xf3\x18\fconsole:read\xca\xf3\x18\x0fconnectors:read\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x01\x12\x86\x01\n" +
 	"\x11ListPinnedSources\x12$.console.v1.ListPinnedSourcesRequest\x1a%.console.v1.ListPinnedSourcesResponse\"$\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\x12\x81\x01\n" +
 	"\x0fSetPinnedSource\x12\".console.v1.SetPinnedSourceRequest\x1a#.console.v1.SetPinnedSourceResponse\"%\xca\xf3\x18\rconsole:write\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\x12u\n" +
 	"\vUnpinSource\x12\x1e.console.v1.UnpinSourceRequest\x1a\x1f.console.v1.UnpinSourceResponse\"%\xca\xf3\x18\rconsole:write\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\x12\x93\x01\n" +

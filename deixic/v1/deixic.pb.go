@@ -27,7 +27,7 @@ var File_deixic_v1_deixic_proto protoreflect.FileDescriptor
 
 const file_deixic_v1_deixic_proto_rawDesc = "" +
 	"\n" +
-	"\x16deixic/v1/deixic.proto\x12\tdeixic.v1\x1a\x15common/v1/authz.proto\x1a\x18console/v1/console.proto\x1a\x14meter/v1/meter.proto2ձ\x02\n" +
+	"\x16deixic/v1/deixic.proto\x12\tdeixic.v1\x1a\x15common/v1/authz.proto\x1a\x18console/v1/console.proto\x1a\x14meter/v1/meter.proto2\xe8\xb1\x02\n" +
 	"\rDeixicService\x12\xa8\x01\n" +
 	"\x16ListBusinessBlueprints\x12).console.v1.ListBusinessBlueprintsRequest\x1a*.console.v1.ListBusinessBlueprintsResponse\"7\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x0forganization_id\x12\xa9\x01\n" +
 	"\x16CloneBusinessBlueprint\x12).console.v1.CloneBusinessBlueprintRequest\x1a*.console.v1.CloneBusinessBlueprintResponse\"8\xca\xf3\x18\rconsole:write\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x02\xea\xf3\x18\x0forganization_id\x12\xba\x01\n" +
@@ -88,8 +88,8 @@ const file_deixic_v1_deixic_proto_rawDesc = "" +
 	"\x11GetOnboardingPlan\x12$.console.v1.GetOnboardingPlanRequest\x1a%.console.v1.GetOnboardingPlanResponse\"$\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\x12\x95\x01\n" +
 	"\x14ListAuthorityPosture\x12'.console.v1.ListAuthorityPostureRequest\x1a(.console.v1.ListAuthorityPostureResponse\"*\xca\xf3\x18\fconsole:read\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x01\x12\xa4\x01\n" +
 	"\x19ListAgentWorkforceRecords\x12,.console.v1.ListAgentWorkforceRecordsRequest\x1a-.console.v1.ListAgentWorkforceRecordsResponse\"*\xca\xf3\x18\fconsole:read\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x01\x12\xae\x01\n" +
-	"\x1cSubmitAgentWorkforceEvidence\x12/.console.v1.SubmitAgentWorkforceEvidenceRequest\x1a0.console.v1.SubmitAgentWorkforceEvidenceResponse\"+\xca\xf3\x18\rconsole:write\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x03\x12\x95\x01\n" +
-	"\x14ListIntegrationTiles\x12'.console.v1.ListIntegrationTilesRequest\x1a(.console.v1.ListIntegrationTilesResponse\"*\xca\xf3\x18\fconsole:read\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x01\x12\x86\x01\n" +
+	"\x1cSubmitAgentWorkforceEvidence\x12/.console.v1.SubmitAgentWorkforceEvidenceRequest\x1a0.console.v1.SubmitAgentWorkforceEvidenceResponse\"+\xca\xf3\x18\rconsole:write\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x03\x12\xa8\x01\n" +
+	"\x14ListIntegrationTiles\x12'.console.v1.ListIntegrationTilesRequest\x1a(.console.v1.ListIntegrationTilesResponse\"=\xca\xf3\x18\fconsole:read\xca\xf3\x18\x0fconnectors:read\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x01\x12\x86\x01\n" +
 	"\x11ListPinnedSources\x12$.console.v1.ListPinnedSourcesRequest\x1a%.console.v1.ListPinnedSourcesResponse\"$\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\x12\xb1\x01\n" +
 	"\x15ListOrbControlTargets\x12(.console.v1.ListOrbControlTargetsRequest\x1a).console.v1.ListOrbControlTargetsResponse\"C\xca\xf3\x18\fconsole:read\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x15query.organization_id\x12\xab\x01\n" +
 	"\x13GetOrbControlTarget\x12&.console.v1.GetOrbControlTargetRequest\x1a'.console.v1.GetOrbControlTargetResponse\"C\xca\xf3\x18\fconsole:read\xd2\xf3\x18\x12query.workspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x15query.organization_id\x12\xb5\x01\n" +
