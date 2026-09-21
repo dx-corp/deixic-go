@@ -439,6 +439,11 @@ type ToolExecutionLinkage struct {
 	ApplicationId string                      `protobuf:"bytes,13,opt,name=application_id,json=applicationId,proto3" json:"application_id,omitempty"`
 	ProjectSource *ToolExecutionProjectSource `protobuf:"bytes,14,opt,name=project_source,json=projectSource,proto3" json:"project_source,omitempty"`
 	ProjectImport *ToolExecutionProjectImport `protobuf:"bytes,15,opt,name=project_import,json=projectImport,proto3" json:"project_import,omitempty"`
+	// Exact Platform-admitted task recipe. Executor preparation is authorized
+	// from this typed linkage, never from caller-controlled metadata.
+	WorkspaceRecipe *ToolExecutionWorkspaceRecipe `protobuf:"bytes,16,opt,name=workspace_recipe,json=workspaceRecipe,proto3" json:"workspace_recipe,omitempty"`
+	// Platform-admitted task identity used for tenant-scoped owner inspection.
+	TaskId        string `protobuf:"bytes,17,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -579,6 +584,123 @@ func (x *ToolExecutionLinkage) GetProjectImport() *ToolExecutionProjectImport {
 	return nil
 }
 
+func (x *ToolExecutionLinkage) GetWorkspaceRecipe() *ToolExecutionWorkspaceRecipe {
+	if x != nil {
+		return x.WorkspaceRecipe
+	}
+	return nil
+}
+
+func (x *ToolExecutionLinkage) GetTaskId() string {
+	if x != nil {
+		return x.TaskId
+	}
+	return ""
+}
+
+// Versioned, server-owned preparation recipe for one task workspace. The
+// recipe carries bounded declarative requirements; it cannot contain shell
+// commands, repository hooks, credentials, or approval policy.
+type ToolExecutionWorkspaceRecipe struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	SchemaVersion        string                 `protobuf:"bytes,1,opt,name=schema_version,json=schemaVersion,proto3" json:"schema_version,omitempty"`
+	RecipeId             string                 `protobuf:"bytes,2,opt,name=recipe_id,json=recipeId,proto3" json:"recipe_id,omitempty"`
+	RecipeVersion        uint64                 `protobuf:"varint,3,opt,name=recipe_version,json=recipeVersion,proto3" json:"recipe_version,omitempty"`
+	RecipeDigest         string                 `protobuf:"bytes,4,opt,name=recipe_digest,json=recipeDigest,proto3" json:"recipe_digest,omitempty"`
+	SourceManifestDigest string                 `protobuf:"bytes,5,opt,name=source_manifest_digest,json=sourceManifestDigest,proto3" json:"source_manifest_digest,omitempty"`
+	RequiredRuntimes     []string               `protobuf:"bytes,6,rep,name=required_runtimes,json=requiredRuntimes,proto3" json:"required_runtimes,omitempty"`
+	PreparationTool      string                 `protobuf:"bytes,7,opt,name=preparation_tool,json=preparationTool,proto3" json:"preparation_tool,omitempty"`
+	ExecutionOwner       string                 `protobuf:"bytes,10,opt,name=execution_owner,json=executionOwner,proto3" json:"execution_owner,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *ToolExecutionWorkspaceRecipe) Reset() {
+	*x = ToolExecutionWorkspaceRecipe{}
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ToolExecutionWorkspaceRecipe) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ToolExecutionWorkspaceRecipe) ProtoMessage() {}
+
+func (x *ToolExecutionWorkspaceRecipe) ProtoReflect() protoreflect.Message {
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ToolExecutionWorkspaceRecipe.ProtoReflect.Descriptor instead.
+func (*ToolExecutionWorkspaceRecipe) Descriptor() ([]byte, []int) {
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ToolExecutionWorkspaceRecipe) GetSchemaVersion() string {
+	if x != nil {
+		return x.SchemaVersion
+	}
+	return ""
+}
+
+func (x *ToolExecutionWorkspaceRecipe) GetRecipeId() string {
+	if x != nil {
+		return x.RecipeId
+	}
+	return ""
+}
+
+func (x *ToolExecutionWorkspaceRecipe) GetRecipeVersion() uint64 {
+	if x != nil {
+		return x.RecipeVersion
+	}
+	return 0
+}
+
+func (x *ToolExecutionWorkspaceRecipe) GetRecipeDigest() string {
+	if x != nil {
+		return x.RecipeDigest
+	}
+	return ""
+}
+
+func (x *ToolExecutionWorkspaceRecipe) GetSourceManifestDigest() string {
+	if x != nil {
+		return x.SourceManifestDigest
+	}
+	return ""
+}
+
+func (x *ToolExecutionWorkspaceRecipe) GetRequiredRuntimes() []string {
+	if x != nil {
+		return x.RequiredRuntimes
+	}
+	return nil
+}
+
+func (x *ToolExecutionWorkspaceRecipe) GetPreparationTool() string {
+	if x != nil {
+		return x.PreparationTool
+	}
+	return ""
+}
+
+func (x *ToolExecutionWorkspaceRecipe) GetExecutionOwner() string {
+	if x != nil {
+		return x.ExecutionOwner
+	}
+	return ""
+}
+
 // ToolExecutionAttachmentMount is an immutable, server-authorized VFS version
 // materialized read-only under the execution's attachment root.
 type ToolExecutionAttachmentMount struct {
@@ -596,7 +718,7 @@ type ToolExecutionAttachmentMount struct {
 
 func (x *ToolExecutionAttachmentMount) Reset() {
 	*x = ToolExecutionAttachmentMount{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[1]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -608,7 +730,7 @@ func (x *ToolExecutionAttachmentMount) String() string {
 func (*ToolExecutionAttachmentMount) ProtoMessage() {}
 
 func (x *ToolExecutionAttachmentMount) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[1]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -621,7 +743,7 @@ func (x *ToolExecutionAttachmentMount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecutionAttachmentMount.ProtoReflect.Descriptor instead.
 func (*ToolExecutionAttachmentMount) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{1}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ToolExecutionAttachmentMount) GetObjectId() string {
@@ -689,7 +811,7 @@ type ToolExecutionTraceContext struct {
 
 func (x *ToolExecutionTraceContext) Reset() {
 	*x = ToolExecutionTraceContext{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[2]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -701,7 +823,7 @@ func (x *ToolExecutionTraceContext) String() string {
 func (*ToolExecutionTraceContext) ProtoMessage() {}
 
 func (x *ToolExecutionTraceContext) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[2]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -714,7 +836,7 @@ func (x *ToolExecutionTraceContext) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecutionTraceContext.ProtoReflect.Descriptor instead.
 func (*ToolExecutionTraceContext) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{2}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ToolExecutionTraceContext) GetTraceId() string {
@@ -768,7 +890,7 @@ type ToolRef struct {
 
 func (x *ToolRef) Reset() {
 	*x = ToolRef{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[3]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -780,7 +902,7 @@ func (x *ToolRef) String() string {
 func (*ToolRef) ProtoMessage() {}
 
 func (x *ToolRef) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[3]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -793,7 +915,7 @@ func (x *ToolRef) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolRef.ProtoReflect.Descriptor instead.
 func (*ToolRef) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{3}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ToolRef) GetNamespace() string {
@@ -862,7 +984,7 @@ type ConnectorRef struct {
 
 func (x *ConnectorRef) Reset() {
 	*x = ConnectorRef{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[4]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -874,7 +996,7 @@ func (x *ConnectorRef) String() string {
 func (*ConnectorRef) ProtoMessage() {}
 
 func (x *ConnectorRef) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[4]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -887,7 +1009,7 @@ func (x *ConnectorRef) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConnectorRef.ProtoReflect.Descriptor instead.
 func (*ConnectorRef) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{4}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ConnectorRef) GetConnectionId() string {
@@ -947,7 +1069,7 @@ type ToolRetryPolicy struct {
 
 func (x *ToolRetryPolicy) Reset() {
 	*x = ToolRetryPolicy{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[5]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -959,7 +1081,7 @@ func (x *ToolRetryPolicy) String() string {
 func (*ToolRetryPolicy) ProtoMessage() {}
 
 func (x *ToolRetryPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[5]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -972,7 +1094,7 @@ func (x *ToolRetryPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolRetryPolicy.ProtoReflect.Descriptor instead.
 func (*ToolRetryPolicy) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{5}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ToolRetryPolicy) GetMaxAttempts() int32 {
@@ -1021,7 +1143,7 @@ type ToolExecutionStep struct {
 
 func (x *ToolExecutionStep) Reset() {
 	*x = ToolExecutionStep{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[6]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1033,7 +1155,7 @@ func (x *ToolExecutionStep) String() string {
 func (*ToolExecutionStep) ProtoMessage() {}
 
 func (x *ToolExecutionStep) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[6]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1046,7 +1168,7 @@ func (x *ToolExecutionStep) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecutionStep.ProtoReflect.Descriptor instead.
 func (*ToolExecutionStep) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{6}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ToolExecutionStep) GetId() string {
@@ -1132,7 +1254,7 @@ type ToolApprovalWait struct {
 
 func (x *ToolApprovalWait) Reset() {
 	*x = ToolApprovalWait{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[7]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1144,7 +1266,7 @@ func (x *ToolApprovalWait) String() string {
 func (*ToolApprovalWait) ProtoMessage() {}
 
 func (x *ToolApprovalWait) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[7]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1157,7 +1279,7 @@ func (x *ToolApprovalWait) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolApprovalWait.ProtoReflect.Descriptor instead.
 func (*ToolApprovalWait) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{7}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ToolApprovalWait) GetId() string {
@@ -1241,7 +1363,7 @@ type VerifiedApprovalDecision struct {
 
 func (x *VerifiedApprovalDecision) Reset() {
 	*x = VerifiedApprovalDecision{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[8]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1253,7 +1375,7 @@ func (x *VerifiedApprovalDecision) String() string {
 func (*VerifiedApprovalDecision) ProtoMessage() {}
 
 func (x *VerifiedApprovalDecision) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[8]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1266,7 +1388,7 @@ func (x *VerifiedApprovalDecision) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VerifiedApprovalDecision.ProtoReflect.Descriptor instead.
 func (*VerifiedApprovalDecision) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{8}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *VerifiedApprovalDecision) GetDecisionId() string {
@@ -1335,7 +1457,7 @@ type ToolExecutionOutputAuthority struct {
 
 func (x *ToolExecutionOutputAuthority) Reset() {
 	*x = ToolExecutionOutputAuthority{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[9]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1347,7 +1469,7 @@ func (x *ToolExecutionOutputAuthority) String() string {
 func (*ToolExecutionOutputAuthority) ProtoMessage() {}
 
 func (x *ToolExecutionOutputAuthority) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[9]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1360,7 +1482,7 @@ func (x *ToolExecutionOutputAuthority) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecutionOutputAuthority.ProtoReflect.Descriptor instead.
 func (*ToolExecutionOutputAuthority) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{9}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ToolExecutionOutputAuthority) GetApplicationId() string {
@@ -1424,7 +1546,7 @@ type ToolExecutionOutput struct {
 
 func (x *ToolExecutionOutput) Reset() {
 	*x = ToolExecutionOutput{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[10]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1436,7 +1558,7 @@ func (x *ToolExecutionOutput) String() string {
 func (*ToolExecutionOutput) ProtoMessage() {}
 
 func (x *ToolExecutionOutput) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[10]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1449,7 +1571,7 @@ func (x *ToolExecutionOutput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecutionOutput.ProtoReflect.Descriptor instead.
 func (*ToolExecutionOutput) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{10}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ToolExecutionOutput) GetRawOutput() *structpb.Struct {
@@ -1521,7 +1643,7 @@ type ToolOutputProposal struct {
 
 func (x *ToolOutputProposal) Reset() {
 	*x = ToolOutputProposal{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[11]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1533,7 +1655,7 @@ func (x *ToolOutputProposal) String() string {
 func (*ToolOutputProposal) ProtoMessage() {}
 
 func (x *ToolOutputProposal) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[11]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1546,7 +1668,7 @@ func (x *ToolOutputProposal) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolOutputProposal.ProtoReflect.Descriptor instead.
 func (*ToolOutputProposal) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{11}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ToolOutputProposal) GetKind() ToolExecutionProposalKind {
@@ -1600,7 +1722,7 @@ type ToolExecutionProvenance struct {
 
 func (x *ToolExecutionProvenance) Reset() {
 	*x = ToolExecutionProvenance{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[12]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1612,7 +1734,7 @@ func (x *ToolExecutionProvenance) String() string {
 func (*ToolExecutionProvenance) ProtoMessage() {}
 
 func (x *ToolExecutionProvenance) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[12]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1625,7 +1747,7 @@ func (x *ToolExecutionProvenance) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecutionProvenance.ProtoReflect.Descriptor instead.
 func (*ToolExecutionProvenance) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{12}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ToolExecutionProvenance) GetCapabilityRef() string {
@@ -1746,7 +1868,7 @@ type ToolExecution struct {
 
 func (x *ToolExecution) Reset() {
 	*x = ToolExecution{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[13]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1758,7 +1880,7 @@ func (x *ToolExecution) String() string {
 func (*ToolExecution) ProtoMessage() {}
 
 func (x *ToolExecution) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[13]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1771,7 +1893,7 @@ func (x *ToolExecution) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecution.ProtoReflect.Descriptor instead.
 func (*ToolExecution) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{13}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ToolExecution) GetId() string {
@@ -1945,7 +2067,7 @@ type ExecuteToolRequest struct {
 
 func (x *ExecuteToolRequest) Reset() {
 	*x = ExecuteToolRequest{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[14]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1957,7 +2079,7 @@ func (x *ExecuteToolRequest) String() string {
 func (*ExecuteToolRequest) ProtoMessage() {}
 
 func (x *ExecuteToolRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[14]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1970,7 +2092,7 @@ func (x *ExecuteToolRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecuteToolRequest.ProtoReflect.Descriptor instead.
 func (*ExecuteToolRequest) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{14}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ExecuteToolRequest) GetLinkage() *ToolExecutionLinkage {
@@ -2046,7 +2168,7 @@ type ExecuteToolResponse struct {
 
 func (x *ExecuteToolResponse) Reset() {
 	*x = ExecuteToolResponse{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[15]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2058,7 +2180,7 @@ func (x *ExecuteToolResponse) String() string {
 func (*ExecuteToolResponse) ProtoMessage() {}
 
 func (x *ExecuteToolResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[15]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2071,7 +2193,7 @@ func (x *ExecuteToolResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecuteToolResponse.ProtoReflect.Descriptor instead.
 func (*ExecuteToolResponse) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{15}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ExecuteToolResponse) GetExecution() *ToolExecution {
@@ -2108,7 +2230,7 @@ type ResumeToolExecutionRequest struct {
 
 func (x *ResumeToolExecutionRequest) Reset() {
 	*x = ResumeToolExecutionRequest{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[16]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2120,7 +2242,7 @@ func (x *ResumeToolExecutionRequest) String() string {
 func (*ResumeToolExecutionRequest) ProtoMessage() {}
 
 func (x *ResumeToolExecutionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[16]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2133,7 +2255,7 @@ func (x *ResumeToolExecutionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResumeToolExecutionRequest.ProtoReflect.Descriptor instead.
 func (*ResumeToolExecutionRequest) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{16}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ResumeToolExecutionRequest) GetExecutionId() string {
@@ -2197,7 +2319,7 @@ type ResumeToolExecutionResponse struct {
 
 func (x *ResumeToolExecutionResponse) Reset() {
 	*x = ResumeToolExecutionResponse{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[17]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2209,7 +2331,7 @@ func (x *ResumeToolExecutionResponse) String() string {
 func (*ResumeToolExecutionResponse) ProtoMessage() {}
 
 func (x *ResumeToolExecutionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[17]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2222,7 +2344,7 @@ func (x *ResumeToolExecutionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResumeToolExecutionResponse.ProtoReflect.Descriptor instead.
 func (*ResumeToolExecutionResponse) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{17}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ResumeToolExecutionResponse) GetExecution() *ToolExecution {
@@ -2244,7 +2366,7 @@ type RecordToolExecutionOutputRequest struct {
 
 func (x *RecordToolExecutionOutputRequest) Reset() {
 	*x = RecordToolExecutionOutputRequest{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[18]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2256,7 +2378,7 @@ func (x *RecordToolExecutionOutputRequest) String() string {
 func (*RecordToolExecutionOutputRequest) ProtoMessage() {}
 
 func (x *RecordToolExecutionOutputRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[18]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2269,7 +2391,7 @@ func (x *RecordToolExecutionOutputRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecordToolExecutionOutputRequest.ProtoReflect.Descriptor instead.
 func (*RecordToolExecutionOutputRequest) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{18}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *RecordToolExecutionOutputRequest) GetExecutionId() string {
@@ -2309,7 +2431,7 @@ type RecordToolExecutionOutputResponse struct {
 
 func (x *RecordToolExecutionOutputResponse) Reset() {
 	*x = RecordToolExecutionOutputResponse{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[19]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2321,7 +2443,7 @@ func (x *RecordToolExecutionOutputResponse) String() string {
 func (*RecordToolExecutionOutputResponse) ProtoMessage() {}
 
 func (x *RecordToolExecutionOutputResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[19]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2334,7 +2456,7 @@ func (x *RecordToolExecutionOutputResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use RecordToolExecutionOutputResponse.ProtoReflect.Descriptor instead.
 func (*RecordToolExecutionOutputResponse) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{19}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *RecordToolExecutionOutputResponse) GetExecution() *ToolExecution {
@@ -2359,7 +2481,7 @@ type GetToolExecutionRequest struct {
 
 func (x *GetToolExecutionRequest) Reset() {
 	*x = GetToolExecutionRequest{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[20]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2371,7 +2493,7 @@ func (x *GetToolExecutionRequest) String() string {
 func (*GetToolExecutionRequest) ProtoMessage() {}
 
 func (x *GetToolExecutionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[20]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2384,7 +2506,7 @@ func (x *GetToolExecutionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetToolExecutionRequest.ProtoReflect.Descriptor instead.
 func (*GetToolExecutionRequest) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{20}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GetToolExecutionRequest) GetId() string {
@@ -2424,7 +2546,7 @@ type GetToolExecutionResponse struct {
 
 func (x *GetToolExecutionResponse) Reset() {
 	*x = GetToolExecutionResponse{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[21]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2436,7 +2558,7 @@ func (x *GetToolExecutionResponse) String() string {
 func (*GetToolExecutionResponse) ProtoMessage() {}
 
 func (x *GetToolExecutionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[21]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2449,7 +2571,7 @@ func (x *GetToolExecutionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetToolExecutionResponse.ProtoReflect.Descriptor instead.
 func (*GetToolExecutionResponse) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{21}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *GetToolExecutionResponse) GetExecution() *ToolExecution {
@@ -2473,13 +2595,14 @@ type ListToolExecutionsRequest struct {
 	Limit             int32                  `protobuf:"varint,10,opt,name=limit,proto3" json:"limit,omitempty"`
 	Offset            int32                  `protobuf:"varint,11,opt,name=offset,proto3" json:"offset,omitempty"`
 	OrganizationId    string                 `protobuf:"bytes,12,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	TaskId            string                 `protobuf:"bytes,13,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
 
 func (x *ListToolExecutionsRequest) Reset() {
 	*x = ListToolExecutionsRequest{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[22]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2491,7 +2614,7 @@ func (x *ListToolExecutionsRequest) String() string {
 func (*ListToolExecutionsRequest) ProtoMessage() {}
 
 func (x *ListToolExecutionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[22]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2504,7 +2627,7 @@ func (x *ListToolExecutionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListToolExecutionsRequest.ProtoReflect.Descriptor instead.
 func (*ListToolExecutionsRequest) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{22}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ListToolExecutionsRequest) GetWorkspaceId() string {
@@ -2591,6 +2714,13 @@ func (x *ListToolExecutionsRequest) GetOrganizationId() string {
 	return ""
 }
 
+func (x *ListToolExecutionsRequest) GetTaskId() string {
+	if x != nil {
+		return x.TaskId
+	}
+	return ""
+}
+
 type ListToolExecutionsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Executions    []*ToolExecution       `protobuf:"bytes,1,rep,name=executions,proto3" json:"executions,omitempty"`
@@ -2602,7 +2732,7 @@ type ListToolExecutionsResponse struct {
 
 func (x *ListToolExecutionsResponse) Reset() {
 	*x = ListToolExecutionsResponse{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[23]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2614,7 +2744,7 @@ func (x *ListToolExecutionsResponse) String() string {
 func (*ListToolExecutionsResponse) ProtoMessage() {}
 
 func (x *ListToolExecutionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[23]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2627,7 +2757,7 @@ func (x *ListToolExecutionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListToolExecutionsResponse.ProtoReflect.Descriptor instead.
 func (*ListToolExecutionsResponse) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{23}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *ListToolExecutionsResponse) GetExecutions() []*ToolExecution {
@@ -2666,7 +2796,7 @@ type ToolExecutionProjectSourceFile struct {
 
 func (x *ToolExecutionProjectSourceFile) Reset() {
 	*x = ToolExecutionProjectSourceFile{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[24]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2678,7 +2808,7 @@ func (x *ToolExecutionProjectSourceFile) String() string {
 func (*ToolExecutionProjectSourceFile) ProtoMessage() {}
 
 func (x *ToolExecutionProjectSourceFile) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[24]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2691,7 +2821,7 @@ func (x *ToolExecutionProjectSourceFile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecutionProjectSourceFile.ProtoReflect.Descriptor instead.
 func (*ToolExecutionProjectSourceFile) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{24}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *ToolExecutionProjectSourceFile) GetPath() string {
@@ -2752,7 +2882,7 @@ type ToolExecutionProjectSource struct {
 
 func (x *ToolExecutionProjectSource) Reset() {
 	*x = ToolExecutionProjectSource{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[25]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2764,7 +2894,7 @@ func (x *ToolExecutionProjectSource) String() string {
 func (*ToolExecutionProjectSource) ProtoMessage() {}
 
 func (x *ToolExecutionProjectSource) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[25]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2777,7 +2907,7 @@ func (x *ToolExecutionProjectSource) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecutionProjectSource.ProtoReflect.Descriptor instead.
 func (*ToolExecutionProjectSource) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{25}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *ToolExecutionProjectSource) GetProjectResourceId() string {
@@ -2844,7 +2974,7 @@ type ToolExecutionProjectImport struct {
 
 func (x *ToolExecutionProjectImport) Reset() {
 	*x = ToolExecutionProjectImport{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[26]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2856,7 +2986,7 @@ func (x *ToolExecutionProjectImport) String() string {
 func (*ToolExecutionProjectImport) ProtoMessage() {}
 
 func (x *ToolExecutionProjectImport) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[26]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2869,7 +2999,7 @@ func (x *ToolExecutionProjectImport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecutionProjectImport.ProtoReflect.Descriptor instead.
 func (*ToolExecutionProjectImport) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{26}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *ToolExecutionProjectImport) GetProjectResourceId() string {
@@ -2929,7 +3059,7 @@ type ToolExecutionGitSnapshotManifest struct {
 
 func (x *ToolExecutionGitSnapshotManifest) Reset() {
 	*x = ToolExecutionGitSnapshotManifest{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[27]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2941,7 +3071,7 @@ func (x *ToolExecutionGitSnapshotManifest) String() string {
 func (*ToolExecutionGitSnapshotManifest) ProtoMessage() {}
 
 func (x *ToolExecutionGitSnapshotManifest) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[27]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2954,7 +3084,7 @@ func (x *ToolExecutionGitSnapshotManifest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecutionGitSnapshotManifest.ProtoReflect.Descriptor instead.
 func (*ToolExecutionGitSnapshotManifest) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{27}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *ToolExecutionGitSnapshotManifest) GetRepositoryId() uint64 {
@@ -3018,7 +3148,7 @@ type ToolExecutionGitSnapshotFile struct {
 
 func (x *ToolExecutionGitSnapshotFile) Reset() {
 	*x = ToolExecutionGitSnapshotFile{}
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[28]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3030,7 +3160,7 @@ func (x *ToolExecutionGitSnapshotFile) String() string {
 func (*ToolExecutionGitSnapshotFile) ProtoMessage() {}
 
 func (x *ToolExecutionGitSnapshotFile) ProtoReflect() protoreflect.Message {
-	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[28]
+	mi := &file_toolexecution_v1_toolexecution_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3043,7 +3173,7 @@ func (x *ToolExecutionGitSnapshotFile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToolExecutionGitSnapshotFile.ProtoReflect.Descriptor instead.
 func (*ToolExecutionGitSnapshotFile) Descriptor() ([]byte, []int) {
-	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{28}
+	return file_toolexecution_v1_toolexecution_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *ToolExecutionGitSnapshotFile) GetPath() string {
@@ -3078,7 +3208,7 @@ var File_toolexecution_v1_toolexecution_proto protoreflect.FileDescriptor
 
 const file_toolexecution_v1_toolexecution_proto_rawDesc = "" +
 	"\n" +
-	"$toolexecution/v1/toolexecution.proto\x12\x10toolexecution.v1\x1a\x1bbuf/validate/validate.proto\x1a\x15common/v1/authz.proto\x1a\x14common/v1/risk.proto\x1a\x17common/v1/surface.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aplatform/v1/platform.proto\"\xe2\x05\n" +
+	"$toolexecution/v1/toolexecution.proto\x12\x10toolexecution.v1\x1a\x1bbuf/validate/validate.proto\x1a\x15common/v1/authz.proto\x1a\x14common/v1/risk.proto\x1a\x17common/v1/surface.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aplatform/v1/platform.proto\"\xd6\x06\n" +
 	"\x14ToolExecutionLinkage\x12*\n" +
 	"\fworkspace_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vworkspaceId\x120\n" +
 	"\x0forganization_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0eorganizationId\x12\"\n" +
@@ -3096,7 +3226,24 @@ const file_toolexecution_v1_toolexecution_proto_rawDesc = "" +
 	"\x11attachment_mounts\x18\f \x03(\v2..toolexecution.v1.ToolExecutionAttachmentMountR\x10attachmentMounts\x12.\n" +
 	"\x0eapplication_id\x18\r \x01(\tB\a\xbaH\x04r\x02\x10\x01R\rapplicationId\x12S\n" +
 	"\x0eproject_source\x18\x0e \x01(\v2,.toolexecution.v1.ToolExecutionProjectSourceR\rprojectSource\x12S\n" +
-	"\x0eproject_import\x18\x0f \x01(\v2,.toolexecution.v1.ToolExecutionProjectImportR\rprojectImport\"\xd0\x02\n" +
+	"\x0eproject_import\x18\x0f \x01(\v2,.toolexecution.v1.ToolExecutionProjectImportR\rprojectImport\x12Y\n" +
+	"\x10workspace_recipe\x18\x10 \x01(\v2..toolexecution.v1.ToolExecutionWorkspaceRecipeR\x0fworkspaceRecipe\x12\x17\n" +
+	"\atask_id\x18\x11 \x01(\tR\x06taskId\"\x83\x04\n" +
+	"\x1cToolExecutionWorkspaceRecipe\x12H\n" +
+	"\x0eschema_version\x18\x01 \x01(\tB!\xbaH\x1er\x1c\n" +
+	"\x1adeixic.workspace_recipe.v1R\rschemaVersion\x12$\n" +
+	"\trecipe_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\brecipeId\x12.\n" +
+	"\x0erecipe_version\x18\x03 \x01(\x04B\a\xbaH\x042\x02(\x01R\rrecipeVersion\x12,\n" +
+	"\rrecipe_digest\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\frecipeDigest\x12=\n" +
+	"\x16source_manifest_digest\x18\x05 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x14sourceManifestDigest\x12=\n" +
+	"\x11required_runtimes\x18\x06 \x03(\tB\x10\xbaH\r\x92\x01\n" +
+	"\x10\x10\"\x06r\x04\x10\x01\x18@R\x10requiredRuntimes\x12I\n" +
+	"\x10preparation_tool\x18\a \x01(\tB\x1e\xbaH\x1br\x19\n" +
+	"\x17computer.check_runtimesR\x0fpreparationTool\x12@\n" +
+	"\x0fexecution_owner\x18\n" +
+	" \x01(\tB\x17\xbaH\x14r\x12\n" +
+	"\x10platform-api.dexR\x0eexecutionOwnerJ\x04\b\b\x10\tJ\x04\b\t\x10\n" +
+	"\"\xd0\x02\n" +
 	"\x1cToolExecutionAttachmentMount\x12$\n" +
 	"\tobject_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bobjectId\x12&\n" +
 	"\n" +
@@ -3305,7 +3452,7 @@ const file_toolexecution_v1_toolexecution_proto_rawDesc = "" +
 	"\fworkspace_id\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vworkspaceId\x123\n" +
 	"\x0fwait_timeout_ms\x18\x04 \x01(\rB\v\xbaH\b*\x06\x18\xb0\xea\x01(\x00R\rwaitTimeoutMs\"Y\n" +
 	"\x18GetToolExecutionResponse\x12=\n" +
-	"\texecution\x18\x01 \x01(\v2\x1f.toolexecution.v1.ToolExecutionR\texecution\"\xd1\x03\n" +
+	"\texecution\x18\x01 \x01(\v2\x1f.toolexecution.v1.ToolExecutionR\texecution\"\xea\x03\n" +
 	"\x19ListToolExecutionsRequest\x12!\n" +
 	"\fworkspace_id\x18\x01 \x01(\tR\vworkspaceId\x12\x15\n" +
 	"\x06run_id\x18\x02 \x01(\tR\x05runId\x12!\n" +
@@ -3319,7 +3466,8 @@ const file_toolexecution_v1_toolexecution_proto_rawDesc = "" +
 	"\x05limit\x18\n" +
 	" \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x05limit\x12\x1f\n" +
 	"\x06offset\x18\v \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\x06offset\x12'\n" +
-	"\x0forganization_id\x18\f \x01(\tR\x0eorganizationId\"\x8e\x01\n" +
+	"\x0forganization_id\x18\f \x01(\tR\x0eorganizationId\x12\x17\n" +
+	"\atask_id\x18\r \x01(\tR\x06taskId\"\x8e\x01\n" +
 	"\x1aListToolExecutionsResponse\x12?\n" +
 	"\n" +
 	"executions\x18\x01 \x03(\v2\x1f.toolexecution.v1.ToolExecutionR\n" +
@@ -3446,7 +3594,7 @@ func file_toolexecution_v1_toolexecution_proto_rawDescGZIP() []byte {
 }
 
 var file_toolexecution_v1_toolexecution_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
-var file_toolexecution_v1_toolexecution_proto_msgTypes = make([]protoimpl.MessageInfo, 34)
+var file_toolexecution_v1_toolexecution_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
 var file_toolexecution_v1_toolexecution_proto_goTypes = []any{
 	(ToolExecutionState)(0),                   // 0: toolexecution.v1.ToolExecutionState
 	(ToolExecutionStage)(0),                   // 1: toolexecution.v1.ToolExecutionStage
@@ -3455,123 +3603,125 @@ var file_toolexecution_v1_toolexecution_proto_goTypes = []any{
 	(ToolExecutionProposalKind)(0),            // 4: toolexecution.v1.ToolExecutionProposalKind
 	(ToolExecutionFailureCode)(0),             // 5: toolexecution.v1.ToolExecutionFailureCode
 	(*ToolExecutionLinkage)(nil),              // 6: toolexecution.v1.ToolExecutionLinkage
-	(*ToolExecutionAttachmentMount)(nil),      // 7: toolexecution.v1.ToolExecutionAttachmentMount
-	(*ToolExecutionTraceContext)(nil),         // 8: toolexecution.v1.ToolExecutionTraceContext
-	(*ToolRef)(nil),                           // 9: toolexecution.v1.ToolRef
-	(*ConnectorRef)(nil),                      // 10: toolexecution.v1.ConnectorRef
-	(*ToolRetryPolicy)(nil),                   // 11: toolexecution.v1.ToolRetryPolicy
-	(*ToolExecutionStep)(nil),                 // 12: toolexecution.v1.ToolExecutionStep
-	(*ToolApprovalWait)(nil),                  // 13: toolexecution.v1.ToolApprovalWait
-	(*VerifiedApprovalDecision)(nil),          // 14: toolexecution.v1.VerifiedApprovalDecision
-	(*ToolExecutionOutputAuthority)(nil),      // 15: toolexecution.v1.ToolExecutionOutputAuthority
-	(*ToolExecutionOutput)(nil),               // 16: toolexecution.v1.ToolExecutionOutput
-	(*ToolOutputProposal)(nil),                // 17: toolexecution.v1.ToolOutputProposal
-	(*ToolExecutionProvenance)(nil),           // 18: toolexecution.v1.ToolExecutionProvenance
-	(*ToolExecution)(nil),                     // 19: toolexecution.v1.ToolExecution
-	(*ExecuteToolRequest)(nil),                // 20: toolexecution.v1.ExecuteToolRequest
-	(*ExecuteToolResponse)(nil),               // 21: toolexecution.v1.ExecuteToolResponse
-	(*ResumeToolExecutionRequest)(nil),        // 22: toolexecution.v1.ResumeToolExecutionRequest
-	(*ResumeToolExecutionResponse)(nil),       // 23: toolexecution.v1.ResumeToolExecutionResponse
-	(*RecordToolExecutionOutputRequest)(nil),  // 24: toolexecution.v1.RecordToolExecutionOutputRequest
-	(*RecordToolExecutionOutputResponse)(nil), // 25: toolexecution.v1.RecordToolExecutionOutputResponse
-	(*GetToolExecutionRequest)(nil),           // 26: toolexecution.v1.GetToolExecutionRequest
-	(*GetToolExecutionResponse)(nil),          // 27: toolexecution.v1.GetToolExecutionResponse
-	(*ListToolExecutionsRequest)(nil),         // 28: toolexecution.v1.ListToolExecutionsRequest
-	(*ListToolExecutionsResponse)(nil),        // 29: toolexecution.v1.ListToolExecutionsResponse
-	(*ToolExecutionProjectSourceFile)(nil),    // 30: toolexecution.v1.ToolExecutionProjectSourceFile
-	(*ToolExecutionProjectSource)(nil),        // 31: toolexecution.v1.ToolExecutionProjectSource
-	(*ToolExecutionProjectImport)(nil),        // 32: toolexecution.v1.ToolExecutionProjectImport
-	(*ToolExecutionGitSnapshotManifest)(nil),  // 33: toolexecution.v1.ToolExecutionGitSnapshotManifest
-	(*ToolExecutionGitSnapshotFile)(nil),      // 34: toolexecution.v1.ToolExecutionGitSnapshotFile
-	nil,                                       // 35: toolexecution.v1.ToolExecutionStep.AttributesEntry
-	nil,                                       // 36: toolexecution.v1.ToolOutputProposal.MetadataEntry
-	nil,                                       // 37: toolexecution.v1.ToolExecutionProvenance.MetadataEntry
-	nil,                                       // 38: toolexecution.v1.ExecuteToolRequest.MetadataEntry
-	nil,                                       // 39: toolexecution.v1.RecordToolExecutionOutputRequest.MetadataEntry
-	(v1.Surface)(0),                           // 40: common.v1.Surface
-	(*v11.ResourceRef)(nil),                   // 41: platform.v1.ResourceRef
-	(*timestamppb.Timestamp)(nil),             // 42: google.protobuf.Timestamp
-	(*structpb.Struct)(nil),                   // 43: google.protobuf.Struct
-	(v1.RiskLevel)(0),                         // 44: common.v1.RiskLevel
+	(*ToolExecutionWorkspaceRecipe)(nil),      // 7: toolexecution.v1.ToolExecutionWorkspaceRecipe
+	(*ToolExecutionAttachmentMount)(nil),      // 8: toolexecution.v1.ToolExecutionAttachmentMount
+	(*ToolExecutionTraceContext)(nil),         // 9: toolexecution.v1.ToolExecutionTraceContext
+	(*ToolRef)(nil),                           // 10: toolexecution.v1.ToolRef
+	(*ConnectorRef)(nil),                      // 11: toolexecution.v1.ConnectorRef
+	(*ToolRetryPolicy)(nil),                   // 12: toolexecution.v1.ToolRetryPolicy
+	(*ToolExecutionStep)(nil),                 // 13: toolexecution.v1.ToolExecutionStep
+	(*ToolApprovalWait)(nil),                  // 14: toolexecution.v1.ToolApprovalWait
+	(*VerifiedApprovalDecision)(nil),          // 15: toolexecution.v1.VerifiedApprovalDecision
+	(*ToolExecutionOutputAuthority)(nil),      // 16: toolexecution.v1.ToolExecutionOutputAuthority
+	(*ToolExecutionOutput)(nil),               // 17: toolexecution.v1.ToolExecutionOutput
+	(*ToolOutputProposal)(nil),                // 18: toolexecution.v1.ToolOutputProposal
+	(*ToolExecutionProvenance)(nil),           // 19: toolexecution.v1.ToolExecutionProvenance
+	(*ToolExecution)(nil),                     // 20: toolexecution.v1.ToolExecution
+	(*ExecuteToolRequest)(nil),                // 21: toolexecution.v1.ExecuteToolRequest
+	(*ExecuteToolResponse)(nil),               // 22: toolexecution.v1.ExecuteToolResponse
+	(*ResumeToolExecutionRequest)(nil),        // 23: toolexecution.v1.ResumeToolExecutionRequest
+	(*ResumeToolExecutionResponse)(nil),       // 24: toolexecution.v1.ResumeToolExecutionResponse
+	(*RecordToolExecutionOutputRequest)(nil),  // 25: toolexecution.v1.RecordToolExecutionOutputRequest
+	(*RecordToolExecutionOutputResponse)(nil), // 26: toolexecution.v1.RecordToolExecutionOutputResponse
+	(*GetToolExecutionRequest)(nil),           // 27: toolexecution.v1.GetToolExecutionRequest
+	(*GetToolExecutionResponse)(nil),          // 28: toolexecution.v1.GetToolExecutionResponse
+	(*ListToolExecutionsRequest)(nil),         // 29: toolexecution.v1.ListToolExecutionsRequest
+	(*ListToolExecutionsResponse)(nil),        // 30: toolexecution.v1.ListToolExecutionsResponse
+	(*ToolExecutionProjectSourceFile)(nil),    // 31: toolexecution.v1.ToolExecutionProjectSourceFile
+	(*ToolExecutionProjectSource)(nil),        // 32: toolexecution.v1.ToolExecutionProjectSource
+	(*ToolExecutionProjectImport)(nil),        // 33: toolexecution.v1.ToolExecutionProjectImport
+	(*ToolExecutionGitSnapshotManifest)(nil),  // 34: toolexecution.v1.ToolExecutionGitSnapshotManifest
+	(*ToolExecutionGitSnapshotFile)(nil),      // 35: toolexecution.v1.ToolExecutionGitSnapshotFile
+	nil,                                       // 36: toolexecution.v1.ToolExecutionStep.AttributesEntry
+	nil,                                       // 37: toolexecution.v1.ToolOutputProposal.MetadataEntry
+	nil,                                       // 38: toolexecution.v1.ToolExecutionProvenance.MetadataEntry
+	nil,                                       // 39: toolexecution.v1.ExecuteToolRequest.MetadataEntry
+	nil,                                       // 40: toolexecution.v1.RecordToolExecutionOutputRequest.MetadataEntry
+	(v1.Surface)(0),                           // 41: common.v1.Surface
+	(*v11.ResourceRef)(nil),                   // 42: platform.v1.ResourceRef
+	(*timestamppb.Timestamp)(nil),             // 43: google.protobuf.Timestamp
+	(*structpb.Struct)(nil),                   // 44: google.protobuf.Struct
+	(v1.RiskLevel)(0),                         // 45: common.v1.RiskLevel
 }
 var file_toolexecution_v1_toolexecution_proto_depIdxs = []int32{
-	40, // 0: toolexecution.v1.ToolExecutionLinkage.surface_type:type_name -> common.v1.Surface
-	7,  // 1: toolexecution.v1.ToolExecutionLinkage.attachment_mounts:type_name -> toolexecution.v1.ToolExecutionAttachmentMount
-	31, // 2: toolexecution.v1.ToolExecutionLinkage.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
-	32, // 3: toolexecution.v1.ToolExecutionLinkage.project_import:type_name -> toolexecution.v1.ToolExecutionProjectImport
-	41, // 4: toolexecution.v1.ToolExecutionAttachmentMount.resource_ref:type_name -> platform.v1.ResourceRef
-	1,  // 5: toolexecution.v1.ToolExecutionStep.stage:type_name -> toolexecution.v1.ToolExecutionStage
-	2,  // 6: toolexecution.v1.ToolExecutionStep.state:type_name -> toolexecution.v1.ToolExecutionStepState
-	3,  // 7: toolexecution.v1.ToolExecutionStep.decision:type_name -> toolexecution.v1.ToolExecutionPolicyDecision
-	35, // 8: toolexecution.v1.ToolExecutionStep.attributes:type_name -> toolexecution.v1.ToolExecutionStep.AttributesEntry
-	42, // 9: toolexecution.v1.ToolExecutionStep.started_at:type_name -> google.protobuf.Timestamp
-	42, // 10: toolexecution.v1.ToolExecutionStep.ended_at:type_name -> google.protobuf.Timestamp
-	3,  // 11: toolexecution.v1.ToolApprovalWait.requested_decision:type_name -> toolexecution.v1.ToolExecutionPolicyDecision
-	42, // 12: toolexecution.v1.ToolApprovalWait.created_at:type_name -> google.protobuf.Timestamp
-	42, // 13: toolexecution.v1.ToolApprovalWait.resolved_at:type_name -> google.protobuf.Timestamp
-	42, // 14: toolexecution.v1.ToolApprovalWait.expires_at:type_name -> google.protobuf.Timestamp
-	42, // 15: toolexecution.v1.VerifiedApprovalDecision.decided_at:type_name -> google.protobuf.Timestamp
-	42, // 16: toolexecution.v1.VerifiedApprovalDecision.verified_at:type_name -> google.protobuf.Timestamp
-	43, // 17: toolexecution.v1.ToolExecutionOutput.raw_output:type_name -> google.protobuf.Struct
-	43, // 18: toolexecution.v1.ToolExecutionOutput.safe_output:type_name -> google.protobuf.Struct
-	17, // 19: toolexecution.v1.ToolExecutionOutput.proposals:type_name -> toolexecution.v1.ToolOutputProposal
-	41, // 20: toolexecution.v1.ToolExecutionOutput.resource_ref:type_name -> platform.v1.ResourceRef
-	4,  // 21: toolexecution.v1.ToolOutputProposal.kind:type_name -> toolexecution.v1.ToolExecutionProposalKind
-	43, // 22: toolexecution.v1.ToolOutputProposal.payload:type_name -> google.protobuf.Struct
-	36, // 23: toolexecution.v1.ToolOutputProposal.metadata:type_name -> toolexecution.v1.ToolOutputProposal.MetadataEntry
-	37, // 24: toolexecution.v1.ToolExecutionProvenance.metadata:type_name -> toolexecution.v1.ToolExecutionProvenance.MetadataEntry
-	6,  // 25: toolexecution.v1.ToolExecution.linkage:type_name -> toolexecution.v1.ToolExecutionLinkage
-	9,  // 26: toolexecution.v1.ToolExecution.tool:type_name -> toolexecution.v1.ToolRef
-	10, // 27: toolexecution.v1.ToolExecution.connector:type_name -> toolexecution.v1.ConnectorRef
-	43, // 28: toolexecution.v1.ToolExecution.arguments:type_name -> google.protobuf.Struct
-	44, // 29: toolexecution.v1.ToolExecution.risk_level:type_name -> common.v1.RiskLevel
-	11, // 30: toolexecution.v1.ToolExecution.retry_policy:type_name -> toolexecution.v1.ToolRetryPolicy
-	0,  // 31: toolexecution.v1.ToolExecution.state:type_name -> toolexecution.v1.ToolExecutionState
-	12, // 32: toolexecution.v1.ToolExecution.steps:type_name -> toolexecution.v1.ToolExecutionStep
-	13, // 33: toolexecution.v1.ToolExecution.approval_wait:type_name -> toolexecution.v1.ToolApprovalWait
-	16, // 34: toolexecution.v1.ToolExecution.output:type_name -> toolexecution.v1.ToolExecutionOutput
-	18, // 35: toolexecution.v1.ToolExecution.provenance:type_name -> toolexecution.v1.ToolExecutionProvenance
-	42, // 36: toolexecution.v1.ToolExecution.created_at:type_name -> google.protobuf.Timestamp
-	42, // 37: toolexecution.v1.ToolExecution.updated_at:type_name -> google.protobuf.Timestamp
-	42, // 38: toolexecution.v1.ToolExecution.completed_at:type_name -> google.protobuf.Timestamp
-	8,  // 39: toolexecution.v1.ToolExecution.trace_context:type_name -> toolexecution.v1.ToolExecutionTraceContext
-	5,  // 40: toolexecution.v1.ToolExecution.failure_code:type_name -> toolexecution.v1.ToolExecutionFailureCode
-	14, // 41: toolexecution.v1.ToolExecution.verified_approval_decision:type_name -> toolexecution.v1.VerifiedApprovalDecision
-	6,  // 42: toolexecution.v1.ExecuteToolRequest.linkage:type_name -> toolexecution.v1.ToolExecutionLinkage
-	9,  // 43: toolexecution.v1.ExecuteToolRequest.tool:type_name -> toolexecution.v1.ToolRef
-	10, // 44: toolexecution.v1.ExecuteToolRequest.connector:type_name -> toolexecution.v1.ConnectorRef
-	43, // 45: toolexecution.v1.ExecuteToolRequest.arguments:type_name -> google.protobuf.Struct
-	44, // 46: toolexecution.v1.ExecuteToolRequest.risk_level:type_name -> common.v1.RiskLevel
-	11, // 47: toolexecution.v1.ExecuteToolRequest.retry_policy:type_name -> toolexecution.v1.ToolRetryPolicy
-	38, // 48: toolexecution.v1.ExecuteToolRequest.metadata:type_name -> toolexecution.v1.ExecuteToolRequest.MetadataEntry
-	8,  // 49: toolexecution.v1.ExecuteToolRequest.trace_context:type_name -> toolexecution.v1.ToolExecutionTraceContext
-	19, // 50: toolexecution.v1.ExecuteToolResponse.execution:type_name -> toolexecution.v1.ToolExecution
-	19, // 51: toolexecution.v1.ResumeToolExecutionResponse.execution:type_name -> toolexecution.v1.ToolExecution
-	16, // 52: toolexecution.v1.RecordToolExecutionOutputRequest.output:type_name -> toolexecution.v1.ToolExecutionOutput
-	39, // 53: toolexecution.v1.RecordToolExecutionOutputRequest.metadata:type_name -> toolexecution.v1.RecordToolExecutionOutputRequest.MetadataEntry
-	15, // 54: toolexecution.v1.RecordToolExecutionOutputRequest.authority:type_name -> toolexecution.v1.ToolExecutionOutputAuthority
-	19, // 55: toolexecution.v1.RecordToolExecutionOutputResponse.execution:type_name -> toolexecution.v1.ToolExecution
-	19, // 56: toolexecution.v1.GetToolExecutionResponse.execution:type_name -> toolexecution.v1.ToolExecution
-	0,  // 57: toolexecution.v1.ListToolExecutionsRequest.state:type_name -> toolexecution.v1.ToolExecutionState
-	19, // 58: toolexecution.v1.ListToolExecutionsResponse.executions:type_name -> toolexecution.v1.ToolExecution
-	30, // 59: toolexecution.v1.ToolExecutionProjectSource.files:type_name -> toolexecution.v1.ToolExecutionProjectSourceFile
-	33, // 60: toolexecution.v1.ToolExecutionProjectImport.manifest:type_name -> toolexecution.v1.ToolExecutionGitSnapshotManifest
-	34, // 61: toolexecution.v1.ToolExecutionGitSnapshotManifest.files:type_name -> toolexecution.v1.ToolExecutionGitSnapshotFile
-	20, // 62: toolexecution.v1.ToolExecutionService.ExecuteTool:input_type -> toolexecution.v1.ExecuteToolRequest
-	22, // 63: toolexecution.v1.ToolExecutionService.ResumeToolExecution:input_type -> toolexecution.v1.ResumeToolExecutionRequest
-	24, // 64: toolexecution.v1.ToolExecutionService.RecordToolExecutionOutput:input_type -> toolexecution.v1.RecordToolExecutionOutputRequest
-	26, // 65: toolexecution.v1.ToolExecutionService.GetToolExecution:input_type -> toolexecution.v1.GetToolExecutionRequest
-	28, // 66: toolexecution.v1.ToolExecutionService.ListToolExecutions:input_type -> toolexecution.v1.ListToolExecutionsRequest
-	21, // 67: toolexecution.v1.ToolExecutionService.ExecuteTool:output_type -> toolexecution.v1.ExecuteToolResponse
-	23, // 68: toolexecution.v1.ToolExecutionService.ResumeToolExecution:output_type -> toolexecution.v1.ResumeToolExecutionResponse
-	25, // 69: toolexecution.v1.ToolExecutionService.RecordToolExecutionOutput:output_type -> toolexecution.v1.RecordToolExecutionOutputResponse
-	27, // 70: toolexecution.v1.ToolExecutionService.GetToolExecution:output_type -> toolexecution.v1.GetToolExecutionResponse
-	29, // 71: toolexecution.v1.ToolExecutionService.ListToolExecutions:output_type -> toolexecution.v1.ListToolExecutionsResponse
-	67, // [67:72] is the sub-list for method output_type
-	62, // [62:67] is the sub-list for method input_type
-	62, // [62:62] is the sub-list for extension type_name
-	62, // [62:62] is the sub-list for extension extendee
-	0,  // [0:62] is the sub-list for field type_name
+	41, // 0: toolexecution.v1.ToolExecutionLinkage.surface_type:type_name -> common.v1.Surface
+	8,  // 1: toolexecution.v1.ToolExecutionLinkage.attachment_mounts:type_name -> toolexecution.v1.ToolExecutionAttachmentMount
+	32, // 2: toolexecution.v1.ToolExecutionLinkage.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
+	33, // 3: toolexecution.v1.ToolExecutionLinkage.project_import:type_name -> toolexecution.v1.ToolExecutionProjectImport
+	7,  // 4: toolexecution.v1.ToolExecutionLinkage.workspace_recipe:type_name -> toolexecution.v1.ToolExecutionWorkspaceRecipe
+	42, // 5: toolexecution.v1.ToolExecutionAttachmentMount.resource_ref:type_name -> platform.v1.ResourceRef
+	1,  // 6: toolexecution.v1.ToolExecutionStep.stage:type_name -> toolexecution.v1.ToolExecutionStage
+	2,  // 7: toolexecution.v1.ToolExecutionStep.state:type_name -> toolexecution.v1.ToolExecutionStepState
+	3,  // 8: toolexecution.v1.ToolExecutionStep.decision:type_name -> toolexecution.v1.ToolExecutionPolicyDecision
+	36, // 9: toolexecution.v1.ToolExecutionStep.attributes:type_name -> toolexecution.v1.ToolExecutionStep.AttributesEntry
+	43, // 10: toolexecution.v1.ToolExecutionStep.started_at:type_name -> google.protobuf.Timestamp
+	43, // 11: toolexecution.v1.ToolExecutionStep.ended_at:type_name -> google.protobuf.Timestamp
+	3,  // 12: toolexecution.v1.ToolApprovalWait.requested_decision:type_name -> toolexecution.v1.ToolExecutionPolicyDecision
+	43, // 13: toolexecution.v1.ToolApprovalWait.created_at:type_name -> google.protobuf.Timestamp
+	43, // 14: toolexecution.v1.ToolApprovalWait.resolved_at:type_name -> google.protobuf.Timestamp
+	43, // 15: toolexecution.v1.ToolApprovalWait.expires_at:type_name -> google.protobuf.Timestamp
+	43, // 16: toolexecution.v1.VerifiedApprovalDecision.decided_at:type_name -> google.protobuf.Timestamp
+	43, // 17: toolexecution.v1.VerifiedApprovalDecision.verified_at:type_name -> google.protobuf.Timestamp
+	44, // 18: toolexecution.v1.ToolExecutionOutput.raw_output:type_name -> google.protobuf.Struct
+	44, // 19: toolexecution.v1.ToolExecutionOutput.safe_output:type_name -> google.protobuf.Struct
+	18, // 20: toolexecution.v1.ToolExecutionOutput.proposals:type_name -> toolexecution.v1.ToolOutputProposal
+	42, // 21: toolexecution.v1.ToolExecutionOutput.resource_ref:type_name -> platform.v1.ResourceRef
+	4,  // 22: toolexecution.v1.ToolOutputProposal.kind:type_name -> toolexecution.v1.ToolExecutionProposalKind
+	44, // 23: toolexecution.v1.ToolOutputProposal.payload:type_name -> google.protobuf.Struct
+	37, // 24: toolexecution.v1.ToolOutputProposal.metadata:type_name -> toolexecution.v1.ToolOutputProposal.MetadataEntry
+	38, // 25: toolexecution.v1.ToolExecutionProvenance.metadata:type_name -> toolexecution.v1.ToolExecutionProvenance.MetadataEntry
+	6,  // 26: toolexecution.v1.ToolExecution.linkage:type_name -> toolexecution.v1.ToolExecutionLinkage
+	10, // 27: toolexecution.v1.ToolExecution.tool:type_name -> toolexecution.v1.ToolRef
+	11, // 28: toolexecution.v1.ToolExecution.connector:type_name -> toolexecution.v1.ConnectorRef
+	44, // 29: toolexecution.v1.ToolExecution.arguments:type_name -> google.protobuf.Struct
+	45, // 30: toolexecution.v1.ToolExecution.risk_level:type_name -> common.v1.RiskLevel
+	12, // 31: toolexecution.v1.ToolExecution.retry_policy:type_name -> toolexecution.v1.ToolRetryPolicy
+	0,  // 32: toolexecution.v1.ToolExecution.state:type_name -> toolexecution.v1.ToolExecutionState
+	13, // 33: toolexecution.v1.ToolExecution.steps:type_name -> toolexecution.v1.ToolExecutionStep
+	14, // 34: toolexecution.v1.ToolExecution.approval_wait:type_name -> toolexecution.v1.ToolApprovalWait
+	17, // 35: toolexecution.v1.ToolExecution.output:type_name -> toolexecution.v1.ToolExecutionOutput
+	19, // 36: toolexecution.v1.ToolExecution.provenance:type_name -> toolexecution.v1.ToolExecutionProvenance
+	43, // 37: toolexecution.v1.ToolExecution.created_at:type_name -> google.protobuf.Timestamp
+	43, // 38: toolexecution.v1.ToolExecution.updated_at:type_name -> google.protobuf.Timestamp
+	43, // 39: toolexecution.v1.ToolExecution.completed_at:type_name -> google.protobuf.Timestamp
+	9,  // 40: toolexecution.v1.ToolExecution.trace_context:type_name -> toolexecution.v1.ToolExecutionTraceContext
+	5,  // 41: toolexecution.v1.ToolExecution.failure_code:type_name -> toolexecution.v1.ToolExecutionFailureCode
+	15, // 42: toolexecution.v1.ToolExecution.verified_approval_decision:type_name -> toolexecution.v1.VerifiedApprovalDecision
+	6,  // 43: toolexecution.v1.ExecuteToolRequest.linkage:type_name -> toolexecution.v1.ToolExecutionLinkage
+	10, // 44: toolexecution.v1.ExecuteToolRequest.tool:type_name -> toolexecution.v1.ToolRef
+	11, // 45: toolexecution.v1.ExecuteToolRequest.connector:type_name -> toolexecution.v1.ConnectorRef
+	44, // 46: toolexecution.v1.ExecuteToolRequest.arguments:type_name -> google.protobuf.Struct
+	45, // 47: toolexecution.v1.ExecuteToolRequest.risk_level:type_name -> common.v1.RiskLevel
+	12, // 48: toolexecution.v1.ExecuteToolRequest.retry_policy:type_name -> toolexecution.v1.ToolRetryPolicy
+	39, // 49: toolexecution.v1.ExecuteToolRequest.metadata:type_name -> toolexecution.v1.ExecuteToolRequest.MetadataEntry
+	9,  // 50: toolexecution.v1.ExecuteToolRequest.trace_context:type_name -> toolexecution.v1.ToolExecutionTraceContext
+	20, // 51: toolexecution.v1.ExecuteToolResponse.execution:type_name -> toolexecution.v1.ToolExecution
+	20, // 52: toolexecution.v1.ResumeToolExecutionResponse.execution:type_name -> toolexecution.v1.ToolExecution
+	17, // 53: toolexecution.v1.RecordToolExecutionOutputRequest.output:type_name -> toolexecution.v1.ToolExecutionOutput
+	40, // 54: toolexecution.v1.RecordToolExecutionOutputRequest.metadata:type_name -> toolexecution.v1.RecordToolExecutionOutputRequest.MetadataEntry
+	16, // 55: toolexecution.v1.RecordToolExecutionOutputRequest.authority:type_name -> toolexecution.v1.ToolExecutionOutputAuthority
+	20, // 56: toolexecution.v1.RecordToolExecutionOutputResponse.execution:type_name -> toolexecution.v1.ToolExecution
+	20, // 57: toolexecution.v1.GetToolExecutionResponse.execution:type_name -> toolexecution.v1.ToolExecution
+	0,  // 58: toolexecution.v1.ListToolExecutionsRequest.state:type_name -> toolexecution.v1.ToolExecutionState
+	20, // 59: toolexecution.v1.ListToolExecutionsResponse.executions:type_name -> toolexecution.v1.ToolExecution
+	31, // 60: toolexecution.v1.ToolExecutionProjectSource.files:type_name -> toolexecution.v1.ToolExecutionProjectSourceFile
+	34, // 61: toolexecution.v1.ToolExecutionProjectImport.manifest:type_name -> toolexecution.v1.ToolExecutionGitSnapshotManifest
+	35, // 62: toolexecution.v1.ToolExecutionGitSnapshotManifest.files:type_name -> toolexecution.v1.ToolExecutionGitSnapshotFile
+	21, // 63: toolexecution.v1.ToolExecutionService.ExecuteTool:input_type -> toolexecution.v1.ExecuteToolRequest
+	23, // 64: toolexecution.v1.ToolExecutionService.ResumeToolExecution:input_type -> toolexecution.v1.ResumeToolExecutionRequest
+	25, // 65: toolexecution.v1.ToolExecutionService.RecordToolExecutionOutput:input_type -> toolexecution.v1.RecordToolExecutionOutputRequest
+	27, // 66: toolexecution.v1.ToolExecutionService.GetToolExecution:input_type -> toolexecution.v1.GetToolExecutionRequest
+	29, // 67: toolexecution.v1.ToolExecutionService.ListToolExecutions:input_type -> toolexecution.v1.ListToolExecutionsRequest
+	22, // 68: toolexecution.v1.ToolExecutionService.ExecuteTool:output_type -> toolexecution.v1.ExecuteToolResponse
+	24, // 69: toolexecution.v1.ToolExecutionService.ResumeToolExecution:output_type -> toolexecution.v1.ResumeToolExecutionResponse
+	26, // 70: toolexecution.v1.ToolExecutionService.RecordToolExecutionOutput:output_type -> toolexecution.v1.RecordToolExecutionOutputResponse
+	28, // 71: toolexecution.v1.ToolExecutionService.GetToolExecution:output_type -> toolexecution.v1.GetToolExecutionResponse
+	30, // 72: toolexecution.v1.ToolExecutionService.ListToolExecutions:output_type -> toolexecution.v1.ListToolExecutionsResponse
+	68, // [68:73] is the sub-list for method output_type
+	63, // [63:68] is the sub-list for method input_type
+	63, // [63:63] is the sub-list for extension type_name
+	63, // [63:63] is the sub-list for extension extendee
+	0,  // [0:63] is the sub-list for field type_name
 }
 
 func init() { file_toolexecution_v1_toolexecution_proto_init() }
@@ -3579,14 +3729,14 @@ func file_toolexecution_v1_toolexecution_proto_init() {
 	if File_toolexecution_v1_toolexecution_proto != nil {
 		return
 	}
-	file_toolexecution_v1_toolexecution_proto_msgTypes[26].OneofWrappers = []any{}
+	file_toolexecution_v1_toolexecution_proto_msgTypes[27].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_toolexecution_v1_toolexecution_proto_rawDesc), len(file_toolexecution_v1_toolexecution_proto_rawDesc)),
 			NumEnums:      6,
-			NumMessages:   34,
+			NumMessages:   35,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
