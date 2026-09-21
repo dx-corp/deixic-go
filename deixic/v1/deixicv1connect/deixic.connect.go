@@ -532,6 +532,24 @@ const (
 	// DeixicServiceEngageStaffProductIssueReportProcedure is the fully-qualified name of the
 	// DeixicService's EngageStaffProductIssueReport RPC.
 	DeixicServiceEngageStaffProductIssueReportProcedure = "/deixic.v1.DeixicService/EngageStaffProductIssueReport"
+	// DeixicServicePrepareStaffProductIssueRecoveryProcedure is the fully-qualified name of the
+	// DeixicService's PrepareStaffProductIssueRecovery RPC.
+	DeixicServicePrepareStaffProductIssueRecoveryProcedure = "/deixic.v1.DeixicService/PrepareStaffProductIssueRecovery"
+	// DeixicServiceScanStaffProductIssueRecoveryProcedure is the fully-qualified name of the
+	// DeixicService's ScanStaffProductIssueRecovery RPC.
+	DeixicServiceScanStaffProductIssueRecoveryProcedure = "/deixic.v1.DeixicService/ScanStaffProductIssueRecovery"
+	// DeixicServiceReviewStaffProductIssueRecoveryProcedure is the fully-qualified name of the
+	// DeixicService's ReviewStaffProductIssueRecovery RPC.
+	DeixicServiceReviewStaffProductIssueRecoveryProcedure = "/deixic.v1.DeixicService/ReviewStaffProductIssueRecovery"
+	// DeixicServiceExecuteStaffProductIssueRecoveryProcedure is the fully-qualified name of the
+	// DeixicService's ExecuteStaffProductIssueRecovery RPC.
+	DeixicServiceExecuteStaffProductIssueRecoveryProcedure = "/deixic.v1.DeixicService/ExecuteStaffProductIssueRecovery"
+	// DeixicServiceGetProductIssueRecoveryProcedure is the fully-qualified name of the DeixicService's
+	// GetProductIssueRecovery RPC.
+	DeixicServiceGetProductIssueRecoveryProcedure = "/deixic.v1.DeixicService/GetProductIssueRecovery"
+	// DeixicServiceReplyProductIssueRecoveryProcedure is the fully-qualified name of the
+	// DeixicService's ReplyProductIssueRecovery RPC.
+	DeixicServiceReplyProductIssueRecoveryProcedure = "/deixic.v1.DeixicService/ReplyProductIssueRecovery"
 	// DeixicServiceGetOperatingFeedbackProcedure is the fully-qualified name of the DeixicService's
 	// GetOperatingFeedback RPC.
 	DeixicServiceGetOperatingFeedbackProcedure = "/deixic.v1.DeixicService/GetOperatingFeedback"
@@ -1072,6 +1090,18 @@ type DeixicServiceClient interface {
 	ListStaffProductIssueReports(context.Context, *connect.Request[v1.ListStaffProductIssueReportsRequest]) (*connect.Response[v1.ListStaffProductIssueReportsResponse], error)
 	// Uses the canonical console.v1.ConsoleService.EngageStaffProductIssueReport message contract.
 	EngageStaffProductIssueReport(context.Context, *connect.Request[v1.EngageStaffProductIssueReportRequest]) (*connect.Response[v1.EngageStaffProductIssueReportResponse], error)
+	// PrepareStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
+	PrepareStaffProductIssueRecovery(context.Context, *connect.Request[v1.PrepareStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
+	// ScanStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
+	ScanStaffProductIssueRecovery(context.Context, *connect.Request[v1.ScanStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
+	// ReviewStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
+	ReviewStaffProductIssueRecovery(context.Context, *connect.Request[v1.ReviewStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
+	// ExecuteStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
+	ExecuteStaffProductIssueRecovery(context.Context, *connect.Request[v1.ExecuteStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
+	// GetProductIssueRecovery accesses only the authenticated recovery recipient or authorized staff.
+	GetProductIssueRecovery(context.Context, *connect.Request[v1.GetProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
+	// ReplyProductIssueRecovery accesses only the authenticated recovery recipient or authorized staff.
+	ReplyProductIssueRecovery(context.Context, *connect.Request[v1.ReplyProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
 	// Uses the canonical console.v1.ConsoleService.GetOperatingFeedback message contract.
 	GetOperatingFeedback(context.Context, *connect.Request[v1.GetOperatingFeedbackRequest]) (*connect.Response[v1.GetOperatingFeedbackResponse], error)
 	// Uses the canonical console.v1.ConsoleService.ResolveOperatingFeedbackRemediation message contract.
@@ -2211,6 +2241,42 @@ func NewDeixicServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			connect.WithSchema(deixicServiceMethods.ByName("EngageStaffProductIssueReport")),
 			connect.WithClientOptions(opts...),
 		),
+		prepareStaffProductIssueRecovery: connect.NewClient[v1.PrepareStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse](
+			httpClient,
+			baseURL+DeixicServicePrepareStaffProductIssueRecoveryProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("PrepareStaffProductIssueRecovery")),
+			connect.WithClientOptions(opts...),
+		),
+		scanStaffProductIssueRecovery: connect.NewClient[v1.ScanStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse](
+			httpClient,
+			baseURL+DeixicServiceScanStaffProductIssueRecoveryProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("ScanStaffProductIssueRecovery")),
+			connect.WithClientOptions(opts...),
+		),
+		reviewStaffProductIssueRecovery: connect.NewClient[v1.ReviewStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse](
+			httpClient,
+			baseURL+DeixicServiceReviewStaffProductIssueRecoveryProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("ReviewStaffProductIssueRecovery")),
+			connect.WithClientOptions(opts...),
+		),
+		executeStaffProductIssueRecovery: connect.NewClient[v1.ExecuteStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse](
+			httpClient,
+			baseURL+DeixicServiceExecuteStaffProductIssueRecoveryProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("ExecuteStaffProductIssueRecovery")),
+			connect.WithClientOptions(opts...),
+		),
+		getProductIssueRecovery: connect.NewClient[v1.GetProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse](
+			httpClient,
+			baseURL+DeixicServiceGetProductIssueRecoveryProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("GetProductIssueRecovery")),
+			connect.WithClientOptions(opts...),
+		),
+		replyProductIssueRecovery: connect.NewClient[v1.ReplyProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse](
+			httpClient,
+			baseURL+DeixicServiceReplyProductIssueRecoveryProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("ReplyProductIssueRecovery")),
+			connect.WithClientOptions(opts...),
+		),
 		getOperatingFeedback: connect.NewClient[v1.GetOperatingFeedbackRequest, v1.GetOperatingFeedbackResponse](
 			httpClient,
 			baseURL+DeixicServiceGetOperatingFeedbackProcedure,
@@ -2772,6 +2838,12 @@ type deixicServiceClient struct {
 	submitNativeProductIssueReport              *connect.Client[v1.SubmitNativeProductIssueReportRequest, v1.SubmitProductIssueReportResponse]
 	listStaffProductIssueReports                *connect.Client[v1.ListStaffProductIssueReportsRequest, v1.ListStaffProductIssueReportsResponse]
 	engageStaffProductIssueReport               *connect.Client[v1.EngageStaffProductIssueReportRequest, v1.EngageStaffProductIssueReportResponse]
+	prepareStaffProductIssueRecovery            *connect.Client[v1.PrepareStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse]
+	scanStaffProductIssueRecovery               *connect.Client[v1.ScanStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse]
+	reviewStaffProductIssueRecovery             *connect.Client[v1.ReviewStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse]
+	executeStaffProductIssueRecovery            *connect.Client[v1.ExecuteStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse]
+	getProductIssueRecovery                     *connect.Client[v1.GetProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse]
+	replyProductIssueRecovery                   *connect.Client[v1.ReplyProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse]
 	getOperatingFeedback                        *connect.Client[v1.GetOperatingFeedbackRequest, v1.GetOperatingFeedbackResponse]
 	resolveOperatingFeedbackRemediation         *connect.Client[v1.ResolveOperatingFeedbackRemediationRequest, v1.ResolveOperatingFeedbackRemediationResponse]
 	listCustomerIntelligenceFacts               *connect.Client[v1.ListCustomerIntelligenceFactsRequest, v1.ListCustomerIntelligenceFactsResponse]
@@ -3686,6 +3758,36 @@ func (c *deixicServiceClient) EngageStaffProductIssueReport(ctx context.Context,
 	return c.engageStaffProductIssueReport.CallUnary(ctx, req)
 }
 
+// PrepareStaffProductIssueRecovery calls deixic.v1.DeixicService.PrepareStaffProductIssueRecovery.
+func (c *deixicServiceClient) PrepareStaffProductIssueRecovery(ctx context.Context, req *connect.Request[v1.PrepareStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return c.prepareStaffProductIssueRecovery.CallUnary(ctx, req)
+}
+
+// ScanStaffProductIssueRecovery calls deixic.v1.DeixicService.ScanStaffProductIssueRecovery.
+func (c *deixicServiceClient) ScanStaffProductIssueRecovery(ctx context.Context, req *connect.Request[v1.ScanStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return c.scanStaffProductIssueRecovery.CallUnary(ctx, req)
+}
+
+// ReviewStaffProductIssueRecovery calls deixic.v1.DeixicService.ReviewStaffProductIssueRecovery.
+func (c *deixicServiceClient) ReviewStaffProductIssueRecovery(ctx context.Context, req *connect.Request[v1.ReviewStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return c.reviewStaffProductIssueRecovery.CallUnary(ctx, req)
+}
+
+// ExecuteStaffProductIssueRecovery calls deixic.v1.DeixicService.ExecuteStaffProductIssueRecovery.
+func (c *deixicServiceClient) ExecuteStaffProductIssueRecovery(ctx context.Context, req *connect.Request[v1.ExecuteStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return c.executeStaffProductIssueRecovery.CallUnary(ctx, req)
+}
+
+// GetProductIssueRecovery calls deixic.v1.DeixicService.GetProductIssueRecovery.
+func (c *deixicServiceClient) GetProductIssueRecovery(ctx context.Context, req *connect.Request[v1.GetProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return c.getProductIssueRecovery.CallUnary(ctx, req)
+}
+
+// ReplyProductIssueRecovery calls deixic.v1.DeixicService.ReplyProductIssueRecovery.
+func (c *deixicServiceClient) ReplyProductIssueRecovery(ctx context.Context, req *connect.Request[v1.ReplyProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return c.replyProductIssueRecovery.CallUnary(ctx, req)
+}
+
 // GetOperatingFeedback calls deixic.v1.DeixicService.GetOperatingFeedback.
 func (c *deixicServiceClient) GetOperatingFeedback(ctx context.Context, req *connect.Request[v1.GetOperatingFeedbackRequest]) (*connect.Response[v1.GetOperatingFeedbackResponse], error) {
 	return c.getOperatingFeedback.CallUnary(ctx, req)
@@ -4361,6 +4463,18 @@ type DeixicServiceHandler interface {
 	ListStaffProductIssueReports(context.Context, *connect.Request[v1.ListStaffProductIssueReportsRequest]) (*connect.Response[v1.ListStaffProductIssueReportsResponse], error)
 	// Uses the canonical console.v1.ConsoleService.EngageStaffProductIssueReport message contract.
 	EngageStaffProductIssueReport(context.Context, *connect.Request[v1.EngageStaffProductIssueReportRequest]) (*connect.Response[v1.EngageStaffProductIssueReportResponse], error)
+	// PrepareStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
+	PrepareStaffProductIssueRecovery(context.Context, *connect.Request[v1.PrepareStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
+	// ScanStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
+	ScanStaffProductIssueRecovery(context.Context, *connect.Request[v1.ScanStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
+	// ReviewStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
+	ReviewStaffProductIssueRecovery(context.Context, *connect.Request[v1.ReviewStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
+	// ExecuteStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
+	ExecuteStaffProductIssueRecovery(context.Context, *connect.Request[v1.ExecuteStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
+	// GetProductIssueRecovery accesses only the authenticated recovery recipient or authorized staff.
+	GetProductIssueRecovery(context.Context, *connect.Request[v1.GetProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
+	// ReplyProductIssueRecovery accesses only the authenticated recovery recipient or authorized staff.
+	ReplyProductIssueRecovery(context.Context, *connect.Request[v1.ReplyProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
 	// Uses the canonical console.v1.ConsoleService.GetOperatingFeedback message contract.
 	GetOperatingFeedback(context.Context, *connect.Request[v1.GetOperatingFeedbackRequest]) (*connect.Response[v1.GetOperatingFeedbackResponse], error)
 	// Uses the canonical console.v1.ConsoleService.ResolveOperatingFeedbackRemediation message contract.
@@ -5496,6 +5610,42 @@ func NewDeixicServiceHandler(svc DeixicServiceHandler, opts ...connect.HandlerOp
 		connect.WithSchema(deixicServiceMethods.ByName("EngageStaffProductIssueReport")),
 		connect.WithHandlerOptions(opts...),
 	)
+	deixicServicePrepareStaffProductIssueRecoveryHandler := connect.NewUnaryHandler(
+		DeixicServicePrepareStaffProductIssueRecoveryProcedure,
+		svc.PrepareStaffProductIssueRecovery,
+		connect.WithSchema(deixicServiceMethods.ByName("PrepareStaffProductIssueRecovery")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicServiceScanStaffProductIssueRecoveryHandler := connect.NewUnaryHandler(
+		DeixicServiceScanStaffProductIssueRecoveryProcedure,
+		svc.ScanStaffProductIssueRecovery,
+		connect.WithSchema(deixicServiceMethods.ByName("ScanStaffProductIssueRecovery")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicServiceReviewStaffProductIssueRecoveryHandler := connect.NewUnaryHandler(
+		DeixicServiceReviewStaffProductIssueRecoveryProcedure,
+		svc.ReviewStaffProductIssueRecovery,
+		connect.WithSchema(deixicServiceMethods.ByName("ReviewStaffProductIssueRecovery")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicServiceExecuteStaffProductIssueRecoveryHandler := connect.NewUnaryHandler(
+		DeixicServiceExecuteStaffProductIssueRecoveryProcedure,
+		svc.ExecuteStaffProductIssueRecovery,
+		connect.WithSchema(deixicServiceMethods.ByName("ExecuteStaffProductIssueRecovery")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicServiceGetProductIssueRecoveryHandler := connect.NewUnaryHandler(
+		DeixicServiceGetProductIssueRecoveryProcedure,
+		svc.GetProductIssueRecovery,
+		connect.WithSchema(deixicServiceMethods.ByName("GetProductIssueRecovery")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicServiceReplyProductIssueRecoveryHandler := connect.NewUnaryHandler(
+		DeixicServiceReplyProductIssueRecoveryProcedure,
+		svc.ReplyProductIssueRecovery,
+		connect.WithSchema(deixicServiceMethods.ByName("ReplyProductIssueRecovery")),
+		connect.WithHandlerOptions(opts...),
+	)
 	deixicServiceGetOperatingFeedbackHandler := connect.NewUnaryHandler(
 		DeixicServiceGetOperatingFeedbackProcedure,
 		svc.GetOperatingFeedback,
@@ -6220,6 +6370,18 @@ func NewDeixicServiceHandler(svc DeixicServiceHandler, opts ...connect.HandlerOp
 			deixicServiceListStaffProductIssueReportsHandler.ServeHTTP(w, r)
 		case DeixicServiceEngageStaffProductIssueReportProcedure:
 			deixicServiceEngageStaffProductIssueReportHandler.ServeHTTP(w, r)
+		case DeixicServicePrepareStaffProductIssueRecoveryProcedure:
+			deixicServicePrepareStaffProductIssueRecoveryHandler.ServeHTTP(w, r)
+		case DeixicServiceScanStaffProductIssueRecoveryProcedure:
+			deixicServiceScanStaffProductIssueRecoveryHandler.ServeHTTP(w, r)
+		case DeixicServiceReviewStaffProductIssueRecoveryProcedure:
+			deixicServiceReviewStaffProductIssueRecoveryHandler.ServeHTTP(w, r)
+		case DeixicServiceExecuteStaffProductIssueRecoveryProcedure:
+			deixicServiceExecuteStaffProductIssueRecoveryHandler.ServeHTTP(w, r)
+		case DeixicServiceGetProductIssueRecoveryProcedure:
+			deixicServiceGetProductIssueRecoveryHandler.ServeHTTP(w, r)
+		case DeixicServiceReplyProductIssueRecoveryProcedure:
+			deixicServiceReplyProductIssueRecoveryHandler.ServeHTTP(w, r)
 		case DeixicServiceGetOperatingFeedbackProcedure:
 			deixicServiceGetOperatingFeedbackHandler.ServeHTTP(w, r)
 		case DeixicServiceResolveOperatingFeedbackRemediationProcedure:
@@ -7021,6 +7183,30 @@ func (UnimplementedDeixicServiceHandler) ListStaffProductIssueReports(context.Co
 
 func (UnimplementedDeixicServiceHandler) EngageStaffProductIssueReport(context.Context, *connect.Request[v1.EngageStaffProductIssueReportRequest]) (*connect.Response[v1.EngageStaffProductIssueReportResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.EngageStaffProductIssueReport is not implemented"))
+}
+
+func (UnimplementedDeixicServiceHandler) PrepareStaffProductIssueRecovery(context.Context, *connect.Request[v1.PrepareStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.PrepareStaffProductIssueRecovery is not implemented"))
+}
+
+func (UnimplementedDeixicServiceHandler) ScanStaffProductIssueRecovery(context.Context, *connect.Request[v1.ScanStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.ScanStaffProductIssueRecovery is not implemented"))
+}
+
+func (UnimplementedDeixicServiceHandler) ReviewStaffProductIssueRecovery(context.Context, *connect.Request[v1.ReviewStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.ReviewStaffProductIssueRecovery is not implemented"))
+}
+
+func (UnimplementedDeixicServiceHandler) ExecuteStaffProductIssueRecovery(context.Context, *connect.Request[v1.ExecuteStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.ExecuteStaffProductIssueRecovery is not implemented"))
+}
+
+func (UnimplementedDeixicServiceHandler) GetProductIssueRecovery(context.Context, *connect.Request[v1.GetProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.GetProductIssueRecovery is not implemented"))
+}
+
+func (UnimplementedDeixicServiceHandler) ReplyProductIssueRecovery(context.Context, *connect.Request[v1.ReplyProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.ReplyProductIssueRecovery is not implemented"))
 }
 
 func (UnimplementedDeixicServiceHandler) GetOperatingFeedback(context.Context, *connect.Request[v1.GetOperatingFeedbackRequest]) (*connect.Response[v1.GetOperatingFeedbackResponse], error) {

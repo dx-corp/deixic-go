@@ -5081,6 +5081,8 @@ func (x *GetEventDashboardResponse) GetByProvider() []*EventDashboardBucket {
 // Meter owns funding, reservations, settlement, and the available balance.
 type PrepaidCreditBalance struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
+	// Cash recovery, separate from purchases and non-cash grants.
+	CompensatedMicros int64 `protobuf:"varint,13,opt,name=compensated_micros,json=compensatedMicros,proto3" json:"compensated_micros,omitempty"`
 	// Enrolled development programs cannot consume paid credits or trigger paid refill.
 	DevelopmentCreditOnly bool `protobuf:"varint,12,opt,name=development_credit_only,json=developmentCreditOnly,proto3" json:"development_credit_only,omitempty"`
 	// Non-cash development funding, kept separate from purchased credits.
@@ -5127,6 +5129,13 @@ func (x *PrepaidCreditBalance) ProtoReflect() protoreflect.Message {
 // Deprecated: Use PrepaidCreditBalance.ProtoReflect.Descriptor instead.
 func (*PrepaidCreditBalance) Descriptor() ([]byte, []int) {
 	return file_meter_v1_meter_proto_rawDescGZIP(), []int{52}
+}
+
+func (x *PrepaidCreditBalance) GetCompensatedMicros() int64 {
+	if x != nil {
+		return x.CompensatedMicros
+	}
+	return 0
 }
 
 func (x *PrepaidCreditBalance) GetDevelopmentCreditOnly() bool {
@@ -5430,6 +5439,7 @@ func (x *PrepaidRunBalance) GetOldestPendingAt() *timestamppb.Timestamp {
 
 type PrepaidCreditReconciliation struct {
 	state                       protoimpl.MessageState `protogen:"open.v1"`
+	CompensatedDifferenceMicros int64                  `protobuf:"varint,12,opt,name=compensated_difference_micros,json=compensatedDifferenceMicros,proto3" json:"compensated_difference_micros,omitempty"`
 	GrantedDifferenceMicros     int64                  `protobuf:"varint,10,opt,name=granted_difference_micros,json=grantedDifferenceMicros,proto3" json:"granted_difference_micros,omitempty"`
 	InvalidGrantAllocationCount int64                  `protobuf:"varint,11,opt,name=invalid_grant_allocation_count,json=invalidGrantAllocationCount,proto3" json:"invalid_grant_allocation_count,omitempty"`
 	// A comparison of materialized counters with source rows in one snapshot.
@@ -5474,6 +5484,13 @@ func (x *PrepaidCreditReconciliation) ProtoReflect() protoreflect.Message {
 // Deprecated: Use PrepaidCreditReconciliation.ProtoReflect.Descriptor instead.
 func (*PrepaidCreditReconciliation) Descriptor() ([]byte, []int) {
 	return file_meter_v1_meter_proto_rawDescGZIP(), []int{56}
+}
+
+func (x *PrepaidCreditReconciliation) GetCompensatedDifferenceMicros() int64 {
+	if x != nil {
+		return x.CompensatedDifferenceMicros
+	}
+	return 0
 }
 
 func (x *PrepaidCreditReconciliation) GetGrantedDifferenceMicros() int64 {
@@ -6815,6 +6832,301 @@ func (x *ReserveWorkCreditsResponse) GetCreated() bool {
 	return false
 }
 
+// Organization and actor come exclusively from the authenticated recovery service.
+type CompensatePrepaidCreditRequest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	WorkspaceId      string                 `protobuf:"bytes,1,opt,name=workspace_id,json=workspaceId,proto3" json:"workspace_id,omitempty"`
+	GatewayRequestId string                 `protobuf:"bytes,2,opt,name=gateway_request_id,json=gatewayRequestId,proto3" json:"gateway_request_id,omitempty"`
+	IncidentId       string                 `protobuf:"bytes,3,opt,name=incident_id,json=incidentId,proto3" json:"incident_id,omitempty"`
+	IdempotencyKey   string                 `protobuf:"bytes,4,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *CompensatePrepaidCreditRequest) Reset() {
+	*x = CompensatePrepaidCreditRequest{}
+	mi := &file_meter_v1_meter_proto_msgTypes[75]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CompensatePrepaidCreditRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompensatePrepaidCreditRequest) ProtoMessage() {}
+
+func (x *CompensatePrepaidCreditRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_meter_v1_meter_proto_msgTypes[75]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompensatePrepaidCreditRequest.ProtoReflect.Descriptor instead.
+func (*CompensatePrepaidCreditRequest) Descriptor() ([]byte, []int) {
+	return file_meter_v1_meter_proto_rawDescGZIP(), []int{75}
+}
+
+func (x *CompensatePrepaidCreditRequest) GetWorkspaceId() string {
+	if x != nil {
+		return x.WorkspaceId
+	}
+	return ""
+}
+
+func (x *CompensatePrepaidCreditRequest) GetGatewayRequestId() string {
+	if x != nil {
+		return x.GatewayRequestId
+	}
+	return ""
+}
+
+func (x *CompensatePrepaidCreditRequest) GetIncidentId() string {
+	if x != nil {
+		return x.IncidentId
+	}
+	return ""
+}
+
+func (x *CompensatePrepaidCreditRequest) GetIdempotencyKey() string {
+	if x != nil {
+		return x.IdempotencyKey
+	}
+	return ""
+}
+
+type CompensatePrepaidCreditResponse struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	CompensatedMicros int64                  `protobuf:"varint,1,opt,name=compensated_micros,json=compensatedMicros,proto3" json:"compensated_micros,omitempty"`
+	ReceiptId         string                 `protobuf:"bytes,2,opt,name=receipt_id,json=receiptId,proto3" json:"receipt_id,omitempty"`
+	// Another incident or retry already restored this original charge.
+	Duplicate     bool `protobuf:"varint,3,opt,name=duplicate,proto3" json:"duplicate,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CompensatePrepaidCreditResponse) Reset() {
+	*x = CompensatePrepaidCreditResponse{}
+	mi := &file_meter_v1_meter_proto_msgTypes[76]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CompensatePrepaidCreditResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompensatePrepaidCreditResponse) ProtoMessage() {}
+
+func (x *CompensatePrepaidCreditResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_meter_v1_meter_proto_msgTypes[76]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompensatePrepaidCreditResponse.ProtoReflect.Descriptor instead.
+func (*CompensatePrepaidCreditResponse) Descriptor() ([]byte, []int) {
+	return file_meter_v1_meter_proto_rawDescGZIP(), []int{76}
+}
+
+func (x *CompensatePrepaidCreditResponse) GetCompensatedMicros() int64 {
+	if x != nil {
+		return x.CompensatedMicros
+	}
+	return 0
+}
+
+func (x *CompensatePrepaidCreditResponse) GetReceiptId() string {
+	if x != nil {
+		return x.ReceiptId
+	}
+	return ""
+}
+
+func (x *CompensatePrepaidCreditResponse) GetDuplicate() bool {
+	if x != nil {
+		return x.Duplicate
+	}
+	return false
+}
+
+type PreviewPrepaidCompensationRequest struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	WorkspaceId       string                 `protobuf:"bytes,1,opt,name=workspace_id,json=workspaceId,proto3" json:"workspace_id,omitempty"`
+	GatewayRequestIds []string               `protobuf:"bytes,2,rep,name=gateway_request_ids,json=gatewayRequestIds,proto3" json:"gateway_request_ids,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *PreviewPrepaidCompensationRequest) Reset() {
+	*x = PreviewPrepaidCompensationRequest{}
+	mi := &file_meter_v1_meter_proto_msgTypes[77]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PreviewPrepaidCompensationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PreviewPrepaidCompensationRequest) ProtoMessage() {}
+
+func (x *PreviewPrepaidCompensationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_meter_v1_meter_proto_msgTypes[77]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PreviewPrepaidCompensationRequest.ProtoReflect.Descriptor instead.
+func (*PreviewPrepaidCompensationRequest) Descriptor() ([]byte, []int) {
+	return file_meter_v1_meter_proto_rawDescGZIP(), []int{77}
+}
+
+func (x *PreviewPrepaidCompensationRequest) GetWorkspaceId() string {
+	if x != nil {
+		return x.WorkspaceId
+	}
+	return ""
+}
+
+func (x *PreviewPrepaidCompensationRequest) GetGatewayRequestIds() []string {
+	if x != nil {
+		return x.GatewayRequestIds
+	}
+	return nil
+}
+
+type PrepaidCompensationEligibility struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	GatewayRequestId string                 `protobuf:"bytes,1,opt,name=gateway_request_id,json=gatewayRequestId,proto3" json:"gateway_request_id,omitempty"`
+	Eligible         bool                   `protobuf:"varint,2,opt,name=eligible,proto3" json:"eligible,omitempty"`
+	CreditMicros     int64                  `protobuf:"varint,3,opt,name=credit_micros,json=creditMicros,proto3" json:"credit_micros,omitempty"`
+	// Stable owner codes: eligible, not_found, unsettled, zero_charge, grant_funded.
+	Reason        string `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PrepaidCompensationEligibility) Reset() {
+	*x = PrepaidCompensationEligibility{}
+	mi := &file_meter_v1_meter_proto_msgTypes[78]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PrepaidCompensationEligibility) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PrepaidCompensationEligibility) ProtoMessage() {}
+
+func (x *PrepaidCompensationEligibility) ProtoReflect() protoreflect.Message {
+	mi := &file_meter_v1_meter_proto_msgTypes[78]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PrepaidCompensationEligibility.ProtoReflect.Descriptor instead.
+func (*PrepaidCompensationEligibility) Descriptor() ([]byte, []int) {
+	return file_meter_v1_meter_proto_rawDescGZIP(), []int{78}
+}
+
+func (x *PrepaidCompensationEligibility) GetGatewayRequestId() string {
+	if x != nil {
+		return x.GatewayRequestId
+	}
+	return ""
+}
+
+func (x *PrepaidCompensationEligibility) GetEligible() bool {
+	if x != nil {
+		return x.Eligible
+	}
+	return false
+}
+
+func (x *PrepaidCompensationEligibility) GetCreditMicros() int64 {
+	if x != nil {
+		return x.CreditMicros
+	}
+	return 0
+}
+
+func (x *PrepaidCompensationEligibility) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+type PreviewPrepaidCompensationResponse struct {
+	state         protoimpl.MessageState            `protogen:"open.v1"`
+	Entries       []*PrepaidCompensationEligibility `protobuf:"bytes,1,rep,name=entries,proto3" json:"entries,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PreviewPrepaidCompensationResponse) Reset() {
+	*x = PreviewPrepaidCompensationResponse{}
+	mi := &file_meter_v1_meter_proto_msgTypes[79]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PreviewPrepaidCompensationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PreviewPrepaidCompensationResponse) ProtoMessage() {}
+
+func (x *PreviewPrepaidCompensationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_meter_v1_meter_proto_msgTypes[79]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PreviewPrepaidCompensationResponse.ProtoReflect.Descriptor instead.
+func (*PreviewPrepaidCompensationResponse) Descriptor() ([]byte, []int) {
+	return file_meter_v1_meter_proto_rawDescGZIP(), []int{79}
+}
+
+func (x *PreviewPrepaidCompensationResponse) GetEntries() []*PrepaidCompensationEligibility {
+	if x != nil {
+		return x.Entries
+	}
+	return nil
+}
+
 var File_meter_v1_meter_proto protoreflect.FileDescriptor
 
 const file_meter_v1_meter_proto_rawDesc = "" +
@@ -7321,8 +7633,9 @@ const file_meter_v1_meter_proto_rawDesc = "" +
 	"\bby_model\x18\t \x03(\v2\x1e.meter.v1.EventDashboardBucketR\abyModel\x12?\n" +
 	"\vby_provider\x18\n" +
 	" \x03(\v2\x1e.meter.v1.EventDashboardBucketR\n" +
-	"byProvider\"\x80\x05\n" +
+	"byProvider\"\xb8\x05\n" +
 	"\x14PrepaidCreditBalance\x126\n" +
+	"\x12compensated_micros\x18\r \x01(\x03B\a\xbaH\x04\"\x02(\x00R\x11compensatedMicros\x126\n" +
 	"\x17development_credit_only\x18\f \x01(\bR\x15developmentCreditOnly\x12.\n" +
 	"\x0egranted_micros\x18\b \x01(\x03B\a\xbaH\x04\"\x02(\x00R\rgrantedMicros\x129\n" +
 	"\x14expired_grant_micros\x18\t \x01(\x03B\a\xbaH\x04\"\x02(\x00R\x12expiredGrantMicros\x125\n" +
@@ -7353,8 +7666,9 @@ const file_meter_v1_meter_proto_rawDesc = "" +
 	"\x0freserved_micros\x18\x03 \x01(\x03R\x0ereservedMicros\x122\n" +
 	"\x15pending_request_count\x18\x04 \x01(\x03R\x13pendingRequestCount\x122\n" +
 	"\x15settled_request_count\x18\x05 \x01(\x03R\x13settledRequestCount\x12F\n" +
-	"\x11oldest_pending_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\x0foldestPendingAt\"\xbd\x05\n" +
-	"\x1bPrepaidCreditReconciliation\x12:\n" +
+	"\x11oldest_pending_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\x0foldestPendingAt\"\x81\x06\n" +
+	"\x1bPrepaidCreditReconciliation\x12B\n" +
+	"\x1dcompensated_difference_micros\x18\f \x01(\x03R\x1bcompensatedDifferenceMicros\x12:\n" +
 	"\x19granted_difference_micros\x18\n" +
 	" \x01(\x03R\x17grantedDifferenceMicros\x12L\n" +
 	"\x1einvalid_grant_allocation_count\x18\v \x01(\x03B\a\xbaH\x04\"\x02(\x00R\x1binvalidGrantAllocationCount\x12\x1a\n" +
@@ -7472,7 +7786,28 @@ const file_meter_v1_meter_proto_rawDesc = "" +
 	"\x1aReserveWorkCreditsResponse\x120\n" +
 	"\x0freserved_micros\x18\x01 \x01(\x03B\a\xbaH\x04\"\x02(\x00R\x0ereservedMicros\x12\x18\n" +
 	"\asettled\x18\x02 \x01(\bR\asettled\x12\x18\n" +
-	"\acreated\x18\x03 \x01(\bR\acreated*\x9e\x02\n" +
+	"\acreated\x18\x03 \x01(\bR\acreated\"\xfb\x01\n" +
+	"\x1eCompensatePrepaidCreditRequest\x121\n" +
+	"\fworkspace_id\x18\x01 \x01(\tB\x0e\xbaH\ar\x05\x10\x01\x18\x80\x02\x80\xf4\x18\x02R\vworkspaceId\x12<\n" +
+	"\x12gateway_request_id\x18\x02 \x01(\tB\x0e\xbaH\ar\x05\x10\x01\x18\x80\x02\x80\xf4\x18\x02R\x10gatewayRequestId\x12/\n" +
+	"\vincident_id\x18\x03 \x01(\tB\x0e\xbaH\ar\x05\x10\x01\x18\x80\x02\x80\xf4\x18\x02R\n" +
+	"incidentId\x127\n" +
+	"\x0fidempotency_key\x18\x04 \x01(\tB\x0e\xbaH\ar\x05\x10\x01\x18\x80\x02\x80\xf4\x18\x02R\x0eidempotencyKey\"\x9c\x01\n" +
+	"\x1fCompensatePrepaidCreditResponse\x126\n" +
+	"\x12compensated_micros\x18\x01 \x01(\x03B\a\xbaH\x04\"\x02 \x00R\x11compensatedMicros\x12#\n" +
+	"\n" +
+	"receipt_id\x18\x02 \x01(\tB\x04\x80\xf4\x18\x02R\treceiptId\x12\x1c\n" +
+	"\tduplicate\x18\x03 \x01(\bR\tduplicate\"\x96\x01\n" +
+	"!PreviewPrepaidCompensationRequest\x121\n" +
+	"\fworkspace_id\x18\x01 \x01(\tB\x0e\xbaH\ar\x05\x10\x01\x18\x80\x02\x80\xf4\x18\x02R\vworkspaceId\x12>\n" +
+	"\x13gateway_request_ids\x18\x02 \x03(\tB\x0e\xbaH\a\x92\x01\x04\b\x01\x10d\x80\xf4\x18\x02R\x11gatewayRequestIds\"\xbc\x01\n" +
+	"\x1ePrepaidCompensationEligibility\x122\n" +
+	"\x12gateway_request_id\x18\x01 \x01(\tB\x04\x80\xf4\x18\x02R\x10gatewayRequestId\x12\x1a\n" +
+	"\beligible\x18\x02 \x01(\bR\beligible\x12,\n" +
+	"\rcredit_micros\x18\x03 \x01(\x03B\a\xbaH\x04\"\x02(\x00R\fcreditMicros\x12\x1c\n" +
+	"\x06reason\x18\x04 \x01(\tB\x04\x80\xf4\x18\x01R\x06reason\"h\n" +
+	"\"PreviewPrepaidCompensationResponse\x12B\n" +
+	"\aentries\x18\x01 \x03(\v2(.meter.v1.PrepaidCompensationEligibilityR\aentries*\x9e\x02\n" +
 	"\x0eSummaryGroupBy\x12 \n" +
 	"\x1cSUMMARY_GROUP_BY_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16SUMMARY_GROUP_BY_MODEL\x10\x01\x12\x1d\n" +
@@ -7487,7 +7822,7 @@ const file_meter_v1_meter_proto_rawDesc = "" +
 	")PREPAID_PAYMENT_DISPUTE_STATE_UNSPECIFIED\x10\x00\x12&\n" +
 	"\"PREPAID_PAYMENT_DISPUTE_STATE_OPEN\x10\x01\x12%\n" +
 	"!PREPAID_PAYMENT_DISPUTE_STATE_WON\x10\x02\x12&\n" +
-	"\"PREPAID_PAYMENT_DISPUTE_STATE_LOST\x10\x032\xe9\x18\n" +
+	"\"PREPAID_PAYMENT_DISPUTE_STATE_LOST\x10\x032\xb8\x1b\n" +
 	"\fMeterService\x12\x92\x01\n" +
 	"\x17GetPrepaidCreditBalance\x12(.meter.v1.GetPrepaidCreditBalanceRequest\x1a).meter.v1.GetPrepaidCreditBalanceResponse\"\"\xca\xf3\x18\n" +
 	"meter:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\x12\xa7\x01\n" +
@@ -7497,7 +7832,9 @@ const file_meter_v1_meter_proto_rawDesc = "" +
 	"\x1aApplyPrepaidPaymentDispute\x12+.meter.v1.ApplyPrepaidPaymentDisputeRequest\x1a,.meter.v1.ApplyPrepaidPaymentDisputeResponse\"-\xca\xf3\x18\x15meter:credits:reverse\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x03\x12\x97\x01\n" +
 	"\x15ReservePrepaidCredits\x12&.meter.v1.ReservePrepaidCreditsRequest\x1a'.meter.v1.ReservePrepaidCreditsResponse\"-\xca\xf3\x18\x15meter:credits:reserve\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x03\x12\x8a\x01\n" +
 	"\x12AuthorizeWorkSpend\x12#.meter.v1.AuthorizeWorkSpendRequest\x1a$.meter.v1.AuthorizeWorkSpendResponse\")\xca\xf3\x18\x11billing:authorize\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x03\x12\x8e\x01\n" +
-	"\x12ReserveWorkCredits\x12#.meter.v1.ReserveWorkCreditsRequest\x1a$.meter.v1.ReserveWorkCreditsResponse\"-\xca\xf3\x18\x15meter:credits:reserve\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x03\x12\x93\x01\n" +
+	"\x12ReserveWorkCredits\x12#.meter.v1.ReserveWorkCreditsRequest\x1a$.meter.v1.ReserveWorkCreditsResponse\"-\xca\xf3\x18\x15meter:credits:reserve\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x03\x12\xa9\x01\n" +
+	"\x1aPreviewPrepaidCompensation\x12+.meter.v1.PreviewPrepaidCompensationRequest\x1a,.meter.v1.PreviewPrepaidCompensationResponse\"0\xca\xf3\x18\x18meter:credits:compensate\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\x12\xa0\x01\n" +
+	"\x17CompensatePrepaidCredit\x12(.meter.v1.CompensatePrepaidCreditRequest\x1a).meter.v1.CompensatePrepaidCreditResponse\"0\xca\xf3\x18\x18meter:credits:compensate\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x03\x12\x93\x01\n" +
 	"\x14SettlePrepaidCredits\x12%.meter.v1.SettlePrepaidCreditsRequest\x1a&.meter.v1.SettlePrepaidCreditsResponse\",\xca\xf3\x18\x14meter:credits:settle\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x03\x12_\n" +
 	"\vRecordUsage\x12\x1c.meter.v1.RecordUsageRequest\x1a\x1d.meter.v1.RecordUsageResponse\"\x13\xca\xf3\x18\vmeter:write\xd8\xf3\x18\x02\x12n\n" +
 	"\x10RecordUsageBatch\x12!.meter.v1.RecordUsageBatchRequest\x1a\".meter.v1.RecordUsageBatchResponse\"\x13\xca\xf3\x18\vmeter:write\xd8\xf3\x18\x02\x12\xaa\x01\n" +
@@ -7541,7 +7878,7 @@ func file_meter_v1_meter_proto_rawDescGZIP() []byte {
 }
 
 var file_meter_v1_meter_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_meter_v1_meter_proto_msgTypes = make([]protoimpl.MessageInfo, 75)
+var file_meter_v1_meter_proto_msgTypes = make([]protoimpl.MessageInfo, 80)
 var file_meter_v1_meter_proto_goTypes = []any{
 	(SummaryGroupBy)(0),                             // 0: meter.v1.SummaryGroupBy
 	(PrepaidPaymentDisputeState)(0),                 // 1: meter.v1.PrepaidPaymentDisputeState
@@ -7620,22 +7957,27 @@ var file_meter_v1_meter_proto_goTypes = []any{
 	(*AuthorizeWorkSpendResponse)(nil),              // 74: meter.v1.AuthorizeWorkSpendResponse
 	(*ReserveWorkCreditsRequest)(nil),               // 75: meter.v1.ReserveWorkCreditsRequest
 	(*ReserveWorkCreditsResponse)(nil),              // 76: meter.v1.ReserveWorkCreditsResponse
-	(*structpb.Struct)(nil),                         // 77: google.protobuf.Struct
-	(*timestamppb.Timestamp)(nil),                   // 78: google.protobuf.Timestamp
+	(*CompensatePrepaidCreditRequest)(nil),          // 77: meter.v1.CompensatePrepaidCreditRequest
+	(*CompensatePrepaidCreditResponse)(nil),         // 78: meter.v1.CompensatePrepaidCreditResponse
+	(*PreviewPrepaidCompensationRequest)(nil),       // 79: meter.v1.PreviewPrepaidCompensationRequest
+	(*PrepaidCompensationEligibility)(nil),          // 80: meter.v1.PrepaidCompensationEligibility
+	(*PreviewPrepaidCompensationResponse)(nil),      // 81: meter.v1.PreviewPrepaidCompensationResponse
+	(*structpb.Struct)(nil),                         // 82: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil),                   // 83: google.protobuf.Timestamp
 }
 var file_meter_v1_meter_proto_depIdxs = []int32{
-	77,  // 0: meter.v1.RecordUsageRequest.metadata:type_name -> google.protobuf.Struct
-	77,  // 1: meter.v1.RecordUsageRequest.data:type_name -> google.protobuf.Struct
+	82,  // 0: meter.v1.RecordUsageRequest.metadata:type_name -> google.protobuf.Struct
+	82,  // 1: meter.v1.RecordUsageRequest.data:type_name -> google.protobuf.Struct
 	23,  // 2: meter.v1.RecordUsageResponse.record:type_name -> meter.v1.UsageRecord
 	2,   // 3: meter.v1.RecordUsageBatchRequest.records:type_name -> meter.v1.RecordUsageRequest
 	23,  // 4: meter.v1.RecordUsageBatchResponse.records:type_name -> meter.v1.UsageRecord
-	78,  // 5: meter.v1.Budget.period_start:type_name -> google.protobuf.Timestamp
-	78,  // 6: meter.v1.Budget.next_reset_at:type_name -> google.protobuf.Timestamp
-	78,  // 7: meter.v1.Budget.created_at:type_name -> google.protobuf.Timestamp
-	78,  // 8: meter.v1.Budget.updated_at:type_name -> google.protobuf.Timestamp
-	78,  // 9: meter.v1.BudgetStatus.period_start:type_name -> google.protobuf.Timestamp
-	78,  // 10: meter.v1.BudgetStatus.next_reset_at:type_name -> google.protobuf.Timestamp
-	78,  // 11: meter.v1.ManagedInferenceAdminEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	83,  // 5: meter.v1.Budget.period_start:type_name -> google.protobuf.Timestamp
+	83,  // 6: meter.v1.Budget.next_reset_at:type_name -> google.protobuf.Timestamp
+	83,  // 7: meter.v1.Budget.created_at:type_name -> google.protobuf.Timestamp
+	83,  // 8: meter.v1.Budget.updated_at:type_name -> google.protobuf.Timestamp
+	83,  // 9: meter.v1.BudgetStatus.period_start:type_name -> google.protobuf.Timestamp
+	83,  // 10: meter.v1.BudgetStatus.next_reset_at:type_name -> google.protobuf.Timestamp
+	83,  // 11: meter.v1.ManagedInferenceAdminEvent.occurred_at:type_name -> google.protobuf.Timestamp
 	9,   // 12: meter.v1.ManagedInferenceAdminEvent.before_budget:type_name -> meter.v1.ManagedInferenceBudgetSnapshot
 	9,   // 13: meter.v1.ManagedInferenceAdminEvent.after_budget:type_name -> meter.v1.ManagedInferenceBudgetSnapshot
 	10,  // 14: meter.v1.ListManagedInferenceAdminEventsResponse.events:type_name -> meter.v1.ManagedInferenceAdminEvent
@@ -7643,31 +7985,31 @@ var file_meter_v1_meter_proto_depIdxs = []int32{
 	6,   // 16: meter.v1.SetBudgetResponse.budget:type_name -> meter.v1.Budget
 	7,   // 17: meter.v1.CheckBudgetResponse.statuses:type_name -> meter.v1.BudgetStatus
 	16,  // 18: meter.v1.CheckBudgetResponse.warnings:type_name -> meter.v1.BudgetWarning
-	78,  // 19: meter.v1.BudgetDenial.denied_at:type_name -> google.protobuf.Timestamp
-	78,  // 20: meter.v1.GetBudgetDashboardResponse.generated_at:type_name -> google.protobuf.Timestamp
+	83,  // 19: meter.v1.BudgetDenial.denied_at:type_name -> google.protobuf.Timestamp
+	83,  // 20: meter.v1.GetBudgetDashboardResponse.generated_at:type_name -> google.protobuf.Timestamp
 	7,   // 21: meter.v1.GetBudgetDashboardResponse.statuses:type_name -> meter.v1.BudgetStatus
 	19,  // 22: meter.v1.GetBudgetDashboardResponse.last_denial:type_name -> meter.v1.BudgetDenial
-	78,  // 23: meter.v1.ListBudgetDenialsRequest.start_time:type_name -> google.protobuf.Timestamp
-	78,  // 24: meter.v1.ListBudgetDenialsRequest.end_time:type_name -> google.protobuf.Timestamp
+	83,  // 23: meter.v1.ListBudgetDenialsRequest.start_time:type_name -> google.protobuf.Timestamp
+	83,  // 24: meter.v1.ListBudgetDenialsRequest.end_time:type_name -> google.protobuf.Timestamp
 	19,  // 25: meter.v1.ListBudgetDenialsResponse.denials:type_name -> meter.v1.BudgetDenial
-	78,  // 26: meter.v1.UsageRecord.timestamp:type_name -> google.protobuf.Timestamp
-	77,  // 27: meter.v1.UsageRecord.data:type_name -> google.protobuf.Struct
-	77,  // 28: meter.v1.UsageRecord.metadata:type_name -> google.protobuf.Struct
-	78,  // 29: meter.v1.UsageRecord.created_at:type_name -> google.protobuf.Timestamp
-	78,  // 30: meter.v1.QueryUsageRequest.start_time:type_name -> google.protobuf.Timestamp
-	78,  // 31: meter.v1.QueryUsageRequest.end_time:type_name -> google.protobuf.Timestamp
+	83,  // 26: meter.v1.UsageRecord.timestamp:type_name -> google.protobuf.Timestamp
+	82,  // 27: meter.v1.UsageRecord.data:type_name -> google.protobuf.Struct
+	82,  // 28: meter.v1.UsageRecord.metadata:type_name -> google.protobuf.Struct
+	83,  // 29: meter.v1.UsageRecord.created_at:type_name -> google.protobuf.Timestamp
+	83,  // 30: meter.v1.QueryUsageRequest.start_time:type_name -> google.protobuf.Timestamp
+	83,  // 31: meter.v1.QueryUsageRequest.end_time:type_name -> google.protobuf.Timestamp
 	23,  // 32: meter.v1.QueryUsageResponse.records:type_name -> meter.v1.UsageRecord
 	0,   // 33: meter.v1.GetUsageSummaryRequest.group_by:type_name -> meter.v1.SummaryGroupBy
-	78,  // 34: meter.v1.GetUsageSummaryRequest.start_time:type_name -> google.protobuf.Timestamp
-	78,  // 35: meter.v1.GetUsageSummaryRequest.end_time:type_name -> google.protobuf.Timestamp
+	83,  // 34: meter.v1.GetUsageSummaryRequest.start_time:type_name -> google.protobuf.Timestamp
+	83,  // 35: meter.v1.GetUsageSummaryRequest.end_time:type_name -> google.protobuf.Timestamp
 	27,  // 36: meter.v1.GetUsageSummaryResponse.buckets:type_name -> meter.v1.UsageSummary
 	0,   // 37: meter.v1.GetMeterSummaryRequest.group_by:type_name -> meter.v1.SummaryGroupBy
-	78,  // 38: meter.v1.GetMeterSummaryRequest.start_time:type_name -> google.protobuf.Timestamp
-	78,  // 39: meter.v1.GetMeterSummaryRequest.end_time:type_name -> google.protobuf.Timestamp
+	83,  // 38: meter.v1.GetMeterSummaryRequest.start_time:type_name -> google.protobuf.Timestamp
+	83,  // 39: meter.v1.GetMeterSummaryRequest.end_time:type_name -> google.protobuf.Timestamp
 	30,  // 40: meter.v1.GetMeterSummaryResponse.buckets:type_name -> meter.v1.MeterSummaryBucket
-	78,  // 41: meter.v1.GetAdoptionMetricsRequest.start_time:type_name -> google.protobuf.Timestamp
-	78,  // 42: meter.v1.GetAdoptionMetricsRequest.end_time:type_name -> google.protobuf.Timestamp
-	78,  // 43: meter.v1.AdoptionTimeBucket.start_time:type_name -> google.protobuf.Timestamp
+	83,  // 41: meter.v1.GetAdoptionMetricsRequest.start_time:type_name -> google.protobuf.Timestamp
+	83,  // 42: meter.v1.GetAdoptionMetricsRequest.end_time:type_name -> google.protobuf.Timestamp
+	83,  // 43: meter.v1.AdoptionTimeBucket.start_time:type_name -> google.protobuf.Timestamp
 	33,  // 44: meter.v1.GetAdoptionMetricsResponse.active_users_by_bucket:type_name -> meter.v1.AdoptionTimeBucket
 	34,  // 45: meter.v1.GetAdoptionMetricsResponse.cohorts:type_name -> meter.v1.AdoptionCohort
 	35,  // 46: meter.v1.GetAdoptionMetricsResponse.frequency_distribution:type_name -> meter.v1.AdoptionFrequencyBucket
@@ -7675,28 +8017,28 @@ var file_meter_v1_meter_proto_depIdxs = []int32{
 	36,  // 48: meter.v1.GetAdoptionMetricsResponse.by_model:type_name -> meter.v1.AdoptionDimensionBucket
 	36,  // 49: meter.v1.GetAdoptionMetricsResponse.by_provider:type_name -> meter.v1.AdoptionDimensionBucket
 	36,  // 50: meter.v1.GetAdoptionMetricsResponse.by_agent:type_name -> meter.v1.AdoptionDimensionBucket
-	78,  // 51: meter.v1.ListActiveUsersRequest.start_time:type_name -> google.protobuf.Timestamp
-	78,  // 52: meter.v1.ListActiveUsersRequest.end_time:type_name -> google.protobuf.Timestamp
-	78,  // 53: meter.v1.ActiveUser.first_seen:type_name -> google.protobuf.Timestamp
-	78,  // 54: meter.v1.ActiveUser.last_seen:type_name -> google.protobuf.Timestamp
+	83,  // 51: meter.v1.ListActiveUsersRequest.start_time:type_name -> google.protobuf.Timestamp
+	83,  // 52: meter.v1.ListActiveUsersRequest.end_time:type_name -> google.protobuf.Timestamp
+	83,  // 53: meter.v1.ActiveUser.first_seen:type_name -> google.protobuf.Timestamp
+	83,  // 54: meter.v1.ActiveUser.last_seen:type_name -> google.protobuf.Timestamp
 	39,  // 55: meter.v1.ListActiveUsersResponse.users:type_name -> meter.v1.ActiveUser
-	78,  // 56: meter.v1.IngestWideEventRequest.timestamp:type_name -> google.protobuf.Timestamp
-	77,  // 57: meter.v1.IngestWideEventRequest.metadata:type_name -> google.protobuf.Struct
-	77,  // 58: meter.v1.IngestWideEventRequest.data:type_name -> google.protobuf.Struct
+	83,  // 56: meter.v1.IngestWideEventRequest.timestamp:type_name -> google.protobuf.Timestamp
+	82,  // 57: meter.v1.IngestWideEventRequest.metadata:type_name -> google.protobuf.Struct
+	82,  // 58: meter.v1.IngestWideEventRequest.data:type_name -> google.protobuf.Struct
 	41,  // 59: meter.v1.IngestWideEventRequest.metrics:type_name -> meter.v1.WideEventMetrics
-	78,  // 60: meter.v1.WideEvent.timestamp:type_name -> google.protobuf.Timestamp
-	77,  // 61: meter.v1.WideEvent.metadata:type_name -> google.protobuf.Struct
-	77,  // 62: meter.v1.WideEvent.data:type_name -> google.protobuf.Struct
+	83,  // 60: meter.v1.WideEvent.timestamp:type_name -> google.protobuf.Timestamp
+	82,  // 61: meter.v1.WideEvent.metadata:type_name -> google.protobuf.Struct
+	82,  // 62: meter.v1.WideEvent.data:type_name -> google.protobuf.Struct
 	41,  // 63: meter.v1.WideEvent.metrics:type_name -> meter.v1.WideEventMetrics
-	78,  // 64: meter.v1.WideEvent.created_at:type_name -> google.protobuf.Timestamp
+	83,  // 64: meter.v1.WideEvent.created_at:type_name -> google.protobuf.Timestamp
 	44,  // 65: meter.v1.IngestWideEventResponse.event:type_name -> meter.v1.WideEvent
 	43,  // 66: meter.v1.IngestWideEventBatchRequest.events:type_name -> meter.v1.IngestWideEventRequest
 	48,  // 67: meter.v1.IngestWideEventBatchResponse.results:type_name -> meter.v1.IngestWideEventBatchItemResult
-	78,  // 68: meter.v1.QueryWideEventsRequest.start_time:type_name -> google.protobuf.Timestamp
-	78,  // 69: meter.v1.QueryWideEventsRequest.end_time:type_name -> google.protobuf.Timestamp
+	83,  // 68: meter.v1.QueryWideEventsRequest.start_time:type_name -> google.protobuf.Timestamp
+	83,  // 69: meter.v1.QueryWideEventsRequest.end_time:type_name -> google.protobuf.Timestamp
 	44,  // 70: meter.v1.QueryWideEventsResponse.events:type_name -> meter.v1.WideEvent
-	78,  // 71: meter.v1.GetEventDashboardRequest.start_time:type_name -> google.protobuf.Timestamp
-	78,  // 72: meter.v1.GetEventDashboardRequest.end_time:type_name -> google.protobuf.Timestamp
+	83,  // 71: meter.v1.GetEventDashboardRequest.start_time:type_name -> google.protobuf.Timestamp
+	83,  // 72: meter.v1.GetEventDashboardRequest.end_time:type_name -> google.protobuf.Timestamp
 	52,  // 73: meter.v1.GetEventDashboardResponse.by_event_type:type_name -> meter.v1.EventDashboardBucket
 	52,  // 74: meter.v1.GetEventDashboardResponse.by_surface:type_name -> meter.v1.EventDashboardBucket
 	52,  // 75: meter.v1.GetEventDashboardResponse.by_model:type_name -> meter.v1.EventDashboardBucket
@@ -7705,73 +8047,78 @@ var file_meter_v1_meter_proto_depIdxs = []int32{
 	58,  // 78: meter.v1.GetPrepaidCreditBalanceResponse.reconciliation:type_name -> meter.v1.PrepaidCreditReconciliation
 	57,  // 79: meter.v1.GetPrepaidCreditBalanceResponse.run_balance:type_name -> meter.v1.PrepaidRunBalance
 	59,  // 80: meter.v1.GetPrepaidCreditBalanceResponse.development_program_policy:type_name -> meter.v1.DevelopmentCreditProgramPolicy
-	78,  // 81: meter.v1.PrepaidRunBalance.oldest_pending_at:type_name -> google.protobuf.Timestamp
-	78,  // 82: meter.v1.PrepaidCreditReconciliation.oldest_pending_at:type_name -> google.protobuf.Timestamp
-	78,  // 83: meter.v1.GrantDevelopmentCreditsRequest.expires_at:type_name -> google.protobuf.Timestamp
+	83,  // 81: meter.v1.PrepaidRunBalance.oldest_pending_at:type_name -> google.protobuf.Timestamp
+	83,  // 82: meter.v1.PrepaidCreditReconciliation.oldest_pending_at:type_name -> google.protobuf.Timestamp
+	83,  // 83: meter.v1.GrantDevelopmentCreditsRequest.expires_at:type_name -> google.protobuf.Timestamp
 	59,  // 84: meter.v1.GrantDevelopmentCreditsRequest.enrollment_policy:type_name -> meter.v1.DevelopmentCreditProgramPolicy
-	78,  // 85: meter.v1.DevelopmentCreditGrant.expires_at:type_name -> google.protobuf.Timestamp
-	78,  // 86: meter.v1.DevelopmentCreditGrant.created_at:type_name -> google.protobuf.Timestamp
+	83,  // 85: meter.v1.DevelopmentCreditGrant.expires_at:type_name -> google.protobuf.Timestamp
+	83,  // 86: meter.v1.DevelopmentCreditGrant.created_at:type_name -> google.protobuf.Timestamp
 	61,  // 87: meter.v1.GrantDevelopmentCreditsResponse.grant:type_name -> meter.v1.DevelopmentCreditGrant
 	54,  // 88: meter.v1.FundPrepaidCreditsResponse.balance:type_name -> meter.v1.PrepaidCreditBalance
 	54,  // 89: meter.v1.ReversePrepaidCreditsResponse.balance:type_name -> meter.v1.PrepaidCreditBalance
 	1,   // 90: meter.v1.ApplyPrepaidPaymentDisputeRequest.state:type_name -> meter.v1.PrepaidPaymentDisputeState
 	54,  // 91: meter.v1.ApplyPrepaidPaymentDisputeResponse.balance:type_name -> meter.v1.PrepaidCreditBalance
-	78,  // 92: meter.v1.AuthorizeWorkSpendRequest.valid_until:type_name -> google.protobuf.Timestamp
-	55,  // 93: meter.v1.MeterService.GetPrepaidCreditBalance:input_type -> meter.v1.GetPrepaidCreditBalanceRequest
-	60,  // 94: meter.v1.MeterService.GrantDevelopmentCredits:input_type -> meter.v1.GrantDevelopmentCreditsRequest
-	63,  // 95: meter.v1.MeterService.FundPrepaidCredits:input_type -> meter.v1.FundPrepaidCreditsRequest
-	69,  // 96: meter.v1.MeterService.ReversePrepaidCredits:input_type -> meter.v1.ReversePrepaidCreditsRequest
-	71,  // 97: meter.v1.MeterService.ApplyPrepaidPaymentDispute:input_type -> meter.v1.ApplyPrepaidPaymentDisputeRequest
-	65,  // 98: meter.v1.MeterService.ReservePrepaidCredits:input_type -> meter.v1.ReservePrepaidCreditsRequest
-	73,  // 99: meter.v1.MeterService.AuthorizeWorkSpend:input_type -> meter.v1.AuthorizeWorkSpendRequest
-	75,  // 100: meter.v1.MeterService.ReserveWorkCredits:input_type -> meter.v1.ReserveWorkCreditsRequest
-	67,  // 101: meter.v1.MeterService.SettlePrepaidCredits:input_type -> meter.v1.SettlePrepaidCreditsRequest
-	2,   // 102: meter.v1.MeterService.RecordUsage:input_type -> meter.v1.RecordUsageRequest
-	4,   // 103: meter.v1.MeterService.RecordUsageBatch:input_type -> meter.v1.RecordUsageBatchRequest
-	11,  // 104: meter.v1.MeterService.ListManagedInferenceAdminEvents:input_type -> meter.v1.ListManagedInferenceAdminEventsRequest
-	13,  // 105: meter.v1.MeterService.SetBudget:input_type -> meter.v1.SetBudgetRequest
-	15,  // 106: meter.v1.MeterService.CheckBudget:input_type -> meter.v1.CheckBudgetRequest
-	18,  // 107: meter.v1.MeterService.GetBudgetDashboard:input_type -> meter.v1.GetBudgetDashboardRequest
-	21,  // 108: meter.v1.MeterService.ListBudgetDenials:input_type -> meter.v1.ListBudgetDenialsRequest
-	24,  // 109: meter.v1.MeterService.QueryUsage:input_type -> meter.v1.QueryUsageRequest
-	26,  // 110: meter.v1.MeterService.GetUsageSummary:input_type -> meter.v1.GetUsageSummaryRequest
-	29,  // 111: meter.v1.MeterService.GetMeterSummary:input_type -> meter.v1.GetMeterSummaryRequest
-	32,  // 112: meter.v1.MeterService.GetAdoptionMetrics:input_type -> meter.v1.GetAdoptionMetricsRequest
-	38,  // 113: meter.v1.MeterService.ListActiveUsers:input_type -> meter.v1.ListActiveUsersRequest
-	43,  // 114: meter.v1.MeterService.IngestWideEvent:input_type -> meter.v1.IngestWideEventRequest
-	46,  // 115: meter.v1.MeterService.IngestWideEventBatch:input_type -> meter.v1.IngestWideEventBatchRequest
-	49,  // 116: meter.v1.MeterService.QueryWideEvents:input_type -> meter.v1.QueryWideEventsRequest
-	51,  // 117: meter.v1.MeterService.GetEventDashboard:input_type -> meter.v1.GetEventDashboardRequest
-	56,  // 118: meter.v1.MeterService.GetPrepaidCreditBalance:output_type -> meter.v1.GetPrepaidCreditBalanceResponse
-	62,  // 119: meter.v1.MeterService.GrantDevelopmentCredits:output_type -> meter.v1.GrantDevelopmentCreditsResponse
-	64,  // 120: meter.v1.MeterService.FundPrepaidCredits:output_type -> meter.v1.FundPrepaidCreditsResponse
-	70,  // 121: meter.v1.MeterService.ReversePrepaidCredits:output_type -> meter.v1.ReversePrepaidCreditsResponse
-	72,  // 122: meter.v1.MeterService.ApplyPrepaidPaymentDispute:output_type -> meter.v1.ApplyPrepaidPaymentDisputeResponse
-	66,  // 123: meter.v1.MeterService.ReservePrepaidCredits:output_type -> meter.v1.ReservePrepaidCreditsResponse
-	74,  // 124: meter.v1.MeterService.AuthorizeWorkSpend:output_type -> meter.v1.AuthorizeWorkSpendResponse
-	76,  // 125: meter.v1.MeterService.ReserveWorkCredits:output_type -> meter.v1.ReserveWorkCreditsResponse
-	68,  // 126: meter.v1.MeterService.SettlePrepaidCredits:output_type -> meter.v1.SettlePrepaidCreditsResponse
-	3,   // 127: meter.v1.MeterService.RecordUsage:output_type -> meter.v1.RecordUsageResponse
-	5,   // 128: meter.v1.MeterService.RecordUsageBatch:output_type -> meter.v1.RecordUsageBatchResponse
-	12,  // 129: meter.v1.MeterService.ListManagedInferenceAdminEvents:output_type -> meter.v1.ListManagedInferenceAdminEventsResponse
-	14,  // 130: meter.v1.MeterService.SetBudget:output_type -> meter.v1.SetBudgetResponse
-	17,  // 131: meter.v1.MeterService.CheckBudget:output_type -> meter.v1.CheckBudgetResponse
-	20,  // 132: meter.v1.MeterService.GetBudgetDashboard:output_type -> meter.v1.GetBudgetDashboardResponse
-	22,  // 133: meter.v1.MeterService.ListBudgetDenials:output_type -> meter.v1.ListBudgetDenialsResponse
-	25,  // 134: meter.v1.MeterService.QueryUsage:output_type -> meter.v1.QueryUsageResponse
-	28,  // 135: meter.v1.MeterService.GetUsageSummary:output_type -> meter.v1.GetUsageSummaryResponse
-	31,  // 136: meter.v1.MeterService.GetMeterSummary:output_type -> meter.v1.GetMeterSummaryResponse
-	37,  // 137: meter.v1.MeterService.GetAdoptionMetrics:output_type -> meter.v1.GetAdoptionMetricsResponse
-	40,  // 138: meter.v1.MeterService.ListActiveUsers:output_type -> meter.v1.ListActiveUsersResponse
-	45,  // 139: meter.v1.MeterService.IngestWideEvent:output_type -> meter.v1.IngestWideEventResponse
-	47,  // 140: meter.v1.MeterService.IngestWideEventBatch:output_type -> meter.v1.IngestWideEventBatchResponse
-	50,  // 141: meter.v1.MeterService.QueryWideEvents:output_type -> meter.v1.QueryWideEventsResponse
-	53,  // 142: meter.v1.MeterService.GetEventDashboard:output_type -> meter.v1.GetEventDashboardResponse
-	118, // [118:143] is the sub-list for method output_type
-	93,  // [93:118] is the sub-list for method input_type
-	93,  // [93:93] is the sub-list for extension type_name
-	93,  // [93:93] is the sub-list for extension extendee
-	0,   // [0:93] is the sub-list for field type_name
+	83,  // 92: meter.v1.AuthorizeWorkSpendRequest.valid_until:type_name -> google.protobuf.Timestamp
+	80,  // 93: meter.v1.PreviewPrepaidCompensationResponse.entries:type_name -> meter.v1.PrepaidCompensationEligibility
+	55,  // 94: meter.v1.MeterService.GetPrepaidCreditBalance:input_type -> meter.v1.GetPrepaidCreditBalanceRequest
+	60,  // 95: meter.v1.MeterService.GrantDevelopmentCredits:input_type -> meter.v1.GrantDevelopmentCreditsRequest
+	63,  // 96: meter.v1.MeterService.FundPrepaidCredits:input_type -> meter.v1.FundPrepaidCreditsRequest
+	69,  // 97: meter.v1.MeterService.ReversePrepaidCredits:input_type -> meter.v1.ReversePrepaidCreditsRequest
+	71,  // 98: meter.v1.MeterService.ApplyPrepaidPaymentDispute:input_type -> meter.v1.ApplyPrepaidPaymentDisputeRequest
+	65,  // 99: meter.v1.MeterService.ReservePrepaidCredits:input_type -> meter.v1.ReservePrepaidCreditsRequest
+	73,  // 100: meter.v1.MeterService.AuthorizeWorkSpend:input_type -> meter.v1.AuthorizeWorkSpendRequest
+	75,  // 101: meter.v1.MeterService.ReserveWorkCredits:input_type -> meter.v1.ReserveWorkCreditsRequest
+	79,  // 102: meter.v1.MeterService.PreviewPrepaidCompensation:input_type -> meter.v1.PreviewPrepaidCompensationRequest
+	77,  // 103: meter.v1.MeterService.CompensatePrepaidCredit:input_type -> meter.v1.CompensatePrepaidCreditRequest
+	67,  // 104: meter.v1.MeterService.SettlePrepaidCredits:input_type -> meter.v1.SettlePrepaidCreditsRequest
+	2,   // 105: meter.v1.MeterService.RecordUsage:input_type -> meter.v1.RecordUsageRequest
+	4,   // 106: meter.v1.MeterService.RecordUsageBatch:input_type -> meter.v1.RecordUsageBatchRequest
+	11,  // 107: meter.v1.MeterService.ListManagedInferenceAdminEvents:input_type -> meter.v1.ListManagedInferenceAdminEventsRequest
+	13,  // 108: meter.v1.MeterService.SetBudget:input_type -> meter.v1.SetBudgetRequest
+	15,  // 109: meter.v1.MeterService.CheckBudget:input_type -> meter.v1.CheckBudgetRequest
+	18,  // 110: meter.v1.MeterService.GetBudgetDashboard:input_type -> meter.v1.GetBudgetDashboardRequest
+	21,  // 111: meter.v1.MeterService.ListBudgetDenials:input_type -> meter.v1.ListBudgetDenialsRequest
+	24,  // 112: meter.v1.MeterService.QueryUsage:input_type -> meter.v1.QueryUsageRequest
+	26,  // 113: meter.v1.MeterService.GetUsageSummary:input_type -> meter.v1.GetUsageSummaryRequest
+	29,  // 114: meter.v1.MeterService.GetMeterSummary:input_type -> meter.v1.GetMeterSummaryRequest
+	32,  // 115: meter.v1.MeterService.GetAdoptionMetrics:input_type -> meter.v1.GetAdoptionMetricsRequest
+	38,  // 116: meter.v1.MeterService.ListActiveUsers:input_type -> meter.v1.ListActiveUsersRequest
+	43,  // 117: meter.v1.MeterService.IngestWideEvent:input_type -> meter.v1.IngestWideEventRequest
+	46,  // 118: meter.v1.MeterService.IngestWideEventBatch:input_type -> meter.v1.IngestWideEventBatchRequest
+	49,  // 119: meter.v1.MeterService.QueryWideEvents:input_type -> meter.v1.QueryWideEventsRequest
+	51,  // 120: meter.v1.MeterService.GetEventDashboard:input_type -> meter.v1.GetEventDashboardRequest
+	56,  // 121: meter.v1.MeterService.GetPrepaidCreditBalance:output_type -> meter.v1.GetPrepaidCreditBalanceResponse
+	62,  // 122: meter.v1.MeterService.GrantDevelopmentCredits:output_type -> meter.v1.GrantDevelopmentCreditsResponse
+	64,  // 123: meter.v1.MeterService.FundPrepaidCredits:output_type -> meter.v1.FundPrepaidCreditsResponse
+	70,  // 124: meter.v1.MeterService.ReversePrepaidCredits:output_type -> meter.v1.ReversePrepaidCreditsResponse
+	72,  // 125: meter.v1.MeterService.ApplyPrepaidPaymentDispute:output_type -> meter.v1.ApplyPrepaidPaymentDisputeResponse
+	66,  // 126: meter.v1.MeterService.ReservePrepaidCredits:output_type -> meter.v1.ReservePrepaidCreditsResponse
+	74,  // 127: meter.v1.MeterService.AuthorizeWorkSpend:output_type -> meter.v1.AuthorizeWorkSpendResponse
+	76,  // 128: meter.v1.MeterService.ReserveWorkCredits:output_type -> meter.v1.ReserveWorkCreditsResponse
+	81,  // 129: meter.v1.MeterService.PreviewPrepaidCompensation:output_type -> meter.v1.PreviewPrepaidCompensationResponse
+	78,  // 130: meter.v1.MeterService.CompensatePrepaidCredit:output_type -> meter.v1.CompensatePrepaidCreditResponse
+	68,  // 131: meter.v1.MeterService.SettlePrepaidCredits:output_type -> meter.v1.SettlePrepaidCreditsResponse
+	3,   // 132: meter.v1.MeterService.RecordUsage:output_type -> meter.v1.RecordUsageResponse
+	5,   // 133: meter.v1.MeterService.RecordUsageBatch:output_type -> meter.v1.RecordUsageBatchResponse
+	12,  // 134: meter.v1.MeterService.ListManagedInferenceAdminEvents:output_type -> meter.v1.ListManagedInferenceAdminEventsResponse
+	14,  // 135: meter.v1.MeterService.SetBudget:output_type -> meter.v1.SetBudgetResponse
+	17,  // 136: meter.v1.MeterService.CheckBudget:output_type -> meter.v1.CheckBudgetResponse
+	20,  // 137: meter.v1.MeterService.GetBudgetDashboard:output_type -> meter.v1.GetBudgetDashboardResponse
+	22,  // 138: meter.v1.MeterService.ListBudgetDenials:output_type -> meter.v1.ListBudgetDenialsResponse
+	25,  // 139: meter.v1.MeterService.QueryUsage:output_type -> meter.v1.QueryUsageResponse
+	28,  // 140: meter.v1.MeterService.GetUsageSummary:output_type -> meter.v1.GetUsageSummaryResponse
+	31,  // 141: meter.v1.MeterService.GetMeterSummary:output_type -> meter.v1.GetMeterSummaryResponse
+	37,  // 142: meter.v1.MeterService.GetAdoptionMetrics:output_type -> meter.v1.GetAdoptionMetricsResponse
+	40,  // 143: meter.v1.MeterService.ListActiveUsers:output_type -> meter.v1.ListActiveUsersResponse
+	45,  // 144: meter.v1.MeterService.IngestWideEvent:output_type -> meter.v1.IngestWideEventResponse
+	47,  // 145: meter.v1.MeterService.IngestWideEventBatch:output_type -> meter.v1.IngestWideEventBatchResponse
+	50,  // 146: meter.v1.MeterService.QueryWideEvents:output_type -> meter.v1.QueryWideEventsResponse
+	53,  // 147: meter.v1.MeterService.GetEventDashboard:output_type -> meter.v1.GetEventDashboardResponse
+	121, // [121:148] is the sub-list for method output_type
+	94,  // [94:121] is the sub-list for method input_type
+	94,  // [94:94] is the sub-list for extension type_name
+	94,  // [94:94] is the sub-list for extension extendee
+	0,   // [0:94] is the sub-list for field type_name
 }
 
 func init() { file_meter_v1_meter_proto_init() }
@@ -7786,7 +8133,7 @@ func file_meter_v1_meter_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_meter_v1_meter_proto_rawDesc), len(file_meter_v1_meter_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   75,
+			NumMessages:   80,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
