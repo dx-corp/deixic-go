@@ -376,6 +376,9 @@ const (
 	// DeixicServiceArchiveOperatingThreadProcedure is the fully-qualified name of the DeixicService's
 	// ArchiveOperatingThread RPC.
 	DeixicServiceArchiveOperatingThreadProcedure = "/deixic.v1.DeixicService/ArchiveOperatingThread"
+	// DeixicServiceForkOperatingThreadProcedure is the fully-qualified name of the DeixicService's
+	// ForkOperatingThread RPC.
+	DeixicServiceForkOperatingThreadProcedure = "/deixic.v1.DeixicService/ForkOperatingThread"
 	// DeixicServiceRenameOperatingThreadProcedure is the fully-qualified name of the DeixicService's
 	// RenameOperatingThread RPC.
 	DeixicServiceRenameOperatingThreadProcedure = "/deixic.v1.DeixicService/RenameOperatingThread"
@@ -989,6 +992,8 @@ type DeixicServiceClient interface {
 	ListOperatingJobs(context.Context, *connect.Request[v1.ListOperatingJobsRequest]) (*connect.Response[v1.ListOperatingJobsResponse], error)
 	// Uses the canonical console.v1.ConsoleService.ArchiveOperatingThread message contract.
 	ArchiveOperatingThread(context.Context, *connect.Request[v1.ArchiveOperatingThreadRequest]) (*connect.Response[v1.ArchiveOperatingThreadResponse], error)
+	// Uses the canonical console.v1.ConsoleService.ForkOperatingThread message contract.
+	ForkOperatingThread(context.Context, *connect.Request[v1.ForkOperatingThreadRequest]) (*connect.Response[v1.ForkOperatingThreadResponse], error)
 	// Uses the canonical console.v1.ConsoleService.RenameOperatingThread message contract.
 	RenameOperatingThread(context.Context, *connect.Request[v1.RenameOperatingThreadRequest]) (*connect.Response[v1.RenameOperatingThreadResponse], error)
 	// Uses the canonical console.v1.ConsoleService.GetOperatingThread message contract.
@@ -1934,6 +1939,12 @@ func NewDeixicServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			connect.WithSchema(deixicServiceMethods.ByName("ArchiveOperatingThread")),
 			connect.WithClientOptions(opts...),
 		),
+		forkOperatingThread: connect.NewClient[v1.ForkOperatingThreadRequest, v1.ForkOperatingThreadResponse](
+			httpClient,
+			baseURL+DeixicServiceForkOperatingThreadProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("ForkOperatingThread")),
+			connect.WithClientOptions(opts...),
+		),
 		renameOperatingThread: connect.NewClient[v1.RenameOperatingThreadRequest, v1.RenameOperatingThreadResponse](
 			httpClient,
 			baseURL+DeixicServiceRenameOperatingThreadProcedure,
@@ -2797,6 +2808,7 @@ type deixicServiceClient struct {
 	listOperatingChannels                       *connect.Client[v1.ListOperatingChannelsRequest, v1.ListOperatingChannelsResponse]
 	listOperatingJobs                           *connect.Client[v1.ListOperatingJobsRequest, v1.ListOperatingJobsResponse]
 	archiveOperatingThread                      *connect.Client[v1.ArchiveOperatingThreadRequest, v1.ArchiveOperatingThreadResponse]
+	forkOperatingThread                         *connect.Client[v1.ForkOperatingThreadRequest, v1.ForkOperatingThreadResponse]
 	renameOperatingThread                       *connect.Client[v1.RenameOperatingThreadRequest, v1.RenameOperatingThreadResponse]
 	getOperatingThread                          *connect.Client[v1.GetOperatingThreadRequest, v1.GetOperatingThreadResponse]
 	bootstrapThreadGateway                      *connect.Client[v1.BootstrapThreadGatewayRequest, v1.BootstrapThreadGatewayResponse]
@@ -3502,6 +3514,11 @@ func (c *deixicServiceClient) ListOperatingJobs(ctx context.Context, req *connec
 // ArchiveOperatingThread calls deixic.v1.DeixicService.ArchiveOperatingThread.
 func (c *deixicServiceClient) ArchiveOperatingThread(ctx context.Context, req *connect.Request[v1.ArchiveOperatingThreadRequest]) (*connect.Response[v1.ArchiveOperatingThreadResponse], error) {
 	return c.archiveOperatingThread.CallUnary(ctx, req)
+}
+
+// ForkOperatingThread calls deixic.v1.DeixicService.ForkOperatingThread.
+func (c *deixicServiceClient) ForkOperatingThread(ctx context.Context, req *connect.Request[v1.ForkOperatingThreadRequest]) (*connect.Response[v1.ForkOperatingThreadResponse], error) {
+	return c.forkOperatingThread.CallUnary(ctx, req)
 }
 
 // RenameOperatingThread calls deixic.v1.DeixicService.RenameOperatingThread.
@@ -4376,6 +4393,8 @@ type DeixicServiceHandler interface {
 	ListOperatingJobs(context.Context, *connect.Request[v1.ListOperatingJobsRequest]) (*connect.Response[v1.ListOperatingJobsResponse], error)
 	// Uses the canonical console.v1.ConsoleService.ArchiveOperatingThread message contract.
 	ArchiveOperatingThread(context.Context, *connect.Request[v1.ArchiveOperatingThreadRequest]) (*connect.Response[v1.ArchiveOperatingThreadResponse], error)
+	// Uses the canonical console.v1.ConsoleService.ForkOperatingThread message contract.
+	ForkOperatingThread(context.Context, *connect.Request[v1.ForkOperatingThreadRequest]) (*connect.Response[v1.ForkOperatingThreadResponse], error)
 	// Uses the canonical console.v1.ConsoleService.RenameOperatingThread message contract.
 	RenameOperatingThread(context.Context, *connect.Request[v1.RenameOperatingThreadRequest]) (*connect.Response[v1.RenameOperatingThreadResponse], error)
 	// Uses the canonical console.v1.ConsoleService.GetOperatingThread message contract.
@@ -5315,6 +5334,12 @@ func NewDeixicServiceHandler(svc DeixicServiceHandler, opts ...connect.HandlerOp
 		DeixicServiceArchiveOperatingThreadProcedure,
 		svc.ArchiveOperatingThread,
 		connect.WithSchema(deixicServiceMethods.ByName("ArchiveOperatingThread")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicServiceForkOperatingThreadHandler := connect.NewUnaryHandler(
+		DeixicServiceForkOperatingThreadProcedure,
+		svc.ForkOperatingThread,
+		connect.WithSchema(deixicServiceMethods.ByName("ForkOperatingThread")),
 		connect.WithHandlerOptions(opts...),
 	)
 	deixicServiceRenameOperatingThreadHandler := connect.NewUnaryHandler(
@@ -6291,6 +6316,8 @@ func NewDeixicServiceHandler(svc DeixicServiceHandler, opts ...connect.HandlerOp
 			deixicServiceListOperatingJobsHandler.ServeHTTP(w, r)
 		case DeixicServiceArchiveOperatingThreadProcedure:
 			deixicServiceArchiveOperatingThreadHandler.ServeHTTP(w, r)
+		case DeixicServiceForkOperatingThreadProcedure:
+			deixicServiceForkOperatingThreadHandler.ServeHTTP(w, r)
 		case DeixicServiceRenameOperatingThreadProcedure:
 			deixicServiceRenameOperatingThreadHandler.ServeHTTP(w, r)
 		case DeixicServiceGetOperatingThreadProcedure:
@@ -7002,6 +7029,10 @@ func (UnimplementedDeixicServiceHandler) ListOperatingJobs(context.Context, *con
 
 func (UnimplementedDeixicServiceHandler) ArchiveOperatingThread(context.Context, *connect.Request[v1.ArchiveOperatingThreadRequest]) (*connect.Response[v1.ArchiveOperatingThreadResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.ArchiveOperatingThread is not implemented"))
+}
+
+func (UnimplementedDeixicServiceHandler) ForkOperatingThread(context.Context, *connect.Request[v1.ForkOperatingThreadRequest]) (*connect.Response[v1.ForkOperatingThreadResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.ForkOperatingThread is not implemented"))
 }
 
 func (UnimplementedDeixicServiceHandler) RenameOperatingThread(context.Context, *connect.Request[v1.RenameOperatingThreadRequest]) (*connect.Response[v1.RenameOperatingThreadResponse], error) {
