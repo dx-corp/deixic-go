@@ -6936,9 +6936,16 @@ type OperatingChannel struct {
 	ArchivedByDisplayName string `protobuf:"bytes,14,opt,name=archived_by_display_name,json=archivedByDisplayName,proto3" json:"archived_by_display_name,omitempty"`
 	// Fork provenance is durable owner metadata, absent on a thread that was
 	// started directly.
-	Fork          *OperatingThreadFork `protobuf:"bytes,15,opt,name=fork,proto3" json:"fork,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Fork *OperatingThreadFork `protobuf:"bytes,15,opt,name=fork,proto3" json:"fork,omitempty"`
+	// The source project this thread's work belongs to, empty when the thread
+	// has never submitted a turn against one. This is the existing
+	// `project_resource_id` from SubmitOperatingMessageRequest, recorded durably
+	// on the thread so several threads working the same project can be listed
+	// together. It is a grouping, never an authority: every read still resolves
+	// the thread under the caller's own tenant scope.
+	ProjectResourceId string `protobuf:"bytes,16,opt,name=project_resource_id,json=projectResourceId,proto3" json:"project_resource_id,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *OperatingChannel) Reset() {
@@ -7074,6 +7081,13 @@ func (x *OperatingChannel) GetFork() *OperatingThreadFork {
 		return x.Fork
 	}
 	return nil
+}
+
+func (x *OperatingChannel) GetProjectResourceId() string {
+	if x != nil {
+		return x.ProjectResourceId
+	}
+	return ""
 }
 
 // Where a forked operating thread came from.
@@ -8974,8 +8988,11 @@ type ListOperatingChannelsRequest struct {
 	state         protoimpl.MessageState       `protogen:"open.v1"`
 	Query         *ConsoleQuery                `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
 	ArchiveFilter OperatingThreadArchiveFilter `protobuf:"varint,2,opt,name=archive_filter,json=archiveFilter,proto3,enum=console.v1.OperatingThreadArchiveFilter" json:"archive_filter,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	// Return only the threads bound to this source project. Empty returns every
+	// thread in the tenant scope, bound or not.
+	ProjectResourceId string `protobuf:"bytes,3,opt,name=project_resource_id,json=projectResourceId,proto3" json:"project_resource_id,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *ListOperatingChannelsRequest) Reset() {
@@ -9020,6 +9037,13 @@ func (x *ListOperatingChannelsRequest) GetArchiveFilter() OperatingThreadArchive
 		return x.ArchiveFilter
 	}
 	return OperatingThreadArchiveFilter_OPERATING_THREAD_ARCHIVE_FILTER_UNSPECIFIED
+}
+
+func (x *ListOperatingChannelsRequest) GetProjectResourceId() string {
+	if x != nil {
+		return x.ProjectResourceId
+	}
+	return ""
 }
 
 type ListOperatingChannelsResponse struct {
@@ -66018,7 +66042,7 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"safetyKind\x12\x16\n" +
 	"\x06router\x18\x05 \x01(\tR\x06router\x129\n" +
 	"\n" +
-	"decided_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tdecidedAt\"\x99\x05\n" +
+	"decided_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tdecidedAt\"\xd7\x05\n" +
 	"\x10OperatingChannel\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05label\x18\x02 \x01(\tR\x05label\x12\x12\n" +
@@ -66038,7 +66062,8 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"archivedAt\x127\n" +
 	"\x18archived_by_principal_id\x18\r \x01(\tR\x15archivedByPrincipalId\x127\n" +
 	"\x18archived_by_display_name\x18\x0e \x01(\tR\x15archivedByDisplayName\x123\n" +
-	"\x04fork\x18\x0f \x01(\v2\x1f.console.v1.OperatingThreadForkR\x04fork\"\xe3\x02\n" +
+	"\x04fork\x18\x0f \x01(\v2\x1f.console.v1.OperatingThreadForkR\x04fork\x12<\n" +
+	"\x13project_resource_id\x18\x10 \x01(\tB\f\xbaH\x05r\x03\x18\xff\x01\x80\xf4\x18\x02R\x11projectResourceId\"\xe3\x02\n" +
 	"\x13OperatingThreadFork\x120\n" +
 	"\x11source_channel_id\x18\x01 \x01(\tB\x04\x80\xf4\x18\x02R\x0fsourceChannelId\x122\n" +
 	"\x12through_message_id\x18\x02 \x01(\tB\x04\x80\xf4\x18\x02R\x10throughMessageId\x12@\n" +
@@ -66258,10 +66283,11 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"\ttarget_id\x18\x05 \x01(\tR\btargetId\x123\n" +
 	"\x15requires_confirmation\x18\x06 \x01(\bR\x14requiresConfirmation\x12'\n" +
 	"\x0fdisabled_reason\x18\a \x01(\tR\x0edisabledReason\x121\n" +
-	"\apayload\x18\b \x01(\v2\x17.google.protobuf.StructR\apayload\"\xb1\x01\n" +
+	"\apayload\x18\b \x01(\v2\x17.google.protobuf.StructR\apayload\"\xef\x01\n" +
 	"\x1cListOperatingChannelsRequest\x126\n" +
 	"\x05query\x18\x01 \x01(\v2\x18.console.v1.ConsoleQueryB\x06\xbaH\x03\xc8\x01\x01R\x05query\x12Y\n" +
-	"\x0earchive_filter\x18\x02 \x01(\x0e2(.console.v1.OperatingThreadArchiveFilterB\b\xbaH\x05\x82\x01\x02\x10\x01R\rarchiveFilter\"\xfd\x01\n" +
+	"\x0earchive_filter\x18\x02 \x01(\x0e2(.console.v1.OperatingThreadArchiveFilterB\b\xbaH\x05\x82\x01\x02\x10\x01R\rarchiveFilter\x12<\n" +
+	"\x13project_resource_id\x18\x03 \x01(\tB\f\xbaH\x05r\x03\x18\xff\x01\x80\xf4\x18\x02R\x11projectResourceId\"\xfd\x01\n" +
 	"\x1dListOperatingChannelsResponse\x128\n" +
 	"\bchannels\x18\x01 \x03(\v2\x1c.console.v1.OperatingChannelR\bchannels\x12H\n" +
 	"\fcapabilities\x18\x02 \x03(\v2$.console.v1.OperatingCapabilityStateR\fcapabilities\x12X\n" +
