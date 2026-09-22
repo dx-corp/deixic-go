@@ -532,6 +532,9 @@ const (
 	// DeixicServiceEngageStaffProductIssueReportProcedure is the fully-qualified name of the
 	// DeixicService's EngageStaffProductIssueReport RPC.
 	DeixicServiceEngageStaffProductIssueReportProcedure = "/deixic.v1.DeixicService/EngageStaffProductIssueReport"
+	// DeixicServiceListStaffProductIssueRecoveriesProcedure is the fully-qualified name of the
+	// DeixicService's ListStaffProductIssueRecoveries RPC.
+	DeixicServiceListStaffProductIssueRecoveriesProcedure = "/deixic.v1.DeixicService/ListStaffProductIssueRecoveries"
 	// DeixicServicePrepareStaffProductIssueRecoveryProcedure is the fully-qualified name of the
 	// DeixicService's PrepareStaffProductIssueRecovery RPC.
 	DeixicServicePrepareStaffProductIssueRecoveryProcedure = "/deixic.v1.DeixicService/PrepareStaffProductIssueRecovery"
@@ -1090,6 +1093,8 @@ type DeixicServiceClient interface {
 	ListStaffProductIssueReports(context.Context, *connect.Request[v1.ListStaffProductIssueReportsRequest]) (*connect.Response[v1.ListStaffProductIssueReportsResponse], error)
 	// Uses the canonical console.v1.ConsoleService.EngageStaffProductIssueReport message contract.
 	EngageStaffProductIssueReport(context.Context, *connect.Request[v1.EngageStaffProductIssueReportRequest]) (*connect.Response[v1.EngageStaffProductIssueReportResponse], error)
+	// Lists the global recovery queue under verified staff authority.
+	ListStaffProductIssueRecoveries(context.Context, *connect.Request[v1.ListStaffProductIssueRecoveriesRequest]) (*connect.Response[v1.ListStaffProductIssueRecoveriesResponse], error)
 	// PrepareStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
 	PrepareStaffProductIssueRecovery(context.Context, *connect.Request[v1.PrepareStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
 	// ScanStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
@@ -2241,6 +2246,12 @@ func NewDeixicServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			connect.WithSchema(deixicServiceMethods.ByName("EngageStaffProductIssueReport")),
 			connect.WithClientOptions(opts...),
 		),
+		listStaffProductIssueRecoveries: connect.NewClient[v1.ListStaffProductIssueRecoveriesRequest, v1.ListStaffProductIssueRecoveriesResponse](
+			httpClient,
+			baseURL+DeixicServiceListStaffProductIssueRecoveriesProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("ListStaffProductIssueRecoveries")),
+			connect.WithClientOptions(opts...),
+		),
 		prepareStaffProductIssueRecovery: connect.NewClient[v1.PrepareStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse](
 			httpClient,
 			baseURL+DeixicServicePrepareStaffProductIssueRecoveryProcedure,
@@ -2838,6 +2849,7 @@ type deixicServiceClient struct {
 	submitNativeProductIssueReport              *connect.Client[v1.SubmitNativeProductIssueReportRequest, v1.SubmitProductIssueReportResponse]
 	listStaffProductIssueReports                *connect.Client[v1.ListStaffProductIssueReportsRequest, v1.ListStaffProductIssueReportsResponse]
 	engageStaffProductIssueReport               *connect.Client[v1.EngageStaffProductIssueReportRequest, v1.EngageStaffProductIssueReportResponse]
+	listStaffProductIssueRecoveries             *connect.Client[v1.ListStaffProductIssueRecoveriesRequest, v1.ListStaffProductIssueRecoveriesResponse]
 	prepareStaffProductIssueRecovery            *connect.Client[v1.PrepareStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse]
 	scanStaffProductIssueRecovery               *connect.Client[v1.ScanStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse]
 	reviewStaffProductIssueRecovery             *connect.Client[v1.ReviewStaffProductIssueRecoveryRequest, v1.ProductIssueRecoveryResponse]
@@ -3758,6 +3770,11 @@ func (c *deixicServiceClient) EngageStaffProductIssueReport(ctx context.Context,
 	return c.engageStaffProductIssueReport.CallUnary(ctx, req)
 }
 
+// ListStaffProductIssueRecoveries calls deixic.v1.DeixicService.ListStaffProductIssueRecoveries.
+func (c *deixicServiceClient) ListStaffProductIssueRecoveries(ctx context.Context, req *connect.Request[v1.ListStaffProductIssueRecoveriesRequest]) (*connect.Response[v1.ListStaffProductIssueRecoveriesResponse], error) {
+	return c.listStaffProductIssueRecoveries.CallUnary(ctx, req)
+}
+
 // PrepareStaffProductIssueRecovery calls deixic.v1.DeixicService.PrepareStaffProductIssueRecovery.
 func (c *deixicServiceClient) PrepareStaffProductIssueRecovery(ctx context.Context, req *connect.Request[v1.PrepareStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
 	return c.prepareStaffProductIssueRecovery.CallUnary(ctx, req)
@@ -4463,6 +4480,8 @@ type DeixicServiceHandler interface {
 	ListStaffProductIssueReports(context.Context, *connect.Request[v1.ListStaffProductIssueReportsRequest]) (*connect.Response[v1.ListStaffProductIssueReportsResponse], error)
 	// Uses the canonical console.v1.ConsoleService.EngageStaffProductIssueReport message contract.
 	EngageStaffProductIssueReport(context.Context, *connect.Request[v1.EngageStaffProductIssueReportRequest]) (*connect.Response[v1.EngageStaffProductIssueReportResponse], error)
+	// Lists the global recovery queue under verified staff authority.
+	ListStaffProductIssueRecoveries(context.Context, *connect.Request[v1.ListStaffProductIssueRecoveriesRequest]) (*connect.Response[v1.ListStaffProductIssueRecoveriesResponse], error)
 	// PrepareStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
 	PrepareStaffProductIssueRecovery(context.Context, *connect.Request[v1.PrepareStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error)
 	// ScanStaffProductIssueRecovery advances the staff-reviewed recovery of charged failures.
@@ -5610,6 +5629,12 @@ func NewDeixicServiceHandler(svc DeixicServiceHandler, opts ...connect.HandlerOp
 		connect.WithSchema(deixicServiceMethods.ByName("EngageStaffProductIssueReport")),
 		connect.WithHandlerOptions(opts...),
 	)
+	deixicServiceListStaffProductIssueRecoveriesHandler := connect.NewUnaryHandler(
+		DeixicServiceListStaffProductIssueRecoveriesProcedure,
+		svc.ListStaffProductIssueRecoveries,
+		connect.WithSchema(deixicServiceMethods.ByName("ListStaffProductIssueRecoveries")),
+		connect.WithHandlerOptions(opts...),
+	)
 	deixicServicePrepareStaffProductIssueRecoveryHandler := connect.NewUnaryHandler(
 		DeixicServicePrepareStaffProductIssueRecoveryProcedure,
 		svc.PrepareStaffProductIssueRecovery,
@@ -6370,6 +6395,8 @@ func NewDeixicServiceHandler(svc DeixicServiceHandler, opts ...connect.HandlerOp
 			deixicServiceListStaffProductIssueReportsHandler.ServeHTTP(w, r)
 		case DeixicServiceEngageStaffProductIssueReportProcedure:
 			deixicServiceEngageStaffProductIssueReportHandler.ServeHTTP(w, r)
+		case DeixicServiceListStaffProductIssueRecoveriesProcedure:
+			deixicServiceListStaffProductIssueRecoveriesHandler.ServeHTTP(w, r)
 		case DeixicServicePrepareStaffProductIssueRecoveryProcedure:
 			deixicServicePrepareStaffProductIssueRecoveryHandler.ServeHTTP(w, r)
 		case DeixicServiceScanStaffProductIssueRecoveryProcedure:
@@ -7183,6 +7210,10 @@ func (UnimplementedDeixicServiceHandler) ListStaffProductIssueReports(context.Co
 
 func (UnimplementedDeixicServiceHandler) EngageStaffProductIssueReport(context.Context, *connect.Request[v1.EngageStaffProductIssueReportRequest]) (*connect.Response[v1.EngageStaffProductIssueReportResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.EngageStaffProductIssueReport is not implemented"))
+}
+
+func (UnimplementedDeixicServiceHandler) ListStaffProductIssueRecoveries(context.Context, *connect.Request[v1.ListStaffProductIssueRecoveriesRequest]) (*connect.Response[v1.ListStaffProductIssueRecoveriesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.ListStaffProductIssueRecoveries is not implemented"))
 }
 
 func (UnimplementedDeixicServiceHandler) PrepareStaffProductIssueRecovery(context.Context, *connect.Request[v1.PrepareStaffProductIssueRecoveryRequest]) (*connect.Response[v1.ProductIssueRecoveryResponse], error) {
