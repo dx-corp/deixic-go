@@ -4239,8 +4239,12 @@ type PreviewCustomConnectorRequest struct {
 	ApprovedDestinationOrigins []string                         `protobuf:"bytes,8,rep,name=approved_destination_origins,json=approvedDestinationOrigins,proto3" json:"approved_destination_origins,omitempty"`
 	Actions                    []*CustomConnectorActionMetadata `protobuf:"bytes,9,rep,name=actions,proto3" json:"actions,omitempty"`
 	DescriptionsReviewed       bool                             `protobuf:"varint,10,opt,name=descriptions_reviewed,json=descriptionsReviewed,proto3" json:"descriptions_reviewed,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
+	// expected_spec_sha256 binds a create request to the exact remote bytes
+	// returned by preview. It is optional for preview and inline definitions,
+	// and required by the Connectors owner when create fetches source_uri.
+	ExpectedSpecSha256 string `protobuf:"bytes,11,opt,name=expected_spec_sha256,json=expectedSpecSha256,proto3" json:"expected_spec_sha256,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *PreviewCustomConnectorRequest) Reset() {
@@ -4341,6 +4345,13 @@ func (x *PreviewCustomConnectorRequest) GetDescriptionsReviewed() bool {
 		return x.DescriptionsReviewed
 	}
 	return false
+}
+
+func (x *PreviewCustomConnectorRequest) GetExpectedSpecSha256() string {
+	if x != nil {
+		return x.ExpectedSpecSha256
+	}
+	return ""
 }
 
 type PreviewCustomConnectorResponse struct {
@@ -9982,21 +9993,23 @@ const file_connectors_v1_connectors_proto_rawDesc = "" +
 	"created_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
 	"updated_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x1a\n" +
-	"\brevision\x18\x0e \x01(\x04R\brevision\"\xe9\x03\n" +
+	"\brevision\x18\x0e \x01(\x04R\brevision\"\xd0\x05\n" +
 	"\x1dPreviewCustomConnectorRequest\x120\n" +
 	"\x0forganization_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0eorganizationId\x12*\n" +
 	"\fworkspace_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vworkspaceId\x12\x1b\n" +
 	"\x04name\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x04name\x12 \n" +
 	"\vdescription\x18\x04 \x01(\tR\vdescription\x12(\n" +
 	"\vsource_type\x18\x05 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\n" +
-	"sourceType\x12#\n" +
-	"\bdocument\x18\x06 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdocument\x12\x1d\n" +
+	"sourceType\x12\x1a\n" +
+	"\bdocument\x18\x06 \x01(\tR\bdocument\x12\x1d\n" +
 	"\n" +
 	"source_uri\x18\a \x01(\tR\tsourceUri\x12@\n" +
 	"\x1capproved_destination_origins\x18\b \x03(\tR\x1aapprovedDestinationOrigins\x12F\n" +
 	"\aactions\x18\t \x03(\v2,.connectors.v1.CustomConnectorActionMetadataR\aactions\x123\n" +
 	"\x15descriptions_reviewed\x18\n" +
-	" \x01(\bR\x14descriptionsReviewed\"\x80\x01\n" +
+	" \x01(\bR\x14descriptionsReviewed\x12J\n" +
+	"\x14expected_spec_sha256\x18\v \x01(\tB\x18\xbaH\x15r\x132\x11^(|[0-9a-f]{64})$R\x12expectedSpecSha256:\xa1\x01\xbaH\x9d\x01\x1a\x9a\x01\n" +
+	">connectors.v1.preview_custom_connector_request.source_required\x12\"document or source_uri is required\x1a4size(this.document) > 0 || size(this.source_uri) > 0\"\x80\x01\n" +
 	"\x1ePreviewCustomConnectorResponse\x12<\n" +
 	"\tconnector\x18\x01 \x01(\v2\x1e.connectors.v1.CustomConnectorR\tconnector\x12 \n" +
 	"\vdiagnostics\x18\x02 \x03(\tR\vdiagnostics\"l\n" +
