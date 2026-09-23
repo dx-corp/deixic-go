@@ -6264,6 +6264,61 @@ func (ProspectingDraftReviewState) EnumDescriptor() ([]byte, []int) {
 	return file_console_v1_console_proto_rawDescGZIP(), []int{107}
 }
 
+type ComplianceFindingStatus int32
+
+const (
+	ComplianceFindingStatus_COMPLIANCE_FINDING_STATUS_UNSPECIFIED    ComplianceFindingStatus = 0
+	ComplianceFindingStatus_COMPLIANCE_FINDING_STATUS_SATISFIED      ComplianceFindingStatus = 1
+	ComplianceFindingStatus_COMPLIANCE_FINDING_STATUS_VIOLATED       ComplianceFindingStatus = 2
+	ComplianceFindingStatus_COMPLIANCE_FINDING_STATUS_INDETERMINATE  ComplianceFindingStatus = 3
+	ComplianceFindingStatus_COMPLIANCE_FINDING_STATUS_NOT_APPLICABLE ComplianceFindingStatus = 4
+)
+
+// Enum value maps for ComplianceFindingStatus.
+var (
+	ComplianceFindingStatus_name = map[int32]string{
+		0: "COMPLIANCE_FINDING_STATUS_UNSPECIFIED",
+		1: "COMPLIANCE_FINDING_STATUS_SATISFIED",
+		2: "COMPLIANCE_FINDING_STATUS_VIOLATED",
+		3: "COMPLIANCE_FINDING_STATUS_INDETERMINATE",
+		4: "COMPLIANCE_FINDING_STATUS_NOT_APPLICABLE",
+	}
+	ComplianceFindingStatus_value = map[string]int32{
+		"COMPLIANCE_FINDING_STATUS_UNSPECIFIED":    0,
+		"COMPLIANCE_FINDING_STATUS_SATISFIED":      1,
+		"COMPLIANCE_FINDING_STATUS_VIOLATED":       2,
+		"COMPLIANCE_FINDING_STATUS_INDETERMINATE":  3,
+		"COMPLIANCE_FINDING_STATUS_NOT_APPLICABLE": 4,
+	}
+)
+
+func (x ComplianceFindingStatus) Enum() *ComplianceFindingStatus {
+	p := new(ComplianceFindingStatus)
+	*p = x
+	return p
+}
+
+func (x ComplianceFindingStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ComplianceFindingStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_console_v1_console_proto_enumTypes[108].Descriptor()
+}
+
+func (ComplianceFindingStatus) Type() protoreflect.EnumType {
+	return &file_console_v1_console_proto_enumTypes[108]
+}
+
+func (x ComplianceFindingStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ComplianceFindingStatus.Descriptor instead.
+func (ComplianceFindingStatus) EnumDescriptor() ([]byte, []int) {
+	return file_console_v1_console_proto_rawDescGZIP(), []int{108}
+}
+
 type GetWorkspaceKeyConfigRequest struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	OrganizationId string                 `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
@@ -65877,6 +65932,321 @@ func (x *StaffProductIssueRecoverySummary) GetLastReply() string {
 	return ""
 }
 
+// One versioned control profile runs against one owner-fetched subject.
+type AssessComplianceSubjectRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	OrganizationId string                 `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	WorkspaceId    string                 `protobuf:"bytes,2,opt,name=workspace_id,json=workspaceId,proto3" json:"workspace_id,omitempty"`
+	ProfileId      string                 `protobuf:"bytes,3,opt,name=profile_id,json=profileId,proto3" json:"profile_id,omitempty"`
+	SubjectKind    string                 `protobuf:"bytes,4,opt,name=subject_kind,json=subjectKind,proto3" json:"subject_kind,omitempty"`
+	SubjectId      string                 `protobuf:"bytes,5,opt,name=subject_id,json=subjectId,proto3" json:"subject_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *AssessComplianceSubjectRequest) Reset() {
+	*x = AssessComplianceSubjectRequest{}
+	mi := &file_console_v1_console_proto_msgTypes[728]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AssessComplianceSubjectRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssessComplianceSubjectRequest) ProtoMessage() {}
+
+func (x *AssessComplianceSubjectRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_console_v1_console_proto_msgTypes[728]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssessComplianceSubjectRequest.ProtoReflect.Descriptor instead.
+func (*AssessComplianceSubjectRequest) Descriptor() ([]byte, []int) {
+	return file_console_v1_console_proto_rawDescGZIP(), []int{728}
+}
+
+func (x *AssessComplianceSubjectRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *AssessComplianceSubjectRequest) GetWorkspaceId() string {
+	if x != nil {
+		return x.WorkspaceId
+	}
+	return ""
+}
+
+func (x *AssessComplianceSubjectRequest) GetProfileId() string {
+	if x != nil {
+		return x.ProfileId
+	}
+	return ""
+}
+
+func (x *AssessComplianceSubjectRequest) GetSubjectKind() string {
+	if x != nil {
+		return x.SubjectKind
+	}
+	return ""
+}
+
+func (x *AssessComplianceSubjectRequest) GetSubjectId() string {
+	if x != nil {
+		return x.SubjectId
+	}
+	return ""
+}
+
+type ComplianceRequirementFinding struct {
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	RequirementId string                  `protobuf:"bytes,1,opt,name=requirement_id,json=requirementId,proto3" json:"requirement_id,omitempty"`
+	Status        ComplianceFindingStatus `protobuf:"varint,2,opt,name=status,proto3,enum=console.v1.ComplianceFindingStatus" json:"status,omitempty"`
+	ReasonCode    string                  `protobuf:"bytes,3,opt,name=reason_code,json=reasonCode,proto3" json:"reason_code,omitempty"`
+	SourceRef     string                  `protobuf:"bytes,4,opt,name=source_ref,json=sourceRef,proto3" json:"source_ref,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ComplianceRequirementFinding) Reset() {
+	*x = ComplianceRequirementFinding{}
+	mi := &file_console_v1_console_proto_msgTypes[729]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ComplianceRequirementFinding) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ComplianceRequirementFinding) ProtoMessage() {}
+
+func (x *ComplianceRequirementFinding) ProtoReflect() protoreflect.Message {
+	mi := &file_console_v1_console_proto_msgTypes[729]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ComplianceRequirementFinding.ProtoReflect.Descriptor instead.
+func (*ComplianceRequirementFinding) Descriptor() ([]byte, []int) {
+	return file_console_v1_console_proto_rawDescGZIP(), []int{729}
+}
+
+func (x *ComplianceRequirementFinding) GetRequirementId() string {
+	if x != nil {
+		return x.RequirementId
+	}
+	return ""
+}
+
+func (x *ComplianceRequirementFinding) GetStatus() ComplianceFindingStatus {
+	if x != nil {
+		return x.Status
+	}
+	return ComplianceFindingStatus_COMPLIANCE_FINDING_STATUS_UNSPECIFIED
+}
+
+func (x *ComplianceRequirementFinding) GetReasonCode() string {
+	if x != nil {
+		return x.ReasonCode
+	}
+	return ""
+}
+
+func (x *ComplianceRequirementFinding) GetSourceRef() string {
+	if x != nil {
+		return x.SourceRef
+	}
+	return ""
+}
+
+// A live, bounded assessment of one execution. It is not an immutable snapshot.
+type ComplianceSubjectAssessment struct {
+	state           protoimpl.MessageState          `protogen:"open.v1"`
+	ProfileId       string                          `protobuf:"bytes,1,opt,name=profile_id,json=profileId,proto3" json:"profile_id,omitempty"`
+	SubjectKind     string                          `protobuf:"bytes,2,opt,name=subject_kind,json=subjectKind,proto3" json:"subject_kind,omitempty"`
+	SubjectId       string                          `protobuf:"bytes,3,opt,name=subject_id,json=subjectId,proto3" json:"subject_id,omitempty"`
+	SourceDigest    string                          `protobuf:"bytes,4,opt,name=source_digest,json=sourceDigest,proto3" json:"source_digest,omitempty"`
+	SourceUpdatedAt *timestamppb.Timestamp          `protobuf:"bytes,5,opt,name=source_updated_at,json=sourceUpdatedAt,proto3" json:"source_updated_at,omitempty"`
+	AssessedAt      *timestamppb.Timestamp          `protobuf:"bytes,6,opt,name=assessed_at,json=assessedAt,proto3" json:"assessed_at,omitempty"`
+	Status          ComplianceFindingStatus         `protobuf:"varint,7,opt,name=status,proto3,enum=console.v1.ComplianceFindingStatus" json:"status,omitempty"`
+	Findings        []*ComplianceRequirementFinding `protobuf:"bytes,8,rep,name=findings,proto3" json:"findings,omitempty"`
+	// This route covers exactly the one requested owner record.
+	InspectedCount uint32 `protobuf:"varint,9,opt,name=inspected_count,json=inspectedCount,proto3" json:"inspected_count,omitempty"`
+	ExpectedCount  uint32 `protobuf:"varint,10,opt,name=expected_count,json=expectedCount,proto3" json:"expected_count,omitempty"`
+	ControlId      string `protobuf:"bytes,11,opt,name=control_id,json=controlId,proto3" json:"control_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ComplianceSubjectAssessment) Reset() {
+	*x = ComplianceSubjectAssessment{}
+	mi := &file_console_v1_console_proto_msgTypes[730]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ComplianceSubjectAssessment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ComplianceSubjectAssessment) ProtoMessage() {}
+
+func (x *ComplianceSubjectAssessment) ProtoReflect() protoreflect.Message {
+	mi := &file_console_v1_console_proto_msgTypes[730]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ComplianceSubjectAssessment.ProtoReflect.Descriptor instead.
+func (*ComplianceSubjectAssessment) Descriptor() ([]byte, []int) {
+	return file_console_v1_console_proto_rawDescGZIP(), []int{730}
+}
+
+func (x *ComplianceSubjectAssessment) GetProfileId() string {
+	if x != nil {
+		return x.ProfileId
+	}
+	return ""
+}
+
+func (x *ComplianceSubjectAssessment) GetSubjectKind() string {
+	if x != nil {
+		return x.SubjectKind
+	}
+	return ""
+}
+
+func (x *ComplianceSubjectAssessment) GetSubjectId() string {
+	if x != nil {
+		return x.SubjectId
+	}
+	return ""
+}
+
+func (x *ComplianceSubjectAssessment) GetSourceDigest() string {
+	if x != nil {
+		return x.SourceDigest
+	}
+	return ""
+}
+
+func (x *ComplianceSubjectAssessment) GetSourceUpdatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.SourceUpdatedAt
+	}
+	return nil
+}
+
+func (x *ComplianceSubjectAssessment) GetAssessedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.AssessedAt
+	}
+	return nil
+}
+
+func (x *ComplianceSubjectAssessment) GetStatus() ComplianceFindingStatus {
+	if x != nil {
+		return x.Status
+	}
+	return ComplianceFindingStatus_COMPLIANCE_FINDING_STATUS_UNSPECIFIED
+}
+
+func (x *ComplianceSubjectAssessment) GetFindings() []*ComplianceRequirementFinding {
+	if x != nil {
+		return x.Findings
+	}
+	return nil
+}
+
+func (x *ComplianceSubjectAssessment) GetInspectedCount() uint32 {
+	if x != nil {
+		return x.InspectedCount
+	}
+	return 0
+}
+
+func (x *ComplianceSubjectAssessment) GetExpectedCount() uint32 {
+	if x != nil {
+		return x.ExpectedCount
+	}
+	return 0
+}
+
+func (x *ComplianceSubjectAssessment) GetControlId() string {
+	if x != nil {
+		return x.ControlId
+	}
+	return ""
+}
+
+type AssessComplianceSubjectResponse struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Assessment    *ComplianceSubjectAssessment `protobuf:"bytes,1,opt,name=assessment,proto3" json:"assessment,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AssessComplianceSubjectResponse) Reset() {
+	*x = AssessComplianceSubjectResponse{}
+	mi := &file_console_v1_console_proto_msgTypes[731]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AssessComplianceSubjectResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssessComplianceSubjectResponse) ProtoMessage() {}
+
+func (x *AssessComplianceSubjectResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_console_v1_console_proto_msgTypes[731]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssessComplianceSubjectResponse.ProtoReflect.Descriptor instead.
+func (*AssessComplianceSubjectResponse) Descriptor() ([]byte, []int) {
+	return file_console_v1_console_proto_rawDescGZIP(), []int{731}
+}
+
+func (x *AssessComplianceSubjectResponse) GetAssessment() *ComplianceSubjectAssessment {
+	if x != nil {
+		return x.Assessment
+	}
+	return nil
+}
+
 type CaptureFormTypedValue_OptionValues struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	OptionIds     []string               `protobuf:"bytes,1,rep,name=option_ids,json=optionIds,proto3" json:"option_ids,omitempty"`
@@ -65886,7 +66256,7 @@ type CaptureFormTypedValue_OptionValues struct {
 
 func (x *CaptureFormTypedValue_OptionValues) Reset() {
 	*x = CaptureFormTypedValue_OptionValues{}
-	mi := &file_console_v1_console_proto_msgTypes[730]
+	mi := &file_console_v1_console_proto_msgTypes[734]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -65898,7 +66268,7 @@ func (x *CaptureFormTypedValue_OptionValues) String() string {
 func (*CaptureFormTypedValue_OptionValues) ProtoMessage() {}
 
 func (x *CaptureFormTypedValue_OptionValues) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[730]
+	mi := &file_console_v1_console_proto_msgTypes[734]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -65931,7 +66301,7 @@ type WorkspaceBrandVoice_Scope struct {
 
 func (x *WorkspaceBrandVoice_Scope) Reset() {
 	*x = WorkspaceBrandVoice_Scope{}
-	mi := &file_console_v1_console_proto_msgTypes[731]
+	mi := &file_console_v1_console_proto_msgTypes[735]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -65943,7 +66313,7 @@ func (x *WorkspaceBrandVoice_Scope) String() string {
 func (*WorkspaceBrandVoice_Scope) ProtoMessage() {}
 
 func (x *WorkspaceBrandVoice_Scope) ProtoReflect() protoreflect.Message {
-	mi := &file_console_v1_console_proto_msgTypes[731]
+	mi := &file_console_v1_console_proto_msgTypes[735]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -71679,7 +72049,43 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12#\n" +
 	"\n" +
-	"last_reply\x18\t \x01(\tB\x04\x80\xf4\x18\x04R\tlastReply*\xca\x01\n" +
+	"last_reply\x18\t \x01(\tB\x04\x80\xf4\x18\x04R\tlastReply\"\xeb\x01\n" +
+	"\x1eAssessComplianceSubjectRequest\x12-\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB\x04\x80\xf4\x18\x02R\x0eorganizationId\x12'\n" +
+	"\fworkspace_id\x18\x02 \x01(\tB\x04\x80\xf4\x18\x02R\vworkspaceId\x12#\n" +
+	"\n" +
+	"profile_id\x18\x03 \x01(\tB\x04\x80\xf4\x18\x01R\tprofileId\x12'\n" +
+	"\fsubject_kind\x18\x04 \x01(\tB\x04\x80\xf4\x18\x01R\vsubjectKind\x12#\n" +
+	"\n" +
+	"subject_id\x18\x05 \x01(\tB\x04\x80\xf4\x18\x02R\tsubjectId\"\xd4\x01\n" +
+	"\x1cComplianceRequirementFinding\x12+\n" +
+	"\x0erequirement_id\x18\x01 \x01(\tB\x04\x80\xf4\x18\x01R\rrequirementId\x12;\n" +
+	"\x06status\x18\x02 \x01(\x0e2#.console.v1.ComplianceFindingStatusR\x06status\x12%\n" +
+	"\vreason_code\x18\x03 \x01(\tB\x04\x80\xf4\x18\x01R\n" +
+	"reasonCode\x12#\n" +
+	"\n" +
+	"source_ref\x18\x04 \x01(\tB\x04\x80\xf4\x18\x02R\tsourceRef\"\xb8\x04\n" +
+	"\x1bComplianceSubjectAssessment\x12#\n" +
+	"\n" +
+	"profile_id\x18\x01 \x01(\tB\x04\x80\xf4\x18\x01R\tprofileId\x12'\n" +
+	"\fsubject_kind\x18\x02 \x01(\tB\x04\x80\xf4\x18\x01R\vsubjectKind\x12#\n" +
+	"\n" +
+	"subject_id\x18\x03 \x01(\tB\x04\x80\xf4\x18\x02R\tsubjectId\x12)\n" +
+	"\rsource_digest\x18\x04 \x01(\tB\x04\x80\xf4\x18\x02R\fsourceDigest\x12F\n" +
+	"\x11source_updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x0fsourceUpdatedAt\x12;\n" +
+	"\vassessed_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"assessedAt\x12;\n" +
+	"\x06status\x18\a \x01(\x0e2#.console.v1.ComplianceFindingStatusR\x06status\x12D\n" +
+	"\bfindings\x18\b \x03(\v2(.console.v1.ComplianceRequirementFindingR\bfindings\x12'\n" +
+	"\x0finspected_count\x18\t \x01(\rR\x0einspectedCount\x12%\n" +
+	"\x0eexpected_count\x18\n" +
+	" \x01(\rR\rexpectedCount\x12#\n" +
+	"\n" +
+	"control_id\x18\v \x01(\tB\x04\x80\xf4\x18\x01R\tcontrolId\"j\n" +
+	"\x1fAssessComplianceSubjectResponse\x12G\n" +
+	"\n" +
+	"assessment\x18\x01 \x01(\v2'.console.v1.ComplianceSubjectAssessmentR\n" +
+	"assessment*\xca\x01\n" +
 	"\x16OperatingTurnRouteKind\x12/\n" +
 	"+OPERATING_TURN_ROUTE_KIND_ROUTE_UNSPECIFIED\x10\x00\x12+\n" +
 	"'OPERATING_TURN_ROUTE_KIND_DIRECT_ANSWER\x10\x01\x12+\n" +
@@ -72400,8 +72806,15 @@ const file_console_v1_console_proto_rawDesc = "" +
 	"*PROSPECTING_DRAFT_REVIEW_STATE_UNSPECIFIED\x10\x00\x122\n" +
 	".PROSPECTING_DRAFT_REVIEW_STATE_REVIEW_REQUIRED\x10\x01\x12+\n" +
 	"'PROSPECTING_DRAFT_REVIEW_STATE_APPROVED\x10\x02\x12+\n" +
-	"'PROSPECTING_DRAFT_REVIEW_STATE_REJECTED\x10\x032\x88\xbc\x02\n" +
-	"\x0eConsoleService\x12\xa8\x01\n" +
+	"'PROSPECTING_DRAFT_REVIEW_STATE_REJECTED\x10\x03*\xf0\x01\n" +
+	"\x17ComplianceFindingStatus\x12)\n" +
+	"%COMPLIANCE_FINDING_STATUS_UNSPECIFIED\x10\x00\x12'\n" +
+	"#COMPLIANCE_FINDING_STATUS_SATISFIED\x10\x01\x12&\n" +
+	"\"COMPLIANCE_FINDING_STATUS_VIOLATED\x10\x02\x12+\n" +
+	"'COMPLIANCE_FINDING_STATUS_INDETERMINATE\x10\x03\x12,\n" +
+	"(COMPLIANCE_FINDING_STATUS_NOT_APPLICABLE\x10\x042\xb6\xbd\x02\n" +
+	"\x0eConsoleService\x12\xab\x01\n" +
+	"\x17AssessComplianceSubject\x12*.console.v1.AssessComplianceSubjectRequest\x1a+.console.v1.AssessComplianceSubjectResponse\"7\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x0forganization_id\x12\xa8\x01\n" +
 	"\x16ListBusinessBlueprints\x12).console.v1.ListBusinessBlueprintsRequest\x1a*.console.v1.ListBusinessBlueprintsResponse\"7\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x0forganization_id\x12\xa9\x01\n" +
 	"\x16CloneBusinessBlueprint\x12).console.v1.CloneBusinessBlueprintRequest\x1a*.console.v1.CloneBusinessBlueprintResponse\"8\xca\xf3\x18\rconsole:write\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x02\xea\xf3\x18\x0forganization_id\x12\xba\x01\n" +
 	"\x1cGetBusinessProcessDefinition\x12/.console.v1.GetBusinessProcessDefinitionRequest\x1a0.console.v1.GetBusinessProcessDefinitionResponse\"7\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x0forganization_id\x12\xc0\x01\n" +
@@ -72665,8 +73078,8 @@ func file_console_v1_console_proto_rawDescGZIP() []byte {
 	return file_console_v1_console_proto_rawDescData
 }
 
-var file_console_v1_console_proto_enumTypes = make([]protoimpl.EnumInfo, 108)
-var file_console_v1_console_proto_msgTypes = make([]protoimpl.MessageInfo, 732)
+var file_console_v1_console_proto_enumTypes = make([]protoimpl.EnumInfo, 109)
+var file_console_v1_console_proto_msgTypes = make([]protoimpl.MessageInfo, 736)
 var file_console_v1_console_proto_goTypes = []any{
 	(OperatingTurnRouteKind)(0),                                 // 0: console.v1.OperatingTurnRouteKind
 	(OperatingTurnIntentKind)(0),                                // 1: console.v1.OperatingTurnIntentKind
@@ -72776,2416 +73189,2429 @@ var file_console_v1_console_proto_goTypes = []any{
 	(ProspectingDraftChannel)(0),                                // 105: console.v1.ProspectingDraftChannel
 	(ProspectingDraftTone)(0),                                   // 106: console.v1.ProspectingDraftTone
 	(ProspectingDraftReviewState)(0),                            // 107: console.v1.ProspectingDraftReviewState
-	(*GetWorkspaceKeyConfigRequest)(nil),                        // 108: console.v1.GetWorkspaceKeyConfigRequest
-	(*PutWorkspaceKeyConfigRequest)(nil),                        // 109: console.v1.PutWorkspaceKeyConfigRequest
-	(*DeleteWorkspaceKeyConfigRequest)(nil),                     // 110: console.v1.DeleteWorkspaceKeyConfigRequest
-	(*WorkspaceKeyConfigResponse)(nil),                          // 111: console.v1.WorkspaceKeyConfigResponse
-	(*TimeRange)(nil),                                           // 112: console.v1.TimeRange
-	(*ConsoleQuery)(nil),                                        // 113: console.v1.ConsoleQuery
-	(*OperatingCapabilityState)(nil),                            // 114: console.v1.OperatingCapabilityState
-	(*OperatingTurnRoute)(nil),                                  // 115: console.v1.OperatingTurnRoute
-	(*OperatingChannel)(nil),                                    // 116: console.v1.OperatingChannel
-	(*OperatingThreadFork)(nil),                                 // 117: console.v1.OperatingThreadFork
-	(*OperatingSurfaceMetadata)(nil),                            // 118: console.v1.OperatingSurfaceMetadata
-	(*OperatingModelSelection)(nil),                             // 119: console.v1.OperatingModelSelection
-	(*OperatingMessage)(nil),                                    // 120: console.v1.OperatingMessage
-	(*OperatingToolEvent)(nil),                                  // 121: console.v1.OperatingToolEvent
-	(*OperatingTurnRecord)(nil),                                 // 122: console.v1.OperatingTurnRecord
-	(*OperatingCustomerOutcomeIdentity)(nil),                    // 123: console.v1.OperatingCustomerOutcomeIdentity
-	(*OperatingExecutionIdentity)(nil),                          // 124: console.v1.OperatingExecutionIdentity
-	(*OperatingThreadExecution)(nil),                            // 125: console.v1.OperatingThreadExecution
-	(*OperatingThreadTurn)(nil),                                 // 126: console.v1.OperatingThreadTurn
-	(*OperatingThreadEvent)(nil),                                // 127: console.v1.OperatingThreadEvent
-	(*OperatingThreadResponse)(nil),                             // 128: console.v1.OperatingThreadResponse
-	(*OperatingAttachmentRef)(nil),                              // 129: console.v1.OperatingAttachmentRef
-	(*OperatingReceipt)(nil),                                    // 130: console.v1.OperatingReceipt
-	(*OperatingReceiptAction)(nil),                              // 131: console.v1.OperatingReceiptAction
-	(*ListOperatingChannelsRequest)(nil),                        // 132: console.v1.ListOperatingChannelsRequest
-	(*ListOperatingChannelsResponse)(nil),                       // 133: console.v1.ListOperatingChannelsResponse
-	(*ArchiveOperatingThreadRequest)(nil),                       // 134: console.v1.ArchiveOperatingThreadRequest
-	(*ArchiveOperatingThreadResponse)(nil),                      // 135: console.v1.ArchiveOperatingThreadResponse
-	(*ForkOperatingThreadRequest)(nil),                          // 136: console.v1.ForkOperatingThreadRequest
-	(*ForkOperatingThreadResponse)(nil),                         // 137: console.v1.ForkOperatingThreadResponse
-	(*RenameOperatingThreadRequest)(nil),                        // 138: console.v1.RenameOperatingThreadRequest
-	(*RenameOperatingThreadResponse)(nil),                       // 139: console.v1.RenameOperatingThreadResponse
-	(*GetOperatingThreadRequest)(nil),                           // 140: console.v1.GetOperatingThreadRequest
-	(*GetOperatingThreadResponse)(nil),                          // 141: console.v1.GetOperatingThreadResponse
-	(*RespondOperatingThreadRequest)(nil),                       // 142: console.v1.RespondOperatingThreadRequest
-	(*RespondOperatingThreadResponse)(nil),                      // 143: console.v1.RespondOperatingThreadResponse
-	(*InterruptOperatingThreadRequest)(nil),                     // 144: console.v1.InterruptOperatingThreadRequest
-	(*InterruptOperatingThreadResponse)(nil),                    // 145: console.v1.InterruptOperatingThreadResponse
-	(*ListOperatingThreadEventsRequest)(nil),                    // 146: console.v1.ListOperatingThreadEventsRequest
-	(*ListOperatingThreadEventsResponse)(nil),                   // 147: console.v1.ListOperatingThreadEventsResponse
-	(*WatchOperatingThreadRequest)(nil),                         // 148: console.v1.WatchOperatingThreadRequest
-	(*WatchOperatingThreadResponse)(nil),                        // 149: console.v1.WatchOperatingThreadResponse
-	(*CodingAcceptanceContract)(nil),                            // 150: console.v1.CodingAcceptanceContract
-	(*SubmitOperatingMessageRequest)(nil),                       // 151: console.v1.SubmitOperatingMessageRequest
-	(*BeginOperatingAttachmentUploadRequest)(nil),               // 152: console.v1.BeginOperatingAttachmentUploadRequest
-	(*BeginOperatingAttachmentUploadResponse)(nil),              // 153: console.v1.BeginOperatingAttachmentUploadResponse
-	(*CompleteOperatingAttachmentUploadRequest)(nil),            // 154: console.v1.CompleteOperatingAttachmentUploadRequest
-	(*CompleteOperatingAttachmentUploadResponse)(nil),           // 155: console.v1.CompleteOperatingAttachmentUploadResponse
-	(*ListOperatingAttachmentsRequest)(nil),                     // 156: console.v1.ListOperatingAttachmentsRequest
-	(*ListOperatingAttachmentsResponse)(nil),                    // 157: console.v1.ListOperatingAttachmentsResponse
-	(*SubmitOperatingMessageResponse)(nil),                      // 158: console.v1.SubmitOperatingMessageResponse
-	(*DexComputerCorrectionEpisode)(nil),                        // 159: console.v1.DexComputerCorrectionEpisode
-	(*OperatingCorrectionCandidate)(nil),                        // 160: console.v1.OperatingCorrectionCandidate
-	(*SubmitOperatingCorrectionRequest)(nil),                    // 161: console.v1.SubmitOperatingCorrectionRequest
-	(*SubmitOperatingCorrectionResponse)(nil),                   // 162: console.v1.SubmitOperatingCorrectionResponse
-	(*OperatingFeedback)(nil),                                   // 163: console.v1.OperatingFeedback
-	(*SubmitOperatingFeedbackRequest)(nil),                      // 164: console.v1.SubmitOperatingFeedbackRequest
-	(*SubmitOperatingFeedbackResponse)(nil),                     // 165: console.v1.SubmitOperatingFeedbackResponse
-	(*ProductIssueReport)(nil),                                  // 166: console.v1.ProductIssueReport
-	(*SubmitProductIssueReportRequest)(nil),                     // 167: console.v1.SubmitProductIssueReportRequest
-	(*SubmitNativeProductIssueReportRequest)(nil),               // 168: console.v1.SubmitNativeProductIssueReportRequest
-	(*ProductIssueReportContext)(nil),                           // 169: console.v1.ProductIssueReportContext
-	(*ProductIssueReportEvidence)(nil),                          // 170: console.v1.ProductIssueReportEvidence
-	(*SubmitProductIssueReportResponse)(nil),                    // 171: console.v1.SubmitProductIssueReportResponse
-	(*StaffProductIssueReport)(nil),                             // 172: console.v1.StaffProductIssueReport
-	(*ListStaffProductIssueReportsRequest)(nil),                 // 173: console.v1.ListStaffProductIssueReportsRequest
-	(*ListStaffProductIssueReportsResponse)(nil),                // 174: console.v1.ListStaffProductIssueReportsResponse
-	(*EngageStaffProductIssueReportRequest)(nil),                // 175: console.v1.EngageStaffProductIssueReportRequest
-	(*EngageStaffProductIssueReportResponse)(nil),               // 176: console.v1.EngageStaffProductIssueReportResponse
-	(*GetOperatingFeedbackRequest)(nil),                         // 177: console.v1.GetOperatingFeedbackRequest
-	(*GetOperatingFeedbackResponse)(nil),                        // 178: console.v1.GetOperatingFeedbackResponse
-	(*ResolveOperatingFeedbackRemediationRequest)(nil),          // 179: console.v1.ResolveOperatingFeedbackRemediationRequest
-	(*ResolveOperatingFeedbackRemediationResponse)(nil),         // 180: console.v1.ResolveOperatingFeedbackRemediationResponse
-	(*CustomerIntelligenceEvidenceRef)(nil),                     // 181: console.v1.CustomerIntelligenceEvidenceRef
-	(*CustomerIntelligenceFactRevision)(nil),                    // 182: console.v1.CustomerIntelligenceFactRevision
-	(*CustomerIntelligenceFact)(nil),                            // 183: console.v1.CustomerIntelligenceFact
-	(*CustomerIntelligenceReceipt)(nil),                         // 184: console.v1.CustomerIntelligenceReceipt
-	(*ListCustomerIntelligenceFactsRequest)(nil),                // 185: console.v1.ListCustomerIntelligenceFactsRequest
-	(*ListCustomerIntelligenceFactsResponse)(nil),               // 186: console.v1.ListCustomerIntelligenceFactsResponse
-	(*GetCustomerIntelligenceFactRequest)(nil),                  // 187: console.v1.GetCustomerIntelligenceFactRequest
-	(*GetCustomerIntelligenceFactResponse)(nil),                 // 188: console.v1.GetCustomerIntelligenceFactResponse
-	(*ReviewCustomerIntelligenceFactRequest)(nil),               // 189: console.v1.ReviewCustomerIntelligenceFactRequest
-	(*ReviewCustomerIntelligenceFactResponse)(nil),              // 190: console.v1.ReviewCustomerIntelligenceFactResponse
-	(*ProposeCustomerIntelligenceFactRequest)(nil),              // 191: console.v1.ProposeCustomerIntelligenceFactRequest
-	(*ProposeCustomerIntelligenceFactResponse)(nil),             // 192: console.v1.ProposeCustomerIntelligenceFactResponse
-	(*RespondToCustomerFactConfirmationRequest)(nil),            // 193: console.v1.RespondToCustomerFactConfirmationRequest
-	(*RespondToCustomerFactConfirmationResponse)(nil),           // 194: console.v1.RespondToCustomerFactConfirmationResponse
-	(*AggregateCustomerIntelligencePatternsRequest)(nil),        // 195: console.v1.AggregateCustomerIntelligencePatternsRequest
-	(*CustomerIntelligencePattern)(nil),                         // 196: console.v1.CustomerIntelligencePattern
-	(*AggregateCustomerIntelligencePatternsResponse)(nil),       // 197: console.v1.AggregateCustomerIntelligencePatternsResponse
-	(*ListOperatingCorrectionsRequest)(nil),                     // 198: console.v1.ListOperatingCorrectionsRequest
-	(*ListOperatingCorrectionsResponse)(nil),                    // 199: console.v1.ListOperatingCorrectionsResponse
-	(*ReviewOperatingCorrectionRequest)(nil),                    // 200: console.v1.ReviewOperatingCorrectionRequest
-	(*ReviewOperatingCorrectionResponse)(nil),                   // 201: console.v1.ReviewOperatingCorrectionResponse
-	(*ListWorkspaceMemoriesRequest)(nil),                        // 202: console.v1.ListWorkspaceMemoriesRequest
-	(*ListWorkspaceMemoriesResponse)(nil),                       // 203: console.v1.ListWorkspaceMemoriesResponse
-	(*WorkspaceMemory)(nil),                                     // 204: console.v1.WorkspaceMemory
-	(*CorrectWorkspaceMemoryRequest)(nil),                       // 205: console.v1.CorrectWorkspaceMemoryRequest
-	(*CorrectWorkspaceMemoryResponse)(nil),                      // 206: console.v1.CorrectWorkspaceMemoryResponse
-	(*ReviewWorkspaceMemoryRequest)(nil),                        // 207: console.v1.ReviewWorkspaceMemoryRequest
-	(*ReviewWorkspaceMemoryResponse)(nil),                       // 208: console.v1.ReviewWorkspaceMemoryResponse
-	(*ForgetWorkspaceMemoryRequest)(nil),                        // 209: console.v1.ForgetWorkspaceMemoryRequest
-	(*ForgetWorkspaceMemoryResponse)(nil),                       // 210: console.v1.ForgetWorkspaceMemoryResponse
-	(*OperatingHistorySearchFilter)(nil),                        // 211: console.v1.OperatingHistorySearchFilter
-	(*SearchOperatingHistoryRequest)(nil),                       // 212: console.v1.SearchOperatingHistoryRequest
-	(*OperatingHistorySearchResult)(nil),                        // 213: console.v1.OperatingHistorySearchResult
-	(*SearchOperatingHistoryResponse)(nil),                      // 214: console.v1.SearchOperatingHistoryResponse
-	(*GetOperatingHistoryContextRequest)(nil),                   // 215: console.v1.GetOperatingHistoryContextRequest
-	(*OperatingHistoryContextRecord)(nil),                       // 216: console.v1.OperatingHistoryContextRecord
-	(*GetOperatingHistoryContextResponse)(nil),                  // 217: console.v1.GetOperatingHistoryContextResponse
-	(*OperatingCapabilityContract)(nil),                         // 218: console.v1.OperatingCapabilityContract
-	(*IdentityToolAuthorizationEvidence)(nil),                   // 219: console.v1.IdentityToolAuthorizationEvidence
-	(*OperatingExecutionProfile)(nil),                           // 220: console.v1.OperatingExecutionProfile
-	(*OperatingHostedFrontDecision)(nil),                        // 221: console.v1.OperatingHostedFrontDecision
-	(*OperatingInitialActionResult)(nil),                        // 222: console.v1.OperatingInitialActionResult
-	(*OperatingManagedInferenceProviderCandidate)(nil),          // 223: console.v1.OperatingManagedInferenceProviderCandidate
-	(*OperatingManagedInferenceOutputTokenBudget)(nil),          // 224: console.v1.OperatingManagedInferenceOutputTokenBudget
-	(*OperatingManagedInferenceScope)(nil),                      // 225: console.v1.OperatingManagedInferenceScope
-	(*OperatingRunDispatch)(nil),                                // 226: console.v1.OperatingRunDispatch
-	(*OperatingTaskEnvironmentBinding)(nil),                     // 227: console.v1.OperatingTaskEnvironmentBinding
-	(*OperatingRequiredInitialToolIntent)(nil),                  // 228: console.v1.OperatingRequiredInitialToolIntent
-	(*ResolveOperatingReceiptActionRequest)(nil),                // 229: console.v1.ResolveOperatingReceiptActionRequest
-	(*ResolveOperatingReceiptActionResponse)(nil),               // 230: console.v1.ResolveOperatingReceiptActionResponse
-	(*GetOperatingReceiptRequest)(nil),                          // 231: console.v1.GetOperatingReceiptRequest
-	(*OperatingCodingAcceptance)(nil),                           // 232: console.v1.OperatingCodingAcceptance
-	(*OperatingCodingOutput)(nil),                               // 233: console.v1.OperatingCodingOutput
-	(*GetOperatingReceiptResponse)(nil),                         // 234: console.v1.GetOperatingReceiptResponse
-	(*ComputerMissionEvidenceGate)(nil),                         // 235: console.v1.ComputerMissionEvidenceGate
-	(*ComputerMissionRollbackArgumentBinding)(nil),              // 236: console.v1.ComputerMissionRollbackArgumentBinding
-	(*ComputerMissionCompensatingAction)(nil),                   // 237: console.v1.ComputerMissionCompensatingAction
-	(*ComputerMissionCanaryThreshold)(nil),                      // 238: console.v1.ComputerMissionCanaryThreshold
-	(*ComputerMissionCanaryDefinition)(nil),                     // 239: console.v1.ComputerMissionCanaryDefinition
-	(*ComputerMissionCanaryOperatorAction)(nil),                 // 240: console.v1.ComputerMissionCanaryOperatorAction
-	(*ComputerMissionBudget)(nil),                               // 241: console.v1.ComputerMissionBudget
-	(*ComputerMissionCapability)(nil),                           // 242: console.v1.ComputerMissionCapability
-	(*ComputerMissionApexRunnerBinding)(nil),                    // 243: console.v1.ComputerMissionApexRunnerBinding
-	(*ComputerMissionScope)(nil),                                // 244: console.v1.ComputerMissionScope
-	(*ComputerMissionAuthorityGrant)(nil),                       // 245: console.v1.ComputerMissionAuthorityGrant
-	(*ComputerMissionDecision)(nil),                             // 246: console.v1.ComputerMissionDecision
-	(*ComputerMissionContract)(nil),                             // 247: console.v1.ComputerMissionContract
-	(*ComputerMission)(nil),                                     // 248: console.v1.ComputerMission
-	(*ComputerMissionLongHorizonBudgetState)(nil),               // 249: console.v1.ComputerMissionLongHorizonBudgetState
-	(*SubmitComputerMissionRequest)(nil),                        // 250: console.v1.SubmitComputerMissionRequest
-	(*SubmitComputerMissionResponse)(nil),                       // 251: console.v1.SubmitComputerMissionResponse
-	(*GetComputerMissionRequest)(nil),                           // 252: console.v1.GetComputerMissionRequest
-	(*GetComputerMissionResponse)(nil),                          // 253: console.v1.GetComputerMissionResponse
-	(*CancelComputerMissionRequest)(nil),                        // 254: console.v1.CancelComputerMissionRequest
-	(*CancelComputerMissionResponse)(nil),                       // 255: console.v1.CancelComputerMissionResponse
-	(*ContinueComputerMissionRequest)(nil),                      // 256: console.v1.ContinueComputerMissionRequest
-	(*ContinueComputerMissionResponse)(nil),                     // 257: console.v1.ContinueComputerMissionResponse
-	(*PauseComputerMissionRequest)(nil),                         // 258: console.v1.PauseComputerMissionRequest
-	(*PauseComputerMissionResponse)(nil),                        // 259: console.v1.PauseComputerMissionResponse
-	(*ResumeComputerMissionRequest)(nil),                        // 260: console.v1.ResumeComputerMissionRequest
-	(*ResumeComputerMissionResponse)(nil),                       // 261: console.v1.ResumeComputerMissionResponse
-	(*WakeComputerMissionRequest)(nil),                          // 262: console.v1.WakeComputerMissionRequest
-	(*WakeComputerMissionResponse)(nil),                         // 263: console.v1.WakeComputerMissionResponse
-	(*GuideComputerMissionRequest)(nil),                         // 264: console.v1.GuideComputerMissionRequest
-	(*GuideComputerMissionResponse)(nil),                        // 265: console.v1.GuideComputerMissionResponse
-	(*ComputerMissionCanaryRun)(nil),                            // 266: console.v1.ComputerMissionCanaryRun
-	(*ComputerMissionCanaryEffect)(nil),                         // 267: console.v1.ComputerMissionCanaryEffect
-	(*ComputerMissionCanaryDimensionResult)(nil),                // 268: console.v1.ComputerMissionCanaryDimensionResult
-	(*ComputerMissionCanaryHardGateResult)(nil),                 // 269: console.v1.ComputerMissionCanaryHardGateResult
-	(*ComputerMissionCanaryEvaluation)(nil),                     // 270: console.v1.ComputerMissionCanaryEvaluation
-	(*ListComputerMissionCanaryDefinitionsRequest)(nil),         // 271: console.v1.ListComputerMissionCanaryDefinitionsRequest
-	(*ListComputerMissionCanaryDefinitionsResponse)(nil),        // 272: console.v1.ListComputerMissionCanaryDefinitionsResponse
-	(*StartComputerMissionCanaryRunRequest)(nil),                // 273: console.v1.StartComputerMissionCanaryRunRequest
-	(*StartComputerMissionCanaryRunResponse)(nil),               // 274: console.v1.StartComputerMissionCanaryRunResponse
-	(*GetComputerMissionCanaryRunRequest)(nil),                  // 275: console.v1.GetComputerMissionCanaryRunRequest
-	(*GetComputerMissionCanaryRunResponse)(nil),                 // 276: console.v1.GetComputerMissionCanaryRunResponse
-	(*ListComputerMissionCanaryRunsRequest)(nil),                // 277: console.v1.ListComputerMissionCanaryRunsRequest
-	(*ListComputerMissionCanaryRunsResponse)(nil),               // 278: console.v1.ListComputerMissionCanaryRunsResponse
-	(*GetComputerMissionCanaryEvidenceRequest)(nil),             // 279: console.v1.GetComputerMissionCanaryEvidenceRequest
-	(*GetComputerMissionCanaryEvidenceResponse)(nil),            // 280: console.v1.GetComputerMissionCanaryEvidenceResponse
-	(*OperateComputerMissionCanaryRunRequest)(nil),              // 281: console.v1.OperateComputerMissionCanaryRunRequest
-	(*OperateComputerMissionCanaryRunResponse)(nil),             // 282: console.v1.OperateComputerMissionCanaryRunResponse
-	(*MissionScheduleTemplate)(nil),                             // 283: console.v1.MissionScheduleTemplate
-	(*MissionSchedule)(nil),                                     // 284: console.v1.MissionSchedule
-	(*CreateMissionScheduleRequest)(nil),                        // 285: console.v1.CreateMissionScheduleRequest
-	(*CreateMissionScheduleResponse)(nil),                       // 286: console.v1.CreateMissionScheduleResponse
-	(*UpdateMissionScheduleRequest)(nil),                        // 287: console.v1.UpdateMissionScheduleRequest
-	(*UpdateMissionScheduleResponse)(nil),                       // 288: console.v1.UpdateMissionScheduleResponse
-	(*SetMissionScheduleEnabledRequest)(nil),                    // 289: console.v1.SetMissionScheduleEnabledRequest
-	(*SetMissionScheduleEnabledResponse)(nil),                   // 290: console.v1.SetMissionScheduleEnabledResponse
-	(*ListMissionSchedulesRequest)(nil),                         // 291: console.v1.ListMissionSchedulesRequest
-	(*ListMissionSchedulesResponse)(nil),                        // 292: console.v1.ListMissionSchedulesResponse
-	(*ConnectorTrigger)(nil),                                    // 293: console.v1.ConnectorTrigger
-	(*CreateConnectorTriggerRequest)(nil),                       // 294: console.v1.CreateConnectorTriggerRequest
-	(*CreateConnectorTriggerResponse)(nil),                      // 295: console.v1.CreateConnectorTriggerResponse
-	(*UpdateConnectorTriggerRequest)(nil),                       // 296: console.v1.UpdateConnectorTriggerRequest
-	(*UpdateConnectorTriggerResponse)(nil),                      // 297: console.v1.UpdateConnectorTriggerResponse
-	(*ListConnectorTriggersRequest)(nil),                        // 298: console.v1.ListConnectorTriggersRequest
-	(*ListConnectorTriggersResponse)(nil),                       // 299: console.v1.ListConnectorTriggersResponse
-	(*DeleteConnectorTriggerRequest)(nil),                       // 300: console.v1.DeleteConnectorTriggerRequest
-	(*DeleteConnectorTriggerResponse)(nil),                      // 301: console.v1.DeleteConnectorTriggerResponse
-	(*SetConnectorTriggerEnabledRequest)(nil),                   // 302: console.v1.SetConnectorTriggerEnabledRequest
-	(*SetConnectorTriggerEnabledResponse)(nil),                  // 303: console.v1.SetConnectorTriggerEnabledResponse
-	(*ComputerMissionApexSessionReservation)(nil),               // 304: console.v1.ComputerMissionApexSessionReservation
-	(*ReserveComputerMissionApexSessionRequest)(nil),            // 305: console.v1.ReserveComputerMissionApexSessionRequest
-	(*ReserveComputerMissionApexSessionResponse)(nil),           // 306: console.v1.ReserveComputerMissionApexSessionResponse
-	(*BindComputerMissionApexSessionReservationRequest)(nil),    // 307: console.v1.BindComputerMissionApexSessionReservationRequest
-	(*BindComputerMissionApexSessionReservationResponse)(nil),   // 308: console.v1.BindComputerMissionApexSessionReservationResponse
-	(*ComputerMissionApexInstructionMetadata)(nil),              // 309: console.v1.ComputerMissionApexInstructionMetadata
-	(*BindComputerMissionApexInstructionMetadataRequest)(nil),   // 310: console.v1.BindComputerMissionApexInstructionMetadataRequest
-	(*BindComputerMissionApexInstructionMetadataResponse)(nil),  // 311: console.v1.BindComputerMissionApexInstructionMetadataResponse
-	(*AuthorizeComputerMissionApexSessionAdoptionRequest)(nil),  // 312: console.v1.AuthorizeComputerMissionApexSessionAdoptionRequest
-	(*AuthorizeComputerMissionApexSessionAdoptionResponse)(nil), // 313: console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse
-	(*GetOverviewRequest)(nil),                                  // 314: console.v1.GetOverviewRequest
-	(*GetOverviewResponse)(nil),                                 // 315: console.v1.GetOverviewResponse
-	(*GetConsoleBootSnapshotRequest)(nil),                       // 316: console.v1.GetConsoleBootSnapshotRequest
-	(*ConsoleSnapshotFreshness)(nil),                            // 317: console.v1.ConsoleSnapshotFreshness
-	(*GetConsoleBootSnapshotResponse)(nil),                      // 318: console.v1.GetConsoleBootSnapshotResponse
-	(*ListAssetsRequest)(nil),                                   // 319: console.v1.ListAssetsRequest
-	(*ListAssetsResponse)(nil),                                  // 320: console.v1.ListAssetsResponse
-	(*GetAssetRequest)(nil),                                     // 321: console.v1.GetAssetRequest
-	(*GetAssetResponse)(nil),                                    // 322: console.v1.GetAssetResponse
-	(*ListActivityRequest)(nil),                                 // 323: console.v1.ListActivityRequest
-	(*ListActivityResponse)(nil),                                // 324: console.v1.ListActivityResponse
-	(*ListEvalResultsRequest)(nil),                              // 325: console.v1.ListEvalResultsRequest
-	(*ListEvalResultsResponse)(nil),                             // 326: console.v1.ListEvalResultsResponse
-	(*ListCostUsageRequest)(nil),                                // 327: console.v1.ListCostUsageRequest
-	(*ListCostUsageResponse)(nil),                               // 328: console.v1.ListCostUsageResponse
-	(*CostUsageRunSummary)(nil),                                 // 329: console.v1.CostUsageRunSummary
-	(*RecordProviderCostSnapshotRequest)(nil),                   // 330: console.v1.RecordProviderCostSnapshotRequest
-	(*RecordProviderCostSnapshotResponse)(nil),                  // 331: console.v1.RecordProviderCostSnapshotResponse
-	(*ListAuthorityPostureRequest)(nil),                         // 332: console.v1.ListAuthorityPostureRequest
-	(*ListAuthorityPostureResponse)(nil),                        // 333: console.v1.ListAuthorityPostureResponse
-	(*ListAgentWorkforceRecordsRequest)(nil),                    // 334: console.v1.ListAgentWorkforceRecordsRequest
-	(*ListAgentWorkforceRecordsResponse)(nil),                   // 335: console.v1.ListAgentWorkforceRecordsResponse
-	(*OrbControlTarget)(nil),                                    // 336: console.v1.OrbControlTarget
-	(*ListOrbControlTargetsRequest)(nil),                        // 337: console.v1.ListOrbControlTargetsRequest
-	(*ListOrbControlTargetsResponse)(nil),                       // 338: console.v1.ListOrbControlTargetsResponse
-	(*GetOrbControlTargetRequest)(nil),                          // 339: console.v1.GetOrbControlTargetRequest
-	(*GetOrbControlTargetResponse)(nil),                         // 340: console.v1.GetOrbControlTargetResponse
-	(*SubmitOrbControlActionRequest)(nil),                       // 341: console.v1.SubmitOrbControlActionRequest
-	(*SubmitOrbControlActionResponse)(nil),                      // 342: console.v1.SubmitOrbControlActionResponse
-	(*SubmitAgentWorkforceEvidenceRequest)(nil),                 // 343: console.v1.SubmitAgentWorkforceEvidenceRequest
-	(*SubmitAgentWorkforceEvidenceResponse)(nil),                // 344: console.v1.SubmitAgentWorkforceEvidenceResponse
-	(*AgentWorkforceSubmittedEvidence)(nil),                     // 345: console.v1.AgentWorkforceSubmittedEvidence
-	(*ListFindingsRequest)(nil),                                 // 346: console.v1.ListFindingsRequest
-	(*ListFindingsResponse)(nil),                                // 347: console.v1.ListFindingsResponse
-	(*GetTraceDrilldownRequest)(nil),                            // 348: console.v1.GetTraceDrilldownRequest
-	(*GetTraceDrilldownResponse)(nil),                           // 349: console.v1.GetTraceDrilldownResponse
-	(*ListIntegrationTilesRequest)(nil),                         // 350: console.v1.ListIntegrationTilesRequest
-	(*ListIntegrationTilesResponse)(nil),                        // 351: console.v1.ListIntegrationTilesResponse
-	(*ListPinnedSourcesRequest)(nil),                            // 352: console.v1.ListPinnedSourcesRequest
-	(*ListPinnedSourcesResponse)(nil),                           // 353: console.v1.ListPinnedSourcesResponse
-	(*PinnedSource)(nil),                                        // 354: console.v1.PinnedSource
-	(*SetPinnedSourceRequest)(nil),                              // 355: console.v1.SetPinnedSourceRequest
-	(*SetPinnedSourceResponse)(nil),                             // 356: console.v1.SetPinnedSourceResponse
-	(*UnpinSourceRequest)(nil),                                  // 357: console.v1.UnpinSourceRequest
-	(*UnpinSourceResponse)(nil),                                 // 358: console.v1.UnpinSourceResponse
-	(*GetOnboardingPlanRequest)(nil),                            // 359: console.v1.GetOnboardingPlanRequest
-	(*GetOnboardingPlanResponse)(nil),                           // 360: console.v1.GetOnboardingPlanResponse
-	(*GetWorkspaceSettingsRequest)(nil),                         // 361: console.v1.GetWorkspaceSettingsRequest
-	(*GetWorkspaceSettingsResponse)(nil),                        // 362: console.v1.GetWorkspaceSettingsResponse
-	(*TaskEnvironmentProjectOption)(nil),                        // 363: console.v1.TaskEnvironmentProjectOption
-	(*GetBillingSubscriptionRequest)(nil),                       // 364: console.v1.GetBillingSubscriptionRequest
-	(*GetBillingSubscriptionResponse)(nil),                      // 365: console.v1.GetBillingSubscriptionResponse
-	(*CreateBillingPortalSessionRequest)(nil),                   // 366: console.v1.CreateBillingPortalSessionRequest
-	(*CreateBillingPortalSessionResponse)(nil),                  // 367: console.v1.CreateBillingPortalSessionResponse
-	(*CreateBillingCheckoutSessionRequest)(nil),                 // 368: console.v1.CreateBillingCheckoutSessionRequest
-	(*CreateBillingCheckoutSessionResponse)(nil),                // 369: console.v1.CreateBillingCheckoutSessionResponse
-	(*UpdateWorkspaceProfileRequest)(nil),                       // 370: console.v1.UpdateWorkspaceProfileRequest
-	(*UpdateWorkspaceProfileResponse)(nil),                      // 371: console.v1.UpdateWorkspaceProfileResponse
-	(*OperatorModelPreference)(nil),                             // 372: console.v1.OperatorModelPreference
-	(*OperatorModelPreferenceUpdate)(nil),                       // 373: console.v1.OperatorModelPreferenceUpdate
-	(*OperatorPreferences)(nil),                                 // 374: console.v1.OperatorPreferences
-	(*GetOperatorPreferencesRequest)(nil),                       // 375: console.v1.GetOperatorPreferencesRequest
-	(*GetOperatorPreferencesResponse)(nil),                      // 376: console.v1.GetOperatorPreferencesResponse
-	(*UpdateOperatorPreferencesRequest)(nil),                    // 377: console.v1.UpdateOperatorPreferencesRequest
-	(*UpdateOperatorPreferencesResponse)(nil),                   // 378: console.v1.UpdateOperatorPreferencesResponse
-	(*WorkspaceGuardrailRule)(nil),                              // 379: console.v1.WorkspaceGuardrailRule
-	(*ListWorkspaceGuardrailRulesRequest)(nil),                  // 380: console.v1.ListWorkspaceGuardrailRulesRequest
-	(*ListWorkspaceGuardrailRulesResponse)(nil),                 // 381: console.v1.ListWorkspaceGuardrailRulesResponse
-	(*UpsertWorkspaceGuardrailRuleRequest)(nil),                 // 382: console.v1.UpsertWorkspaceGuardrailRuleRequest
-	(*RemoveWorkspaceGuardrailRuleRequest)(nil),                 // 383: console.v1.RemoveWorkspaceGuardrailRuleRequest
-	(*ConnectorProfile)(nil),                                    // 384: console.v1.ConnectorProfile
-	(*ConnectorProfileScopeSet)(nil),                            // 385: console.v1.ConnectorProfileScopeSet
-	(*CreateConnectorProfileRequest)(nil),                       // 386: console.v1.CreateConnectorProfileRequest
-	(*CreateConnectorProfileResponse)(nil),                      // 387: console.v1.CreateConnectorProfileResponse
-	(*ListConnectorProfilesRequest)(nil),                        // 388: console.v1.ListConnectorProfilesRequest
-	(*ListConnectorProfilesResponse)(nil),                       // 389: console.v1.ListConnectorProfilesResponse
-	(*UpdateConnectorProfileRequest)(nil),                       // 390: console.v1.UpdateConnectorProfileRequest
-	(*UpdateConnectorProfileResponse)(nil),                      // 391: console.v1.UpdateConnectorProfileResponse
-	(*DeleteConnectorProfileRequest)(nil),                       // 392: console.v1.DeleteConnectorProfileRequest
-	(*DeleteConnectorProfileResponse)(nil),                      // 393: console.v1.DeleteConnectorProfileResponse
-	(*ArchiveWorkspaceRequest)(nil),                             // 394: console.v1.ArchiveWorkspaceRequest
-	(*ArchiveWorkspaceResponse)(nil),                            // 395: console.v1.ArchiveWorkspaceResponse
-	(*UpdateWorkspacePolicyRequest)(nil),                        // 396: console.v1.UpdateWorkspacePolicyRequest
-	(*UpdateWorkspacePolicyResponse)(nil),                       // 397: console.v1.UpdateWorkspacePolicyResponse
-	(*UpdateWorkspaceDexPolicyRequest)(nil),                     // 398: console.v1.UpdateWorkspaceDexPolicyRequest
-	(*UpdateWorkspaceDexPolicyResponse)(nil),                    // 399: console.v1.UpdateWorkspaceDexPolicyResponse
-	(*UpdateWorkspaceArtifactStyleGuideRequest)(nil),            // 400: console.v1.UpdateWorkspaceArtifactStyleGuideRequest
-	(*UpdateWorkspaceArtifactStyleGuideResponse)(nil),           // 401: console.v1.UpdateWorkspaceArtifactStyleGuideResponse
-	(*EvaluateWorkspaceArtifactStyleGuideRequest)(nil),          // 402: console.v1.EvaluateWorkspaceArtifactStyleGuideRequest
-	(*EvaluateWorkspaceArtifactStyleGuideResponse)(nil),         // 403: console.v1.EvaluateWorkspaceArtifactStyleGuideResponse
-	(*WorkspaceContentPolicyViolation)(nil),                     // 404: console.v1.WorkspaceContentPolicyViolation
-	(*UpsertWorkspaceIdentityProviderRequest)(nil),              // 405: console.v1.UpsertWorkspaceIdentityProviderRequest
-	(*UpsertWorkspaceIdentityProviderResponse)(nil),             // 406: console.v1.UpsertWorkspaceIdentityProviderResponse
-	(*RemoveWorkspaceIdentityProviderRequest)(nil),              // 407: console.v1.RemoveWorkspaceIdentityProviderRequest
-	(*RemoveWorkspaceIdentityProviderResponse)(nil),             // 408: console.v1.RemoveWorkspaceIdentityProviderResponse
-	(*UpsertWorkspaceIntegrationRequest)(nil),                   // 409: console.v1.UpsertWorkspaceIntegrationRequest
-	(*UpsertWorkspaceIntegrationResponse)(nil),                  // 410: console.v1.UpsertWorkspaceIntegrationResponse
-	(*RemoveWorkspaceIntegrationRequest)(nil),                   // 411: console.v1.RemoveWorkspaceIntegrationRequest
-	(*RemoveWorkspaceIntegrationResponse)(nil),                  // 412: console.v1.RemoveWorkspaceIntegrationResponse
-	(*UpdateWorkspaceBillingRequest)(nil),                       // 413: console.v1.UpdateWorkspaceBillingRequest
-	(*UpsertWorkspaceMemberRequest)(nil),                        // 414: console.v1.UpsertWorkspaceMemberRequest
-	(*RemoveWorkspaceMemberRequest)(nil),                        // 415: console.v1.RemoveWorkspaceMemberRequest
-	(*UpdateWorkspaceNotificationPreferencesRequest)(nil),       // 416: console.v1.UpdateWorkspaceNotificationPreferencesRequest
-	(*EnableWorkspaceBreakGlassRequest)(nil),                    // 417: console.v1.EnableWorkspaceBreakGlassRequest
-	(*DisableWorkspaceBreakGlassRequest)(nil),                   // 418: console.v1.DisableWorkspaceBreakGlassRequest
-	(*OperatingSkill)(nil),                                      // 419: console.v1.OperatingSkill
-	(*ListWorkspaceSkillsRequest)(nil),                          // 420: console.v1.ListWorkspaceSkillsRequest
-	(*ListWorkspaceSkillsResponse)(nil),                         // 421: console.v1.ListWorkspaceSkillsResponse
-	(*SkillAnalysisFinding)(nil),                                // 422: console.v1.SkillAnalysisFinding
-	(*SkillAnalysisReport)(nil),                                 // 423: console.v1.SkillAnalysisReport
-	(*DexSkillInputDeclaration)(nil),                            // 424: console.v1.DexSkillInputDeclaration
-	(*DexSkillOutputDeclaration)(nil),                           // 425: console.v1.DexSkillOutputDeclaration
-	(*DexSkillPackageFile)(nil),                                 // 426: console.v1.DexSkillPackageFile
-	(*DexSkillLicenseEvidence)(nil),                             // 427: console.v1.DexSkillLicenseEvidence
-	(*DexSkillCompatibility)(nil),                               // 428: console.v1.DexSkillCompatibility
-	(*DexSkillQualityFixture)(nil),                              // 429: console.v1.DexSkillQualityFixture
-	(*DexSkillQualityEvidence)(nil),                             // 430: console.v1.DexSkillQualityEvidence
-	(*DexSkillUpdateDiff)(nil),                                  // 431: console.v1.DexSkillUpdateDiff
-	(*DexSkillCatalogEntry)(nil),                                // 432: console.v1.DexSkillCatalogEntry
-	(*DexSkillPlaybookStep)(nil),                                // 433: console.v1.DexSkillPlaybookStep
-	(*DexSkillPlaybook)(nil),                                    // 434: console.v1.DexSkillPlaybook
-	(*BrowseDexSkillCatalogRequest)(nil),                        // 435: console.v1.BrowseDexSkillCatalogRequest
-	(*BrowseDexSkillCatalogResponse)(nil),                       // 436: console.v1.BrowseDexSkillCatalogResponse
-	(*InstallDexSkillCatalogEntryRequest)(nil),                  // 437: console.v1.InstallDexSkillCatalogEntryRequest
-	(*InstallDexSkillCatalogEntryResponse)(nil),                 // 438: console.v1.InstallDexSkillCatalogEntryResponse
-	(*CreateWorkspaceSkillRequest)(nil),                         // 439: console.v1.CreateWorkspaceSkillRequest
-	(*CreateWorkspaceSkillResponse)(nil),                        // 440: console.v1.CreateWorkspaceSkillResponse
-	(*UpdateWorkspaceSkillRequest)(nil),                         // 441: console.v1.UpdateWorkspaceSkillRequest
-	(*UpdateWorkspaceSkillResponse)(nil),                        // 442: console.v1.UpdateWorkspaceSkillResponse
-	(*DeleteWorkspaceSkillRequest)(nil),                         // 443: console.v1.DeleteWorkspaceSkillRequest
-	(*DeleteWorkspaceSkillResponse)(nil),                        // 444: console.v1.DeleteWorkspaceSkillResponse
-	(*WorkspaceSettingsProfile)(nil),                            // 445: console.v1.WorkspaceSettingsProfile
-	(*WorkspaceSettingsPrincipal)(nil),                          // 446: console.v1.WorkspaceSettingsPrincipal
-	(*WorkspaceSettingsCapability)(nil),                         // 447: console.v1.WorkspaceSettingsCapability
-	(*WorkspaceSettingsWorkspace)(nil),                          // 448: console.v1.WorkspaceSettingsWorkspace
-	(*WorkspaceSettingsActivityEntry)(nil),                      // 449: console.v1.WorkspaceSettingsActivityEntry
-	(*WorkspaceSettingsMember)(nil),                             // 450: console.v1.WorkspaceSettingsMember
-	(*WorkspaceSettingsBilling)(nil),                            // 451: console.v1.WorkspaceSettingsBilling
-	(*WorkspaceSettingsPolicy)(nil),                             // 452: console.v1.WorkspaceSettingsPolicy
-	(*ProjectTaskEnvironmentRetention)(nil),                     // 453: console.v1.ProjectTaskEnvironmentRetention
-	(*WorkspaceTaskEnvironmentRetention)(nil),                   // 454: console.v1.WorkspaceTaskEnvironmentRetention
-	(*WorkspaceDexPolicy)(nil),                                  // 455: console.v1.WorkspaceDexPolicy
-	(*WorkspaceArtifactStyleGuide)(nil),                         // 456: console.v1.WorkspaceArtifactStyleGuide
-	(*WorkspaceSettingsNotificationPreference)(nil),             // 457: console.v1.WorkspaceSettingsNotificationPreference
-	(*WorkspaceSpendBeatSettings)(nil),                          // 458: console.v1.WorkspaceSpendBeatSettings
-	(*WorkspaceSettingsNotifications)(nil),                      // 459: console.v1.WorkspaceSettingsNotifications
-	(*WorkspaceSettingsIdentityProvider)(nil),                   // 460: console.v1.WorkspaceSettingsIdentityProvider
-	(*WorkspaceSettingsIntegration)(nil),                        // 461: console.v1.WorkspaceSettingsIntegration
-	(*WorkspaceSettingsOwnerStatus)(nil),                        // 462: console.v1.WorkspaceSettingsOwnerStatus
-	(*WorkspaceSettingsBreakGlassGrant)(nil),                    // 463: console.v1.WorkspaceSettingsBreakGlassGrant
-	(*StaffContextCapability)(nil),                              // 464: console.v1.StaffContextCapability
-	(*SearchStaffWorkspaceDirectoryRequest)(nil),                // 465: console.v1.SearchStaffWorkspaceDirectoryRequest
-	(*StaffWorkspaceDirectoryEntry)(nil),                        // 466: console.v1.StaffWorkspaceDirectoryEntry
-	(*SearchStaffWorkspaceDirectoryResponse)(nil),               // 467: console.v1.SearchStaffWorkspaceDirectoryResponse
-	(*GetStaffWorkspaceContextRequest)(nil),                     // 468: console.v1.GetStaffWorkspaceContextRequest
-	(*StaffGrantEventSummary)(nil),                              // 469: console.v1.StaffGrantEventSummary
-	(*StaffReceiptSummary)(nil),                                 // 470: console.v1.StaffReceiptSummary
-	(*StaffTraceSummary)(nil),                                   // 471: console.v1.StaffTraceSummary
-	(*StaffFailureSummary)(nil),                                 // 472: console.v1.StaffFailureSummary
-	(*StaffComputerEnvironment)(nil),                            // 473: console.v1.StaffComputerEnvironment
-	(*StaffWorkspaceContext)(nil),                               // 474: console.v1.StaffWorkspaceContext
-	(*GetStaffWorkspaceContextResponse)(nil),                    // 475: console.v1.GetStaffWorkspaceContextResponse
-	(*ManagedProviderAccessGrant)(nil),                          // 476: console.v1.ManagedProviderAccessGrant
-	(*ListManagedProviderAccessGrantsRequest)(nil),              // 477: console.v1.ListManagedProviderAccessGrantsRequest
-	(*ListManagedProviderAccessGrantsResponse)(nil),             // 478: console.v1.ListManagedProviderAccessGrantsResponse
-	(*UpsertManagedProviderAccessGrantRequest)(nil),             // 479: console.v1.UpsertManagedProviderAccessGrantRequest
-	(*UpsertManagedProviderAccessGrantResponse)(nil),            // 480: console.v1.UpsertManagedProviderAccessGrantResponse
-	(*RevokeManagedProviderAccessGrantRequest)(nil),             // 481: console.v1.RevokeManagedProviderAccessGrantRequest
-	(*RevokeManagedProviderAccessGrantResponse)(nil),            // 482: console.v1.RevokeManagedProviderAccessGrantResponse
-	(*InferenceProviderTarget)(nil),                             // 483: console.v1.InferenceProviderTarget
-	(*StaffInferencePurposeRoute)(nil),                          // 484: console.v1.StaffInferencePurposeRoute
-	(*StaffInferenceRoutingProfile)(nil),                        // 485: console.v1.StaffInferenceRoutingProfile
-	(*StaffInferenceRoutingEvent)(nil),                          // 486: console.v1.StaffInferenceRoutingEvent
-	(*GetStaffInferenceRoutingProfileRequest)(nil),              // 487: console.v1.GetStaffInferenceRoutingProfileRequest
-	(*GetStaffInferenceRoutingProfileResponse)(nil),             // 488: console.v1.GetStaffInferenceRoutingProfileResponse
-	(*UpdateStaffInferenceRoutingProfileRequest)(nil),           // 489: console.v1.UpdateStaffInferenceRoutingProfileRequest
-	(*UpdateStaffInferenceRoutingProfileResponse)(nil),          // 490: console.v1.UpdateStaffInferenceRoutingProfileResponse
-	(*ListScenarioFixturesRequest)(nil),                         // 491: console.v1.ListScenarioFixturesRequest
-	(*ListScenarioFixturesResponse)(nil),                        // 492: console.v1.ListScenarioFixturesResponse
-	(*PromoteScenarioFixtureRequest)(nil),                       // 493: console.v1.PromoteScenarioFixtureRequest
-	(*PromoteScenarioFixtureResponse)(nil),                      // 494: console.v1.PromoteScenarioFixtureResponse
-	(*CompareScenarioFixturesRequest)(nil),                      // 495: console.v1.CompareScenarioFixturesRequest
-	(*CompareScenarioFixturesResponse)(nil),                     // 496: console.v1.CompareScenarioFixturesResponse
-	(*ScenarioFixtureDifference)(nil),                           // 497: console.v1.ScenarioFixtureDifference
-	(*ScenarioFixture)(nil),                                     // 498: console.v1.ScenarioFixture
-	(*ConsoleMetric)(nil),                                       // 499: console.v1.ConsoleMetric
-	(*AiAsset)(nil),                                             // 500: console.v1.AiAsset
-	(*ActivityEvent)(nil),                                       // 501: console.v1.ActivityEvent
-	(*EvalResult)(nil),                                          // 502: console.v1.EvalResult
-	(*CostUsage)(nil),                                           // 503: console.v1.CostUsage
-	(*AuthorityLedger)(nil),                                     // 504: console.v1.AuthorityLedger
-	(*AuthorityScopeLedger)(nil),                                // 505: console.v1.AuthorityScopeLedger
-	(*AuthorityMissingEvidence)(nil),                            // 506: console.v1.AuthorityMissingEvidence
-	(*AuthorityDeniedAction)(nil),                               // 507: console.v1.AuthorityDeniedAction
-	(*AgentWorkforceRecord)(nil),                                // 508: console.v1.AgentWorkforceRecord
-	(*AgentWorkforceSourceReadiness)(nil),                       // 509: console.v1.AgentWorkforceSourceReadiness
-	(*AgentWorkforceProofSummary)(nil),                          // 510: console.v1.AgentWorkforceProofSummary
-	(*AgentWorkforceApprovalQueueSummary)(nil),                  // 511: console.v1.AgentWorkforceApprovalQueueSummary
-	(*AgentWorkforceApprovalStateBucket)(nil),                   // 512: console.v1.AgentWorkforceApprovalStateBucket
-	(*AgentWorkforceApprovalBlockerBucket)(nil),                 // 513: console.v1.AgentWorkforceApprovalBlockerBucket
-	(*AgentWorkforceActionAuthorityBoundary)(nil),               // 514: console.v1.AgentWorkforceActionAuthorityBoundary
-	(*AgentWorkforceMissingEvidenceBucket)(nil),                 // 515: console.v1.AgentWorkforceMissingEvidenceBucket
-	(*EndpointGuardrailSummary)(nil),                            // 516: console.v1.EndpointGuardrailSummary
-	(*AgentWorkforceQuestionSummary)(nil),                       // 517: console.v1.AgentWorkforceQuestionSummary
-	(*AgentWorkforceApprovalDisablement)(nil),                   // 518: console.v1.AgentWorkforceApprovalDisablement
-	(*RunAsIdentitySummary)(nil),                                // 519: console.v1.RunAsIdentitySummary
-	(*AgentWorkforceActionEvidence)(nil),                        // 520: console.v1.AgentWorkforceActionEvidence
-	(*CredentialAuthoritySummary)(nil),                          // 521: console.v1.CredentialAuthoritySummary
-	(*CostEvidenceSummary)(nil),                                 // 522: console.v1.CostEvidenceSummary
-	(*AgentWorkforceDebugIdentifiers)(nil),                      // 523: console.v1.AgentWorkforceDebugIdentifiers
-	(*RiskFinding)(nil),                                         // 524: console.v1.RiskFinding
-	(*IntegrationCredentialField)(nil),                          // 525: console.v1.IntegrationCredentialField
-	(*IntegrationResourceType)(nil),                             // 526: console.v1.IntegrationResourceType
-	(*IntegrationTile)(nil),                                     // 527: console.v1.IntegrationTile
-	(*OnboardingTask)(nil),                                      // 528: console.v1.OnboardingTask
-	(*TraceDrilldown)(nil),                                      // 529: console.v1.TraceDrilldown
-	(*TraceSpan)(nil),                                           // 530: console.v1.TraceSpan
-	(*TraceSpanReference)(nil),                                  // 531: console.v1.TraceSpanReference
-	(*TraceCompletenessSignal)(nil),                             // 532: console.v1.TraceCompletenessSignal
-	(*SecurityDecisionPacket)(nil),                              // 533: console.v1.SecurityDecisionPacket
-	(*SecurityDecisionEvidenceGap)(nil),                         // 534: console.v1.SecurityDecisionEvidenceGap
-	(*RelatedResource)(nil),                                     // 535: console.v1.RelatedResource
-	(*OperatingHomepageSuggestion)(nil),                         // 536: console.v1.OperatingHomepageSuggestion
-	(*DexMcpServer)(nil),                                        // 537: console.v1.DexMcpServer
-	(*DexMcpCatalogTool)(nil),                                   // 538: console.v1.DexMcpCatalogTool
-	(*CreateDexMcpServerRequest)(nil),                           // 539: console.v1.CreateDexMcpServerRequest
-	(*CreateDexMcpServerResponse)(nil),                          // 540: console.v1.CreateDexMcpServerResponse
-	(*ListDexMcpServersRequest)(nil),                            // 541: console.v1.ListDexMcpServersRequest
-	(*ListDexMcpServersResponse)(nil),                           // 542: console.v1.ListDexMcpServersResponse
-	(*GetDexMcpServerRequest)(nil),                              // 543: console.v1.GetDexMcpServerRequest
-	(*GetDexMcpServerResponse)(nil),                             // 544: console.v1.GetDexMcpServerResponse
-	(*DiscoverDexMcpServerRequest)(nil),                         // 545: console.v1.DiscoverDexMcpServerRequest
-	(*DiscoverDexMcpServerResponse)(nil),                        // 546: console.v1.DiscoverDexMcpServerResponse
-	(*UpdateDexMcpServerRequest)(nil),                           // 547: console.v1.UpdateDexMcpServerRequest
-	(*UpdateDexMcpServerResponse)(nil),                          // 548: console.v1.UpdateDexMcpServerResponse
-	(*DeleteDexMcpServerRequest)(nil),                           // 549: console.v1.DeleteDexMcpServerRequest
-	(*DeleteDexMcpServerResponse)(nil),                          // 550: console.v1.DeleteDexMcpServerResponse
-	(*DexMcpOAuthProfile)(nil),                                  // 551: console.v1.DexMcpOAuthProfile
-	(*InitiateDexMcpOAuthProfileRequest)(nil),                   // 552: console.v1.InitiateDexMcpOAuthProfileRequest
-	(*InitiateDexMcpOAuthProfileResponse)(nil),                  // 553: console.v1.InitiateDexMcpOAuthProfileResponse
-	(*CompleteDexMcpOAuthProfileRequest)(nil),                   // 554: console.v1.CompleteDexMcpOAuthProfileRequest
-	(*CompleteDexMcpOAuthProfileResponse)(nil),                  // 555: console.v1.CompleteDexMcpOAuthProfileResponse
-	(*ListDexMcpOAuthProfilesRequest)(nil),                      // 556: console.v1.ListDexMcpOAuthProfilesRequest
-	(*ListDexMcpOAuthProfilesResponse)(nil),                     // 557: console.v1.ListDexMcpOAuthProfilesResponse
-	(*RevokeDexMcpOAuthProfileRequest)(nil),                     // 558: console.v1.RevokeDexMcpOAuthProfileRequest
-	(*RevokeDexMcpOAuthProfileResponse)(nil),                    // 559: console.v1.RevokeDexMcpOAuthProfileResponse
-	(*ReauthorizeDexMcpOAuthProfileRequest)(nil),                // 560: console.v1.ReauthorizeDexMcpOAuthProfileRequest
-	(*ReauthorizeDexMcpOAuthProfileResponse)(nil),               // 561: console.v1.ReauthorizeDexMcpOAuthProfileResponse
-	(*PrivateEndpoint)(nil),                                     // 562: console.v1.PrivateEndpoint
-	(*PrivateProfileRoute)(nil),                                 // 563: console.v1.PrivateProfileRoute
-	(*RegisterPrivateEndpointRequest)(nil),                      // 564: console.v1.RegisterPrivateEndpointRequest
-	(*RegisterPrivateEndpointResponse)(nil),                     // 565: console.v1.RegisterPrivateEndpointResponse
-	(*VerifyPrivateEndpointRequest)(nil),                        // 566: console.v1.VerifyPrivateEndpointRequest
-	(*VerifyPrivateEndpointResponse)(nil),                       // 567: console.v1.VerifyPrivateEndpointResponse
-	(*ListPrivateEndpointsRequest)(nil),                         // 568: console.v1.ListPrivateEndpointsRequest
-	(*ListPrivateEndpointsResponse)(nil),                        // 569: console.v1.ListPrivateEndpointsResponse
-	(*DeletePrivateEndpointRequest)(nil),                        // 570: console.v1.DeletePrivateEndpointRequest
-	(*DeletePrivateEndpointResponse)(nil),                       // 571: console.v1.DeletePrivateEndpointResponse
-	(*AttachPrivateEndpointToProfileRequest)(nil),               // 572: console.v1.AttachPrivateEndpointToProfileRequest
-	(*AttachPrivateEndpointToProfileResponse)(nil),              // 573: console.v1.AttachPrivateEndpointToProfileResponse
-	(*ListGatewayEgressOriginsRequest)(nil),                     // 574: console.v1.ListGatewayEgressOriginsRequest
-	(*ListGatewayEgressOriginsResponse)(nil),                    // 575: console.v1.ListGatewayEgressOriginsResponse
-	(*OperatingCapabilityRequirementState)(nil),                 // 576: console.v1.OperatingCapabilityRequirementState
-	(*PrewarmOperatingThreadRequest)(nil),                       // 577: console.v1.PrewarmOperatingThreadRequest
-	(*PrewarmOperatingThreadResponse)(nil),                      // 578: console.v1.PrewarmOperatingThreadResponse
-	(*TerminalErrorEnvelope)(nil),                               // 579: console.v1.TerminalErrorEnvelope
-	(*BootstrapThreadGatewayRequest)(nil),                       // 580: console.v1.BootstrapThreadGatewayRequest
-	(*BootstrapThreadGatewayResponse)(nil),                      // 581: console.v1.BootstrapThreadGatewayResponse
-	(*SetOperatingThreadControllerRequest)(nil),                 // 582: console.v1.SetOperatingThreadControllerRequest
-	(*SetOperatingThreadControllerResponse)(nil),                // 583: console.v1.SetOperatingThreadControllerResponse
-	(*CostUsageSummary)(nil),                                    // 584: console.v1.CostUsageSummary
-	(*CostUsageAttributionSummary)(nil),                         // 585: console.v1.CostUsageAttributionSummary
-	(*TenantPrivacySetting)(nil),                                // 586: console.v1.TenantPrivacySetting
-	(*GetPrivacySettingsRequest)(nil),                           // 587: console.v1.GetPrivacySettingsRequest
-	(*GetPrivacySettingsResponse)(nil),                          // 588: console.v1.GetPrivacySettingsResponse
-	(*SetPrivacySettingsRequest)(nil),                           // 589: console.v1.SetPrivacySettingsRequest
-	(*ManagedRule)(nil),                                         // 590: console.v1.ManagedRule
-	(*ManagedSkillRef)(nil),                                     // 591: console.v1.ManagedSkillRef
-	(*McpServerRef)(nil),                                        // 592: console.v1.McpServerRef
-	(*McpPolicy)(nil),                                           // 593: console.v1.McpPolicy
-	(*ManagedSetup)(nil),                                        // 594: console.v1.ManagedSetup
-	(*GetManagedSetupRequest)(nil),                              // 595: console.v1.GetManagedSetupRequest
-	(*SetManagedSetupRequest)(nil),                              // 596: console.v1.SetManagedSetupRequest
-	(*MissionScheduleCapability)(nil),                           // 597: console.v1.MissionScheduleCapability
-	(*StartMeetingCaptureRequest)(nil),                          // 598: console.v1.StartMeetingCaptureRequest
-	(*ListConnectedCallsRequest)(nil),                           // 599: console.v1.ListConnectedCallsRequest
-	(*ListConnectedCallsResponse)(nil),                          // 600: console.v1.ListConnectedCallsResponse
-	(*ConnectedCall)(nil),                                       // 601: console.v1.ConnectedCall
-	(*StartMeetingCaptureResponse)(nil),                         // 602: console.v1.StartMeetingCaptureResponse
-	(*GetMeetingCaptureRequest)(nil),                            // 603: console.v1.GetMeetingCaptureRequest
-	(*GetMeetingCaptureResponse)(nil),                           // 604: console.v1.GetMeetingCaptureResponse
-	(*ListMeetingCapturesRequest)(nil),                          // 605: console.v1.ListMeetingCapturesRequest
-	(*ListMeetingCapturesResponse)(nil),                         // 606: console.v1.ListMeetingCapturesResponse
-	(*StopMeetingCaptureRequest)(nil),                           // 607: console.v1.StopMeetingCaptureRequest
-	(*StopMeetingCaptureResponse)(nil),                          // 608: console.v1.StopMeetingCaptureResponse
-	(*MeetingCapture)(nil),                                      // 609: console.v1.MeetingCapture
-	(*ProspectingWatchProgram)(nil),                             // 610: console.v1.ProspectingWatchProgram
-	(*ProspectingWatchProgramMutationReceipt)(nil),              // 611: console.v1.ProspectingWatchProgramMutationReceipt
-	(*CreateProspectingWatchProgramRequest)(nil),                // 612: console.v1.CreateProspectingWatchProgramRequest
-	(*CreateProspectingWatchProgramResponse)(nil),               // 613: console.v1.CreateProspectingWatchProgramResponse
-	(*GetProspectingWatchProgramRequest)(nil),                   // 614: console.v1.GetProspectingWatchProgramRequest
-	(*GetProspectingWatchProgramResponse)(nil),                  // 615: console.v1.GetProspectingWatchProgramResponse
-	(*ListProspectingWatchProgramsRequest)(nil),                 // 616: console.v1.ListProspectingWatchProgramsRequest
-	(*ListProspectingWatchProgramsResponse)(nil),                // 617: console.v1.ListProspectingWatchProgramsResponse
-	(*UpdateProspectingWatchProgramRequest)(nil),                // 618: console.v1.UpdateProspectingWatchProgramRequest
-	(*UpdateProspectingWatchProgramResponse)(nil),               // 619: console.v1.UpdateProspectingWatchProgramResponse
-	(*ListCommitmentsRequest)(nil),                              // 620: console.v1.ListCommitmentsRequest
-	(*ListCommitmentsResponse)(nil),                             // 621: console.v1.ListCommitmentsResponse
-	(*Commitment)(nil),                                          // 622: console.v1.Commitment
-	(*CommitmentCitation)(nil),                                  // 623: console.v1.CommitmentCitation
-	(*OperatingJobRecordLink)(nil),                              // 624: console.v1.OperatingJobRecordLink
-	(*OperatingJob)(nil),                                        // 625: console.v1.OperatingJob
-	(*ListOperatingJobsRequest)(nil),                            // 626: console.v1.ListOperatingJobsRequest
-	(*ListOperatingJobsResponse)(nil),                           // 627: console.v1.ListOperatingJobsResponse
-	(*RecordOperatingHomepageSuggestionFeedbackRequest)(nil),    // 628: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
-	(*RecordOperatingHomepageSuggestionFeedbackResponse)(nil),   // 629: console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
-	(*InferenceCreditBalance)(nil),                              // 630: console.v1.InferenceCreditBalance
-	(*GetInferenceCreditBalanceRequest)(nil),                    // 631: console.v1.GetInferenceCreditBalanceRequest
-	(*InferenceCreditBlock)(nil),                                // 632: console.v1.InferenceCreditBlock
-	(*InferenceCreditPricing)(nil),                              // 633: console.v1.InferenceCreditPricing
-	(*GetInferenceCreditBalanceResponse)(nil),                   // 634: console.v1.GetInferenceCreditBalanceResponse
-	(*InferenceRunCreditBalance)(nil),                           // 635: console.v1.InferenceRunCreditBalance
-	(*InferenceCreditReconciliation)(nil),                       // 636: console.v1.InferenceCreditReconciliation
-	(*CreateInferenceCreditCheckoutRequest)(nil),                // 637: console.v1.CreateInferenceCreditCheckoutRequest
-	(*CreateInferenceCreditCheckoutResponse)(nil),               // 638: console.v1.CreateInferenceCreditCheckoutResponse
-	(*FulfillInferenceCreditCheckoutRequest)(nil),               // 639: console.v1.FulfillInferenceCreditCheckoutRequest
-	(*FulfillInferenceCreditCheckoutResponse)(nil),              // 640: console.v1.FulfillInferenceCreditCheckoutResponse
-	(*OperatingAutoModelRoute)(nil),                             // 641: console.v1.OperatingAutoModelRoute
-	(*BusinessFieldDefinition)(nil),                             // 642: console.v1.BusinessFieldDefinition
-	(*BusinessRelationshipDefinition)(nil),                      // 643: console.v1.BusinessRelationshipDefinition
-	(*BusinessObjectType)(nil),                                  // 644: console.v1.BusinessObjectType
-	(*BusinessMoney)(nil),                                       // 645: console.v1.BusinessMoney
-	(*BusinessObjectReference)(nil),                             // 646: console.v1.BusinessObjectReference
-	(*BusinessArtifactReference)(nil),                           // 647: console.v1.BusinessArtifactReference
-	(*BusinessTextList)(nil),                                    // 648: console.v1.BusinessTextList
-	(*BusinessFieldValue)(nil),                                  // 649: console.v1.BusinessFieldValue
-	(*BusinessSourceField)(nil),                                 // 650: console.v1.BusinessSourceField
-	(*BusinessSourceBinding)(nil),                               // 651: console.v1.BusinessSourceBinding
-	(*BusinessObject)(nil),                                      // 652: console.v1.BusinessObject
-	(*BusinessObjectRevision)(nil),                              // 653: console.v1.BusinessObjectRevision
-	(*BusinessObjectRelationship)(nil),                          // 654: console.v1.BusinessObjectRelationship
-	(*DefineBusinessObjectTypeRequest)(nil),                     // 655: console.v1.DefineBusinessObjectTypeRequest
-	(*DefineBusinessObjectTypeResponse)(nil),                    // 656: console.v1.DefineBusinessObjectTypeResponse
-	(*ListBusinessObjectTypesRequest)(nil),                      // 657: console.v1.ListBusinessObjectTypesRequest
-	(*ListBusinessObjectTypesResponse)(nil),                     // 658: console.v1.ListBusinessObjectTypesResponse
-	(*CreateBusinessObjectRequest)(nil),                         // 659: console.v1.CreateBusinessObjectRequest
-	(*CreateBusinessObjectResponse)(nil),                        // 660: console.v1.CreateBusinessObjectResponse
-	(*GetBusinessObjectRequest)(nil),                            // 661: console.v1.GetBusinessObjectRequest
-	(*GetBusinessObjectResponse)(nil),                           // 662: console.v1.GetBusinessObjectResponse
-	(*BusinessObjectSourceRecovery)(nil),                        // 663: console.v1.BusinessObjectSourceRecovery
-	(*ListBusinessObjectsRequest)(nil),                          // 664: console.v1.ListBusinessObjectsRequest
-	(*BusinessObjectFilter)(nil),                                // 665: console.v1.BusinessObjectFilter
-	(*BusinessObjectReferenceFilter)(nil),                       // 666: console.v1.BusinessObjectReferenceFilter
-	(*ListBusinessObjectsResponse)(nil),                         // 667: console.v1.ListBusinessObjectsResponse
-	(*UpdateBusinessObjectRequest)(nil),                         // 668: console.v1.UpdateBusinessObjectRequest
-	(*UpdateBusinessObjectResponse)(nil),                        // 669: console.v1.UpdateBusinessObjectResponse
-	(*DeleteBusinessObjectRequest)(nil),                         // 670: console.v1.DeleteBusinessObjectRequest
-	(*DeleteBusinessObjectResponse)(nil),                        // 671: console.v1.DeleteBusinessObjectResponse
-	(*ListBusinessObjectRevisionsRequest)(nil),                  // 672: console.v1.ListBusinessObjectRevisionsRequest
-	(*ListBusinessObjectRevisionsResponse)(nil),                 // 673: console.v1.ListBusinessObjectRevisionsResponse
-	(*BindBusinessObjectSourceRequest)(nil),                     // 674: console.v1.BindBusinessObjectSourceRequest
-	(*BindBusinessObjectSourceResponse)(nil),                    // 675: console.v1.BindBusinessObjectSourceResponse
-	(*AdmitBusinessObjectObservationRequest)(nil),               // 676: console.v1.AdmitBusinessObjectObservationRequest
-	(*AdmitBusinessObjectObservationResponse)(nil),              // 677: console.v1.AdmitBusinessObjectObservationResponse
-	(*ListBusinessObjectRelationshipsRequest)(nil),              // 678: console.v1.ListBusinessObjectRelationshipsRequest
-	(*ListBusinessObjectRelationshipsResponse)(nil),             // 679: console.v1.ListBusinessObjectRelationshipsResponse
-	(*CreateBusinessObjectRelationshipRequest)(nil),             // 680: console.v1.CreateBusinessObjectRelationshipRequest
-	(*CreateBusinessObjectRelationshipResponse)(nil),            // 681: console.v1.CreateBusinessObjectRelationshipResponse
-	(*DeleteBusinessObjectRelationshipRequest)(nil),             // 682: console.v1.DeleteBusinessObjectRelationshipRequest
-	(*DeleteBusinessObjectRelationshipResponse)(nil),            // 683: console.v1.DeleteBusinessObjectRelationshipResponse
-	(*CaptureFormObjectTarget)(nil),                             // 684: console.v1.CaptureFormObjectTarget
-	(*CaptureFormAssetRef)(nil),                                 // 685: console.v1.CaptureFormAssetRef
-	(*CaptureFormBrandingInput)(nil),                            // 686: console.v1.CaptureFormBrandingInput
-	(*CaptureFormBranding)(nil),                                 // 687: console.v1.CaptureFormBranding
-	(*CaptureFormPublicBranding)(nil),                           // 688: console.v1.CaptureFormPublicBranding
-	(*CaptureFormSelectOption)(nil),                             // 689: console.v1.CaptureFormSelectOption
-	(*CaptureFormSelectSpec)(nil),                               // 690: console.v1.CaptureFormSelectSpec
-	(*CaptureFormUploadSpec)(nil),                               // 691: console.v1.CaptureFormUploadSpec
-	(*CaptureFormUpload)(nil),                                   // 692: console.v1.CaptureFormUpload
-	(*CaptureFormTypedValue)(nil),                               // 693: console.v1.CaptureFormTypedValue
-	(*CaptureFormField)(nil),                                    // 694: console.v1.CaptureFormField
-	(*CaptureFormPublicField)(nil),                              // 695: console.v1.CaptureFormPublicField
-	(*CaptureFormVersionInput)(nil),                             // 696: console.v1.CaptureFormVersionInput
-	(*CaptureFormVersion)(nil),                                  // 697: console.v1.CaptureFormVersion
-	(*CaptureFormPublicationInput)(nil),                         // 698: console.v1.CaptureFormPublicationInput
-	(*CaptureFormPublicRoute)(nil),                              // 699: console.v1.CaptureFormPublicRoute
-	(*CaptureFormPublication)(nil),                              // 700: console.v1.CaptureFormPublication
-	(*CaptureForm)(nil),                                         // 701: console.v1.CaptureForm
-	(*PublishedCaptureForm)(nil),                                // 702: console.v1.PublishedCaptureForm
-	(*CaptureFormAnswer)(nil),                                   // 703: console.v1.CaptureFormAnswer
-	(*CaptureFormReview)(nil),                                   // 704: console.v1.CaptureFormReview
-	(*CaptureFormObjectResult)(nil),                             // 705: console.v1.CaptureFormObjectResult
-	(*CaptureFormSubmission)(nil),                               // 706: console.v1.CaptureFormSubmission
-	(*CaptureFormPublicSubmissionReceipt)(nil),                  // 707: console.v1.CaptureFormPublicSubmissionReceipt
-	(*CreateCaptureFormRequest)(nil),                            // 708: console.v1.CreateCaptureFormRequest
-	(*CreateCaptureFormResponse)(nil),                           // 709: console.v1.CreateCaptureFormResponse
-	(*ListCaptureFormsRequest)(nil),                             // 710: console.v1.ListCaptureFormsRequest
-	(*ListCaptureFormsResponse)(nil),                            // 711: console.v1.ListCaptureFormsResponse
-	(*GetCaptureFormRequest)(nil),                               // 712: console.v1.GetCaptureFormRequest
-	(*GetCaptureFormResponse)(nil),                              // 713: console.v1.GetCaptureFormResponse
-	(*UpdateCaptureFormRequest)(nil),                            // 714: console.v1.UpdateCaptureFormRequest
-	(*UpdateCaptureFormResponse)(nil),                           // 715: console.v1.UpdateCaptureFormResponse
-	(*PublishCaptureFormRequest)(nil),                           // 716: console.v1.PublishCaptureFormRequest
-	(*PublishCaptureFormResponse)(nil),                          // 717: console.v1.PublishCaptureFormResponse
-	(*RevokeCaptureFormPublicationRequest)(nil),                 // 718: console.v1.RevokeCaptureFormPublicationRequest
-	(*RevokeCaptureFormPublicationResponse)(nil),                // 719: console.v1.RevokeCaptureFormPublicationResponse
-	(*GetPublishedCaptureFormRequest)(nil),                      // 720: console.v1.GetPublishedCaptureFormRequest
-	(*GetPublishedCaptureFormResponse)(nil),                     // 721: console.v1.GetPublishedCaptureFormResponse
-	(*GetPublishedCaptureFormBrandingAssetRequest)(nil),         // 722: console.v1.GetPublishedCaptureFormBrandingAssetRequest
-	(*GetPublishedCaptureFormBrandingAssetResponse)(nil),        // 723: console.v1.GetPublishedCaptureFormBrandingAssetResponse
-	(*SubmitPublishedCaptureFormRequest)(nil),                   // 724: console.v1.SubmitPublishedCaptureFormRequest
-	(*SubmitPublishedCaptureFormResponse)(nil),                  // 725: console.v1.SubmitPublishedCaptureFormResponse
-	(*BeginPublishedCaptureFormUploadRequest)(nil),              // 726: console.v1.BeginPublishedCaptureFormUploadRequest
-	(*BeginPublishedCaptureFormUploadResponse)(nil),             // 727: console.v1.BeginPublishedCaptureFormUploadResponse
-	(*CompletePublishedCaptureFormUploadRequest)(nil),           // 728: console.v1.CompletePublishedCaptureFormUploadRequest
-	(*CompletePublishedCaptureFormUploadResponse)(nil),          // 729: console.v1.CompletePublishedCaptureFormUploadResponse
-	(*GetCaptureFormSubmissionRequest)(nil),                     // 730: console.v1.GetCaptureFormSubmissionRequest
-	(*GetCaptureFormSubmissionResponse)(nil),                    // 731: console.v1.GetCaptureFormSubmissionResponse
-	(*ListCaptureFormSubmissionsRequest)(nil),                   // 732: console.v1.ListCaptureFormSubmissionsRequest
-	(*ListCaptureFormSubmissionsResponse)(nil),                  // 733: console.v1.ListCaptureFormSubmissionsResponse
-	(*ReviewCaptureFormSubmissionRequest)(nil),                  // 734: console.v1.ReviewCaptureFormSubmissionRequest
-	(*ReviewCaptureFormSubmissionResponse)(nil),                 // 735: console.v1.ReviewCaptureFormSubmissionResponse
-	(*GetBusinessObjectTypeRequest)(nil),                        // 736: console.v1.GetBusinessObjectTypeRequest
-	(*GetBusinessObjectTypeResponse)(nil),                       // 737: console.v1.GetBusinessObjectTypeResponse
-	(*InferenceCreditReceipt)(nil),                              // 738: console.v1.InferenceCreditReceipt
-	(*ListInferenceCreditReceiptsRequest)(nil),                  // 739: console.v1.ListInferenceCreditReceiptsRequest
-	(*ListInferenceCreditReceiptsResponse)(nil),                 // 740: console.v1.ListInferenceCreditReceiptsResponse
-	(*InferenceCreditAutoRefill)(nil),                           // 741: console.v1.InferenceCreditAutoRefill
-	(*GetInferenceCreditAutoRefillRequest)(nil),                 // 742: console.v1.GetInferenceCreditAutoRefillRequest
-	(*GetInferenceCreditAutoRefillResponse)(nil),                // 743: console.v1.GetInferenceCreditAutoRefillResponse
-	(*UpdateInferenceCreditAutoRefillRequest)(nil),              // 744: console.v1.UpdateInferenceCreditAutoRefillRequest
-	(*UpdateInferenceCreditAutoRefillResponse)(nil),             // 745: console.v1.UpdateInferenceCreditAutoRefillResponse
-	(*CompleteInferenceCreditAutoRefillRequest)(nil),            // 746: console.v1.CompleteInferenceCreditAutoRefillRequest
-	(*CompleteInferenceCreditAutoRefillResponse)(nil),           // 747: console.v1.CompleteInferenceCreditAutoRefillResponse
-	(*PrepareBusinessObjectAuthorityTransferRequest)(nil),       // 748: console.v1.PrepareBusinessObjectAuthorityTransferRequest
-	(*PrepareBusinessObjectAuthorityTransferResponse)(nil),      // 749: console.v1.PrepareBusinessObjectAuthorityTransferResponse
-	(*FinalizeBusinessObjectAuthorityTransferRequest)(nil),      // 750: console.v1.FinalizeBusinessObjectAuthorityTransferRequest
-	(*FinalizeBusinessObjectAuthorityTransferResponse)(nil),     // 751: console.v1.FinalizeBusinessObjectAuthorityTransferResponse
-	(*BusinessProcessParticipantType)(nil),                      // 752: console.v1.BusinessProcessParticipantType
-	(*BusinessProcessParticipant)(nil),                          // 753: console.v1.BusinessProcessParticipant
-	(*BusinessProcessRequirement)(nil),                          // 754: console.v1.BusinessProcessRequirement
-	(*BusinessProcessTransition)(nil),                           // 755: console.v1.BusinessProcessTransition
-	(*BusinessProcessFollowUp)(nil),                             // 756: console.v1.BusinessProcessFollowUp
-	(*BusinessProcessDefinition)(nil),                           // 757: console.v1.BusinessProcessDefinition
-	(*BusinessProcessReceipt)(nil),                              // 758: console.v1.BusinessProcessReceipt
-	(*BusinessProcess)(nil),                                     // 759: console.v1.BusinessProcess
-	(*DefineBusinessProcessRequest)(nil),                        // 760: console.v1.DefineBusinessProcessRequest
-	(*DefineBusinessProcessResponse)(nil),                       // 761: console.v1.DefineBusinessProcessResponse
-	(*StartBusinessProcessRequest)(nil),                         // 762: console.v1.StartBusinessProcessRequest
-	(*StartBusinessProcessResponse)(nil),                        // 763: console.v1.StartBusinessProcessResponse
-	(*GetBusinessProcessRequest)(nil),                           // 764: console.v1.GetBusinessProcessRequest
-	(*GetBusinessProcessResponse)(nil),                          // 765: console.v1.GetBusinessProcessResponse
-	(*ListBusinessProcessesRequest)(nil),                        // 766: console.v1.ListBusinessProcessesRequest
-	(*ListBusinessProcessesResponse)(nil),                       // 767: console.v1.ListBusinessProcessesResponse
-	(*TransitionBusinessProcessRequest)(nil),                    // 768: console.v1.TransitionBusinessProcessRequest
-	(*TransitionBusinessProcessResponse)(nil),                   // 769: console.v1.TransitionBusinessProcessResponse
-	(*GetBusinessProcessDefinitionRequest)(nil),                 // 770: console.v1.GetBusinessProcessDefinitionRequest
-	(*GetBusinessProcessDefinitionResponse)(nil),                // 771: console.v1.GetBusinessProcessDefinitionResponse
-	(*ListBusinessProcessDefinitionsRequest)(nil),               // 772: console.v1.ListBusinessProcessDefinitionsRequest
-	(*ListBusinessProcessDefinitionsResponse)(nil),              // 773: console.v1.ListBusinessProcessDefinitionsResponse
-	(*OperatingProjectSnapshotFileInput)(nil),                   // 774: console.v1.OperatingProjectSnapshotFileInput
-	(*AcceptOperatingProjectSnapshotRequest)(nil),               // 775: console.v1.AcceptOperatingProjectSnapshotRequest
-	(*AcceptOperatingProjectSnapshotResponse)(nil),              // 776: console.v1.AcceptOperatingProjectSnapshotResponse
-	(*GetOperatingProjectSnapshotRequest)(nil),                  // 777: console.v1.GetOperatingProjectSnapshotRequest
-	(*GetOperatingTaskEnvironmentRequest)(nil),                  // 778: console.v1.GetOperatingTaskEnvironmentRequest
-	(*GetOperatingTaskEnvironmentResponse)(nil),                 // 779: console.v1.GetOperatingTaskEnvironmentResponse
-	(*OperatingTaskEnvironmentStage)(nil),                       // 780: console.v1.OperatingTaskEnvironmentStage
-	(*ImportOperatingProjectSnapshotRequest)(nil),               // 781: console.v1.ImportOperatingProjectSnapshotRequest
-	(*BusinessBlueprint)(nil),                                   // 782: console.v1.BusinessBlueprint
-	(*ListBusinessBlueprintsRequest)(nil),                       // 783: console.v1.ListBusinessBlueprintsRequest
-	(*ListBusinessBlueprintsResponse)(nil),                      // 784: console.v1.ListBusinessBlueprintsResponse
-	(*CloneBusinessBlueprintRequest)(nil),                       // 785: console.v1.CloneBusinessBlueprintRequest
-	(*CloneBusinessBlueprintResponse)(nil),                      // 786: console.v1.CloneBusinessBlueprintResponse
-	(*BusinessBlueprintSource)(nil),                             // 787: console.v1.BusinessBlueprintSource
-	(*CaptureFormInvitation)(nil),                               // 788: console.v1.CaptureFormInvitation
-	(*CreateCaptureFormInvitationRequest)(nil),                  // 789: console.v1.CreateCaptureFormInvitationRequest
-	(*CreateCaptureFormInvitationResponse)(nil),                 // 790: console.v1.CreateCaptureFormInvitationResponse
-	(*RevokeCaptureFormInvitationRequest)(nil),                  // 791: console.v1.RevokeCaptureFormInvitationRequest
-	(*RevokeCaptureFormInvitationResponse)(nil),                 // 792: console.v1.RevokeCaptureFormInvitationResponse
-	(*GetInvitedCaptureFormRequest)(nil),                        // 793: console.v1.GetInvitedCaptureFormRequest
-	(*GetInvitedCaptureFormResponse)(nil),                       // 794: console.v1.GetInvitedCaptureFormResponse
-	(*SubmitInvitedCaptureFormRequest)(nil),                     // 795: console.v1.SubmitInvitedCaptureFormRequest
-	(*SubmitInvitedCaptureFormResponse)(nil),                    // 796: console.v1.SubmitInvitedCaptureFormResponse
-	(*GetStaffManagedInferenceReadinessRequest)(nil),            // 797: console.v1.GetStaffManagedInferenceReadinessRequest
-	(*GetManagedInferenceReadinessRequest)(nil),                 // 798: console.v1.GetManagedInferenceReadinessRequest
-	(*GetManagedInferenceReadinessResponse)(nil),                // 799: console.v1.GetManagedInferenceReadinessResponse
-	(*GetStaffManagedInferenceFundingRequest)(nil),              // 800: console.v1.GetStaffManagedInferenceFundingRequest
-	(*GrantStaffManagedInferenceCreditsRequest)(nil),            // 801: console.v1.GrantStaffManagedInferenceCreditsRequest
-	(*GetStaffManagedInferenceUsageRequest)(nil),                // 802: console.v1.GetStaffManagedInferenceUsageRequest
-	(*GetStaffManagedInferenceBudgetRequest)(nil),               // 803: console.v1.GetStaffManagedInferenceBudgetRequest
-	(*SetStaffManagedInferenceBudgetRequest)(nil),               // 804: console.v1.SetStaffManagedInferenceBudgetRequest
-	(*ListManagedProviderAccessEventsRequest)(nil),              // 805: console.v1.ListManagedProviderAccessEventsRequest
-	(*ManagedProviderAccessEvent)(nil),                          // 806: console.v1.ManagedProviderAccessEvent
-	(*ListManagedProviderAccessEventsResponse)(nil),             // 807: console.v1.ListManagedProviderAccessEventsResponse
-	(*ListStaffManagedInferenceAdminEventsRequest)(nil),         // 808: console.v1.ListStaffManagedInferenceAdminEventsRequest
-	(*ListStaffManagedExecutionGrantEventsRequest)(nil),         // 809: console.v1.ListStaffManagedExecutionGrantEventsRequest
-	(*ManagedExecutionGrantEvent)(nil),                          // 810: console.v1.ManagedExecutionGrantEvent
-	(*ListStaffManagedExecutionGrantEventsResponse)(nil),        // 811: console.v1.ListStaffManagedExecutionGrantEventsResponse
-	(*ListStaffManagedExecutionOutcomesRequest)(nil),            // 812: console.v1.ListStaffManagedExecutionOutcomesRequest
-	(*ManagedExecutionOutcome)(nil),                             // 813: console.v1.ManagedExecutionOutcome
-	(*ListStaffManagedExecutionOutcomesResponse)(nil),           // 814: console.v1.ListStaffManagedExecutionOutcomesResponse
-	(*ProspectingDraftTargetAccount)(nil),                       // 815: console.v1.ProspectingDraftTargetAccount
-	(*ProspectingDraft)(nil),                                    // 816: console.v1.ProspectingDraft
-	(*ProspectingDraftMutationReceipt)(nil),                     // 817: console.v1.ProspectingDraftMutationReceipt
-	(*CreateProspectingDraftRequest)(nil),                       // 818: console.v1.CreateProspectingDraftRequest
-	(*CreateProspectingDraftResponse)(nil),                      // 819: console.v1.CreateProspectingDraftResponse
-	(*ListProspectingDraftsRequest)(nil),                        // 820: console.v1.ListProspectingDraftsRequest
-	(*ListProspectingDraftsResponse)(nil),                       // 821: console.v1.ListProspectingDraftsResponse
-	(*ReviewProspectingDraftRequest)(nil),                       // 822: console.v1.ReviewProspectingDraftRequest
-	(*ReviewProspectingDraftResponse)(nil),                      // 823: console.v1.ReviewProspectingDraftResponse
-	(*WorkspaceBrandVoice)(nil),                                 // 824: console.v1.WorkspaceBrandVoice
-	(*PrepareStaffProductIssueRecoveryRequest)(nil),             // 825: console.v1.PrepareStaffProductIssueRecoveryRequest
-	(*ScanStaffProductIssueRecoveryRequest)(nil),                // 826: console.v1.ScanStaffProductIssueRecoveryRequest
-	(*ReviewStaffProductIssueRecoveryRequest)(nil),              // 827: console.v1.ReviewStaffProductIssueRecoveryRequest
-	(*ExecuteStaffProductIssueRecoveryRequest)(nil),             // 828: console.v1.ExecuteStaffProductIssueRecoveryRequest
-	(*GetProductIssueRecoveryRequest)(nil),                      // 829: console.v1.GetProductIssueRecoveryRequest
-	(*ReplyProductIssueRecoveryRequest)(nil),                    // 830: console.v1.ReplyProductIssueRecoveryRequest
-	(*ProductIssueRecovery)(nil),                                // 831: console.v1.ProductIssueRecovery
-	(*ProductIssueRecoveryResponse)(nil),                        // 832: console.v1.ProductIssueRecoveryResponse
-	(*ListStaffProductIssueRecoveriesRequest)(nil),              // 833: console.v1.ListStaffProductIssueRecoveriesRequest
-	(*ListStaffProductIssueRecoveriesResponse)(nil),             // 834: console.v1.ListStaffProductIssueRecoveriesResponse
-	(*StaffProductIssueRecoverySummary)(nil),                    // 835: console.v1.StaffProductIssueRecoverySummary
-	nil,                                                         // 836: console.v1.OperatingRequiredInitialToolIntent.MetadataEntry
-	nil,                                                         // 837: console.v1.WorkspaceSettingsActivityEntry.DetailsEntry
-	(*CaptureFormTypedValue_OptionValues)(nil),                  // 838: console.v1.CaptureFormTypedValue.OptionValues
-	(*WorkspaceBrandVoice_Scope)(nil),                           // 839: console.v1.WorkspaceBrandVoice.Scope
-	(*timestamppb.Timestamp)(nil),                               // 840: google.protobuf.Timestamp
-	(v1.RiskLevel)(0),                                           // 841: common.v1.RiskLevel
-	(*v11.ToolExecutionProjectSource)(nil),                      // 842: toolexecution.v1.ToolExecutionProjectSource
-	(*v11.ToolExecutionWorkspaceRecipe)(nil),                    // 843: toolexecution.v1.ToolExecutionWorkspaceRecipe
-	(*structpb.Struct)(nil),                                     // 844: google.protobuf.Struct
-	(*v12.VfsUploadTarget)(nil),                                 // 845: vfs.v1.VfsUploadTarget
-	(*v12.VfsCompletedUploadPart)(nil),                          // 846: vfs.v1.VfsCompletedUploadPart
-	(v13.MemoryReviewStatus)(0),                                 // 847: memory.v1.MemoryReviewStatus
-	(v13.Scope)(0),                                              // 848: memory.v1.Scope
-	(v11.ToolExecutionState)(0),                                 // 849: toolexecution.v1.ToolExecutionState
-	(*v11.ToolExecutionAttachmentMount)(nil),                    // 850: toolexecution.v1.ToolExecutionAttachmentMount
-	(*v14.RuntimeWorkEnvelope)(nil),                             // 851: agentruntime.v1.RuntimeWorkEnvelope
-	(*v15.RunnerSessionOwnerBinding)(nil),                       // 852: remoterunner.v1.RunnerSessionOwnerBinding
-	(v16.OrbObservedLifecycle)(0),                               // 853: orbcontrol.v1.OrbObservedLifecycle
-	(v16.OrbCommandKind)(0),                                     // 854: orbcontrol.v1.OrbCommandKind
-	(*v17.ConnectorCatalogProvenance)(nil),                      // 855: connectors.v1.ConnectorCatalogProvenance
-	(*v18.TraceAnnotation)(nil),                                 // 856: traces.v1.TraceAnnotation
-	(*v17.SourceAuthorityObservation)(nil),                      // 857: connectors.v1.SourceAuthorityObservation
-	(*v19.RecordRef)(nil),                                       // 858: platform.v1.RecordRef
-	(*v17.ProviderResourceEnvelope)(nil),                        // 859: connectors.v1.ProviderResourceEnvelope
-	(*v110.GetBudgetDashboardResponse)(nil),                     // 860: meter.v1.GetBudgetDashboardResponse
-	(*v110.GetPrepaidCreditBalanceRequest)(nil),                 // 861: meter.v1.GetPrepaidCreditBalanceRequest
-	(*v110.GrantDevelopmentCreditsRequest)(nil),                 // 862: meter.v1.GrantDevelopmentCreditsRequest
-	(*v110.QueryUsageRequest)(nil),                              // 863: meter.v1.QueryUsageRequest
-	(*v110.GetBudgetDashboardRequest)(nil),                      // 864: meter.v1.GetBudgetDashboardRequest
-	(*v110.SetBudgetRequest)(nil),                               // 865: meter.v1.SetBudgetRequest
-	(*v110.ListManagedInferenceAdminEventsRequest)(nil),         // 866: meter.v1.ListManagedInferenceAdminEventsRequest
-	(*v110.GetPrepaidCreditBalanceResponse)(nil),                // 867: meter.v1.GetPrepaidCreditBalanceResponse
-	(*v110.GrantDevelopmentCreditsResponse)(nil),                // 868: meter.v1.GrantDevelopmentCreditsResponse
-	(*v110.QueryUsageResponse)(nil),                             // 869: meter.v1.QueryUsageResponse
-	(*v110.SetBudgetResponse)(nil),                              // 870: meter.v1.SetBudgetResponse
-	(*v110.ListManagedInferenceAdminEventsResponse)(nil),        // 871: meter.v1.ListManagedInferenceAdminEventsResponse
+	(ComplianceFindingStatus)(0),                                // 108: console.v1.ComplianceFindingStatus
+	(*GetWorkspaceKeyConfigRequest)(nil),                        // 109: console.v1.GetWorkspaceKeyConfigRequest
+	(*PutWorkspaceKeyConfigRequest)(nil),                        // 110: console.v1.PutWorkspaceKeyConfigRequest
+	(*DeleteWorkspaceKeyConfigRequest)(nil),                     // 111: console.v1.DeleteWorkspaceKeyConfigRequest
+	(*WorkspaceKeyConfigResponse)(nil),                          // 112: console.v1.WorkspaceKeyConfigResponse
+	(*TimeRange)(nil),                                           // 113: console.v1.TimeRange
+	(*ConsoleQuery)(nil),                                        // 114: console.v1.ConsoleQuery
+	(*OperatingCapabilityState)(nil),                            // 115: console.v1.OperatingCapabilityState
+	(*OperatingTurnRoute)(nil),                                  // 116: console.v1.OperatingTurnRoute
+	(*OperatingChannel)(nil),                                    // 117: console.v1.OperatingChannel
+	(*OperatingThreadFork)(nil),                                 // 118: console.v1.OperatingThreadFork
+	(*OperatingSurfaceMetadata)(nil),                            // 119: console.v1.OperatingSurfaceMetadata
+	(*OperatingModelSelection)(nil),                             // 120: console.v1.OperatingModelSelection
+	(*OperatingMessage)(nil),                                    // 121: console.v1.OperatingMessage
+	(*OperatingToolEvent)(nil),                                  // 122: console.v1.OperatingToolEvent
+	(*OperatingTurnRecord)(nil),                                 // 123: console.v1.OperatingTurnRecord
+	(*OperatingCustomerOutcomeIdentity)(nil),                    // 124: console.v1.OperatingCustomerOutcomeIdentity
+	(*OperatingExecutionIdentity)(nil),                          // 125: console.v1.OperatingExecutionIdentity
+	(*OperatingThreadExecution)(nil),                            // 126: console.v1.OperatingThreadExecution
+	(*OperatingThreadTurn)(nil),                                 // 127: console.v1.OperatingThreadTurn
+	(*OperatingThreadEvent)(nil),                                // 128: console.v1.OperatingThreadEvent
+	(*OperatingThreadResponse)(nil),                             // 129: console.v1.OperatingThreadResponse
+	(*OperatingAttachmentRef)(nil),                              // 130: console.v1.OperatingAttachmentRef
+	(*OperatingReceipt)(nil),                                    // 131: console.v1.OperatingReceipt
+	(*OperatingReceiptAction)(nil),                              // 132: console.v1.OperatingReceiptAction
+	(*ListOperatingChannelsRequest)(nil),                        // 133: console.v1.ListOperatingChannelsRequest
+	(*ListOperatingChannelsResponse)(nil),                       // 134: console.v1.ListOperatingChannelsResponse
+	(*ArchiveOperatingThreadRequest)(nil),                       // 135: console.v1.ArchiveOperatingThreadRequest
+	(*ArchiveOperatingThreadResponse)(nil),                      // 136: console.v1.ArchiveOperatingThreadResponse
+	(*ForkOperatingThreadRequest)(nil),                          // 137: console.v1.ForkOperatingThreadRequest
+	(*ForkOperatingThreadResponse)(nil),                         // 138: console.v1.ForkOperatingThreadResponse
+	(*RenameOperatingThreadRequest)(nil),                        // 139: console.v1.RenameOperatingThreadRequest
+	(*RenameOperatingThreadResponse)(nil),                       // 140: console.v1.RenameOperatingThreadResponse
+	(*GetOperatingThreadRequest)(nil),                           // 141: console.v1.GetOperatingThreadRequest
+	(*GetOperatingThreadResponse)(nil),                          // 142: console.v1.GetOperatingThreadResponse
+	(*RespondOperatingThreadRequest)(nil),                       // 143: console.v1.RespondOperatingThreadRequest
+	(*RespondOperatingThreadResponse)(nil),                      // 144: console.v1.RespondOperatingThreadResponse
+	(*InterruptOperatingThreadRequest)(nil),                     // 145: console.v1.InterruptOperatingThreadRequest
+	(*InterruptOperatingThreadResponse)(nil),                    // 146: console.v1.InterruptOperatingThreadResponse
+	(*ListOperatingThreadEventsRequest)(nil),                    // 147: console.v1.ListOperatingThreadEventsRequest
+	(*ListOperatingThreadEventsResponse)(nil),                   // 148: console.v1.ListOperatingThreadEventsResponse
+	(*WatchOperatingThreadRequest)(nil),                         // 149: console.v1.WatchOperatingThreadRequest
+	(*WatchOperatingThreadResponse)(nil),                        // 150: console.v1.WatchOperatingThreadResponse
+	(*CodingAcceptanceContract)(nil),                            // 151: console.v1.CodingAcceptanceContract
+	(*SubmitOperatingMessageRequest)(nil),                       // 152: console.v1.SubmitOperatingMessageRequest
+	(*BeginOperatingAttachmentUploadRequest)(nil),               // 153: console.v1.BeginOperatingAttachmentUploadRequest
+	(*BeginOperatingAttachmentUploadResponse)(nil),              // 154: console.v1.BeginOperatingAttachmentUploadResponse
+	(*CompleteOperatingAttachmentUploadRequest)(nil),            // 155: console.v1.CompleteOperatingAttachmentUploadRequest
+	(*CompleteOperatingAttachmentUploadResponse)(nil),           // 156: console.v1.CompleteOperatingAttachmentUploadResponse
+	(*ListOperatingAttachmentsRequest)(nil),                     // 157: console.v1.ListOperatingAttachmentsRequest
+	(*ListOperatingAttachmentsResponse)(nil),                    // 158: console.v1.ListOperatingAttachmentsResponse
+	(*SubmitOperatingMessageResponse)(nil),                      // 159: console.v1.SubmitOperatingMessageResponse
+	(*DexComputerCorrectionEpisode)(nil),                        // 160: console.v1.DexComputerCorrectionEpisode
+	(*OperatingCorrectionCandidate)(nil),                        // 161: console.v1.OperatingCorrectionCandidate
+	(*SubmitOperatingCorrectionRequest)(nil),                    // 162: console.v1.SubmitOperatingCorrectionRequest
+	(*SubmitOperatingCorrectionResponse)(nil),                   // 163: console.v1.SubmitOperatingCorrectionResponse
+	(*OperatingFeedback)(nil),                                   // 164: console.v1.OperatingFeedback
+	(*SubmitOperatingFeedbackRequest)(nil),                      // 165: console.v1.SubmitOperatingFeedbackRequest
+	(*SubmitOperatingFeedbackResponse)(nil),                     // 166: console.v1.SubmitOperatingFeedbackResponse
+	(*ProductIssueReport)(nil),                                  // 167: console.v1.ProductIssueReport
+	(*SubmitProductIssueReportRequest)(nil),                     // 168: console.v1.SubmitProductIssueReportRequest
+	(*SubmitNativeProductIssueReportRequest)(nil),               // 169: console.v1.SubmitNativeProductIssueReportRequest
+	(*ProductIssueReportContext)(nil),                           // 170: console.v1.ProductIssueReportContext
+	(*ProductIssueReportEvidence)(nil),                          // 171: console.v1.ProductIssueReportEvidence
+	(*SubmitProductIssueReportResponse)(nil),                    // 172: console.v1.SubmitProductIssueReportResponse
+	(*StaffProductIssueReport)(nil),                             // 173: console.v1.StaffProductIssueReport
+	(*ListStaffProductIssueReportsRequest)(nil),                 // 174: console.v1.ListStaffProductIssueReportsRequest
+	(*ListStaffProductIssueReportsResponse)(nil),                // 175: console.v1.ListStaffProductIssueReportsResponse
+	(*EngageStaffProductIssueReportRequest)(nil),                // 176: console.v1.EngageStaffProductIssueReportRequest
+	(*EngageStaffProductIssueReportResponse)(nil),               // 177: console.v1.EngageStaffProductIssueReportResponse
+	(*GetOperatingFeedbackRequest)(nil),                         // 178: console.v1.GetOperatingFeedbackRequest
+	(*GetOperatingFeedbackResponse)(nil),                        // 179: console.v1.GetOperatingFeedbackResponse
+	(*ResolveOperatingFeedbackRemediationRequest)(nil),          // 180: console.v1.ResolveOperatingFeedbackRemediationRequest
+	(*ResolveOperatingFeedbackRemediationResponse)(nil),         // 181: console.v1.ResolveOperatingFeedbackRemediationResponse
+	(*CustomerIntelligenceEvidenceRef)(nil),                     // 182: console.v1.CustomerIntelligenceEvidenceRef
+	(*CustomerIntelligenceFactRevision)(nil),                    // 183: console.v1.CustomerIntelligenceFactRevision
+	(*CustomerIntelligenceFact)(nil),                            // 184: console.v1.CustomerIntelligenceFact
+	(*CustomerIntelligenceReceipt)(nil),                         // 185: console.v1.CustomerIntelligenceReceipt
+	(*ListCustomerIntelligenceFactsRequest)(nil),                // 186: console.v1.ListCustomerIntelligenceFactsRequest
+	(*ListCustomerIntelligenceFactsResponse)(nil),               // 187: console.v1.ListCustomerIntelligenceFactsResponse
+	(*GetCustomerIntelligenceFactRequest)(nil),                  // 188: console.v1.GetCustomerIntelligenceFactRequest
+	(*GetCustomerIntelligenceFactResponse)(nil),                 // 189: console.v1.GetCustomerIntelligenceFactResponse
+	(*ReviewCustomerIntelligenceFactRequest)(nil),               // 190: console.v1.ReviewCustomerIntelligenceFactRequest
+	(*ReviewCustomerIntelligenceFactResponse)(nil),              // 191: console.v1.ReviewCustomerIntelligenceFactResponse
+	(*ProposeCustomerIntelligenceFactRequest)(nil),              // 192: console.v1.ProposeCustomerIntelligenceFactRequest
+	(*ProposeCustomerIntelligenceFactResponse)(nil),             // 193: console.v1.ProposeCustomerIntelligenceFactResponse
+	(*RespondToCustomerFactConfirmationRequest)(nil),            // 194: console.v1.RespondToCustomerFactConfirmationRequest
+	(*RespondToCustomerFactConfirmationResponse)(nil),           // 195: console.v1.RespondToCustomerFactConfirmationResponse
+	(*AggregateCustomerIntelligencePatternsRequest)(nil),        // 196: console.v1.AggregateCustomerIntelligencePatternsRequest
+	(*CustomerIntelligencePattern)(nil),                         // 197: console.v1.CustomerIntelligencePattern
+	(*AggregateCustomerIntelligencePatternsResponse)(nil),       // 198: console.v1.AggregateCustomerIntelligencePatternsResponse
+	(*ListOperatingCorrectionsRequest)(nil),                     // 199: console.v1.ListOperatingCorrectionsRequest
+	(*ListOperatingCorrectionsResponse)(nil),                    // 200: console.v1.ListOperatingCorrectionsResponse
+	(*ReviewOperatingCorrectionRequest)(nil),                    // 201: console.v1.ReviewOperatingCorrectionRequest
+	(*ReviewOperatingCorrectionResponse)(nil),                   // 202: console.v1.ReviewOperatingCorrectionResponse
+	(*ListWorkspaceMemoriesRequest)(nil),                        // 203: console.v1.ListWorkspaceMemoriesRequest
+	(*ListWorkspaceMemoriesResponse)(nil),                       // 204: console.v1.ListWorkspaceMemoriesResponse
+	(*WorkspaceMemory)(nil),                                     // 205: console.v1.WorkspaceMemory
+	(*CorrectWorkspaceMemoryRequest)(nil),                       // 206: console.v1.CorrectWorkspaceMemoryRequest
+	(*CorrectWorkspaceMemoryResponse)(nil),                      // 207: console.v1.CorrectWorkspaceMemoryResponse
+	(*ReviewWorkspaceMemoryRequest)(nil),                        // 208: console.v1.ReviewWorkspaceMemoryRequest
+	(*ReviewWorkspaceMemoryResponse)(nil),                       // 209: console.v1.ReviewWorkspaceMemoryResponse
+	(*ForgetWorkspaceMemoryRequest)(nil),                        // 210: console.v1.ForgetWorkspaceMemoryRequest
+	(*ForgetWorkspaceMemoryResponse)(nil),                       // 211: console.v1.ForgetWorkspaceMemoryResponse
+	(*OperatingHistorySearchFilter)(nil),                        // 212: console.v1.OperatingHistorySearchFilter
+	(*SearchOperatingHistoryRequest)(nil),                       // 213: console.v1.SearchOperatingHistoryRequest
+	(*OperatingHistorySearchResult)(nil),                        // 214: console.v1.OperatingHistorySearchResult
+	(*SearchOperatingHistoryResponse)(nil),                      // 215: console.v1.SearchOperatingHistoryResponse
+	(*GetOperatingHistoryContextRequest)(nil),                   // 216: console.v1.GetOperatingHistoryContextRequest
+	(*OperatingHistoryContextRecord)(nil),                       // 217: console.v1.OperatingHistoryContextRecord
+	(*GetOperatingHistoryContextResponse)(nil),                  // 218: console.v1.GetOperatingHistoryContextResponse
+	(*OperatingCapabilityContract)(nil),                         // 219: console.v1.OperatingCapabilityContract
+	(*IdentityToolAuthorizationEvidence)(nil),                   // 220: console.v1.IdentityToolAuthorizationEvidence
+	(*OperatingExecutionProfile)(nil),                           // 221: console.v1.OperatingExecutionProfile
+	(*OperatingHostedFrontDecision)(nil),                        // 222: console.v1.OperatingHostedFrontDecision
+	(*OperatingInitialActionResult)(nil),                        // 223: console.v1.OperatingInitialActionResult
+	(*OperatingManagedInferenceProviderCandidate)(nil),          // 224: console.v1.OperatingManagedInferenceProviderCandidate
+	(*OperatingManagedInferenceOutputTokenBudget)(nil),          // 225: console.v1.OperatingManagedInferenceOutputTokenBudget
+	(*OperatingManagedInferenceScope)(nil),                      // 226: console.v1.OperatingManagedInferenceScope
+	(*OperatingRunDispatch)(nil),                                // 227: console.v1.OperatingRunDispatch
+	(*OperatingTaskEnvironmentBinding)(nil),                     // 228: console.v1.OperatingTaskEnvironmentBinding
+	(*OperatingRequiredInitialToolIntent)(nil),                  // 229: console.v1.OperatingRequiredInitialToolIntent
+	(*ResolveOperatingReceiptActionRequest)(nil),                // 230: console.v1.ResolveOperatingReceiptActionRequest
+	(*ResolveOperatingReceiptActionResponse)(nil),               // 231: console.v1.ResolveOperatingReceiptActionResponse
+	(*GetOperatingReceiptRequest)(nil),                          // 232: console.v1.GetOperatingReceiptRequest
+	(*OperatingCodingAcceptance)(nil),                           // 233: console.v1.OperatingCodingAcceptance
+	(*OperatingCodingOutput)(nil),                               // 234: console.v1.OperatingCodingOutput
+	(*GetOperatingReceiptResponse)(nil),                         // 235: console.v1.GetOperatingReceiptResponse
+	(*ComputerMissionEvidenceGate)(nil),                         // 236: console.v1.ComputerMissionEvidenceGate
+	(*ComputerMissionRollbackArgumentBinding)(nil),              // 237: console.v1.ComputerMissionRollbackArgumentBinding
+	(*ComputerMissionCompensatingAction)(nil),                   // 238: console.v1.ComputerMissionCompensatingAction
+	(*ComputerMissionCanaryThreshold)(nil),                      // 239: console.v1.ComputerMissionCanaryThreshold
+	(*ComputerMissionCanaryDefinition)(nil),                     // 240: console.v1.ComputerMissionCanaryDefinition
+	(*ComputerMissionCanaryOperatorAction)(nil),                 // 241: console.v1.ComputerMissionCanaryOperatorAction
+	(*ComputerMissionBudget)(nil),                               // 242: console.v1.ComputerMissionBudget
+	(*ComputerMissionCapability)(nil),                           // 243: console.v1.ComputerMissionCapability
+	(*ComputerMissionApexRunnerBinding)(nil),                    // 244: console.v1.ComputerMissionApexRunnerBinding
+	(*ComputerMissionScope)(nil),                                // 245: console.v1.ComputerMissionScope
+	(*ComputerMissionAuthorityGrant)(nil),                       // 246: console.v1.ComputerMissionAuthorityGrant
+	(*ComputerMissionDecision)(nil),                             // 247: console.v1.ComputerMissionDecision
+	(*ComputerMissionContract)(nil),                             // 248: console.v1.ComputerMissionContract
+	(*ComputerMission)(nil),                                     // 249: console.v1.ComputerMission
+	(*ComputerMissionLongHorizonBudgetState)(nil),               // 250: console.v1.ComputerMissionLongHorizonBudgetState
+	(*SubmitComputerMissionRequest)(nil),                        // 251: console.v1.SubmitComputerMissionRequest
+	(*SubmitComputerMissionResponse)(nil),                       // 252: console.v1.SubmitComputerMissionResponse
+	(*GetComputerMissionRequest)(nil),                           // 253: console.v1.GetComputerMissionRequest
+	(*GetComputerMissionResponse)(nil),                          // 254: console.v1.GetComputerMissionResponse
+	(*CancelComputerMissionRequest)(nil),                        // 255: console.v1.CancelComputerMissionRequest
+	(*CancelComputerMissionResponse)(nil),                       // 256: console.v1.CancelComputerMissionResponse
+	(*ContinueComputerMissionRequest)(nil),                      // 257: console.v1.ContinueComputerMissionRequest
+	(*ContinueComputerMissionResponse)(nil),                     // 258: console.v1.ContinueComputerMissionResponse
+	(*PauseComputerMissionRequest)(nil),                         // 259: console.v1.PauseComputerMissionRequest
+	(*PauseComputerMissionResponse)(nil),                        // 260: console.v1.PauseComputerMissionResponse
+	(*ResumeComputerMissionRequest)(nil),                        // 261: console.v1.ResumeComputerMissionRequest
+	(*ResumeComputerMissionResponse)(nil),                       // 262: console.v1.ResumeComputerMissionResponse
+	(*WakeComputerMissionRequest)(nil),                          // 263: console.v1.WakeComputerMissionRequest
+	(*WakeComputerMissionResponse)(nil),                         // 264: console.v1.WakeComputerMissionResponse
+	(*GuideComputerMissionRequest)(nil),                         // 265: console.v1.GuideComputerMissionRequest
+	(*GuideComputerMissionResponse)(nil),                        // 266: console.v1.GuideComputerMissionResponse
+	(*ComputerMissionCanaryRun)(nil),                            // 267: console.v1.ComputerMissionCanaryRun
+	(*ComputerMissionCanaryEffect)(nil),                         // 268: console.v1.ComputerMissionCanaryEffect
+	(*ComputerMissionCanaryDimensionResult)(nil),                // 269: console.v1.ComputerMissionCanaryDimensionResult
+	(*ComputerMissionCanaryHardGateResult)(nil),                 // 270: console.v1.ComputerMissionCanaryHardGateResult
+	(*ComputerMissionCanaryEvaluation)(nil),                     // 271: console.v1.ComputerMissionCanaryEvaluation
+	(*ListComputerMissionCanaryDefinitionsRequest)(nil),         // 272: console.v1.ListComputerMissionCanaryDefinitionsRequest
+	(*ListComputerMissionCanaryDefinitionsResponse)(nil),        // 273: console.v1.ListComputerMissionCanaryDefinitionsResponse
+	(*StartComputerMissionCanaryRunRequest)(nil),                // 274: console.v1.StartComputerMissionCanaryRunRequest
+	(*StartComputerMissionCanaryRunResponse)(nil),               // 275: console.v1.StartComputerMissionCanaryRunResponse
+	(*GetComputerMissionCanaryRunRequest)(nil),                  // 276: console.v1.GetComputerMissionCanaryRunRequest
+	(*GetComputerMissionCanaryRunResponse)(nil),                 // 277: console.v1.GetComputerMissionCanaryRunResponse
+	(*ListComputerMissionCanaryRunsRequest)(nil),                // 278: console.v1.ListComputerMissionCanaryRunsRequest
+	(*ListComputerMissionCanaryRunsResponse)(nil),               // 279: console.v1.ListComputerMissionCanaryRunsResponse
+	(*GetComputerMissionCanaryEvidenceRequest)(nil),             // 280: console.v1.GetComputerMissionCanaryEvidenceRequest
+	(*GetComputerMissionCanaryEvidenceResponse)(nil),            // 281: console.v1.GetComputerMissionCanaryEvidenceResponse
+	(*OperateComputerMissionCanaryRunRequest)(nil),              // 282: console.v1.OperateComputerMissionCanaryRunRequest
+	(*OperateComputerMissionCanaryRunResponse)(nil),             // 283: console.v1.OperateComputerMissionCanaryRunResponse
+	(*MissionScheduleTemplate)(nil),                             // 284: console.v1.MissionScheduleTemplate
+	(*MissionSchedule)(nil),                                     // 285: console.v1.MissionSchedule
+	(*CreateMissionScheduleRequest)(nil),                        // 286: console.v1.CreateMissionScheduleRequest
+	(*CreateMissionScheduleResponse)(nil),                       // 287: console.v1.CreateMissionScheduleResponse
+	(*UpdateMissionScheduleRequest)(nil),                        // 288: console.v1.UpdateMissionScheduleRequest
+	(*UpdateMissionScheduleResponse)(nil),                       // 289: console.v1.UpdateMissionScheduleResponse
+	(*SetMissionScheduleEnabledRequest)(nil),                    // 290: console.v1.SetMissionScheduleEnabledRequest
+	(*SetMissionScheduleEnabledResponse)(nil),                   // 291: console.v1.SetMissionScheduleEnabledResponse
+	(*ListMissionSchedulesRequest)(nil),                         // 292: console.v1.ListMissionSchedulesRequest
+	(*ListMissionSchedulesResponse)(nil),                        // 293: console.v1.ListMissionSchedulesResponse
+	(*ConnectorTrigger)(nil),                                    // 294: console.v1.ConnectorTrigger
+	(*CreateConnectorTriggerRequest)(nil),                       // 295: console.v1.CreateConnectorTriggerRequest
+	(*CreateConnectorTriggerResponse)(nil),                      // 296: console.v1.CreateConnectorTriggerResponse
+	(*UpdateConnectorTriggerRequest)(nil),                       // 297: console.v1.UpdateConnectorTriggerRequest
+	(*UpdateConnectorTriggerResponse)(nil),                      // 298: console.v1.UpdateConnectorTriggerResponse
+	(*ListConnectorTriggersRequest)(nil),                        // 299: console.v1.ListConnectorTriggersRequest
+	(*ListConnectorTriggersResponse)(nil),                       // 300: console.v1.ListConnectorTriggersResponse
+	(*DeleteConnectorTriggerRequest)(nil),                       // 301: console.v1.DeleteConnectorTriggerRequest
+	(*DeleteConnectorTriggerResponse)(nil),                      // 302: console.v1.DeleteConnectorTriggerResponse
+	(*SetConnectorTriggerEnabledRequest)(nil),                   // 303: console.v1.SetConnectorTriggerEnabledRequest
+	(*SetConnectorTriggerEnabledResponse)(nil),                  // 304: console.v1.SetConnectorTriggerEnabledResponse
+	(*ComputerMissionApexSessionReservation)(nil),               // 305: console.v1.ComputerMissionApexSessionReservation
+	(*ReserveComputerMissionApexSessionRequest)(nil),            // 306: console.v1.ReserveComputerMissionApexSessionRequest
+	(*ReserveComputerMissionApexSessionResponse)(nil),           // 307: console.v1.ReserveComputerMissionApexSessionResponse
+	(*BindComputerMissionApexSessionReservationRequest)(nil),    // 308: console.v1.BindComputerMissionApexSessionReservationRequest
+	(*BindComputerMissionApexSessionReservationResponse)(nil),   // 309: console.v1.BindComputerMissionApexSessionReservationResponse
+	(*ComputerMissionApexInstructionMetadata)(nil),              // 310: console.v1.ComputerMissionApexInstructionMetadata
+	(*BindComputerMissionApexInstructionMetadataRequest)(nil),   // 311: console.v1.BindComputerMissionApexInstructionMetadataRequest
+	(*BindComputerMissionApexInstructionMetadataResponse)(nil),  // 312: console.v1.BindComputerMissionApexInstructionMetadataResponse
+	(*AuthorizeComputerMissionApexSessionAdoptionRequest)(nil),  // 313: console.v1.AuthorizeComputerMissionApexSessionAdoptionRequest
+	(*AuthorizeComputerMissionApexSessionAdoptionResponse)(nil), // 314: console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse
+	(*GetOverviewRequest)(nil),                                  // 315: console.v1.GetOverviewRequest
+	(*GetOverviewResponse)(nil),                                 // 316: console.v1.GetOverviewResponse
+	(*GetConsoleBootSnapshotRequest)(nil),                       // 317: console.v1.GetConsoleBootSnapshotRequest
+	(*ConsoleSnapshotFreshness)(nil),                            // 318: console.v1.ConsoleSnapshotFreshness
+	(*GetConsoleBootSnapshotResponse)(nil),                      // 319: console.v1.GetConsoleBootSnapshotResponse
+	(*ListAssetsRequest)(nil),                                   // 320: console.v1.ListAssetsRequest
+	(*ListAssetsResponse)(nil),                                  // 321: console.v1.ListAssetsResponse
+	(*GetAssetRequest)(nil),                                     // 322: console.v1.GetAssetRequest
+	(*GetAssetResponse)(nil),                                    // 323: console.v1.GetAssetResponse
+	(*ListActivityRequest)(nil),                                 // 324: console.v1.ListActivityRequest
+	(*ListActivityResponse)(nil),                                // 325: console.v1.ListActivityResponse
+	(*ListEvalResultsRequest)(nil),                              // 326: console.v1.ListEvalResultsRequest
+	(*ListEvalResultsResponse)(nil),                             // 327: console.v1.ListEvalResultsResponse
+	(*ListCostUsageRequest)(nil),                                // 328: console.v1.ListCostUsageRequest
+	(*ListCostUsageResponse)(nil),                               // 329: console.v1.ListCostUsageResponse
+	(*CostUsageRunSummary)(nil),                                 // 330: console.v1.CostUsageRunSummary
+	(*RecordProviderCostSnapshotRequest)(nil),                   // 331: console.v1.RecordProviderCostSnapshotRequest
+	(*RecordProviderCostSnapshotResponse)(nil),                  // 332: console.v1.RecordProviderCostSnapshotResponse
+	(*ListAuthorityPostureRequest)(nil),                         // 333: console.v1.ListAuthorityPostureRequest
+	(*ListAuthorityPostureResponse)(nil),                        // 334: console.v1.ListAuthorityPostureResponse
+	(*ListAgentWorkforceRecordsRequest)(nil),                    // 335: console.v1.ListAgentWorkforceRecordsRequest
+	(*ListAgentWorkforceRecordsResponse)(nil),                   // 336: console.v1.ListAgentWorkforceRecordsResponse
+	(*OrbControlTarget)(nil),                                    // 337: console.v1.OrbControlTarget
+	(*ListOrbControlTargetsRequest)(nil),                        // 338: console.v1.ListOrbControlTargetsRequest
+	(*ListOrbControlTargetsResponse)(nil),                       // 339: console.v1.ListOrbControlTargetsResponse
+	(*GetOrbControlTargetRequest)(nil),                          // 340: console.v1.GetOrbControlTargetRequest
+	(*GetOrbControlTargetResponse)(nil),                         // 341: console.v1.GetOrbControlTargetResponse
+	(*SubmitOrbControlActionRequest)(nil),                       // 342: console.v1.SubmitOrbControlActionRequest
+	(*SubmitOrbControlActionResponse)(nil),                      // 343: console.v1.SubmitOrbControlActionResponse
+	(*SubmitAgentWorkforceEvidenceRequest)(nil),                 // 344: console.v1.SubmitAgentWorkforceEvidenceRequest
+	(*SubmitAgentWorkforceEvidenceResponse)(nil),                // 345: console.v1.SubmitAgentWorkforceEvidenceResponse
+	(*AgentWorkforceSubmittedEvidence)(nil),                     // 346: console.v1.AgentWorkforceSubmittedEvidence
+	(*ListFindingsRequest)(nil),                                 // 347: console.v1.ListFindingsRequest
+	(*ListFindingsResponse)(nil),                                // 348: console.v1.ListFindingsResponse
+	(*GetTraceDrilldownRequest)(nil),                            // 349: console.v1.GetTraceDrilldownRequest
+	(*GetTraceDrilldownResponse)(nil),                           // 350: console.v1.GetTraceDrilldownResponse
+	(*ListIntegrationTilesRequest)(nil),                         // 351: console.v1.ListIntegrationTilesRequest
+	(*ListIntegrationTilesResponse)(nil),                        // 352: console.v1.ListIntegrationTilesResponse
+	(*ListPinnedSourcesRequest)(nil),                            // 353: console.v1.ListPinnedSourcesRequest
+	(*ListPinnedSourcesResponse)(nil),                           // 354: console.v1.ListPinnedSourcesResponse
+	(*PinnedSource)(nil),                                        // 355: console.v1.PinnedSource
+	(*SetPinnedSourceRequest)(nil),                              // 356: console.v1.SetPinnedSourceRequest
+	(*SetPinnedSourceResponse)(nil),                             // 357: console.v1.SetPinnedSourceResponse
+	(*UnpinSourceRequest)(nil),                                  // 358: console.v1.UnpinSourceRequest
+	(*UnpinSourceResponse)(nil),                                 // 359: console.v1.UnpinSourceResponse
+	(*GetOnboardingPlanRequest)(nil),                            // 360: console.v1.GetOnboardingPlanRequest
+	(*GetOnboardingPlanResponse)(nil),                           // 361: console.v1.GetOnboardingPlanResponse
+	(*GetWorkspaceSettingsRequest)(nil),                         // 362: console.v1.GetWorkspaceSettingsRequest
+	(*GetWorkspaceSettingsResponse)(nil),                        // 363: console.v1.GetWorkspaceSettingsResponse
+	(*TaskEnvironmentProjectOption)(nil),                        // 364: console.v1.TaskEnvironmentProjectOption
+	(*GetBillingSubscriptionRequest)(nil),                       // 365: console.v1.GetBillingSubscriptionRequest
+	(*GetBillingSubscriptionResponse)(nil),                      // 366: console.v1.GetBillingSubscriptionResponse
+	(*CreateBillingPortalSessionRequest)(nil),                   // 367: console.v1.CreateBillingPortalSessionRequest
+	(*CreateBillingPortalSessionResponse)(nil),                  // 368: console.v1.CreateBillingPortalSessionResponse
+	(*CreateBillingCheckoutSessionRequest)(nil),                 // 369: console.v1.CreateBillingCheckoutSessionRequest
+	(*CreateBillingCheckoutSessionResponse)(nil),                // 370: console.v1.CreateBillingCheckoutSessionResponse
+	(*UpdateWorkspaceProfileRequest)(nil),                       // 371: console.v1.UpdateWorkspaceProfileRequest
+	(*UpdateWorkspaceProfileResponse)(nil),                      // 372: console.v1.UpdateWorkspaceProfileResponse
+	(*OperatorModelPreference)(nil),                             // 373: console.v1.OperatorModelPreference
+	(*OperatorModelPreferenceUpdate)(nil),                       // 374: console.v1.OperatorModelPreferenceUpdate
+	(*OperatorPreferences)(nil),                                 // 375: console.v1.OperatorPreferences
+	(*GetOperatorPreferencesRequest)(nil),                       // 376: console.v1.GetOperatorPreferencesRequest
+	(*GetOperatorPreferencesResponse)(nil),                      // 377: console.v1.GetOperatorPreferencesResponse
+	(*UpdateOperatorPreferencesRequest)(nil),                    // 378: console.v1.UpdateOperatorPreferencesRequest
+	(*UpdateOperatorPreferencesResponse)(nil),                   // 379: console.v1.UpdateOperatorPreferencesResponse
+	(*WorkspaceGuardrailRule)(nil),                              // 380: console.v1.WorkspaceGuardrailRule
+	(*ListWorkspaceGuardrailRulesRequest)(nil),                  // 381: console.v1.ListWorkspaceGuardrailRulesRequest
+	(*ListWorkspaceGuardrailRulesResponse)(nil),                 // 382: console.v1.ListWorkspaceGuardrailRulesResponse
+	(*UpsertWorkspaceGuardrailRuleRequest)(nil),                 // 383: console.v1.UpsertWorkspaceGuardrailRuleRequest
+	(*RemoveWorkspaceGuardrailRuleRequest)(nil),                 // 384: console.v1.RemoveWorkspaceGuardrailRuleRequest
+	(*ConnectorProfile)(nil),                                    // 385: console.v1.ConnectorProfile
+	(*ConnectorProfileScopeSet)(nil),                            // 386: console.v1.ConnectorProfileScopeSet
+	(*CreateConnectorProfileRequest)(nil),                       // 387: console.v1.CreateConnectorProfileRequest
+	(*CreateConnectorProfileResponse)(nil),                      // 388: console.v1.CreateConnectorProfileResponse
+	(*ListConnectorProfilesRequest)(nil),                        // 389: console.v1.ListConnectorProfilesRequest
+	(*ListConnectorProfilesResponse)(nil),                       // 390: console.v1.ListConnectorProfilesResponse
+	(*UpdateConnectorProfileRequest)(nil),                       // 391: console.v1.UpdateConnectorProfileRequest
+	(*UpdateConnectorProfileResponse)(nil),                      // 392: console.v1.UpdateConnectorProfileResponse
+	(*DeleteConnectorProfileRequest)(nil),                       // 393: console.v1.DeleteConnectorProfileRequest
+	(*DeleteConnectorProfileResponse)(nil),                      // 394: console.v1.DeleteConnectorProfileResponse
+	(*ArchiveWorkspaceRequest)(nil),                             // 395: console.v1.ArchiveWorkspaceRequest
+	(*ArchiveWorkspaceResponse)(nil),                            // 396: console.v1.ArchiveWorkspaceResponse
+	(*UpdateWorkspacePolicyRequest)(nil),                        // 397: console.v1.UpdateWorkspacePolicyRequest
+	(*UpdateWorkspacePolicyResponse)(nil),                       // 398: console.v1.UpdateWorkspacePolicyResponse
+	(*UpdateWorkspaceDexPolicyRequest)(nil),                     // 399: console.v1.UpdateWorkspaceDexPolicyRequest
+	(*UpdateWorkspaceDexPolicyResponse)(nil),                    // 400: console.v1.UpdateWorkspaceDexPolicyResponse
+	(*UpdateWorkspaceArtifactStyleGuideRequest)(nil),            // 401: console.v1.UpdateWorkspaceArtifactStyleGuideRequest
+	(*UpdateWorkspaceArtifactStyleGuideResponse)(nil),           // 402: console.v1.UpdateWorkspaceArtifactStyleGuideResponse
+	(*EvaluateWorkspaceArtifactStyleGuideRequest)(nil),          // 403: console.v1.EvaluateWorkspaceArtifactStyleGuideRequest
+	(*EvaluateWorkspaceArtifactStyleGuideResponse)(nil),         // 404: console.v1.EvaluateWorkspaceArtifactStyleGuideResponse
+	(*WorkspaceContentPolicyViolation)(nil),                     // 405: console.v1.WorkspaceContentPolicyViolation
+	(*UpsertWorkspaceIdentityProviderRequest)(nil),              // 406: console.v1.UpsertWorkspaceIdentityProviderRequest
+	(*UpsertWorkspaceIdentityProviderResponse)(nil),             // 407: console.v1.UpsertWorkspaceIdentityProviderResponse
+	(*RemoveWorkspaceIdentityProviderRequest)(nil),              // 408: console.v1.RemoveWorkspaceIdentityProviderRequest
+	(*RemoveWorkspaceIdentityProviderResponse)(nil),             // 409: console.v1.RemoveWorkspaceIdentityProviderResponse
+	(*UpsertWorkspaceIntegrationRequest)(nil),                   // 410: console.v1.UpsertWorkspaceIntegrationRequest
+	(*UpsertWorkspaceIntegrationResponse)(nil),                  // 411: console.v1.UpsertWorkspaceIntegrationResponse
+	(*RemoveWorkspaceIntegrationRequest)(nil),                   // 412: console.v1.RemoveWorkspaceIntegrationRequest
+	(*RemoveWorkspaceIntegrationResponse)(nil),                  // 413: console.v1.RemoveWorkspaceIntegrationResponse
+	(*UpdateWorkspaceBillingRequest)(nil),                       // 414: console.v1.UpdateWorkspaceBillingRequest
+	(*UpsertWorkspaceMemberRequest)(nil),                        // 415: console.v1.UpsertWorkspaceMemberRequest
+	(*RemoveWorkspaceMemberRequest)(nil),                        // 416: console.v1.RemoveWorkspaceMemberRequest
+	(*UpdateWorkspaceNotificationPreferencesRequest)(nil),       // 417: console.v1.UpdateWorkspaceNotificationPreferencesRequest
+	(*EnableWorkspaceBreakGlassRequest)(nil),                    // 418: console.v1.EnableWorkspaceBreakGlassRequest
+	(*DisableWorkspaceBreakGlassRequest)(nil),                   // 419: console.v1.DisableWorkspaceBreakGlassRequest
+	(*OperatingSkill)(nil),                                      // 420: console.v1.OperatingSkill
+	(*ListWorkspaceSkillsRequest)(nil),                          // 421: console.v1.ListWorkspaceSkillsRequest
+	(*ListWorkspaceSkillsResponse)(nil),                         // 422: console.v1.ListWorkspaceSkillsResponse
+	(*SkillAnalysisFinding)(nil),                                // 423: console.v1.SkillAnalysisFinding
+	(*SkillAnalysisReport)(nil),                                 // 424: console.v1.SkillAnalysisReport
+	(*DexSkillInputDeclaration)(nil),                            // 425: console.v1.DexSkillInputDeclaration
+	(*DexSkillOutputDeclaration)(nil),                           // 426: console.v1.DexSkillOutputDeclaration
+	(*DexSkillPackageFile)(nil),                                 // 427: console.v1.DexSkillPackageFile
+	(*DexSkillLicenseEvidence)(nil),                             // 428: console.v1.DexSkillLicenseEvidence
+	(*DexSkillCompatibility)(nil),                               // 429: console.v1.DexSkillCompatibility
+	(*DexSkillQualityFixture)(nil),                              // 430: console.v1.DexSkillQualityFixture
+	(*DexSkillQualityEvidence)(nil),                             // 431: console.v1.DexSkillQualityEvidence
+	(*DexSkillUpdateDiff)(nil),                                  // 432: console.v1.DexSkillUpdateDiff
+	(*DexSkillCatalogEntry)(nil),                                // 433: console.v1.DexSkillCatalogEntry
+	(*DexSkillPlaybookStep)(nil),                                // 434: console.v1.DexSkillPlaybookStep
+	(*DexSkillPlaybook)(nil),                                    // 435: console.v1.DexSkillPlaybook
+	(*BrowseDexSkillCatalogRequest)(nil),                        // 436: console.v1.BrowseDexSkillCatalogRequest
+	(*BrowseDexSkillCatalogResponse)(nil),                       // 437: console.v1.BrowseDexSkillCatalogResponse
+	(*InstallDexSkillCatalogEntryRequest)(nil),                  // 438: console.v1.InstallDexSkillCatalogEntryRequest
+	(*InstallDexSkillCatalogEntryResponse)(nil),                 // 439: console.v1.InstallDexSkillCatalogEntryResponse
+	(*CreateWorkspaceSkillRequest)(nil),                         // 440: console.v1.CreateWorkspaceSkillRequest
+	(*CreateWorkspaceSkillResponse)(nil),                        // 441: console.v1.CreateWorkspaceSkillResponse
+	(*UpdateWorkspaceSkillRequest)(nil),                         // 442: console.v1.UpdateWorkspaceSkillRequest
+	(*UpdateWorkspaceSkillResponse)(nil),                        // 443: console.v1.UpdateWorkspaceSkillResponse
+	(*DeleteWorkspaceSkillRequest)(nil),                         // 444: console.v1.DeleteWorkspaceSkillRequest
+	(*DeleteWorkspaceSkillResponse)(nil),                        // 445: console.v1.DeleteWorkspaceSkillResponse
+	(*WorkspaceSettingsProfile)(nil),                            // 446: console.v1.WorkspaceSettingsProfile
+	(*WorkspaceSettingsPrincipal)(nil),                          // 447: console.v1.WorkspaceSettingsPrincipal
+	(*WorkspaceSettingsCapability)(nil),                         // 448: console.v1.WorkspaceSettingsCapability
+	(*WorkspaceSettingsWorkspace)(nil),                          // 449: console.v1.WorkspaceSettingsWorkspace
+	(*WorkspaceSettingsActivityEntry)(nil),                      // 450: console.v1.WorkspaceSettingsActivityEntry
+	(*WorkspaceSettingsMember)(nil),                             // 451: console.v1.WorkspaceSettingsMember
+	(*WorkspaceSettingsBilling)(nil),                            // 452: console.v1.WorkspaceSettingsBilling
+	(*WorkspaceSettingsPolicy)(nil),                             // 453: console.v1.WorkspaceSettingsPolicy
+	(*ProjectTaskEnvironmentRetention)(nil),                     // 454: console.v1.ProjectTaskEnvironmentRetention
+	(*WorkspaceTaskEnvironmentRetention)(nil),                   // 455: console.v1.WorkspaceTaskEnvironmentRetention
+	(*WorkspaceDexPolicy)(nil),                                  // 456: console.v1.WorkspaceDexPolicy
+	(*WorkspaceArtifactStyleGuide)(nil),                         // 457: console.v1.WorkspaceArtifactStyleGuide
+	(*WorkspaceSettingsNotificationPreference)(nil),             // 458: console.v1.WorkspaceSettingsNotificationPreference
+	(*WorkspaceSpendBeatSettings)(nil),                          // 459: console.v1.WorkspaceSpendBeatSettings
+	(*WorkspaceSettingsNotifications)(nil),                      // 460: console.v1.WorkspaceSettingsNotifications
+	(*WorkspaceSettingsIdentityProvider)(nil),                   // 461: console.v1.WorkspaceSettingsIdentityProvider
+	(*WorkspaceSettingsIntegration)(nil),                        // 462: console.v1.WorkspaceSettingsIntegration
+	(*WorkspaceSettingsOwnerStatus)(nil),                        // 463: console.v1.WorkspaceSettingsOwnerStatus
+	(*WorkspaceSettingsBreakGlassGrant)(nil),                    // 464: console.v1.WorkspaceSettingsBreakGlassGrant
+	(*StaffContextCapability)(nil),                              // 465: console.v1.StaffContextCapability
+	(*SearchStaffWorkspaceDirectoryRequest)(nil),                // 466: console.v1.SearchStaffWorkspaceDirectoryRequest
+	(*StaffWorkspaceDirectoryEntry)(nil),                        // 467: console.v1.StaffWorkspaceDirectoryEntry
+	(*SearchStaffWorkspaceDirectoryResponse)(nil),               // 468: console.v1.SearchStaffWorkspaceDirectoryResponse
+	(*GetStaffWorkspaceContextRequest)(nil),                     // 469: console.v1.GetStaffWorkspaceContextRequest
+	(*StaffGrantEventSummary)(nil),                              // 470: console.v1.StaffGrantEventSummary
+	(*StaffReceiptSummary)(nil),                                 // 471: console.v1.StaffReceiptSummary
+	(*StaffTraceSummary)(nil),                                   // 472: console.v1.StaffTraceSummary
+	(*StaffFailureSummary)(nil),                                 // 473: console.v1.StaffFailureSummary
+	(*StaffComputerEnvironment)(nil),                            // 474: console.v1.StaffComputerEnvironment
+	(*StaffWorkspaceContext)(nil),                               // 475: console.v1.StaffWorkspaceContext
+	(*GetStaffWorkspaceContextResponse)(nil),                    // 476: console.v1.GetStaffWorkspaceContextResponse
+	(*ManagedProviderAccessGrant)(nil),                          // 477: console.v1.ManagedProviderAccessGrant
+	(*ListManagedProviderAccessGrantsRequest)(nil),              // 478: console.v1.ListManagedProviderAccessGrantsRequest
+	(*ListManagedProviderAccessGrantsResponse)(nil),             // 479: console.v1.ListManagedProviderAccessGrantsResponse
+	(*UpsertManagedProviderAccessGrantRequest)(nil),             // 480: console.v1.UpsertManagedProviderAccessGrantRequest
+	(*UpsertManagedProviderAccessGrantResponse)(nil),            // 481: console.v1.UpsertManagedProviderAccessGrantResponse
+	(*RevokeManagedProviderAccessGrantRequest)(nil),             // 482: console.v1.RevokeManagedProviderAccessGrantRequest
+	(*RevokeManagedProviderAccessGrantResponse)(nil),            // 483: console.v1.RevokeManagedProviderAccessGrantResponse
+	(*InferenceProviderTarget)(nil),                             // 484: console.v1.InferenceProviderTarget
+	(*StaffInferencePurposeRoute)(nil),                          // 485: console.v1.StaffInferencePurposeRoute
+	(*StaffInferenceRoutingProfile)(nil),                        // 486: console.v1.StaffInferenceRoutingProfile
+	(*StaffInferenceRoutingEvent)(nil),                          // 487: console.v1.StaffInferenceRoutingEvent
+	(*GetStaffInferenceRoutingProfileRequest)(nil),              // 488: console.v1.GetStaffInferenceRoutingProfileRequest
+	(*GetStaffInferenceRoutingProfileResponse)(nil),             // 489: console.v1.GetStaffInferenceRoutingProfileResponse
+	(*UpdateStaffInferenceRoutingProfileRequest)(nil),           // 490: console.v1.UpdateStaffInferenceRoutingProfileRequest
+	(*UpdateStaffInferenceRoutingProfileResponse)(nil),          // 491: console.v1.UpdateStaffInferenceRoutingProfileResponse
+	(*ListScenarioFixturesRequest)(nil),                         // 492: console.v1.ListScenarioFixturesRequest
+	(*ListScenarioFixturesResponse)(nil),                        // 493: console.v1.ListScenarioFixturesResponse
+	(*PromoteScenarioFixtureRequest)(nil),                       // 494: console.v1.PromoteScenarioFixtureRequest
+	(*PromoteScenarioFixtureResponse)(nil),                      // 495: console.v1.PromoteScenarioFixtureResponse
+	(*CompareScenarioFixturesRequest)(nil),                      // 496: console.v1.CompareScenarioFixturesRequest
+	(*CompareScenarioFixturesResponse)(nil),                     // 497: console.v1.CompareScenarioFixturesResponse
+	(*ScenarioFixtureDifference)(nil),                           // 498: console.v1.ScenarioFixtureDifference
+	(*ScenarioFixture)(nil),                                     // 499: console.v1.ScenarioFixture
+	(*ConsoleMetric)(nil),                                       // 500: console.v1.ConsoleMetric
+	(*AiAsset)(nil),                                             // 501: console.v1.AiAsset
+	(*ActivityEvent)(nil),                                       // 502: console.v1.ActivityEvent
+	(*EvalResult)(nil),                                          // 503: console.v1.EvalResult
+	(*CostUsage)(nil),                                           // 504: console.v1.CostUsage
+	(*AuthorityLedger)(nil),                                     // 505: console.v1.AuthorityLedger
+	(*AuthorityScopeLedger)(nil),                                // 506: console.v1.AuthorityScopeLedger
+	(*AuthorityMissingEvidence)(nil),                            // 507: console.v1.AuthorityMissingEvidence
+	(*AuthorityDeniedAction)(nil),                               // 508: console.v1.AuthorityDeniedAction
+	(*AgentWorkforceRecord)(nil),                                // 509: console.v1.AgentWorkforceRecord
+	(*AgentWorkforceSourceReadiness)(nil),                       // 510: console.v1.AgentWorkforceSourceReadiness
+	(*AgentWorkforceProofSummary)(nil),                          // 511: console.v1.AgentWorkforceProofSummary
+	(*AgentWorkforceApprovalQueueSummary)(nil),                  // 512: console.v1.AgentWorkforceApprovalQueueSummary
+	(*AgentWorkforceApprovalStateBucket)(nil),                   // 513: console.v1.AgentWorkforceApprovalStateBucket
+	(*AgentWorkforceApprovalBlockerBucket)(nil),                 // 514: console.v1.AgentWorkforceApprovalBlockerBucket
+	(*AgentWorkforceActionAuthorityBoundary)(nil),               // 515: console.v1.AgentWorkforceActionAuthorityBoundary
+	(*AgentWorkforceMissingEvidenceBucket)(nil),                 // 516: console.v1.AgentWorkforceMissingEvidenceBucket
+	(*EndpointGuardrailSummary)(nil),                            // 517: console.v1.EndpointGuardrailSummary
+	(*AgentWorkforceQuestionSummary)(nil),                       // 518: console.v1.AgentWorkforceQuestionSummary
+	(*AgentWorkforceApprovalDisablement)(nil),                   // 519: console.v1.AgentWorkforceApprovalDisablement
+	(*RunAsIdentitySummary)(nil),                                // 520: console.v1.RunAsIdentitySummary
+	(*AgentWorkforceActionEvidence)(nil),                        // 521: console.v1.AgentWorkforceActionEvidence
+	(*CredentialAuthoritySummary)(nil),                          // 522: console.v1.CredentialAuthoritySummary
+	(*CostEvidenceSummary)(nil),                                 // 523: console.v1.CostEvidenceSummary
+	(*AgentWorkforceDebugIdentifiers)(nil),                      // 524: console.v1.AgentWorkforceDebugIdentifiers
+	(*RiskFinding)(nil),                                         // 525: console.v1.RiskFinding
+	(*IntegrationCredentialField)(nil),                          // 526: console.v1.IntegrationCredentialField
+	(*IntegrationResourceType)(nil),                             // 527: console.v1.IntegrationResourceType
+	(*IntegrationTile)(nil),                                     // 528: console.v1.IntegrationTile
+	(*OnboardingTask)(nil),                                      // 529: console.v1.OnboardingTask
+	(*TraceDrilldown)(nil),                                      // 530: console.v1.TraceDrilldown
+	(*TraceSpan)(nil),                                           // 531: console.v1.TraceSpan
+	(*TraceSpanReference)(nil),                                  // 532: console.v1.TraceSpanReference
+	(*TraceCompletenessSignal)(nil),                             // 533: console.v1.TraceCompletenessSignal
+	(*SecurityDecisionPacket)(nil),                              // 534: console.v1.SecurityDecisionPacket
+	(*SecurityDecisionEvidenceGap)(nil),                         // 535: console.v1.SecurityDecisionEvidenceGap
+	(*RelatedResource)(nil),                                     // 536: console.v1.RelatedResource
+	(*OperatingHomepageSuggestion)(nil),                         // 537: console.v1.OperatingHomepageSuggestion
+	(*DexMcpServer)(nil),                                        // 538: console.v1.DexMcpServer
+	(*DexMcpCatalogTool)(nil),                                   // 539: console.v1.DexMcpCatalogTool
+	(*CreateDexMcpServerRequest)(nil),                           // 540: console.v1.CreateDexMcpServerRequest
+	(*CreateDexMcpServerResponse)(nil),                          // 541: console.v1.CreateDexMcpServerResponse
+	(*ListDexMcpServersRequest)(nil),                            // 542: console.v1.ListDexMcpServersRequest
+	(*ListDexMcpServersResponse)(nil),                           // 543: console.v1.ListDexMcpServersResponse
+	(*GetDexMcpServerRequest)(nil),                              // 544: console.v1.GetDexMcpServerRequest
+	(*GetDexMcpServerResponse)(nil),                             // 545: console.v1.GetDexMcpServerResponse
+	(*DiscoverDexMcpServerRequest)(nil),                         // 546: console.v1.DiscoverDexMcpServerRequest
+	(*DiscoverDexMcpServerResponse)(nil),                        // 547: console.v1.DiscoverDexMcpServerResponse
+	(*UpdateDexMcpServerRequest)(nil),                           // 548: console.v1.UpdateDexMcpServerRequest
+	(*UpdateDexMcpServerResponse)(nil),                          // 549: console.v1.UpdateDexMcpServerResponse
+	(*DeleteDexMcpServerRequest)(nil),                           // 550: console.v1.DeleteDexMcpServerRequest
+	(*DeleteDexMcpServerResponse)(nil),                          // 551: console.v1.DeleteDexMcpServerResponse
+	(*DexMcpOAuthProfile)(nil),                                  // 552: console.v1.DexMcpOAuthProfile
+	(*InitiateDexMcpOAuthProfileRequest)(nil),                   // 553: console.v1.InitiateDexMcpOAuthProfileRequest
+	(*InitiateDexMcpOAuthProfileResponse)(nil),                  // 554: console.v1.InitiateDexMcpOAuthProfileResponse
+	(*CompleteDexMcpOAuthProfileRequest)(nil),                   // 555: console.v1.CompleteDexMcpOAuthProfileRequest
+	(*CompleteDexMcpOAuthProfileResponse)(nil),                  // 556: console.v1.CompleteDexMcpOAuthProfileResponse
+	(*ListDexMcpOAuthProfilesRequest)(nil),                      // 557: console.v1.ListDexMcpOAuthProfilesRequest
+	(*ListDexMcpOAuthProfilesResponse)(nil),                     // 558: console.v1.ListDexMcpOAuthProfilesResponse
+	(*RevokeDexMcpOAuthProfileRequest)(nil),                     // 559: console.v1.RevokeDexMcpOAuthProfileRequest
+	(*RevokeDexMcpOAuthProfileResponse)(nil),                    // 560: console.v1.RevokeDexMcpOAuthProfileResponse
+	(*ReauthorizeDexMcpOAuthProfileRequest)(nil),                // 561: console.v1.ReauthorizeDexMcpOAuthProfileRequest
+	(*ReauthorizeDexMcpOAuthProfileResponse)(nil),               // 562: console.v1.ReauthorizeDexMcpOAuthProfileResponse
+	(*PrivateEndpoint)(nil),                                     // 563: console.v1.PrivateEndpoint
+	(*PrivateProfileRoute)(nil),                                 // 564: console.v1.PrivateProfileRoute
+	(*RegisterPrivateEndpointRequest)(nil),                      // 565: console.v1.RegisterPrivateEndpointRequest
+	(*RegisterPrivateEndpointResponse)(nil),                     // 566: console.v1.RegisterPrivateEndpointResponse
+	(*VerifyPrivateEndpointRequest)(nil),                        // 567: console.v1.VerifyPrivateEndpointRequest
+	(*VerifyPrivateEndpointResponse)(nil),                       // 568: console.v1.VerifyPrivateEndpointResponse
+	(*ListPrivateEndpointsRequest)(nil),                         // 569: console.v1.ListPrivateEndpointsRequest
+	(*ListPrivateEndpointsResponse)(nil),                        // 570: console.v1.ListPrivateEndpointsResponse
+	(*DeletePrivateEndpointRequest)(nil),                        // 571: console.v1.DeletePrivateEndpointRequest
+	(*DeletePrivateEndpointResponse)(nil),                       // 572: console.v1.DeletePrivateEndpointResponse
+	(*AttachPrivateEndpointToProfileRequest)(nil),               // 573: console.v1.AttachPrivateEndpointToProfileRequest
+	(*AttachPrivateEndpointToProfileResponse)(nil),              // 574: console.v1.AttachPrivateEndpointToProfileResponse
+	(*ListGatewayEgressOriginsRequest)(nil),                     // 575: console.v1.ListGatewayEgressOriginsRequest
+	(*ListGatewayEgressOriginsResponse)(nil),                    // 576: console.v1.ListGatewayEgressOriginsResponse
+	(*OperatingCapabilityRequirementState)(nil),                 // 577: console.v1.OperatingCapabilityRequirementState
+	(*PrewarmOperatingThreadRequest)(nil),                       // 578: console.v1.PrewarmOperatingThreadRequest
+	(*PrewarmOperatingThreadResponse)(nil),                      // 579: console.v1.PrewarmOperatingThreadResponse
+	(*TerminalErrorEnvelope)(nil),                               // 580: console.v1.TerminalErrorEnvelope
+	(*BootstrapThreadGatewayRequest)(nil),                       // 581: console.v1.BootstrapThreadGatewayRequest
+	(*BootstrapThreadGatewayResponse)(nil),                      // 582: console.v1.BootstrapThreadGatewayResponse
+	(*SetOperatingThreadControllerRequest)(nil),                 // 583: console.v1.SetOperatingThreadControllerRequest
+	(*SetOperatingThreadControllerResponse)(nil),                // 584: console.v1.SetOperatingThreadControllerResponse
+	(*CostUsageSummary)(nil),                                    // 585: console.v1.CostUsageSummary
+	(*CostUsageAttributionSummary)(nil),                         // 586: console.v1.CostUsageAttributionSummary
+	(*TenantPrivacySetting)(nil),                                // 587: console.v1.TenantPrivacySetting
+	(*GetPrivacySettingsRequest)(nil),                           // 588: console.v1.GetPrivacySettingsRequest
+	(*GetPrivacySettingsResponse)(nil),                          // 589: console.v1.GetPrivacySettingsResponse
+	(*SetPrivacySettingsRequest)(nil),                           // 590: console.v1.SetPrivacySettingsRequest
+	(*ManagedRule)(nil),                                         // 591: console.v1.ManagedRule
+	(*ManagedSkillRef)(nil),                                     // 592: console.v1.ManagedSkillRef
+	(*McpServerRef)(nil),                                        // 593: console.v1.McpServerRef
+	(*McpPolicy)(nil),                                           // 594: console.v1.McpPolicy
+	(*ManagedSetup)(nil),                                        // 595: console.v1.ManagedSetup
+	(*GetManagedSetupRequest)(nil),                              // 596: console.v1.GetManagedSetupRequest
+	(*SetManagedSetupRequest)(nil),                              // 597: console.v1.SetManagedSetupRequest
+	(*MissionScheduleCapability)(nil),                           // 598: console.v1.MissionScheduleCapability
+	(*StartMeetingCaptureRequest)(nil),                          // 599: console.v1.StartMeetingCaptureRequest
+	(*ListConnectedCallsRequest)(nil),                           // 600: console.v1.ListConnectedCallsRequest
+	(*ListConnectedCallsResponse)(nil),                          // 601: console.v1.ListConnectedCallsResponse
+	(*ConnectedCall)(nil),                                       // 602: console.v1.ConnectedCall
+	(*StartMeetingCaptureResponse)(nil),                         // 603: console.v1.StartMeetingCaptureResponse
+	(*GetMeetingCaptureRequest)(nil),                            // 604: console.v1.GetMeetingCaptureRequest
+	(*GetMeetingCaptureResponse)(nil),                           // 605: console.v1.GetMeetingCaptureResponse
+	(*ListMeetingCapturesRequest)(nil),                          // 606: console.v1.ListMeetingCapturesRequest
+	(*ListMeetingCapturesResponse)(nil),                         // 607: console.v1.ListMeetingCapturesResponse
+	(*StopMeetingCaptureRequest)(nil),                           // 608: console.v1.StopMeetingCaptureRequest
+	(*StopMeetingCaptureResponse)(nil),                          // 609: console.v1.StopMeetingCaptureResponse
+	(*MeetingCapture)(nil),                                      // 610: console.v1.MeetingCapture
+	(*ProspectingWatchProgram)(nil),                             // 611: console.v1.ProspectingWatchProgram
+	(*ProspectingWatchProgramMutationReceipt)(nil),              // 612: console.v1.ProspectingWatchProgramMutationReceipt
+	(*CreateProspectingWatchProgramRequest)(nil),                // 613: console.v1.CreateProspectingWatchProgramRequest
+	(*CreateProspectingWatchProgramResponse)(nil),               // 614: console.v1.CreateProspectingWatchProgramResponse
+	(*GetProspectingWatchProgramRequest)(nil),                   // 615: console.v1.GetProspectingWatchProgramRequest
+	(*GetProspectingWatchProgramResponse)(nil),                  // 616: console.v1.GetProspectingWatchProgramResponse
+	(*ListProspectingWatchProgramsRequest)(nil),                 // 617: console.v1.ListProspectingWatchProgramsRequest
+	(*ListProspectingWatchProgramsResponse)(nil),                // 618: console.v1.ListProspectingWatchProgramsResponse
+	(*UpdateProspectingWatchProgramRequest)(nil),                // 619: console.v1.UpdateProspectingWatchProgramRequest
+	(*UpdateProspectingWatchProgramResponse)(nil),               // 620: console.v1.UpdateProspectingWatchProgramResponse
+	(*ListCommitmentsRequest)(nil),                              // 621: console.v1.ListCommitmentsRequest
+	(*ListCommitmentsResponse)(nil),                             // 622: console.v1.ListCommitmentsResponse
+	(*Commitment)(nil),                                          // 623: console.v1.Commitment
+	(*CommitmentCitation)(nil),                                  // 624: console.v1.CommitmentCitation
+	(*OperatingJobRecordLink)(nil),                              // 625: console.v1.OperatingJobRecordLink
+	(*OperatingJob)(nil),                                        // 626: console.v1.OperatingJob
+	(*ListOperatingJobsRequest)(nil),                            // 627: console.v1.ListOperatingJobsRequest
+	(*ListOperatingJobsResponse)(nil),                           // 628: console.v1.ListOperatingJobsResponse
+	(*RecordOperatingHomepageSuggestionFeedbackRequest)(nil),    // 629: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
+	(*RecordOperatingHomepageSuggestionFeedbackResponse)(nil),   // 630: console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
+	(*InferenceCreditBalance)(nil),                              // 631: console.v1.InferenceCreditBalance
+	(*GetInferenceCreditBalanceRequest)(nil),                    // 632: console.v1.GetInferenceCreditBalanceRequest
+	(*InferenceCreditBlock)(nil),                                // 633: console.v1.InferenceCreditBlock
+	(*InferenceCreditPricing)(nil),                              // 634: console.v1.InferenceCreditPricing
+	(*GetInferenceCreditBalanceResponse)(nil),                   // 635: console.v1.GetInferenceCreditBalanceResponse
+	(*InferenceRunCreditBalance)(nil),                           // 636: console.v1.InferenceRunCreditBalance
+	(*InferenceCreditReconciliation)(nil),                       // 637: console.v1.InferenceCreditReconciliation
+	(*CreateInferenceCreditCheckoutRequest)(nil),                // 638: console.v1.CreateInferenceCreditCheckoutRequest
+	(*CreateInferenceCreditCheckoutResponse)(nil),               // 639: console.v1.CreateInferenceCreditCheckoutResponse
+	(*FulfillInferenceCreditCheckoutRequest)(nil),               // 640: console.v1.FulfillInferenceCreditCheckoutRequest
+	(*FulfillInferenceCreditCheckoutResponse)(nil),              // 641: console.v1.FulfillInferenceCreditCheckoutResponse
+	(*OperatingAutoModelRoute)(nil),                             // 642: console.v1.OperatingAutoModelRoute
+	(*BusinessFieldDefinition)(nil),                             // 643: console.v1.BusinessFieldDefinition
+	(*BusinessRelationshipDefinition)(nil),                      // 644: console.v1.BusinessRelationshipDefinition
+	(*BusinessObjectType)(nil),                                  // 645: console.v1.BusinessObjectType
+	(*BusinessMoney)(nil),                                       // 646: console.v1.BusinessMoney
+	(*BusinessObjectReference)(nil),                             // 647: console.v1.BusinessObjectReference
+	(*BusinessArtifactReference)(nil),                           // 648: console.v1.BusinessArtifactReference
+	(*BusinessTextList)(nil),                                    // 649: console.v1.BusinessTextList
+	(*BusinessFieldValue)(nil),                                  // 650: console.v1.BusinessFieldValue
+	(*BusinessSourceField)(nil),                                 // 651: console.v1.BusinessSourceField
+	(*BusinessSourceBinding)(nil),                               // 652: console.v1.BusinessSourceBinding
+	(*BusinessObject)(nil),                                      // 653: console.v1.BusinessObject
+	(*BusinessObjectRevision)(nil),                              // 654: console.v1.BusinessObjectRevision
+	(*BusinessObjectRelationship)(nil),                          // 655: console.v1.BusinessObjectRelationship
+	(*DefineBusinessObjectTypeRequest)(nil),                     // 656: console.v1.DefineBusinessObjectTypeRequest
+	(*DefineBusinessObjectTypeResponse)(nil),                    // 657: console.v1.DefineBusinessObjectTypeResponse
+	(*ListBusinessObjectTypesRequest)(nil),                      // 658: console.v1.ListBusinessObjectTypesRequest
+	(*ListBusinessObjectTypesResponse)(nil),                     // 659: console.v1.ListBusinessObjectTypesResponse
+	(*CreateBusinessObjectRequest)(nil),                         // 660: console.v1.CreateBusinessObjectRequest
+	(*CreateBusinessObjectResponse)(nil),                        // 661: console.v1.CreateBusinessObjectResponse
+	(*GetBusinessObjectRequest)(nil),                            // 662: console.v1.GetBusinessObjectRequest
+	(*GetBusinessObjectResponse)(nil),                           // 663: console.v1.GetBusinessObjectResponse
+	(*BusinessObjectSourceRecovery)(nil),                        // 664: console.v1.BusinessObjectSourceRecovery
+	(*ListBusinessObjectsRequest)(nil),                          // 665: console.v1.ListBusinessObjectsRequest
+	(*BusinessObjectFilter)(nil),                                // 666: console.v1.BusinessObjectFilter
+	(*BusinessObjectReferenceFilter)(nil),                       // 667: console.v1.BusinessObjectReferenceFilter
+	(*ListBusinessObjectsResponse)(nil),                         // 668: console.v1.ListBusinessObjectsResponse
+	(*UpdateBusinessObjectRequest)(nil),                         // 669: console.v1.UpdateBusinessObjectRequest
+	(*UpdateBusinessObjectResponse)(nil),                        // 670: console.v1.UpdateBusinessObjectResponse
+	(*DeleteBusinessObjectRequest)(nil),                         // 671: console.v1.DeleteBusinessObjectRequest
+	(*DeleteBusinessObjectResponse)(nil),                        // 672: console.v1.DeleteBusinessObjectResponse
+	(*ListBusinessObjectRevisionsRequest)(nil),                  // 673: console.v1.ListBusinessObjectRevisionsRequest
+	(*ListBusinessObjectRevisionsResponse)(nil),                 // 674: console.v1.ListBusinessObjectRevisionsResponse
+	(*BindBusinessObjectSourceRequest)(nil),                     // 675: console.v1.BindBusinessObjectSourceRequest
+	(*BindBusinessObjectSourceResponse)(nil),                    // 676: console.v1.BindBusinessObjectSourceResponse
+	(*AdmitBusinessObjectObservationRequest)(nil),               // 677: console.v1.AdmitBusinessObjectObservationRequest
+	(*AdmitBusinessObjectObservationResponse)(nil),              // 678: console.v1.AdmitBusinessObjectObservationResponse
+	(*ListBusinessObjectRelationshipsRequest)(nil),              // 679: console.v1.ListBusinessObjectRelationshipsRequest
+	(*ListBusinessObjectRelationshipsResponse)(nil),             // 680: console.v1.ListBusinessObjectRelationshipsResponse
+	(*CreateBusinessObjectRelationshipRequest)(nil),             // 681: console.v1.CreateBusinessObjectRelationshipRequest
+	(*CreateBusinessObjectRelationshipResponse)(nil),            // 682: console.v1.CreateBusinessObjectRelationshipResponse
+	(*DeleteBusinessObjectRelationshipRequest)(nil),             // 683: console.v1.DeleteBusinessObjectRelationshipRequest
+	(*DeleteBusinessObjectRelationshipResponse)(nil),            // 684: console.v1.DeleteBusinessObjectRelationshipResponse
+	(*CaptureFormObjectTarget)(nil),                             // 685: console.v1.CaptureFormObjectTarget
+	(*CaptureFormAssetRef)(nil),                                 // 686: console.v1.CaptureFormAssetRef
+	(*CaptureFormBrandingInput)(nil),                            // 687: console.v1.CaptureFormBrandingInput
+	(*CaptureFormBranding)(nil),                                 // 688: console.v1.CaptureFormBranding
+	(*CaptureFormPublicBranding)(nil),                           // 689: console.v1.CaptureFormPublicBranding
+	(*CaptureFormSelectOption)(nil),                             // 690: console.v1.CaptureFormSelectOption
+	(*CaptureFormSelectSpec)(nil),                               // 691: console.v1.CaptureFormSelectSpec
+	(*CaptureFormUploadSpec)(nil),                               // 692: console.v1.CaptureFormUploadSpec
+	(*CaptureFormUpload)(nil),                                   // 693: console.v1.CaptureFormUpload
+	(*CaptureFormTypedValue)(nil),                               // 694: console.v1.CaptureFormTypedValue
+	(*CaptureFormField)(nil),                                    // 695: console.v1.CaptureFormField
+	(*CaptureFormPublicField)(nil),                              // 696: console.v1.CaptureFormPublicField
+	(*CaptureFormVersionInput)(nil),                             // 697: console.v1.CaptureFormVersionInput
+	(*CaptureFormVersion)(nil),                                  // 698: console.v1.CaptureFormVersion
+	(*CaptureFormPublicationInput)(nil),                         // 699: console.v1.CaptureFormPublicationInput
+	(*CaptureFormPublicRoute)(nil),                              // 700: console.v1.CaptureFormPublicRoute
+	(*CaptureFormPublication)(nil),                              // 701: console.v1.CaptureFormPublication
+	(*CaptureForm)(nil),                                         // 702: console.v1.CaptureForm
+	(*PublishedCaptureForm)(nil),                                // 703: console.v1.PublishedCaptureForm
+	(*CaptureFormAnswer)(nil),                                   // 704: console.v1.CaptureFormAnswer
+	(*CaptureFormReview)(nil),                                   // 705: console.v1.CaptureFormReview
+	(*CaptureFormObjectResult)(nil),                             // 706: console.v1.CaptureFormObjectResult
+	(*CaptureFormSubmission)(nil),                               // 707: console.v1.CaptureFormSubmission
+	(*CaptureFormPublicSubmissionReceipt)(nil),                  // 708: console.v1.CaptureFormPublicSubmissionReceipt
+	(*CreateCaptureFormRequest)(nil),                            // 709: console.v1.CreateCaptureFormRequest
+	(*CreateCaptureFormResponse)(nil),                           // 710: console.v1.CreateCaptureFormResponse
+	(*ListCaptureFormsRequest)(nil),                             // 711: console.v1.ListCaptureFormsRequest
+	(*ListCaptureFormsResponse)(nil),                            // 712: console.v1.ListCaptureFormsResponse
+	(*GetCaptureFormRequest)(nil),                               // 713: console.v1.GetCaptureFormRequest
+	(*GetCaptureFormResponse)(nil),                              // 714: console.v1.GetCaptureFormResponse
+	(*UpdateCaptureFormRequest)(nil),                            // 715: console.v1.UpdateCaptureFormRequest
+	(*UpdateCaptureFormResponse)(nil),                           // 716: console.v1.UpdateCaptureFormResponse
+	(*PublishCaptureFormRequest)(nil),                           // 717: console.v1.PublishCaptureFormRequest
+	(*PublishCaptureFormResponse)(nil),                          // 718: console.v1.PublishCaptureFormResponse
+	(*RevokeCaptureFormPublicationRequest)(nil),                 // 719: console.v1.RevokeCaptureFormPublicationRequest
+	(*RevokeCaptureFormPublicationResponse)(nil),                // 720: console.v1.RevokeCaptureFormPublicationResponse
+	(*GetPublishedCaptureFormRequest)(nil),                      // 721: console.v1.GetPublishedCaptureFormRequest
+	(*GetPublishedCaptureFormResponse)(nil),                     // 722: console.v1.GetPublishedCaptureFormResponse
+	(*GetPublishedCaptureFormBrandingAssetRequest)(nil),         // 723: console.v1.GetPublishedCaptureFormBrandingAssetRequest
+	(*GetPublishedCaptureFormBrandingAssetResponse)(nil),        // 724: console.v1.GetPublishedCaptureFormBrandingAssetResponse
+	(*SubmitPublishedCaptureFormRequest)(nil),                   // 725: console.v1.SubmitPublishedCaptureFormRequest
+	(*SubmitPublishedCaptureFormResponse)(nil),                  // 726: console.v1.SubmitPublishedCaptureFormResponse
+	(*BeginPublishedCaptureFormUploadRequest)(nil),              // 727: console.v1.BeginPublishedCaptureFormUploadRequest
+	(*BeginPublishedCaptureFormUploadResponse)(nil),             // 728: console.v1.BeginPublishedCaptureFormUploadResponse
+	(*CompletePublishedCaptureFormUploadRequest)(nil),           // 729: console.v1.CompletePublishedCaptureFormUploadRequest
+	(*CompletePublishedCaptureFormUploadResponse)(nil),          // 730: console.v1.CompletePublishedCaptureFormUploadResponse
+	(*GetCaptureFormSubmissionRequest)(nil),                     // 731: console.v1.GetCaptureFormSubmissionRequest
+	(*GetCaptureFormSubmissionResponse)(nil),                    // 732: console.v1.GetCaptureFormSubmissionResponse
+	(*ListCaptureFormSubmissionsRequest)(nil),                   // 733: console.v1.ListCaptureFormSubmissionsRequest
+	(*ListCaptureFormSubmissionsResponse)(nil),                  // 734: console.v1.ListCaptureFormSubmissionsResponse
+	(*ReviewCaptureFormSubmissionRequest)(nil),                  // 735: console.v1.ReviewCaptureFormSubmissionRequest
+	(*ReviewCaptureFormSubmissionResponse)(nil),                 // 736: console.v1.ReviewCaptureFormSubmissionResponse
+	(*GetBusinessObjectTypeRequest)(nil),                        // 737: console.v1.GetBusinessObjectTypeRequest
+	(*GetBusinessObjectTypeResponse)(nil),                       // 738: console.v1.GetBusinessObjectTypeResponse
+	(*InferenceCreditReceipt)(nil),                              // 739: console.v1.InferenceCreditReceipt
+	(*ListInferenceCreditReceiptsRequest)(nil),                  // 740: console.v1.ListInferenceCreditReceiptsRequest
+	(*ListInferenceCreditReceiptsResponse)(nil),                 // 741: console.v1.ListInferenceCreditReceiptsResponse
+	(*InferenceCreditAutoRefill)(nil),                           // 742: console.v1.InferenceCreditAutoRefill
+	(*GetInferenceCreditAutoRefillRequest)(nil),                 // 743: console.v1.GetInferenceCreditAutoRefillRequest
+	(*GetInferenceCreditAutoRefillResponse)(nil),                // 744: console.v1.GetInferenceCreditAutoRefillResponse
+	(*UpdateInferenceCreditAutoRefillRequest)(nil),              // 745: console.v1.UpdateInferenceCreditAutoRefillRequest
+	(*UpdateInferenceCreditAutoRefillResponse)(nil),             // 746: console.v1.UpdateInferenceCreditAutoRefillResponse
+	(*CompleteInferenceCreditAutoRefillRequest)(nil),            // 747: console.v1.CompleteInferenceCreditAutoRefillRequest
+	(*CompleteInferenceCreditAutoRefillResponse)(nil),           // 748: console.v1.CompleteInferenceCreditAutoRefillResponse
+	(*PrepareBusinessObjectAuthorityTransferRequest)(nil),       // 749: console.v1.PrepareBusinessObjectAuthorityTransferRequest
+	(*PrepareBusinessObjectAuthorityTransferResponse)(nil),      // 750: console.v1.PrepareBusinessObjectAuthorityTransferResponse
+	(*FinalizeBusinessObjectAuthorityTransferRequest)(nil),      // 751: console.v1.FinalizeBusinessObjectAuthorityTransferRequest
+	(*FinalizeBusinessObjectAuthorityTransferResponse)(nil),     // 752: console.v1.FinalizeBusinessObjectAuthorityTransferResponse
+	(*BusinessProcessParticipantType)(nil),                      // 753: console.v1.BusinessProcessParticipantType
+	(*BusinessProcessParticipant)(nil),                          // 754: console.v1.BusinessProcessParticipant
+	(*BusinessProcessRequirement)(nil),                          // 755: console.v1.BusinessProcessRequirement
+	(*BusinessProcessTransition)(nil),                           // 756: console.v1.BusinessProcessTransition
+	(*BusinessProcessFollowUp)(nil),                             // 757: console.v1.BusinessProcessFollowUp
+	(*BusinessProcessDefinition)(nil),                           // 758: console.v1.BusinessProcessDefinition
+	(*BusinessProcessReceipt)(nil),                              // 759: console.v1.BusinessProcessReceipt
+	(*BusinessProcess)(nil),                                     // 760: console.v1.BusinessProcess
+	(*DefineBusinessProcessRequest)(nil),                        // 761: console.v1.DefineBusinessProcessRequest
+	(*DefineBusinessProcessResponse)(nil),                       // 762: console.v1.DefineBusinessProcessResponse
+	(*StartBusinessProcessRequest)(nil),                         // 763: console.v1.StartBusinessProcessRequest
+	(*StartBusinessProcessResponse)(nil),                        // 764: console.v1.StartBusinessProcessResponse
+	(*GetBusinessProcessRequest)(nil),                           // 765: console.v1.GetBusinessProcessRequest
+	(*GetBusinessProcessResponse)(nil),                          // 766: console.v1.GetBusinessProcessResponse
+	(*ListBusinessProcessesRequest)(nil),                        // 767: console.v1.ListBusinessProcessesRequest
+	(*ListBusinessProcessesResponse)(nil),                       // 768: console.v1.ListBusinessProcessesResponse
+	(*TransitionBusinessProcessRequest)(nil),                    // 769: console.v1.TransitionBusinessProcessRequest
+	(*TransitionBusinessProcessResponse)(nil),                   // 770: console.v1.TransitionBusinessProcessResponse
+	(*GetBusinessProcessDefinitionRequest)(nil),                 // 771: console.v1.GetBusinessProcessDefinitionRequest
+	(*GetBusinessProcessDefinitionResponse)(nil),                // 772: console.v1.GetBusinessProcessDefinitionResponse
+	(*ListBusinessProcessDefinitionsRequest)(nil),               // 773: console.v1.ListBusinessProcessDefinitionsRequest
+	(*ListBusinessProcessDefinitionsResponse)(nil),              // 774: console.v1.ListBusinessProcessDefinitionsResponse
+	(*OperatingProjectSnapshotFileInput)(nil),                   // 775: console.v1.OperatingProjectSnapshotFileInput
+	(*AcceptOperatingProjectSnapshotRequest)(nil),               // 776: console.v1.AcceptOperatingProjectSnapshotRequest
+	(*AcceptOperatingProjectSnapshotResponse)(nil),              // 777: console.v1.AcceptOperatingProjectSnapshotResponse
+	(*GetOperatingProjectSnapshotRequest)(nil),                  // 778: console.v1.GetOperatingProjectSnapshotRequest
+	(*GetOperatingTaskEnvironmentRequest)(nil),                  // 779: console.v1.GetOperatingTaskEnvironmentRequest
+	(*GetOperatingTaskEnvironmentResponse)(nil),                 // 780: console.v1.GetOperatingTaskEnvironmentResponse
+	(*OperatingTaskEnvironmentStage)(nil),                       // 781: console.v1.OperatingTaskEnvironmentStage
+	(*ImportOperatingProjectSnapshotRequest)(nil),               // 782: console.v1.ImportOperatingProjectSnapshotRequest
+	(*BusinessBlueprint)(nil),                                   // 783: console.v1.BusinessBlueprint
+	(*ListBusinessBlueprintsRequest)(nil),                       // 784: console.v1.ListBusinessBlueprintsRequest
+	(*ListBusinessBlueprintsResponse)(nil),                      // 785: console.v1.ListBusinessBlueprintsResponse
+	(*CloneBusinessBlueprintRequest)(nil),                       // 786: console.v1.CloneBusinessBlueprintRequest
+	(*CloneBusinessBlueprintResponse)(nil),                      // 787: console.v1.CloneBusinessBlueprintResponse
+	(*BusinessBlueprintSource)(nil),                             // 788: console.v1.BusinessBlueprintSource
+	(*CaptureFormInvitation)(nil),                               // 789: console.v1.CaptureFormInvitation
+	(*CreateCaptureFormInvitationRequest)(nil),                  // 790: console.v1.CreateCaptureFormInvitationRequest
+	(*CreateCaptureFormInvitationResponse)(nil),                 // 791: console.v1.CreateCaptureFormInvitationResponse
+	(*RevokeCaptureFormInvitationRequest)(nil),                  // 792: console.v1.RevokeCaptureFormInvitationRequest
+	(*RevokeCaptureFormInvitationResponse)(nil),                 // 793: console.v1.RevokeCaptureFormInvitationResponse
+	(*GetInvitedCaptureFormRequest)(nil),                        // 794: console.v1.GetInvitedCaptureFormRequest
+	(*GetInvitedCaptureFormResponse)(nil),                       // 795: console.v1.GetInvitedCaptureFormResponse
+	(*SubmitInvitedCaptureFormRequest)(nil),                     // 796: console.v1.SubmitInvitedCaptureFormRequest
+	(*SubmitInvitedCaptureFormResponse)(nil),                    // 797: console.v1.SubmitInvitedCaptureFormResponse
+	(*GetStaffManagedInferenceReadinessRequest)(nil),            // 798: console.v1.GetStaffManagedInferenceReadinessRequest
+	(*GetManagedInferenceReadinessRequest)(nil),                 // 799: console.v1.GetManagedInferenceReadinessRequest
+	(*GetManagedInferenceReadinessResponse)(nil),                // 800: console.v1.GetManagedInferenceReadinessResponse
+	(*GetStaffManagedInferenceFundingRequest)(nil),              // 801: console.v1.GetStaffManagedInferenceFundingRequest
+	(*GrantStaffManagedInferenceCreditsRequest)(nil),            // 802: console.v1.GrantStaffManagedInferenceCreditsRequest
+	(*GetStaffManagedInferenceUsageRequest)(nil),                // 803: console.v1.GetStaffManagedInferenceUsageRequest
+	(*GetStaffManagedInferenceBudgetRequest)(nil),               // 804: console.v1.GetStaffManagedInferenceBudgetRequest
+	(*SetStaffManagedInferenceBudgetRequest)(nil),               // 805: console.v1.SetStaffManagedInferenceBudgetRequest
+	(*ListManagedProviderAccessEventsRequest)(nil),              // 806: console.v1.ListManagedProviderAccessEventsRequest
+	(*ManagedProviderAccessEvent)(nil),                          // 807: console.v1.ManagedProviderAccessEvent
+	(*ListManagedProviderAccessEventsResponse)(nil),             // 808: console.v1.ListManagedProviderAccessEventsResponse
+	(*ListStaffManagedInferenceAdminEventsRequest)(nil),         // 809: console.v1.ListStaffManagedInferenceAdminEventsRequest
+	(*ListStaffManagedExecutionGrantEventsRequest)(nil),         // 810: console.v1.ListStaffManagedExecutionGrantEventsRequest
+	(*ManagedExecutionGrantEvent)(nil),                          // 811: console.v1.ManagedExecutionGrantEvent
+	(*ListStaffManagedExecutionGrantEventsResponse)(nil),        // 812: console.v1.ListStaffManagedExecutionGrantEventsResponse
+	(*ListStaffManagedExecutionOutcomesRequest)(nil),            // 813: console.v1.ListStaffManagedExecutionOutcomesRequest
+	(*ManagedExecutionOutcome)(nil),                             // 814: console.v1.ManagedExecutionOutcome
+	(*ListStaffManagedExecutionOutcomesResponse)(nil),           // 815: console.v1.ListStaffManagedExecutionOutcomesResponse
+	(*ProspectingDraftTargetAccount)(nil),                       // 816: console.v1.ProspectingDraftTargetAccount
+	(*ProspectingDraft)(nil),                                    // 817: console.v1.ProspectingDraft
+	(*ProspectingDraftMutationReceipt)(nil),                     // 818: console.v1.ProspectingDraftMutationReceipt
+	(*CreateProspectingDraftRequest)(nil),                       // 819: console.v1.CreateProspectingDraftRequest
+	(*CreateProspectingDraftResponse)(nil),                      // 820: console.v1.CreateProspectingDraftResponse
+	(*ListProspectingDraftsRequest)(nil),                        // 821: console.v1.ListProspectingDraftsRequest
+	(*ListProspectingDraftsResponse)(nil),                       // 822: console.v1.ListProspectingDraftsResponse
+	(*ReviewProspectingDraftRequest)(nil),                       // 823: console.v1.ReviewProspectingDraftRequest
+	(*ReviewProspectingDraftResponse)(nil),                      // 824: console.v1.ReviewProspectingDraftResponse
+	(*WorkspaceBrandVoice)(nil),                                 // 825: console.v1.WorkspaceBrandVoice
+	(*PrepareStaffProductIssueRecoveryRequest)(nil),             // 826: console.v1.PrepareStaffProductIssueRecoveryRequest
+	(*ScanStaffProductIssueRecoveryRequest)(nil),                // 827: console.v1.ScanStaffProductIssueRecoveryRequest
+	(*ReviewStaffProductIssueRecoveryRequest)(nil),              // 828: console.v1.ReviewStaffProductIssueRecoveryRequest
+	(*ExecuteStaffProductIssueRecoveryRequest)(nil),             // 829: console.v1.ExecuteStaffProductIssueRecoveryRequest
+	(*GetProductIssueRecoveryRequest)(nil),                      // 830: console.v1.GetProductIssueRecoveryRequest
+	(*ReplyProductIssueRecoveryRequest)(nil),                    // 831: console.v1.ReplyProductIssueRecoveryRequest
+	(*ProductIssueRecovery)(nil),                                // 832: console.v1.ProductIssueRecovery
+	(*ProductIssueRecoveryResponse)(nil),                        // 833: console.v1.ProductIssueRecoveryResponse
+	(*ListStaffProductIssueRecoveriesRequest)(nil),              // 834: console.v1.ListStaffProductIssueRecoveriesRequest
+	(*ListStaffProductIssueRecoveriesResponse)(nil),             // 835: console.v1.ListStaffProductIssueRecoveriesResponse
+	(*StaffProductIssueRecoverySummary)(nil),                    // 836: console.v1.StaffProductIssueRecoverySummary
+	(*AssessComplianceSubjectRequest)(nil),                      // 837: console.v1.AssessComplianceSubjectRequest
+	(*ComplianceRequirementFinding)(nil),                        // 838: console.v1.ComplianceRequirementFinding
+	(*ComplianceSubjectAssessment)(nil),                         // 839: console.v1.ComplianceSubjectAssessment
+	(*AssessComplianceSubjectResponse)(nil),                     // 840: console.v1.AssessComplianceSubjectResponse
+	nil,                                                         // 841: console.v1.OperatingRequiredInitialToolIntent.MetadataEntry
+	nil,                                                         // 842: console.v1.WorkspaceSettingsActivityEntry.DetailsEntry
+	(*CaptureFormTypedValue_OptionValues)(nil),                  // 843: console.v1.CaptureFormTypedValue.OptionValues
+	(*WorkspaceBrandVoice_Scope)(nil),                           // 844: console.v1.WorkspaceBrandVoice.Scope
+	(*timestamppb.Timestamp)(nil),                               // 845: google.protobuf.Timestamp
+	(v1.RiskLevel)(0),                                           // 846: common.v1.RiskLevel
+	(*v11.ToolExecutionProjectSource)(nil),                      // 847: toolexecution.v1.ToolExecutionProjectSource
+	(*v11.ToolExecutionWorkspaceRecipe)(nil),                    // 848: toolexecution.v1.ToolExecutionWorkspaceRecipe
+	(*structpb.Struct)(nil),                                     // 849: google.protobuf.Struct
+	(*v12.VfsUploadTarget)(nil),                                 // 850: vfs.v1.VfsUploadTarget
+	(*v12.VfsCompletedUploadPart)(nil),                          // 851: vfs.v1.VfsCompletedUploadPart
+	(v13.MemoryReviewStatus)(0),                                 // 852: memory.v1.MemoryReviewStatus
+	(v13.Scope)(0),                                              // 853: memory.v1.Scope
+	(v11.ToolExecutionState)(0),                                 // 854: toolexecution.v1.ToolExecutionState
+	(*v11.ToolExecutionAttachmentMount)(nil),                    // 855: toolexecution.v1.ToolExecutionAttachmentMount
+	(*v14.RuntimeWorkEnvelope)(nil),                             // 856: agentruntime.v1.RuntimeWorkEnvelope
+	(*v15.RunnerSessionOwnerBinding)(nil),                       // 857: remoterunner.v1.RunnerSessionOwnerBinding
+	(v16.OrbObservedLifecycle)(0),                               // 858: orbcontrol.v1.OrbObservedLifecycle
+	(v16.OrbCommandKind)(0),                                     // 859: orbcontrol.v1.OrbCommandKind
+	(*v17.ConnectorCatalogProvenance)(nil),                      // 860: connectors.v1.ConnectorCatalogProvenance
+	(*v18.TraceAnnotation)(nil),                                 // 861: traces.v1.TraceAnnotation
+	(*v17.SourceAuthorityObservation)(nil),                      // 862: connectors.v1.SourceAuthorityObservation
+	(*v19.RecordRef)(nil),                                       // 863: platform.v1.RecordRef
+	(*v17.ProviderResourceEnvelope)(nil),                        // 864: connectors.v1.ProviderResourceEnvelope
+	(*v110.GetBudgetDashboardResponse)(nil),                     // 865: meter.v1.GetBudgetDashboardResponse
+	(*v110.GetPrepaidCreditBalanceRequest)(nil),                 // 866: meter.v1.GetPrepaidCreditBalanceRequest
+	(*v110.GrantDevelopmentCreditsRequest)(nil),                 // 867: meter.v1.GrantDevelopmentCreditsRequest
+	(*v110.QueryUsageRequest)(nil),                              // 868: meter.v1.QueryUsageRequest
+	(*v110.GetBudgetDashboardRequest)(nil),                      // 869: meter.v1.GetBudgetDashboardRequest
+	(*v110.SetBudgetRequest)(nil),                               // 870: meter.v1.SetBudgetRequest
+	(*v110.ListManagedInferenceAdminEventsRequest)(nil),         // 871: meter.v1.ListManagedInferenceAdminEventsRequest
+	(*v110.GetPrepaidCreditBalanceResponse)(nil),                // 872: meter.v1.GetPrepaidCreditBalanceResponse
+	(*v110.GrantDevelopmentCreditsResponse)(nil),                // 873: meter.v1.GrantDevelopmentCreditsResponse
+	(*v110.QueryUsageResponse)(nil),                             // 874: meter.v1.QueryUsageResponse
+	(*v110.SetBudgetResponse)(nil),                              // 875: meter.v1.SetBudgetResponse
+	(*v110.ListManagedInferenceAdminEventsResponse)(nil),        // 876: meter.v1.ListManagedInferenceAdminEventsResponse
 }
 var file_console_v1_console_proto_depIdxs = []int32{
-	840,  // 0: console.v1.TimeRange.start_time:type_name -> google.protobuf.Timestamp
-	840,  // 1: console.v1.TimeRange.end_time:type_name -> google.protobuf.Timestamp
-	112,  // 2: console.v1.ConsoleQuery.time_range:type_name -> console.v1.TimeRange
-	841,  // 3: console.v1.ConsoleQuery.risk_level:type_name -> common.v1.RiskLevel
-	576,  // 4: console.v1.OperatingCapabilityState.missing_requirement_states:type_name -> console.v1.OperatingCapabilityRequirementState
+	845,  // 0: console.v1.TimeRange.start_time:type_name -> google.protobuf.Timestamp
+	845,  // 1: console.v1.TimeRange.end_time:type_name -> google.protobuf.Timestamp
+	113,  // 2: console.v1.ConsoleQuery.time_range:type_name -> console.v1.TimeRange
+	846,  // 3: console.v1.ConsoleQuery.risk_level:type_name -> common.v1.RiskLevel
+	577,  // 4: console.v1.OperatingCapabilityState.missing_requirement_states:type_name -> console.v1.OperatingCapabilityRequirementState
 	0,    // 5: console.v1.OperatingTurnRoute.kind:type_name -> console.v1.OperatingTurnRouteKind
 	1,    // 6: console.v1.OperatingTurnRoute.intent_kind:type_name -> console.v1.OperatingTurnIntentKind
 	2,    // 7: console.v1.OperatingTurnRoute.answer_kind:type_name -> console.v1.OperatingTurnAnswerKind
 	3,    // 8: console.v1.OperatingTurnRoute.safety_kind:type_name -> console.v1.OperatingTurnSafetyKind
-	840,  // 9: console.v1.OperatingTurnRoute.decided_at:type_name -> google.protobuf.Timestamp
-	114,  // 10: console.v1.OperatingChannel.capability_state:type_name -> console.v1.OperatingCapabilityState
-	840,  // 11: console.v1.OperatingChannel.updated_at:type_name -> google.protobuf.Timestamp
-	118,  // 12: console.v1.OperatingChannel.surface:type_name -> console.v1.OperatingSurfaceMetadata
-	840,  // 13: console.v1.OperatingChannel.archived_at:type_name -> google.protobuf.Timestamp
-	117,  // 14: console.v1.OperatingChannel.fork:type_name -> console.v1.OperatingThreadFork
-	840,  // 15: console.v1.OperatingThreadFork.forked_at:type_name -> google.protobuf.Timestamp
+	845,  // 9: console.v1.OperatingTurnRoute.decided_at:type_name -> google.protobuf.Timestamp
+	115,  // 10: console.v1.OperatingChannel.capability_state:type_name -> console.v1.OperatingCapabilityState
+	845,  // 11: console.v1.OperatingChannel.updated_at:type_name -> google.protobuf.Timestamp
+	119,  // 12: console.v1.OperatingChannel.surface:type_name -> console.v1.OperatingSurfaceMetadata
+	845,  // 13: console.v1.OperatingChannel.archived_at:type_name -> google.protobuf.Timestamp
+	118,  // 14: console.v1.OperatingChannel.fork:type_name -> console.v1.OperatingThreadFork
+	845,  // 15: console.v1.OperatingThreadFork.forked_at:type_name -> google.protobuf.Timestamp
 	5,    // 16: console.v1.OperatingSurfaceMetadata.kind:type_name -> console.v1.OperatingSurfaceKind
-	840,  // 17: console.v1.OperatingMessage.created_at:type_name -> google.protobuf.Timestamp
-	115,  // 18: console.v1.OperatingMessage.route:type_name -> console.v1.OperatingTurnRoute
-	129,  // 19: console.v1.OperatingMessage.attachments:type_name -> console.v1.OperatingAttachmentRef
-	122,  // 20: console.v1.OperatingMessage.turn_record:type_name -> console.v1.OperatingTurnRecord
-	119,  // 21: console.v1.OperatingMessage.model_selection:type_name -> console.v1.OperatingModelSelection
-	641,  // 22: console.v1.OperatingMessage.auto_model_route:type_name -> console.v1.OperatingAutoModelRoute
-	535,  // 23: console.v1.OperatingToolEvent.evidence_refs:type_name -> console.v1.RelatedResource
+	845,  // 17: console.v1.OperatingMessage.created_at:type_name -> google.protobuf.Timestamp
+	116,  // 18: console.v1.OperatingMessage.route:type_name -> console.v1.OperatingTurnRoute
+	130,  // 19: console.v1.OperatingMessage.attachments:type_name -> console.v1.OperatingAttachmentRef
+	123,  // 20: console.v1.OperatingMessage.turn_record:type_name -> console.v1.OperatingTurnRecord
+	120,  // 21: console.v1.OperatingMessage.model_selection:type_name -> console.v1.OperatingModelSelection
+	642,  // 22: console.v1.OperatingMessage.auto_model_route:type_name -> console.v1.OperatingAutoModelRoute
+	536,  // 23: console.v1.OperatingToolEvent.evidence_refs:type_name -> console.v1.RelatedResource
 	6,    // 24: console.v1.OperatingTurnRecord.state:type_name -> console.v1.OperatingTurnState
 	7,    // 25: console.v1.OperatingTurnRecord.verification_state:type_name -> console.v1.OperatingVerificationState
-	121,  // 26: console.v1.OperatingTurnRecord.tool_events:type_name -> console.v1.OperatingToolEvent
-	535,  // 27: console.v1.OperatingTurnRecord.evidence_refs:type_name -> console.v1.RelatedResource
-	840,  // 28: console.v1.OperatingTurnRecord.updated_at:type_name -> google.protobuf.Timestamp
+	122,  // 26: console.v1.OperatingTurnRecord.tool_events:type_name -> console.v1.OperatingToolEvent
+	536,  // 27: console.v1.OperatingTurnRecord.evidence_refs:type_name -> console.v1.RelatedResource
+	845,  // 28: console.v1.OperatingTurnRecord.updated_at:type_name -> google.protobuf.Timestamp
 	8,    // 29: console.v1.OperatingTurnRecord.answer_provenance:type_name -> console.v1.OperatingAnswerProvenance
-	123,  // 30: console.v1.OperatingTurnRecord.customer_outcome_identity:type_name -> console.v1.OperatingCustomerOutcomeIdentity
-	842,  // 31: console.v1.OperatingTurnRecord.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
-	843,  // 32: console.v1.OperatingTurnRecord.workspace_recipe:type_name -> toolexecution.v1.ToolExecutionWorkspaceRecipe
-	150,  // 33: console.v1.OperatingTurnRecord.coding_acceptance:type_name -> console.v1.CodingAcceptanceContract
+	124,  // 30: console.v1.OperatingTurnRecord.customer_outcome_identity:type_name -> console.v1.OperatingCustomerOutcomeIdentity
+	847,  // 31: console.v1.OperatingTurnRecord.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
+	848,  // 32: console.v1.OperatingTurnRecord.workspace_recipe:type_name -> toolexecution.v1.ToolExecutionWorkspaceRecipe
+	151,  // 33: console.v1.OperatingTurnRecord.coding_acceptance:type_name -> console.v1.CodingAcceptanceContract
 	11,   // 34: console.v1.OperatingExecutionIdentity.runtime:type_name -> console.v1.OperatingExecutionRuntime
 	9,    // 35: console.v1.OperatingThreadExecution.state:type_name -> console.v1.OperatingThreadExecutionState
-	840,  // 36: console.v1.OperatingThreadExecution.updated_at:type_name -> google.protobuf.Timestamp
-	124,  // 37: console.v1.OperatingThreadExecution.execution_identity:type_name -> console.v1.OperatingExecutionIdentity
+	845,  // 36: console.v1.OperatingThreadExecution.updated_at:type_name -> google.protobuf.Timestamp
+	125,  // 37: console.v1.OperatingThreadExecution.execution_identity:type_name -> console.v1.OperatingExecutionIdentity
 	6,    // 38: console.v1.OperatingThreadTurn.state:type_name -> console.v1.OperatingTurnState
 	10,   // 39: console.v1.OperatingThreadTurn.waiting_reason:type_name -> console.v1.OperatingThreadWaitingReason
-	840,  // 40: console.v1.OperatingThreadTurn.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 41: console.v1.OperatingThreadTurn.updated_at:type_name -> google.protobuf.Timestamp
-	840,  // 42: console.v1.OperatingThreadTurn.completed_at:type_name -> google.protobuf.Timestamp
-	579,  // 43: console.v1.OperatingThreadTurn.terminal_error:type_name -> console.v1.TerminalErrorEnvelope
+	845,  // 40: console.v1.OperatingThreadTurn.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 41: console.v1.OperatingThreadTurn.updated_at:type_name -> google.protobuf.Timestamp
+	845,  // 42: console.v1.OperatingThreadTurn.completed_at:type_name -> google.protobuf.Timestamp
+	580,  // 43: console.v1.OperatingThreadTurn.terminal_error:type_name -> console.v1.TerminalErrorEnvelope
 	12,   // 44: console.v1.OperatingThreadEvent.kind:type_name -> console.v1.OperatingThreadEventKind
-	535,  // 45: console.v1.OperatingThreadEvent.artifact_refs:type_name -> console.v1.RelatedResource
-	840,  // 46: console.v1.OperatingThreadEvent.created_at:type_name -> google.protobuf.Timestamp
-	124,  // 47: console.v1.OperatingThreadEvent.execution_identity:type_name -> console.v1.OperatingExecutionIdentity
+	536,  // 45: console.v1.OperatingThreadEvent.artifact_refs:type_name -> console.v1.RelatedResource
+	845,  // 46: console.v1.OperatingThreadEvent.created_at:type_name -> google.protobuf.Timestamp
+	125,  // 47: console.v1.OperatingThreadEvent.execution_identity:type_name -> console.v1.OperatingExecutionIdentity
 	13,   // 48: console.v1.OperatingThreadEvent.request_type:type_name -> console.v1.OperatingThreadRequestType
-	579,  // 49: console.v1.OperatingThreadEvent.terminal_error:type_name -> console.v1.TerminalErrorEnvelope
+	580,  // 49: console.v1.OperatingThreadEvent.terminal_error:type_name -> console.v1.TerminalErrorEnvelope
 	13,   // 50: console.v1.OperatingThreadResponse.request_type:type_name -> console.v1.OperatingThreadRequestType
 	14,   // 51: console.v1.OperatingThreadResponse.action:type_name -> console.v1.OperatingThreadResponseAction
 	15,   // 52: console.v1.OperatingAttachmentRef.scope:type_name -> console.v1.OperatingAttachmentScope
 	16,   // 53: console.v1.OperatingAttachmentRef.processing_state:type_name -> console.v1.OperatingAttachmentProcessingState
-	840,  // 54: console.v1.OperatingAttachmentRef.created_at:type_name -> google.protobuf.Timestamp
-	841,  // 55: console.v1.OperatingReceipt.risk_level:type_name -> common.v1.RiskLevel
-	840,  // 56: console.v1.OperatingReceipt.updated_at:type_name -> google.protobuf.Timestamp
-	131,  // 57: console.v1.OperatingReceipt.allowed_actions:type_name -> console.v1.OperatingReceiptAction
-	535,  // 58: console.v1.OperatingReceipt.evidence_refs:type_name -> console.v1.RelatedResource
-	844,  // 59: console.v1.OperatingReceipt.payload:type_name -> google.protobuf.Struct
+	845,  // 54: console.v1.OperatingAttachmentRef.created_at:type_name -> google.protobuf.Timestamp
+	846,  // 55: console.v1.OperatingReceipt.risk_level:type_name -> common.v1.RiskLevel
+	845,  // 56: console.v1.OperatingReceipt.updated_at:type_name -> google.protobuf.Timestamp
+	132,  // 57: console.v1.OperatingReceipt.allowed_actions:type_name -> console.v1.OperatingReceiptAction
+	536,  // 58: console.v1.OperatingReceipt.evidence_refs:type_name -> console.v1.RelatedResource
+	849,  // 59: console.v1.OperatingReceipt.payload:type_name -> google.protobuf.Struct
 	17,   // 60: console.v1.OperatingReceipt.lifecycle_state:type_name -> console.v1.ReceiptLifecycleState
-	232,  // 61: console.v1.OperatingReceipt.coding_acceptance:type_name -> console.v1.OperatingCodingAcceptance
-	844,  // 62: console.v1.OperatingReceiptAction.payload:type_name -> google.protobuf.Struct
-	113,  // 63: console.v1.ListOperatingChannelsRequest.query:type_name -> console.v1.ConsoleQuery
+	233,  // 61: console.v1.OperatingReceipt.coding_acceptance:type_name -> console.v1.OperatingCodingAcceptance
+	849,  // 62: console.v1.OperatingReceiptAction.payload:type_name -> google.protobuf.Struct
+	114,  // 63: console.v1.ListOperatingChannelsRequest.query:type_name -> console.v1.ConsoleQuery
 	4,    // 64: console.v1.ListOperatingChannelsRequest.archive_filter:type_name -> console.v1.OperatingThreadArchiveFilter
-	116,  // 65: console.v1.ListOperatingChannelsResponse.channels:type_name -> console.v1.OperatingChannel
-	114,  // 66: console.v1.ListOperatingChannelsResponse.capabilities:type_name -> console.v1.OperatingCapabilityState
-	536,  // 67: console.v1.ListOperatingChannelsResponse.homepage_suggestion:type_name -> console.v1.OperatingHomepageSuggestion
-	113,  // 68: console.v1.ArchiveOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
-	116,  // 69: console.v1.ArchiveOperatingThreadResponse.channel:type_name -> console.v1.OperatingChannel
-	113,  // 70: console.v1.ForkOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
-	116,  // 71: console.v1.ForkOperatingThreadResponse.channel:type_name -> console.v1.OperatingChannel
-	113,  // 72: console.v1.RenameOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
-	116,  // 73: console.v1.RenameOperatingThreadResponse.channel:type_name -> console.v1.OperatingChannel
-	113,  // 74: console.v1.GetOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
-	116,  // 75: console.v1.GetOperatingThreadResponse.channel:type_name -> console.v1.OperatingChannel
-	120,  // 76: console.v1.GetOperatingThreadResponse.messages:type_name -> console.v1.OperatingMessage
-	130,  // 77: console.v1.GetOperatingThreadResponse.receipts:type_name -> console.v1.OperatingReceipt
-	114,  // 78: console.v1.GetOperatingThreadResponse.capabilities:type_name -> console.v1.OperatingCapabilityState
-	125,  // 79: console.v1.GetOperatingThreadResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
-	126,  // 80: console.v1.GetOperatingThreadResponse.turns:type_name -> console.v1.OperatingThreadTurn
-	119,  // 81: console.v1.GetOperatingThreadResponse.model_selection:type_name -> console.v1.OperatingModelSelection
-	483,  // 82: console.v1.GetOperatingThreadResponse.available_models:type_name -> console.v1.InferenceProviderTarget
-	483,  // 83: console.v1.GetOperatingThreadResponse.default_model:type_name -> console.v1.InferenceProviderTarget
-	113,  // 84: console.v1.RespondOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
-	128,  // 85: console.v1.RespondOperatingThreadRequest.response:type_name -> console.v1.OperatingThreadResponse
-	125,  // 86: console.v1.RespondOperatingThreadResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
-	126,  // 87: console.v1.RespondOperatingThreadResponse.turns:type_name -> console.v1.OperatingThreadTurn
-	113,  // 88: console.v1.InterruptOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
-	125,  // 89: console.v1.InterruptOperatingThreadResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
-	126,  // 90: console.v1.InterruptOperatingThreadResponse.turns:type_name -> console.v1.OperatingThreadTurn
-	113,  // 91: console.v1.ListOperatingThreadEventsRequest.query:type_name -> console.v1.ConsoleQuery
-	127,  // 92: console.v1.ListOperatingThreadEventsResponse.events:type_name -> console.v1.OperatingThreadEvent
-	125,  // 93: console.v1.ListOperatingThreadEventsResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
-	126,  // 94: console.v1.ListOperatingThreadEventsResponse.snapshot_turns:type_name -> console.v1.OperatingThreadTurn
-	113,  // 95: console.v1.WatchOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
-	127,  // 96: console.v1.WatchOperatingThreadResponse.events:type_name -> console.v1.OperatingThreadEvent
-	125,  // 97: console.v1.WatchOperatingThreadResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
-	126,  // 98: console.v1.WatchOperatingThreadResponse.snapshot_turns:type_name -> console.v1.OperatingThreadTurn
-	113,  // 99: console.v1.SubmitOperatingMessageRequest.query:type_name -> console.v1.ConsoleQuery
-	129,  // 100: console.v1.SubmitOperatingMessageRequest.attachments:type_name -> console.v1.OperatingAttachmentRef
-	119,  // 101: console.v1.SubmitOperatingMessageRequest.model_selection:type_name -> console.v1.OperatingModelSelection
-	150,  // 102: console.v1.SubmitOperatingMessageRequest.coding_acceptance:type_name -> console.v1.CodingAcceptanceContract
+	117,  // 65: console.v1.ListOperatingChannelsResponse.channels:type_name -> console.v1.OperatingChannel
+	115,  // 66: console.v1.ListOperatingChannelsResponse.capabilities:type_name -> console.v1.OperatingCapabilityState
+	537,  // 67: console.v1.ListOperatingChannelsResponse.homepage_suggestion:type_name -> console.v1.OperatingHomepageSuggestion
+	114,  // 68: console.v1.ArchiveOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
+	117,  // 69: console.v1.ArchiveOperatingThreadResponse.channel:type_name -> console.v1.OperatingChannel
+	114,  // 70: console.v1.ForkOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
+	117,  // 71: console.v1.ForkOperatingThreadResponse.channel:type_name -> console.v1.OperatingChannel
+	114,  // 72: console.v1.RenameOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
+	117,  // 73: console.v1.RenameOperatingThreadResponse.channel:type_name -> console.v1.OperatingChannel
+	114,  // 74: console.v1.GetOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
+	117,  // 75: console.v1.GetOperatingThreadResponse.channel:type_name -> console.v1.OperatingChannel
+	121,  // 76: console.v1.GetOperatingThreadResponse.messages:type_name -> console.v1.OperatingMessage
+	131,  // 77: console.v1.GetOperatingThreadResponse.receipts:type_name -> console.v1.OperatingReceipt
+	115,  // 78: console.v1.GetOperatingThreadResponse.capabilities:type_name -> console.v1.OperatingCapabilityState
+	126,  // 79: console.v1.GetOperatingThreadResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
+	127,  // 80: console.v1.GetOperatingThreadResponse.turns:type_name -> console.v1.OperatingThreadTurn
+	120,  // 81: console.v1.GetOperatingThreadResponse.model_selection:type_name -> console.v1.OperatingModelSelection
+	484,  // 82: console.v1.GetOperatingThreadResponse.available_models:type_name -> console.v1.InferenceProviderTarget
+	484,  // 83: console.v1.GetOperatingThreadResponse.default_model:type_name -> console.v1.InferenceProviderTarget
+	114,  // 84: console.v1.RespondOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
+	129,  // 85: console.v1.RespondOperatingThreadRequest.response:type_name -> console.v1.OperatingThreadResponse
+	126,  // 86: console.v1.RespondOperatingThreadResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
+	127,  // 87: console.v1.RespondOperatingThreadResponse.turns:type_name -> console.v1.OperatingThreadTurn
+	114,  // 88: console.v1.InterruptOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
+	126,  // 89: console.v1.InterruptOperatingThreadResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
+	127,  // 90: console.v1.InterruptOperatingThreadResponse.turns:type_name -> console.v1.OperatingThreadTurn
+	114,  // 91: console.v1.ListOperatingThreadEventsRequest.query:type_name -> console.v1.ConsoleQuery
+	128,  // 92: console.v1.ListOperatingThreadEventsResponse.events:type_name -> console.v1.OperatingThreadEvent
+	126,  // 93: console.v1.ListOperatingThreadEventsResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
+	127,  // 94: console.v1.ListOperatingThreadEventsResponse.snapshot_turns:type_name -> console.v1.OperatingThreadTurn
+	114,  // 95: console.v1.WatchOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
+	128,  // 96: console.v1.WatchOperatingThreadResponse.events:type_name -> console.v1.OperatingThreadEvent
+	126,  // 97: console.v1.WatchOperatingThreadResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
+	127,  // 98: console.v1.WatchOperatingThreadResponse.snapshot_turns:type_name -> console.v1.OperatingThreadTurn
+	114,  // 99: console.v1.SubmitOperatingMessageRequest.query:type_name -> console.v1.ConsoleQuery
+	130,  // 100: console.v1.SubmitOperatingMessageRequest.attachments:type_name -> console.v1.OperatingAttachmentRef
+	120,  // 101: console.v1.SubmitOperatingMessageRequest.model_selection:type_name -> console.v1.OperatingModelSelection
+	151,  // 102: console.v1.SubmitOperatingMessageRequest.coding_acceptance:type_name -> console.v1.CodingAcceptanceContract
 	18,   // 103: console.v1.SubmitOperatingMessageRequest.task_kind:type_name -> console.v1.OperatingTaskKind
-	113,  // 104: console.v1.BeginOperatingAttachmentUploadRequest.query:type_name -> console.v1.ConsoleQuery
+	114,  // 104: console.v1.BeginOperatingAttachmentUploadRequest.query:type_name -> console.v1.ConsoleQuery
 	15,   // 105: console.v1.BeginOperatingAttachmentUploadRequest.scope:type_name -> console.v1.OperatingAttachmentScope
-	129,  // 106: console.v1.BeginOperatingAttachmentUploadResponse.attachment:type_name -> console.v1.OperatingAttachmentRef
-	845,  // 107: console.v1.BeginOperatingAttachmentUploadResponse.upload:type_name -> vfs.v1.VfsUploadTarget
-	113,  // 108: console.v1.CompleteOperatingAttachmentUploadRequest.query:type_name -> console.v1.ConsoleQuery
-	846,  // 109: console.v1.CompleteOperatingAttachmentUploadRequest.completed_parts:type_name -> vfs.v1.VfsCompletedUploadPart
-	129,  // 110: console.v1.CompleteOperatingAttachmentUploadResponse.attachment:type_name -> console.v1.OperatingAttachmentRef
-	113,  // 111: console.v1.ListOperatingAttachmentsRequest.query:type_name -> console.v1.ConsoleQuery
+	130,  // 106: console.v1.BeginOperatingAttachmentUploadResponse.attachment:type_name -> console.v1.OperatingAttachmentRef
+	850,  // 107: console.v1.BeginOperatingAttachmentUploadResponse.upload:type_name -> vfs.v1.VfsUploadTarget
+	114,  // 108: console.v1.CompleteOperatingAttachmentUploadRequest.query:type_name -> console.v1.ConsoleQuery
+	851,  // 109: console.v1.CompleteOperatingAttachmentUploadRequest.completed_parts:type_name -> vfs.v1.VfsCompletedUploadPart
+	130,  // 110: console.v1.CompleteOperatingAttachmentUploadResponse.attachment:type_name -> console.v1.OperatingAttachmentRef
+	114,  // 111: console.v1.ListOperatingAttachmentsRequest.query:type_name -> console.v1.ConsoleQuery
 	15,   // 112: console.v1.ListOperatingAttachmentsRequest.scope:type_name -> console.v1.OperatingAttachmentScope
-	129,  // 113: console.v1.ListOperatingAttachmentsResponse.attachments:type_name -> console.v1.OperatingAttachmentRef
-	120,  // 114: console.v1.SubmitOperatingMessageResponse.message:type_name -> console.v1.OperatingMessage
-	130,  // 115: console.v1.SubmitOperatingMessageResponse.receipts:type_name -> console.v1.OperatingReceipt
-	114,  // 116: console.v1.SubmitOperatingMessageResponse.capabilities:type_name -> console.v1.OperatingCapabilityState
-	120,  // 117: console.v1.SubmitOperatingMessageResponse.messages:type_name -> console.v1.OperatingMessage
-	115,  // 118: console.v1.SubmitOperatingMessageResponse.route:type_name -> console.v1.OperatingTurnRoute
-	126,  // 119: console.v1.SubmitOperatingMessageResponse.accepted_turn:type_name -> console.v1.OperatingThreadTurn
+	130,  // 113: console.v1.ListOperatingAttachmentsResponse.attachments:type_name -> console.v1.OperatingAttachmentRef
+	121,  // 114: console.v1.SubmitOperatingMessageResponse.message:type_name -> console.v1.OperatingMessage
+	131,  // 115: console.v1.SubmitOperatingMessageResponse.receipts:type_name -> console.v1.OperatingReceipt
+	115,  // 116: console.v1.SubmitOperatingMessageResponse.capabilities:type_name -> console.v1.OperatingCapabilityState
+	121,  // 117: console.v1.SubmitOperatingMessageResponse.messages:type_name -> console.v1.OperatingMessage
+	116,  // 118: console.v1.SubmitOperatingMessageResponse.route:type_name -> console.v1.OperatingTurnRoute
+	127,  // 119: console.v1.SubmitOperatingMessageResponse.accepted_turn:type_name -> console.v1.OperatingThreadTurn
 	21,   // 120: console.v1.DexComputerCorrectionEpisode.labels:type_name -> console.v1.DexComputerCorrectionLabel
 	20,   // 121: console.v1.DexComputerCorrectionEpisode.review_state:type_name -> console.v1.OperatingCorrectionReviewState
 	19,   // 122: console.v1.OperatingCorrectionCandidate.category:type_name -> console.v1.OperatingCorrectionCategory
 	20,   // 123: console.v1.OperatingCorrectionCandidate.review_state:type_name -> console.v1.OperatingCorrectionReviewState
-	535,  // 124: console.v1.OperatingCorrectionCandidate.evidence_refs:type_name -> console.v1.RelatedResource
-	840,  // 125: console.v1.OperatingCorrectionCandidate.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 126: console.v1.OperatingCorrectionCandidate.reviewed_at:type_name -> google.protobuf.Timestamp
-	447,  // 127: console.v1.OperatingCorrectionCandidate.review_capability:type_name -> console.v1.WorkspaceSettingsCapability
-	159,  // 128: console.v1.OperatingCorrectionCandidate.correction_episode:type_name -> console.v1.DexComputerCorrectionEpisode
-	113,  // 129: console.v1.SubmitOperatingCorrectionRequest.query:type_name -> console.v1.ConsoleQuery
+	536,  // 124: console.v1.OperatingCorrectionCandidate.evidence_refs:type_name -> console.v1.RelatedResource
+	845,  // 125: console.v1.OperatingCorrectionCandidate.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 126: console.v1.OperatingCorrectionCandidate.reviewed_at:type_name -> google.protobuf.Timestamp
+	448,  // 127: console.v1.OperatingCorrectionCandidate.review_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	160,  // 128: console.v1.OperatingCorrectionCandidate.correction_episode:type_name -> console.v1.DexComputerCorrectionEpisode
+	114,  // 129: console.v1.SubmitOperatingCorrectionRequest.query:type_name -> console.v1.ConsoleQuery
 	19,   // 130: console.v1.SubmitOperatingCorrectionRequest.category:type_name -> console.v1.OperatingCorrectionCategory
-	160,  // 131: console.v1.SubmitOperatingCorrectionResponse.correction:type_name -> console.v1.OperatingCorrectionCandidate
+	161,  // 131: console.v1.SubmitOperatingCorrectionResponse.correction:type_name -> console.v1.OperatingCorrectionCandidate
 	22,   // 132: console.v1.OperatingFeedback.sentiment:type_name -> console.v1.OperatingFeedbackSentiment
 	19,   // 133: console.v1.OperatingFeedback.category:type_name -> console.v1.OperatingCorrectionCategory
 	24,   // 134: console.v1.OperatingFeedback.classification_source:type_name -> console.v1.OperatingFeedbackClassificationSource
 	25,   // 135: console.v1.OperatingFeedback.remediation_action:type_name -> console.v1.OperatingFeedbackRemediationAction
 	26,   // 136: console.v1.OperatingFeedback.remediation_outcome:type_name -> console.v1.OperatingFeedbackRemediationOutcome
-	840,  // 137: console.v1.OperatingFeedback.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 138: console.v1.OperatingFeedback.updated_at:type_name -> google.protobuf.Timestamp
-	840,  // 139: console.v1.OperatingFeedback.resolved_at:type_name -> google.protobuf.Timestamp
+	845,  // 137: console.v1.OperatingFeedback.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 138: console.v1.OperatingFeedback.updated_at:type_name -> google.protobuf.Timestamp
+	845,  // 139: console.v1.OperatingFeedback.resolved_at:type_name -> google.protobuf.Timestamp
 	23,   // 140: console.v1.OperatingFeedback.reason:type_name -> console.v1.OperatingFeedbackReason
 	27,   // 141: console.v1.OperatingFeedback.lifecycle_state:type_name -> console.v1.OperatingFeedbackLifecycleState
-	113,  // 142: console.v1.SubmitOperatingFeedbackRequest.query:type_name -> console.v1.ConsoleQuery
+	114,  // 142: console.v1.SubmitOperatingFeedbackRequest.query:type_name -> console.v1.ConsoleQuery
 	22,   // 143: console.v1.SubmitOperatingFeedbackRequest.sentiment:type_name -> console.v1.OperatingFeedbackSentiment
 	19,   // 144: console.v1.SubmitOperatingFeedbackRequest.category:type_name -> console.v1.OperatingCorrectionCategory
 	24,   // 145: console.v1.SubmitOperatingFeedbackRequest.classification_source:type_name -> console.v1.OperatingFeedbackClassificationSource
 	25,   // 146: console.v1.SubmitOperatingFeedbackRequest.remediation_action:type_name -> console.v1.OperatingFeedbackRemediationAction
 	23,   // 147: console.v1.SubmitOperatingFeedbackRequest.reason:type_name -> console.v1.OperatingFeedbackReason
 	27,   // 148: console.v1.SubmitOperatingFeedbackRequest.lifecycle_state:type_name -> console.v1.OperatingFeedbackLifecycleState
-	163,  // 149: console.v1.SubmitOperatingFeedbackResponse.feedback:type_name -> console.v1.OperatingFeedback
-	160,  // 150: console.v1.SubmitOperatingFeedbackResponse.correction:type_name -> console.v1.OperatingCorrectionCandidate
-	184,  // 151: console.v1.SubmitOperatingFeedbackResponse.fact_receipt:type_name -> console.v1.CustomerIntelligenceReceipt
-	840,  // 152: console.v1.ProductIssueReport.created_at:type_name -> google.protobuf.Timestamp
-	113,  // 153: console.v1.SubmitProductIssueReportRequest.query:type_name -> console.v1.ConsoleQuery
-	169,  // 154: console.v1.SubmitProductIssueReportRequest.context:type_name -> console.v1.ProductIssueReportContext
-	113,  // 155: console.v1.SubmitNativeProductIssueReportRequest.query:type_name -> console.v1.ConsoleQuery
-	169,  // 156: console.v1.SubmitNativeProductIssueReportRequest.context:type_name -> console.v1.ProductIssueReportContext
-	170,  // 157: console.v1.ProductIssueReportContext.evidence:type_name -> console.v1.ProductIssueReportEvidence
-	166,  // 158: console.v1.SubmitProductIssueReportResponse.report:type_name -> console.v1.ProductIssueReport
-	840,  // 159: console.v1.StaffProductIssueReport.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 160: console.v1.StaffProductIssueReport.engaged_at:type_name -> google.protobuf.Timestamp
-	169,  // 161: console.v1.StaffProductIssueReport.context:type_name -> console.v1.ProductIssueReportContext
-	172,  // 162: console.v1.ListStaffProductIssueReportsResponse.reports:type_name -> console.v1.StaffProductIssueReport
-	172,  // 163: console.v1.EngageStaffProductIssueReportResponse.report:type_name -> console.v1.StaffProductIssueReport
-	113,  // 164: console.v1.GetOperatingFeedbackRequest.query:type_name -> console.v1.ConsoleQuery
-	163,  // 165: console.v1.GetOperatingFeedbackResponse.feedback:type_name -> console.v1.OperatingFeedback
-	113,  // 166: console.v1.ResolveOperatingFeedbackRemediationRequest.query:type_name -> console.v1.ConsoleQuery
+	164,  // 149: console.v1.SubmitOperatingFeedbackResponse.feedback:type_name -> console.v1.OperatingFeedback
+	161,  // 150: console.v1.SubmitOperatingFeedbackResponse.correction:type_name -> console.v1.OperatingCorrectionCandidate
+	185,  // 151: console.v1.SubmitOperatingFeedbackResponse.fact_receipt:type_name -> console.v1.CustomerIntelligenceReceipt
+	845,  // 152: console.v1.ProductIssueReport.created_at:type_name -> google.protobuf.Timestamp
+	114,  // 153: console.v1.SubmitProductIssueReportRequest.query:type_name -> console.v1.ConsoleQuery
+	170,  // 154: console.v1.SubmitProductIssueReportRequest.context:type_name -> console.v1.ProductIssueReportContext
+	114,  // 155: console.v1.SubmitNativeProductIssueReportRequest.query:type_name -> console.v1.ConsoleQuery
+	170,  // 156: console.v1.SubmitNativeProductIssueReportRequest.context:type_name -> console.v1.ProductIssueReportContext
+	171,  // 157: console.v1.ProductIssueReportContext.evidence:type_name -> console.v1.ProductIssueReportEvidence
+	167,  // 158: console.v1.SubmitProductIssueReportResponse.report:type_name -> console.v1.ProductIssueReport
+	845,  // 159: console.v1.StaffProductIssueReport.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 160: console.v1.StaffProductIssueReport.engaged_at:type_name -> google.protobuf.Timestamp
+	170,  // 161: console.v1.StaffProductIssueReport.context:type_name -> console.v1.ProductIssueReportContext
+	173,  // 162: console.v1.ListStaffProductIssueReportsResponse.reports:type_name -> console.v1.StaffProductIssueReport
+	173,  // 163: console.v1.EngageStaffProductIssueReportResponse.report:type_name -> console.v1.StaffProductIssueReport
+	114,  // 164: console.v1.GetOperatingFeedbackRequest.query:type_name -> console.v1.ConsoleQuery
+	164,  // 165: console.v1.GetOperatingFeedbackResponse.feedback:type_name -> console.v1.OperatingFeedback
+	114,  // 166: console.v1.ResolveOperatingFeedbackRemediationRequest.query:type_name -> console.v1.ConsoleQuery
 	26,   // 167: console.v1.ResolveOperatingFeedbackRemediationRequest.outcome:type_name -> console.v1.OperatingFeedbackRemediationOutcome
-	163,  // 168: console.v1.ResolveOperatingFeedbackRemediationResponse.feedback:type_name -> console.v1.OperatingFeedback
-	184,  // 169: console.v1.ResolveOperatingFeedbackRemediationResponse.fact_receipt:type_name -> console.v1.CustomerIntelligenceReceipt
+	164,  // 168: console.v1.ResolveOperatingFeedbackRemediationResponse.feedback:type_name -> console.v1.OperatingFeedback
+	185,  // 169: console.v1.ResolveOperatingFeedbackRemediationResponse.fact_receipt:type_name -> console.v1.CustomerIntelligenceReceipt
 	31,   // 170: console.v1.CustomerIntelligenceEvidenceRef.polarity:type_name -> console.v1.CustomerIntelligenceEvidencePolarity
 	30,   // 171: console.v1.CustomerIntelligenceFactRevision.subject_kind:type_name -> console.v1.CustomerIntelligenceSubjectKind
 	28,   // 172: console.v1.CustomerIntelligenceFactRevision.authority:type_name -> console.v1.CustomerIntelligenceAuthority
 	29,   // 173: console.v1.CustomerIntelligenceFactRevision.lifecycle_state:type_name -> console.v1.CustomerIntelligenceLifecycleState
-	181,  // 174: console.v1.CustomerIntelligenceFactRevision.evidence_refs:type_name -> console.v1.CustomerIntelligenceEvidenceRef
+	182,  // 174: console.v1.CustomerIntelligenceFactRevision.evidence_refs:type_name -> console.v1.CustomerIntelligenceEvidenceRef
 	32,   // 175: console.v1.CustomerIntelligenceFactRevision.producer_kind:type_name -> console.v1.CustomerIntelligenceProducerKind
-	840,  // 176: console.v1.CustomerIntelligenceFactRevision.valid_from:type_name -> google.protobuf.Timestamp
-	840,  // 177: console.v1.CustomerIntelligenceFactRevision.expires_at:type_name -> google.protobuf.Timestamp
-	840,  // 178: console.v1.CustomerIntelligenceFactRevision.created_at:type_name -> google.protobuf.Timestamp
-	182,  // 179: console.v1.CustomerIntelligenceFact.current:type_name -> console.v1.CustomerIntelligenceFactRevision
-	182,  // 180: console.v1.CustomerIntelligenceFact.revisions:type_name -> console.v1.CustomerIntelligenceFactRevision
+	845,  // 176: console.v1.CustomerIntelligenceFactRevision.valid_from:type_name -> google.protobuf.Timestamp
+	845,  // 177: console.v1.CustomerIntelligenceFactRevision.expires_at:type_name -> google.protobuf.Timestamp
+	845,  // 178: console.v1.CustomerIntelligenceFactRevision.created_at:type_name -> google.protobuf.Timestamp
+	183,  // 179: console.v1.CustomerIntelligenceFact.current:type_name -> console.v1.CustomerIntelligenceFactRevision
+	183,  // 180: console.v1.CustomerIntelligenceFact.revisions:type_name -> console.v1.CustomerIntelligenceFactRevision
 	28,   // 181: console.v1.CustomerIntelligenceReceipt.authority:type_name -> console.v1.CustomerIntelligenceAuthority
 	29,   // 182: console.v1.CustomerIntelligenceReceipt.lifecycle_state:type_name -> console.v1.CustomerIntelligenceLifecycleState
-	113,  // 183: console.v1.ListCustomerIntelligenceFactsRequest.query:type_name -> console.v1.ConsoleQuery
+	114,  // 183: console.v1.ListCustomerIntelligenceFactsRequest.query:type_name -> console.v1.ConsoleQuery
 	28,   // 184: console.v1.ListCustomerIntelligenceFactsRequest.authorities:type_name -> console.v1.CustomerIntelligenceAuthority
 	29,   // 185: console.v1.ListCustomerIntelligenceFactsRequest.lifecycle_states:type_name -> console.v1.CustomerIntelligenceLifecycleState
 	30,   // 186: console.v1.ListCustomerIntelligenceFactsRequest.subject_kind:type_name -> console.v1.CustomerIntelligenceSubjectKind
-	840,  // 187: console.v1.ListCustomerIntelligenceFactsRequest.created_after:type_name -> google.protobuf.Timestamp
-	183,  // 188: console.v1.ListCustomerIntelligenceFactsResponse.facts:type_name -> console.v1.CustomerIntelligenceFact
-	113,  // 189: console.v1.GetCustomerIntelligenceFactRequest.query:type_name -> console.v1.ConsoleQuery
-	183,  // 190: console.v1.GetCustomerIntelligenceFactResponse.fact:type_name -> console.v1.CustomerIntelligenceFact
-	113,  // 191: console.v1.ReviewCustomerIntelligenceFactRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 187: console.v1.ListCustomerIntelligenceFactsRequest.created_after:type_name -> google.protobuf.Timestamp
+	184,  // 188: console.v1.ListCustomerIntelligenceFactsResponse.facts:type_name -> console.v1.CustomerIntelligenceFact
+	114,  // 189: console.v1.GetCustomerIntelligenceFactRequest.query:type_name -> console.v1.ConsoleQuery
+	184,  // 190: console.v1.GetCustomerIntelligenceFactResponse.fact:type_name -> console.v1.CustomerIntelligenceFact
+	114,  // 191: console.v1.ReviewCustomerIntelligenceFactRequest.query:type_name -> console.v1.ConsoleQuery
 	33,   // 192: console.v1.ReviewCustomerIntelligenceFactRequest.decision:type_name -> console.v1.CustomerIntelligenceReviewDecision
-	181,  // 193: console.v1.ReviewCustomerIntelligenceFactRequest.evidence_refs:type_name -> console.v1.CustomerIntelligenceEvidenceRef
-	183,  // 194: console.v1.ReviewCustomerIntelligenceFactResponse.fact:type_name -> console.v1.CustomerIntelligenceFact
-	184,  // 195: console.v1.ReviewCustomerIntelligenceFactResponse.receipt:type_name -> console.v1.CustomerIntelligenceReceipt
-	113,  // 196: console.v1.ProposeCustomerIntelligenceFactRequest.query:type_name -> console.v1.ConsoleQuery
+	182,  // 193: console.v1.ReviewCustomerIntelligenceFactRequest.evidence_refs:type_name -> console.v1.CustomerIntelligenceEvidenceRef
+	184,  // 194: console.v1.ReviewCustomerIntelligenceFactResponse.fact:type_name -> console.v1.CustomerIntelligenceFact
+	185,  // 195: console.v1.ReviewCustomerIntelligenceFactResponse.receipt:type_name -> console.v1.CustomerIntelligenceReceipt
+	114,  // 196: console.v1.ProposeCustomerIntelligenceFactRequest.query:type_name -> console.v1.ConsoleQuery
 	30,   // 197: console.v1.ProposeCustomerIntelligenceFactRequest.subject_kind:type_name -> console.v1.CustomerIntelligenceSubjectKind
 	28,   // 198: console.v1.ProposeCustomerIntelligenceFactRequest.authority:type_name -> console.v1.CustomerIntelligenceAuthority
-	181,  // 199: console.v1.ProposeCustomerIntelligenceFactRequest.evidence_refs:type_name -> console.v1.CustomerIntelligenceEvidenceRef
+	182,  // 199: console.v1.ProposeCustomerIntelligenceFactRequest.evidence_refs:type_name -> console.v1.CustomerIntelligenceEvidenceRef
 	32,   // 200: console.v1.ProposeCustomerIntelligenceFactRequest.producer_kind:type_name -> console.v1.CustomerIntelligenceProducerKind
-	840,  // 201: console.v1.ProposeCustomerIntelligenceFactRequest.expires_at:type_name -> google.protobuf.Timestamp
-	183,  // 202: console.v1.ProposeCustomerIntelligenceFactResponse.fact:type_name -> console.v1.CustomerIntelligenceFact
-	184,  // 203: console.v1.ProposeCustomerIntelligenceFactResponse.receipt:type_name -> console.v1.CustomerIntelligenceReceipt
-	113,  // 204: console.v1.RespondToCustomerFactConfirmationRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 201: console.v1.ProposeCustomerIntelligenceFactRequest.expires_at:type_name -> google.protobuf.Timestamp
+	184,  // 202: console.v1.ProposeCustomerIntelligenceFactResponse.fact:type_name -> console.v1.CustomerIntelligenceFact
+	185,  // 203: console.v1.ProposeCustomerIntelligenceFactResponse.receipt:type_name -> console.v1.CustomerIntelligenceReceipt
+	114,  // 204: console.v1.RespondToCustomerFactConfirmationRequest.query:type_name -> console.v1.ConsoleQuery
 	34,   // 205: console.v1.RespondToCustomerFactConfirmationRequest.response:type_name -> console.v1.CustomerFactConfirmationResponse
-	184,  // 206: console.v1.RespondToCustomerFactConfirmationResponse.receipt:type_name -> console.v1.CustomerIntelligenceReceipt
+	185,  // 206: console.v1.RespondToCustomerFactConfirmationResponse.receipt:type_name -> console.v1.CustomerIntelligenceReceipt
 	28,   // 207: console.v1.AggregateCustomerIntelligencePatternsRequest.authorities:type_name -> console.v1.CustomerIntelligenceAuthority
 	29,   // 208: console.v1.AggregateCustomerIntelligencePatternsRequest.lifecycle_states:type_name -> console.v1.CustomerIntelligenceLifecycleState
-	840,  // 209: console.v1.AggregateCustomerIntelligencePatternsRequest.created_after:type_name -> google.protobuf.Timestamp
-	196,  // 210: console.v1.AggregateCustomerIntelligencePatternsResponse.patterns:type_name -> console.v1.CustomerIntelligencePattern
-	113,  // 211: console.v1.ListOperatingCorrectionsRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 209: console.v1.AggregateCustomerIntelligencePatternsRequest.created_after:type_name -> google.protobuf.Timestamp
+	197,  // 210: console.v1.AggregateCustomerIntelligencePatternsResponse.patterns:type_name -> console.v1.CustomerIntelligencePattern
+	114,  // 211: console.v1.ListOperatingCorrectionsRequest.query:type_name -> console.v1.ConsoleQuery
 	20,   // 212: console.v1.ListOperatingCorrectionsRequest.review_state:type_name -> console.v1.OperatingCorrectionReviewState
-	160,  // 213: console.v1.ListOperatingCorrectionsResponse.corrections:type_name -> console.v1.OperatingCorrectionCandidate
-	113,  // 214: console.v1.ReviewOperatingCorrectionRequest.query:type_name -> console.v1.ConsoleQuery
+	161,  // 213: console.v1.ListOperatingCorrectionsResponse.corrections:type_name -> console.v1.OperatingCorrectionCandidate
+	114,  // 214: console.v1.ReviewOperatingCorrectionRequest.query:type_name -> console.v1.ConsoleQuery
 	20,   // 215: console.v1.ReviewOperatingCorrectionRequest.decision:type_name -> console.v1.OperatingCorrectionReviewState
-	535,  // 216: console.v1.ReviewOperatingCorrectionRequest.evidence_refs:type_name -> console.v1.RelatedResource
-	160,  // 217: console.v1.ReviewOperatingCorrectionResponse.correction:type_name -> console.v1.OperatingCorrectionCandidate
-	847,  // 218: console.v1.ListWorkspaceMemoriesRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
-	113,  // 219: console.v1.ListWorkspaceMemoriesRequest.query:type_name -> console.v1.ConsoleQuery
-	204,  // 220: console.v1.ListWorkspaceMemoriesResponse.memories:type_name -> console.v1.WorkspaceMemory
-	847,  // 221: console.v1.WorkspaceMemory.review_status:type_name -> memory.v1.MemoryReviewStatus
-	848,  // 222: console.v1.WorkspaceMemory.scope:type_name -> memory.v1.Scope
-	840,  // 223: console.v1.WorkspaceMemory.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 224: console.v1.WorkspaceMemory.updated_at:type_name -> google.protobuf.Timestamp
-	113,  // 225: console.v1.CorrectWorkspaceMemoryRequest.query:type_name -> console.v1.ConsoleQuery
-	204,  // 226: console.v1.CorrectWorkspaceMemoryResponse.memory:type_name -> console.v1.WorkspaceMemory
-	113,  // 227: console.v1.ReviewWorkspaceMemoryRequest.query:type_name -> console.v1.ConsoleQuery
-	847,  // 228: console.v1.ReviewWorkspaceMemoryRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
-	204,  // 229: console.v1.ReviewWorkspaceMemoryResponse.memory:type_name -> console.v1.WorkspaceMemory
-	113,  // 230: console.v1.ForgetWorkspaceMemoryRequest.query:type_name -> console.v1.ConsoleQuery
-	840,  // 231: console.v1.OperatingHistorySearchFilter.occurred_after:type_name -> google.protobuf.Timestamp
-	840,  // 232: console.v1.OperatingHistorySearchFilter.occurred_before:type_name -> google.protobuf.Timestamp
-	113,  // 233: console.v1.SearchOperatingHistoryRequest.query:type_name -> console.v1.ConsoleQuery
-	211,  // 234: console.v1.SearchOperatingHistoryRequest.filter:type_name -> console.v1.OperatingHistorySearchFilter
-	840,  // 235: console.v1.OperatingHistorySearchResult.occurred_at:type_name -> google.protobuf.Timestamp
-	535,  // 236: console.v1.OperatingHistorySearchResult.source_ref:type_name -> console.v1.RelatedResource
-	213,  // 237: console.v1.SearchOperatingHistoryResponse.results:type_name -> console.v1.OperatingHistorySearchResult
-	113,  // 238: console.v1.GetOperatingHistoryContextRequest.query:type_name -> console.v1.ConsoleQuery
-	840,  // 239: console.v1.OperatingHistoryContextRecord.occurred_at:type_name -> google.protobuf.Timestamp
-	535,  // 240: console.v1.OperatingHistoryContextRecord.source_ref:type_name -> console.v1.RelatedResource
-	216,  // 241: console.v1.GetOperatingHistoryContextResponse.records:type_name -> console.v1.OperatingHistoryContextRecord
-	219,  // 242: console.v1.OperatingCapabilityContract.identity_authorization:type_name -> console.v1.IdentityToolAuthorizationEvidence
+	536,  // 216: console.v1.ReviewOperatingCorrectionRequest.evidence_refs:type_name -> console.v1.RelatedResource
+	161,  // 217: console.v1.ReviewOperatingCorrectionResponse.correction:type_name -> console.v1.OperatingCorrectionCandidate
+	852,  // 218: console.v1.ListWorkspaceMemoriesRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
+	114,  // 219: console.v1.ListWorkspaceMemoriesRequest.query:type_name -> console.v1.ConsoleQuery
+	205,  // 220: console.v1.ListWorkspaceMemoriesResponse.memories:type_name -> console.v1.WorkspaceMemory
+	852,  // 221: console.v1.WorkspaceMemory.review_status:type_name -> memory.v1.MemoryReviewStatus
+	853,  // 222: console.v1.WorkspaceMemory.scope:type_name -> memory.v1.Scope
+	845,  // 223: console.v1.WorkspaceMemory.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 224: console.v1.WorkspaceMemory.updated_at:type_name -> google.protobuf.Timestamp
+	114,  // 225: console.v1.CorrectWorkspaceMemoryRequest.query:type_name -> console.v1.ConsoleQuery
+	205,  // 226: console.v1.CorrectWorkspaceMemoryResponse.memory:type_name -> console.v1.WorkspaceMemory
+	114,  // 227: console.v1.ReviewWorkspaceMemoryRequest.query:type_name -> console.v1.ConsoleQuery
+	852,  // 228: console.v1.ReviewWorkspaceMemoryRequest.review_status:type_name -> memory.v1.MemoryReviewStatus
+	205,  // 229: console.v1.ReviewWorkspaceMemoryResponse.memory:type_name -> console.v1.WorkspaceMemory
+	114,  // 230: console.v1.ForgetWorkspaceMemoryRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 231: console.v1.OperatingHistorySearchFilter.occurred_after:type_name -> google.protobuf.Timestamp
+	845,  // 232: console.v1.OperatingHistorySearchFilter.occurred_before:type_name -> google.protobuf.Timestamp
+	114,  // 233: console.v1.SearchOperatingHistoryRequest.query:type_name -> console.v1.ConsoleQuery
+	212,  // 234: console.v1.SearchOperatingHistoryRequest.filter:type_name -> console.v1.OperatingHistorySearchFilter
+	845,  // 235: console.v1.OperatingHistorySearchResult.occurred_at:type_name -> google.protobuf.Timestamp
+	536,  // 236: console.v1.OperatingHistorySearchResult.source_ref:type_name -> console.v1.RelatedResource
+	214,  // 237: console.v1.SearchOperatingHistoryResponse.results:type_name -> console.v1.OperatingHistorySearchResult
+	114,  // 238: console.v1.GetOperatingHistoryContextRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 239: console.v1.OperatingHistoryContextRecord.occurred_at:type_name -> google.protobuf.Timestamp
+	536,  // 240: console.v1.OperatingHistoryContextRecord.source_ref:type_name -> console.v1.RelatedResource
+	217,  // 241: console.v1.GetOperatingHistoryContextResponse.records:type_name -> console.v1.OperatingHistoryContextRecord
+	220,  // 242: console.v1.OperatingCapabilityContract.identity_authorization:type_name -> console.v1.IdentityToolAuthorizationEvidence
 	35,   // 243: console.v1.OperatingExecutionProfile.kind:type_name -> console.v1.OperatingExecutionProfileKind
 	36,   // 244: console.v1.OperatingHostedFrontDecision.kind:type_name -> console.v1.OperatingHostedFrontDecisionKind
-	849,  // 245: console.v1.OperatingInitialActionResult.state:type_name -> toolexecution.v1.ToolExecutionState
-	844,  // 246: console.v1.OperatingInitialActionResult.safe_output:type_name -> google.protobuf.Struct
-	535,  // 247: console.v1.OperatingInitialActionResult.evidence_refs:type_name -> console.v1.RelatedResource
-	840,  // 248: console.v1.OperatingInitialActionResult.accepted_at:type_name -> google.protobuf.Timestamp
+	854,  // 245: console.v1.OperatingInitialActionResult.state:type_name -> toolexecution.v1.ToolExecutionState
+	849,  // 246: console.v1.OperatingInitialActionResult.safe_output:type_name -> google.protobuf.Struct
+	536,  // 247: console.v1.OperatingInitialActionResult.evidence_refs:type_name -> console.v1.RelatedResource
+	845,  // 248: console.v1.OperatingInitialActionResult.accepted_at:type_name -> google.protobuf.Timestamp
 	38,   // 249: console.v1.OperatingManagedInferenceOutputTokenBudget.origin:type_name -> console.v1.OperatingManagedInferenceBudgetOrigin
-	223,  // 250: console.v1.OperatingManagedInferenceScope.provider_candidates:type_name -> console.v1.OperatingManagedInferenceProviderCandidate
+	224,  // 250: console.v1.OperatingManagedInferenceScope.provider_candidates:type_name -> console.v1.OperatingManagedInferenceProviderCandidate
 	37,   // 251: console.v1.OperatingManagedInferenceScope.routing:type_name -> console.v1.OperatingManagedInferenceRouting
-	224,  // 252: console.v1.OperatingManagedInferenceScope.output_token_budget:type_name -> console.v1.OperatingManagedInferenceOutputTokenBudget
-	840,  // 253: console.v1.OperatingRunDispatch.enqueued_at:type_name -> google.protobuf.Timestamp
-	850,  // 254: console.v1.OperatingRunDispatch.attachment_mounts:type_name -> toolexecution.v1.ToolExecutionAttachmentMount
-	218,  // 255: console.v1.OperatingRunDispatch.capability_contract:type_name -> console.v1.OperatingCapabilityContract
-	128,  // 256: console.v1.OperatingRunDispatch.response:type_name -> console.v1.OperatingThreadResponse
-	220,  // 257: console.v1.OperatingRunDispatch.execution_profile:type_name -> console.v1.OperatingExecutionProfile
-	222,  // 258: console.v1.OperatingRunDispatch.initial_action:type_name -> console.v1.OperatingInitialActionResult
-	221,  // 259: console.v1.OperatingRunDispatch.hosted_front_decision:type_name -> console.v1.OperatingHostedFrontDecision
-	228,  // 260: console.v1.OperatingRunDispatch.required_initial_tool_intent:type_name -> console.v1.OperatingRequiredInitialToolIntent
-	225,  // 261: console.v1.OperatingRunDispatch.managed_inference:type_name -> console.v1.OperatingManagedInferenceScope
-	150,  // 262: console.v1.OperatingRunDispatch.coding_acceptance:type_name -> console.v1.CodingAcceptanceContract
-	227,  // 263: console.v1.OperatingRunDispatch.task_environment:type_name -> console.v1.OperatingTaskEnvironmentBinding
-	851,  // 264: console.v1.OperatingRunDispatch.work_envelope:type_name -> agentruntime.v1.RuntimeWorkEnvelope
-	844,  // 265: console.v1.OperatingRunDispatch.surface_context:type_name -> google.protobuf.Struct
-	842,  // 266: console.v1.OperatingTaskEnvironmentBinding.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
-	843,  // 267: console.v1.OperatingTaskEnvironmentBinding.workspace_recipe:type_name -> toolexecution.v1.ToolExecutionWorkspaceRecipe
-	844,  // 268: console.v1.OperatingRequiredInitialToolIntent.arguments:type_name -> google.protobuf.Struct
-	841,  // 269: console.v1.OperatingRequiredInitialToolIntent.risk_level:type_name -> common.v1.RiskLevel
-	836,  // 270: console.v1.OperatingRequiredInitialToolIntent.metadata:type_name -> console.v1.OperatingRequiredInitialToolIntent.MetadataEntry
-	113,  // 271: console.v1.ResolveOperatingReceiptActionRequest.query:type_name -> console.v1.ConsoleQuery
-	131,  // 272: console.v1.ResolveOperatingReceiptActionRequest.action:type_name -> console.v1.OperatingReceiptAction
-	130,  // 273: console.v1.ResolveOperatingReceiptActionResponse.receipt:type_name -> console.v1.OperatingReceipt
-	114,  // 274: console.v1.ResolveOperatingReceiptActionResponse.capabilities:type_name -> console.v1.OperatingCapabilityState
-	113,  // 275: console.v1.GetOperatingReceiptRequest.query:type_name -> console.v1.ConsoleQuery
-	150,  // 276: console.v1.OperatingCodingAcceptance.contract:type_name -> console.v1.CodingAcceptanceContract
-	233,  // 277: console.v1.OperatingCodingAcceptance.outputs:type_name -> console.v1.OperatingCodingOutput
-	130,  // 278: console.v1.GetOperatingReceiptResponse.receipt:type_name -> console.v1.OperatingReceipt
+	225,  // 252: console.v1.OperatingManagedInferenceScope.output_token_budget:type_name -> console.v1.OperatingManagedInferenceOutputTokenBudget
+	845,  // 253: console.v1.OperatingRunDispatch.enqueued_at:type_name -> google.protobuf.Timestamp
+	855,  // 254: console.v1.OperatingRunDispatch.attachment_mounts:type_name -> toolexecution.v1.ToolExecutionAttachmentMount
+	219,  // 255: console.v1.OperatingRunDispatch.capability_contract:type_name -> console.v1.OperatingCapabilityContract
+	129,  // 256: console.v1.OperatingRunDispatch.response:type_name -> console.v1.OperatingThreadResponse
+	221,  // 257: console.v1.OperatingRunDispatch.execution_profile:type_name -> console.v1.OperatingExecutionProfile
+	223,  // 258: console.v1.OperatingRunDispatch.initial_action:type_name -> console.v1.OperatingInitialActionResult
+	222,  // 259: console.v1.OperatingRunDispatch.hosted_front_decision:type_name -> console.v1.OperatingHostedFrontDecision
+	229,  // 260: console.v1.OperatingRunDispatch.required_initial_tool_intent:type_name -> console.v1.OperatingRequiredInitialToolIntent
+	226,  // 261: console.v1.OperatingRunDispatch.managed_inference:type_name -> console.v1.OperatingManagedInferenceScope
+	151,  // 262: console.v1.OperatingRunDispatch.coding_acceptance:type_name -> console.v1.CodingAcceptanceContract
+	228,  // 263: console.v1.OperatingRunDispatch.task_environment:type_name -> console.v1.OperatingTaskEnvironmentBinding
+	856,  // 264: console.v1.OperatingRunDispatch.work_envelope:type_name -> agentruntime.v1.RuntimeWorkEnvelope
+	849,  // 265: console.v1.OperatingRunDispatch.surface_context:type_name -> google.protobuf.Struct
+	847,  // 266: console.v1.OperatingTaskEnvironmentBinding.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
+	848,  // 267: console.v1.OperatingTaskEnvironmentBinding.workspace_recipe:type_name -> toolexecution.v1.ToolExecutionWorkspaceRecipe
+	849,  // 268: console.v1.OperatingRequiredInitialToolIntent.arguments:type_name -> google.protobuf.Struct
+	846,  // 269: console.v1.OperatingRequiredInitialToolIntent.risk_level:type_name -> common.v1.RiskLevel
+	841,  // 270: console.v1.OperatingRequiredInitialToolIntent.metadata:type_name -> console.v1.OperatingRequiredInitialToolIntent.MetadataEntry
+	114,  // 271: console.v1.ResolveOperatingReceiptActionRequest.query:type_name -> console.v1.ConsoleQuery
+	132,  // 272: console.v1.ResolveOperatingReceiptActionRequest.action:type_name -> console.v1.OperatingReceiptAction
+	131,  // 273: console.v1.ResolveOperatingReceiptActionResponse.receipt:type_name -> console.v1.OperatingReceipt
+	115,  // 274: console.v1.ResolveOperatingReceiptActionResponse.capabilities:type_name -> console.v1.OperatingCapabilityState
+	114,  // 275: console.v1.GetOperatingReceiptRequest.query:type_name -> console.v1.ConsoleQuery
+	151,  // 276: console.v1.OperatingCodingAcceptance.contract:type_name -> console.v1.CodingAcceptanceContract
+	234,  // 277: console.v1.OperatingCodingAcceptance.outputs:type_name -> console.v1.OperatingCodingOutput
+	131,  // 278: console.v1.GetOperatingReceiptResponse.receipt:type_name -> console.v1.OperatingReceipt
 	47,   // 279: console.v1.ComputerMissionRollbackArgumentBinding.source:type_name -> console.v1.ComputerMissionRollbackArgumentSource
-	844,  // 280: console.v1.ComputerMissionCompensatingAction.rollback_arguments:type_name -> google.protobuf.Struct
-	236,  // 281: console.v1.ComputerMissionCompensatingAction.rollback_argument_bindings:type_name -> console.v1.ComputerMissionRollbackArgumentBinding
+	849,  // 280: console.v1.ComputerMissionCompensatingAction.rollback_arguments:type_name -> google.protobuf.Struct
+	237,  // 281: console.v1.ComputerMissionCompensatingAction.rollback_argument_bindings:type_name -> console.v1.ComputerMissionRollbackArgumentBinding
 	44,   // 282: console.v1.ComputerMissionCanaryThreshold.dimension:type_name -> console.v1.ComputerMissionCanaryScoreDimension
 	41,   // 283: console.v1.ComputerMissionCanaryDefinition.scenario_kind:type_name -> console.v1.ComputerMissionCanaryScenarioKind
 	39,   // 284: console.v1.ComputerMissionCanaryDefinition.authority_mode:type_name -> console.v1.ComputerMissionAuthorityMode
-	241,  // 285: console.v1.ComputerMissionCanaryDefinition.budget:type_name -> console.v1.ComputerMissionBudget
-	235,  // 286: console.v1.ComputerMissionCanaryDefinition.required_evidence_gates:type_name -> console.v1.ComputerMissionEvidenceGate
-	237,  // 287: console.v1.ComputerMissionCanaryDefinition.required_compensating_effects:type_name -> console.v1.ComputerMissionCompensatingAction
-	238,  // 288: console.v1.ComputerMissionCanaryDefinition.thresholds:type_name -> console.v1.ComputerMissionCanaryThreshold
-	235,  // 289: console.v1.ComputerMissionCanaryDefinition.hard_safety_gates:type_name -> console.v1.ComputerMissionEvidenceGate
+	242,  // 285: console.v1.ComputerMissionCanaryDefinition.budget:type_name -> console.v1.ComputerMissionBudget
+	236,  // 286: console.v1.ComputerMissionCanaryDefinition.required_evidence_gates:type_name -> console.v1.ComputerMissionEvidenceGate
+	238,  // 287: console.v1.ComputerMissionCanaryDefinition.required_compensating_effects:type_name -> console.v1.ComputerMissionCompensatingAction
+	239,  // 288: console.v1.ComputerMissionCanaryDefinition.thresholds:type_name -> console.v1.ComputerMissionCanaryThreshold
+	236,  // 289: console.v1.ComputerMissionCanaryDefinition.hard_safety_gates:type_name -> console.v1.ComputerMissionEvidenceGate
 	46,   // 290: console.v1.ComputerMissionCanaryOperatorAction.kind:type_name -> console.v1.ComputerMissionCanaryOperatorActionKind
-	840,  // 291: console.v1.ComputerMissionCanaryOperatorAction.occurred_at:type_name -> google.protobuf.Timestamp
-	244,  // 292: console.v1.ComputerMissionCanaryOperatorAction.scope_before:type_name -> console.v1.ComputerMissionScope
-	244,  // 293: console.v1.ComputerMissionCanaryOperatorAction.scope_after:type_name -> console.v1.ComputerMissionScope
-	241,  // 294: console.v1.ComputerMissionCanaryOperatorAction.budget_before:type_name -> console.v1.ComputerMissionBudget
-	241,  // 295: console.v1.ComputerMissionCanaryOperatorAction.budget_after:type_name -> console.v1.ComputerMissionBudget
-	840,  // 296: console.v1.ComputerMissionCanaryOperatorAction.grant_expires_at_before:type_name -> google.protobuf.Timestamp
-	840,  // 297: console.v1.ComputerMissionCanaryOperatorAction.grant_expires_at_after:type_name -> google.protobuf.Timestamp
-	535,  // 298: console.v1.ComputerMissionCanaryOperatorAction.evidence_refs:type_name -> console.v1.RelatedResource
-	844,  // 299: console.v1.ComputerMissionCapability.input_schema:type_name -> google.protobuf.Struct
-	242,  // 300: console.v1.ComputerMissionScope.capability_manifests:type_name -> console.v1.ComputerMissionCapability
-	243,  // 301: console.v1.ComputerMissionScope.apex_runner_binding:type_name -> console.v1.ComputerMissionApexRunnerBinding
+	845,  // 291: console.v1.ComputerMissionCanaryOperatorAction.occurred_at:type_name -> google.protobuf.Timestamp
+	245,  // 292: console.v1.ComputerMissionCanaryOperatorAction.scope_before:type_name -> console.v1.ComputerMissionScope
+	245,  // 293: console.v1.ComputerMissionCanaryOperatorAction.scope_after:type_name -> console.v1.ComputerMissionScope
+	242,  // 294: console.v1.ComputerMissionCanaryOperatorAction.budget_before:type_name -> console.v1.ComputerMissionBudget
+	242,  // 295: console.v1.ComputerMissionCanaryOperatorAction.budget_after:type_name -> console.v1.ComputerMissionBudget
+	845,  // 296: console.v1.ComputerMissionCanaryOperatorAction.grant_expires_at_before:type_name -> google.protobuf.Timestamp
+	845,  // 297: console.v1.ComputerMissionCanaryOperatorAction.grant_expires_at_after:type_name -> google.protobuf.Timestamp
+	536,  // 298: console.v1.ComputerMissionCanaryOperatorAction.evidence_refs:type_name -> console.v1.RelatedResource
+	849,  // 299: console.v1.ComputerMissionCapability.input_schema:type_name -> google.protobuf.Struct
+	243,  // 300: console.v1.ComputerMissionScope.capability_manifests:type_name -> console.v1.ComputerMissionCapability
+	244,  // 301: console.v1.ComputerMissionScope.apex_runner_binding:type_name -> console.v1.ComputerMissionApexRunnerBinding
 	39,   // 302: console.v1.ComputerMissionAuthorityGrant.mode:type_name -> console.v1.ComputerMissionAuthorityMode
-	840,  // 303: console.v1.ComputerMissionAuthorityGrant.granted_at:type_name -> google.protobuf.Timestamp
+	845,  // 303: console.v1.ComputerMissionAuthorityGrant.granted_at:type_name -> google.protobuf.Timestamp
 	48,   // 304: console.v1.ComputerMissionDecision.route:type_name -> console.v1.ComputerMissionDecisionRoute
-	244,  // 305: console.v1.ComputerMissionContract.scope:type_name -> console.v1.ComputerMissionScope
-	245,  // 306: console.v1.ComputerMissionContract.authority:type_name -> console.v1.ComputerMissionAuthorityGrant
-	241,  // 307: console.v1.ComputerMissionContract.budget:type_name -> console.v1.ComputerMissionBudget
-	246,  // 308: console.v1.ComputerMissionContract.decision:type_name -> console.v1.ComputerMissionDecision
-	247,  // 309: console.v1.ComputerMission.contract:type_name -> console.v1.ComputerMissionContract
+	245,  // 305: console.v1.ComputerMissionContract.scope:type_name -> console.v1.ComputerMissionScope
+	246,  // 306: console.v1.ComputerMissionContract.authority:type_name -> console.v1.ComputerMissionAuthorityGrant
+	242,  // 307: console.v1.ComputerMissionContract.budget:type_name -> console.v1.ComputerMissionBudget
+	247,  // 308: console.v1.ComputerMissionContract.decision:type_name -> console.v1.ComputerMissionDecision
+	248,  // 309: console.v1.ComputerMission.contract:type_name -> console.v1.ComputerMissionContract
 	40,   // 310: console.v1.ComputerMission.state:type_name -> console.v1.ComputerMissionState
-	535,  // 311: console.v1.ComputerMission.evidence_refs:type_name -> console.v1.RelatedResource
-	840,  // 312: console.v1.ComputerMission.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 313: console.v1.ComputerMission.updated_at:type_name -> google.protobuf.Timestamp
-	249,  // 314: console.v1.ComputerMission.long_horizon_budget:type_name -> console.v1.ComputerMissionLongHorizonBudgetState
-	840,  // 315: console.v1.ComputerMissionLongHorizonBudgetState.deadline_at:type_name -> google.protobuf.Timestamp
-	840,  // 316: console.v1.ComputerMissionLongHorizonBudgetState.authority_expires_at:type_name -> google.protobuf.Timestamp
-	113,  // 317: console.v1.SubmitComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	247,  // 318: console.v1.SubmitComputerMissionRequest.contract:type_name -> console.v1.ComputerMissionContract
-	248,  // 319: console.v1.SubmitComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
-	130,  // 320: console.v1.SubmitComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
-	113,  // 321: console.v1.GetComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	248,  // 322: console.v1.GetComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
-	130,  // 323: console.v1.GetComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
-	113,  // 324: console.v1.CancelComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	248,  // 325: console.v1.CancelComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
-	130,  // 326: console.v1.CancelComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
-	113,  // 327: console.v1.ContinueComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	248,  // 328: console.v1.ContinueComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
-	130,  // 329: console.v1.ContinueComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
-	113,  // 330: console.v1.PauseComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	844,  // 331: console.v1.PauseComputerMissionRequest.condition:type_name -> google.protobuf.Struct
-	840,  // 332: console.v1.PauseComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
-	248,  // 333: console.v1.PauseComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
-	130,  // 334: console.v1.PauseComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
-	113,  // 335: console.v1.ResumeComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	844,  // 336: console.v1.ResumeComputerMissionRequest.condition:type_name -> google.protobuf.Struct
-	840,  // 337: console.v1.ResumeComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
-	248,  // 338: console.v1.ResumeComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
-	130,  // 339: console.v1.ResumeComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
-	113,  // 340: console.v1.WakeComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	844,  // 341: console.v1.WakeComputerMissionRequest.condition:type_name -> google.protobuf.Struct
-	840,  // 342: console.v1.WakeComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
-	248,  // 343: console.v1.WakeComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
-	130,  // 344: console.v1.WakeComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
-	113,  // 345: console.v1.GuideComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
-	844,  // 346: console.v1.GuideComputerMissionRequest.condition:type_name -> google.protobuf.Struct
-	840,  // 347: console.v1.GuideComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
-	248,  // 348: console.v1.GuideComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
-	130,  // 349: console.v1.GuideComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
+	536,  // 311: console.v1.ComputerMission.evidence_refs:type_name -> console.v1.RelatedResource
+	845,  // 312: console.v1.ComputerMission.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 313: console.v1.ComputerMission.updated_at:type_name -> google.protobuf.Timestamp
+	250,  // 314: console.v1.ComputerMission.long_horizon_budget:type_name -> console.v1.ComputerMissionLongHorizonBudgetState
+	845,  // 315: console.v1.ComputerMissionLongHorizonBudgetState.deadline_at:type_name -> google.protobuf.Timestamp
+	845,  // 316: console.v1.ComputerMissionLongHorizonBudgetState.authority_expires_at:type_name -> google.protobuf.Timestamp
+	114,  // 317: console.v1.SubmitComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
+	248,  // 318: console.v1.SubmitComputerMissionRequest.contract:type_name -> console.v1.ComputerMissionContract
+	249,  // 319: console.v1.SubmitComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
+	131,  // 320: console.v1.SubmitComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
+	114,  // 321: console.v1.GetComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
+	249,  // 322: console.v1.GetComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
+	131,  // 323: console.v1.GetComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
+	114,  // 324: console.v1.CancelComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
+	249,  // 325: console.v1.CancelComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
+	131,  // 326: console.v1.CancelComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
+	114,  // 327: console.v1.ContinueComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
+	249,  // 328: console.v1.ContinueComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
+	131,  // 329: console.v1.ContinueComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
+	114,  // 330: console.v1.PauseComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
+	849,  // 331: console.v1.PauseComputerMissionRequest.condition:type_name -> google.protobuf.Struct
+	845,  // 332: console.v1.PauseComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
+	249,  // 333: console.v1.PauseComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
+	131,  // 334: console.v1.PauseComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
+	114,  // 335: console.v1.ResumeComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
+	849,  // 336: console.v1.ResumeComputerMissionRequest.condition:type_name -> google.protobuf.Struct
+	845,  // 337: console.v1.ResumeComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
+	249,  // 338: console.v1.ResumeComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
+	131,  // 339: console.v1.ResumeComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
+	114,  // 340: console.v1.WakeComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
+	849,  // 341: console.v1.WakeComputerMissionRequest.condition:type_name -> google.protobuf.Struct
+	845,  // 342: console.v1.WakeComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
+	249,  // 343: console.v1.WakeComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
+	131,  // 344: console.v1.WakeComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
+	114,  // 345: console.v1.GuideComputerMissionRequest.query:type_name -> console.v1.ConsoleQuery
+	849,  // 346: console.v1.GuideComputerMissionRequest.condition:type_name -> google.protobuf.Struct
+	845,  // 347: console.v1.GuideComputerMissionRequest.wake_at:type_name -> google.protobuf.Timestamp
+	249,  // 348: console.v1.GuideComputerMissionResponse.mission:type_name -> console.v1.ComputerMission
+	131,  // 349: console.v1.GuideComputerMissionResponse.receipt:type_name -> console.v1.OperatingReceipt
 	43,   // 350: console.v1.ComputerMissionCanaryRun.state:type_name -> console.v1.ComputerMissionCanaryRunState
-	244,  // 351: console.v1.ComputerMissionCanaryRun.scope:type_name -> console.v1.ComputerMissionScope
-	241,  // 352: console.v1.ComputerMissionCanaryRun.budget:type_name -> console.v1.ComputerMissionBudget
-	840,  // 353: console.v1.ComputerMissionCanaryRun.grant_expires_at:type_name -> google.protobuf.Timestamp
+	245,  // 351: console.v1.ComputerMissionCanaryRun.scope:type_name -> console.v1.ComputerMissionScope
+	242,  // 352: console.v1.ComputerMissionCanaryRun.budget:type_name -> console.v1.ComputerMissionBudget
+	845,  // 353: console.v1.ComputerMissionCanaryRun.grant_expires_at:type_name -> google.protobuf.Timestamp
 	45,   // 354: console.v1.ComputerMissionCanaryRun.recommendation:type_name -> console.v1.ComputerMissionCanaryRecommendation
 	42,   // 355: console.v1.ComputerMissionCanaryEffect.state:type_name -> console.v1.ComputerMissionEffectState
-	535,  // 356: console.v1.ComputerMissionCanaryEffect.evidence_refs:type_name -> console.v1.RelatedResource
-	840,  // 357: console.v1.ComputerMissionCanaryEffect.recorded_at:type_name -> google.protobuf.Timestamp
+	536,  // 356: console.v1.ComputerMissionCanaryEffect.evidence_refs:type_name -> console.v1.RelatedResource
+	845,  // 357: console.v1.ComputerMissionCanaryEffect.recorded_at:type_name -> google.protobuf.Timestamp
 	44,   // 358: console.v1.ComputerMissionCanaryDimensionResult.dimension:type_name -> console.v1.ComputerMissionCanaryScoreDimension
 	45,   // 359: console.v1.ComputerMissionCanaryEvaluation.recommendation:type_name -> console.v1.ComputerMissionCanaryRecommendation
-	535,  // 360: console.v1.ComputerMissionCanaryEvaluation.evidence_refs:type_name -> console.v1.RelatedResource
-	268,  // 361: console.v1.ComputerMissionCanaryEvaluation.dimensions:type_name -> console.v1.ComputerMissionCanaryDimensionResult
-	269,  // 362: console.v1.ComputerMissionCanaryEvaluation.hard_gates:type_name -> console.v1.ComputerMissionCanaryHardGateResult
-	113,  // 363: console.v1.ListComputerMissionCanaryDefinitionsRequest.query:type_name -> console.v1.ConsoleQuery
-	239,  // 364: console.v1.ListComputerMissionCanaryDefinitionsResponse.definitions:type_name -> console.v1.ComputerMissionCanaryDefinition
-	113,  // 365: console.v1.StartComputerMissionCanaryRunRequest.query:type_name -> console.v1.ConsoleQuery
-	266,  // 366: console.v1.StartComputerMissionCanaryRunResponse.run:type_name -> console.v1.ComputerMissionCanaryRun
-	248,  // 367: console.v1.StartComputerMissionCanaryRunResponse.mission:type_name -> console.v1.ComputerMission
-	130,  // 368: console.v1.StartComputerMissionCanaryRunResponse.receipt:type_name -> console.v1.OperatingReceipt
-	113,  // 369: console.v1.GetComputerMissionCanaryRunRequest.query:type_name -> console.v1.ConsoleQuery
-	266,  // 370: console.v1.GetComputerMissionCanaryRunResponse.run:type_name -> console.v1.ComputerMissionCanaryRun
-	113,  // 371: console.v1.ListComputerMissionCanaryRunsRequest.query:type_name -> console.v1.ConsoleQuery
-	266,  // 372: console.v1.ListComputerMissionCanaryRunsResponse.runs:type_name -> console.v1.ComputerMissionCanaryRun
-	113,  // 373: console.v1.GetComputerMissionCanaryEvidenceRequest.query:type_name -> console.v1.ConsoleQuery
-	267,  // 374: console.v1.GetComputerMissionCanaryEvidenceResponse.effects:type_name -> console.v1.ComputerMissionCanaryEffect
-	270,  // 375: console.v1.GetComputerMissionCanaryEvidenceResponse.evaluation:type_name -> console.v1.ComputerMissionCanaryEvaluation
-	240,  // 376: console.v1.GetComputerMissionCanaryEvidenceResponse.operator_actions:type_name -> console.v1.ComputerMissionCanaryOperatorAction
-	239,  // 377: console.v1.GetComputerMissionCanaryEvidenceResponse.definition:type_name -> console.v1.ComputerMissionCanaryDefinition
-	113,  // 378: console.v1.OperateComputerMissionCanaryRunRequest.query:type_name -> console.v1.ConsoleQuery
+	536,  // 360: console.v1.ComputerMissionCanaryEvaluation.evidence_refs:type_name -> console.v1.RelatedResource
+	269,  // 361: console.v1.ComputerMissionCanaryEvaluation.dimensions:type_name -> console.v1.ComputerMissionCanaryDimensionResult
+	270,  // 362: console.v1.ComputerMissionCanaryEvaluation.hard_gates:type_name -> console.v1.ComputerMissionCanaryHardGateResult
+	114,  // 363: console.v1.ListComputerMissionCanaryDefinitionsRequest.query:type_name -> console.v1.ConsoleQuery
+	240,  // 364: console.v1.ListComputerMissionCanaryDefinitionsResponse.definitions:type_name -> console.v1.ComputerMissionCanaryDefinition
+	114,  // 365: console.v1.StartComputerMissionCanaryRunRequest.query:type_name -> console.v1.ConsoleQuery
+	267,  // 366: console.v1.StartComputerMissionCanaryRunResponse.run:type_name -> console.v1.ComputerMissionCanaryRun
+	249,  // 367: console.v1.StartComputerMissionCanaryRunResponse.mission:type_name -> console.v1.ComputerMission
+	131,  // 368: console.v1.StartComputerMissionCanaryRunResponse.receipt:type_name -> console.v1.OperatingReceipt
+	114,  // 369: console.v1.GetComputerMissionCanaryRunRequest.query:type_name -> console.v1.ConsoleQuery
+	267,  // 370: console.v1.GetComputerMissionCanaryRunResponse.run:type_name -> console.v1.ComputerMissionCanaryRun
+	114,  // 371: console.v1.ListComputerMissionCanaryRunsRequest.query:type_name -> console.v1.ConsoleQuery
+	267,  // 372: console.v1.ListComputerMissionCanaryRunsResponse.runs:type_name -> console.v1.ComputerMissionCanaryRun
+	114,  // 373: console.v1.GetComputerMissionCanaryEvidenceRequest.query:type_name -> console.v1.ConsoleQuery
+	268,  // 374: console.v1.GetComputerMissionCanaryEvidenceResponse.effects:type_name -> console.v1.ComputerMissionCanaryEffect
+	271,  // 375: console.v1.GetComputerMissionCanaryEvidenceResponse.evaluation:type_name -> console.v1.ComputerMissionCanaryEvaluation
+	241,  // 376: console.v1.GetComputerMissionCanaryEvidenceResponse.operator_actions:type_name -> console.v1.ComputerMissionCanaryOperatorAction
+	240,  // 377: console.v1.GetComputerMissionCanaryEvidenceResponse.definition:type_name -> console.v1.ComputerMissionCanaryDefinition
+	114,  // 378: console.v1.OperateComputerMissionCanaryRunRequest.query:type_name -> console.v1.ConsoleQuery
 	46,   // 379: console.v1.OperateComputerMissionCanaryRunRequest.kind:type_name -> console.v1.ComputerMissionCanaryOperatorActionKind
-	244,  // 380: console.v1.OperateComputerMissionCanaryRunRequest.narrowed_scope:type_name -> console.v1.ComputerMissionScope
-	241,  // 381: console.v1.OperateComputerMissionCanaryRunRequest.extended_budget:type_name -> console.v1.ComputerMissionBudget
-	840,  // 382: console.v1.OperateComputerMissionCanaryRunRequest.extended_grant_expires_at:type_name -> google.protobuf.Timestamp
-	266,  // 383: console.v1.OperateComputerMissionCanaryRunResponse.run:type_name -> console.v1.ComputerMissionCanaryRun
-	240,  // 384: console.v1.OperateComputerMissionCanaryRunResponse.action:type_name -> console.v1.ComputerMissionCanaryOperatorAction
+	245,  // 380: console.v1.OperateComputerMissionCanaryRunRequest.narrowed_scope:type_name -> console.v1.ComputerMissionScope
+	242,  // 381: console.v1.OperateComputerMissionCanaryRunRequest.extended_budget:type_name -> console.v1.ComputerMissionBudget
+	845,  // 382: console.v1.OperateComputerMissionCanaryRunRequest.extended_grant_expires_at:type_name -> google.protobuf.Timestamp
+	267,  // 383: console.v1.OperateComputerMissionCanaryRunResponse.run:type_name -> console.v1.ComputerMissionCanaryRun
+	241,  // 384: console.v1.OperateComputerMissionCanaryRunResponse.action:type_name -> console.v1.ComputerMissionCanaryOperatorAction
 	39,   // 385: console.v1.MissionScheduleTemplate.authority_mode:type_name -> console.v1.ComputerMissionAuthorityMode
-	241,  // 386: console.v1.MissionScheduleTemplate.budget:type_name -> console.v1.ComputerMissionBudget
-	283,  // 387: console.v1.MissionSchedule.template:type_name -> console.v1.MissionScheduleTemplate
-	840,  // 388: console.v1.MissionSchedule.next_run_at:type_name -> google.protobuf.Timestamp
-	840,  // 389: console.v1.MissionSchedule.last_run_at:type_name -> google.protobuf.Timestamp
-	840,  // 390: console.v1.MissionSchedule.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 391: console.v1.MissionSchedule.updated_at:type_name -> google.protobuf.Timestamp
-	113,  // 392: console.v1.CreateMissionScheduleRequest.query:type_name -> console.v1.ConsoleQuery
-	283,  // 393: console.v1.CreateMissionScheduleRequest.template:type_name -> console.v1.MissionScheduleTemplate
-	284,  // 394: console.v1.CreateMissionScheduleResponse.schedule:type_name -> console.v1.MissionSchedule
-	113,  // 395: console.v1.UpdateMissionScheduleRequest.query:type_name -> console.v1.ConsoleQuery
-	283,  // 396: console.v1.UpdateMissionScheduleRequest.template:type_name -> console.v1.MissionScheduleTemplate
-	284,  // 397: console.v1.UpdateMissionScheduleResponse.schedule:type_name -> console.v1.MissionSchedule
-	113,  // 398: console.v1.SetMissionScheduleEnabledRequest.query:type_name -> console.v1.ConsoleQuery
-	284,  // 399: console.v1.SetMissionScheduleEnabledResponse.schedule:type_name -> console.v1.MissionSchedule
-	113,  // 400: console.v1.ListMissionSchedulesRequest.query:type_name -> console.v1.ConsoleQuery
-	284,  // 401: console.v1.ListMissionSchedulesResponse.schedules:type_name -> console.v1.MissionSchedule
-	597,  // 402: console.v1.ListMissionSchedulesResponse.available_capabilities:type_name -> console.v1.MissionScheduleCapability
+	242,  // 386: console.v1.MissionScheduleTemplate.budget:type_name -> console.v1.ComputerMissionBudget
+	284,  // 387: console.v1.MissionSchedule.template:type_name -> console.v1.MissionScheduleTemplate
+	845,  // 388: console.v1.MissionSchedule.next_run_at:type_name -> google.protobuf.Timestamp
+	845,  // 389: console.v1.MissionSchedule.last_run_at:type_name -> google.protobuf.Timestamp
+	845,  // 390: console.v1.MissionSchedule.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 391: console.v1.MissionSchedule.updated_at:type_name -> google.protobuf.Timestamp
+	114,  // 392: console.v1.CreateMissionScheduleRequest.query:type_name -> console.v1.ConsoleQuery
+	284,  // 393: console.v1.CreateMissionScheduleRequest.template:type_name -> console.v1.MissionScheduleTemplate
+	285,  // 394: console.v1.CreateMissionScheduleResponse.schedule:type_name -> console.v1.MissionSchedule
+	114,  // 395: console.v1.UpdateMissionScheduleRequest.query:type_name -> console.v1.ConsoleQuery
+	284,  // 396: console.v1.UpdateMissionScheduleRequest.template:type_name -> console.v1.MissionScheduleTemplate
+	285,  // 397: console.v1.UpdateMissionScheduleResponse.schedule:type_name -> console.v1.MissionSchedule
+	114,  // 398: console.v1.SetMissionScheduleEnabledRequest.query:type_name -> console.v1.ConsoleQuery
+	285,  // 399: console.v1.SetMissionScheduleEnabledResponse.schedule:type_name -> console.v1.MissionSchedule
+	114,  // 400: console.v1.ListMissionSchedulesRequest.query:type_name -> console.v1.ConsoleQuery
+	285,  // 401: console.v1.ListMissionSchedulesResponse.schedules:type_name -> console.v1.MissionSchedule
+	598,  // 402: console.v1.ListMissionSchedulesResponse.available_capabilities:type_name -> console.v1.MissionScheduleCapability
 	49,   // 403: console.v1.ConnectorTrigger.source:type_name -> console.v1.ConnectorTriggerSource
-	283,  // 404: console.v1.ConnectorTrigger.template:type_name -> console.v1.MissionScheduleTemplate
-	840,  // 405: console.v1.ConnectorTrigger.next_run_at:type_name -> google.protobuf.Timestamp
-	840,  // 406: console.v1.ConnectorTrigger.last_run_at:type_name -> google.protobuf.Timestamp
-	840,  // 407: console.v1.ConnectorTrigger.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 408: console.v1.ConnectorTrigger.updated_at:type_name -> google.protobuf.Timestamp
-	113,  // 409: console.v1.CreateConnectorTriggerRequest.query:type_name -> console.v1.ConsoleQuery
+	284,  // 404: console.v1.ConnectorTrigger.template:type_name -> console.v1.MissionScheduleTemplate
+	845,  // 405: console.v1.ConnectorTrigger.next_run_at:type_name -> google.protobuf.Timestamp
+	845,  // 406: console.v1.ConnectorTrigger.last_run_at:type_name -> google.protobuf.Timestamp
+	845,  // 407: console.v1.ConnectorTrigger.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 408: console.v1.ConnectorTrigger.updated_at:type_name -> google.protobuf.Timestamp
+	114,  // 409: console.v1.CreateConnectorTriggerRequest.query:type_name -> console.v1.ConsoleQuery
 	49,   // 410: console.v1.CreateConnectorTriggerRequest.source:type_name -> console.v1.ConnectorTriggerSource
-	283,  // 411: console.v1.CreateConnectorTriggerRequest.template:type_name -> console.v1.MissionScheduleTemplate
-	293,  // 412: console.v1.CreateConnectorTriggerResponse.trigger:type_name -> console.v1.ConnectorTrigger
-	113,  // 413: console.v1.UpdateConnectorTriggerRequest.query:type_name -> console.v1.ConsoleQuery
+	284,  // 411: console.v1.CreateConnectorTriggerRequest.template:type_name -> console.v1.MissionScheduleTemplate
+	294,  // 412: console.v1.CreateConnectorTriggerResponse.trigger:type_name -> console.v1.ConnectorTrigger
+	114,  // 413: console.v1.UpdateConnectorTriggerRequest.query:type_name -> console.v1.ConsoleQuery
 	49,   // 414: console.v1.UpdateConnectorTriggerRequest.source:type_name -> console.v1.ConnectorTriggerSource
-	283,  // 415: console.v1.UpdateConnectorTriggerRequest.template:type_name -> console.v1.MissionScheduleTemplate
-	293,  // 416: console.v1.UpdateConnectorTriggerResponse.trigger:type_name -> console.v1.ConnectorTrigger
-	113,  // 417: console.v1.ListConnectorTriggersRequest.query:type_name -> console.v1.ConsoleQuery
-	293,  // 418: console.v1.ListConnectorTriggersResponse.triggers:type_name -> console.v1.ConnectorTrigger
-	113,  // 419: console.v1.DeleteConnectorTriggerRequest.query:type_name -> console.v1.ConsoleQuery
-	113,  // 420: console.v1.SetConnectorTriggerEnabledRequest.query:type_name -> console.v1.ConsoleQuery
-	293,  // 421: console.v1.SetConnectorTriggerEnabledResponse.trigger:type_name -> console.v1.ConnectorTrigger
-	840,  // 422: console.v1.ComputerMissionApexSessionReservation.expires_at:type_name -> google.protobuf.Timestamp
-	304,  // 423: console.v1.ReserveComputerMissionApexSessionResponse.reservation:type_name -> console.v1.ComputerMissionApexSessionReservation
-	304,  // 424: console.v1.BindComputerMissionApexSessionReservationResponse.reservation:type_name -> console.v1.ComputerMissionApexSessionReservation
-	309,  // 425: console.v1.BindComputerMissionApexInstructionMetadataResponse.metadata:type_name -> console.v1.ComputerMissionApexInstructionMetadata
-	852,  // 426: console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse.owner_binding:type_name -> remoterunner.v1.RunnerSessionOwnerBinding
-	113,  // 427: console.v1.GetOverviewRequest.query:type_name -> console.v1.ConsoleQuery
-	840,  // 428: console.v1.GetOverviewResponse.generated_at:type_name -> google.protobuf.Timestamp
-	499,  // 429: console.v1.GetOverviewResponse.metrics:type_name -> console.v1.ConsoleMetric
-	500,  // 430: console.v1.GetOverviewResponse.top_assets:type_name -> console.v1.AiAsset
-	524,  // 431: console.v1.GetOverviewResponse.top_findings:type_name -> console.v1.RiskFinding
-	501,  // 432: console.v1.GetOverviewResponse.recent_activity:type_name -> console.v1.ActivityEvent
-	527,  // 433: console.v1.GetOverviewResponse.integration_tiles:type_name -> console.v1.IntegrationTile
-	528,  // 434: console.v1.GetOverviewResponse.onboarding_tasks:type_name -> console.v1.OnboardingTask
-	113,  // 435: console.v1.GetConsoleBootSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
-	840,  // 436: console.v1.ConsoleSnapshotFreshness.generated_at:type_name -> google.protobuf.Timestamp
-	362,  // 437: console.v1.GetConsoleBootSnapshotResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
-	365,  // 438: console.v1.GetConsoleBootSnapshotResponse.billing_subscription:type_name -> console.v1.GetBillingSubscriptionResponse
-	335,  // 439: console.v1.GetConsoleBootSnapshotResponse.workforce:type_name -> console.v1.ListAgentWorkforceRecordsResponse
-	133,  // 440: console.v1.GetConsoleBootSnapshotResponse.operating_channels:type_name -> console.v1.ListOperatingChannelsResponse
-	141,  // 441: console.v1.GetConsoleBootSnapshotResponse.operating_thread:type_name -> console.v1.GetOperatingThreadResponse
-	317,  // 442: console.v1.GetConsoleBootSnapshotResponse.freshness:type_name -> console.v1.ConsoleSnapshotFreshness
-	113,  // 443: console.v1.ListAssetsRequest.query:type_name -> console.v1.ConsoleQuery
-	500,  // 444: console.v1.ListAssetsResponse.assets:type_name -> console.v1.AiAsset
-	500,  // 445: console.v1.GetAssetResponse.asset:type_name -> console.v1.AiAsset
-	535,  // 446: console.v1.GetAssetResponse.related_resources:type_name -> console.v1.RelatedResource
-	501,  // 447: console.v1.GetAssetResponse.recent_activity:type_name -> console.v1.ActivityEvent
-	524,  // 448: console.v1.GetAssetResponse.findings:type_name -> console.v1.RiskFinding
-	113,  // 449: console.v1.ListActivityRequest.query:type_name -> console.v1.ConsoleQuery
-	501,  // 450: console.v1.ListActivityResponse.events:type_name -> console.v1.ActivityEvent
-	113,  // 451: console.v1.ListEvalResultsRequest.query:type_name -> console.v1.ConsoleQuery
-	502,  // 452: console.v1.ListEvalResultsResponse.results:type_name -> console.v1.EvalResult
-	113,  // 453: console.v1.ListCostUsageRequest.query:type_name -> console.v1.ConsoleQuery
-	503,  // 454: console.v1.ListCostUsageResponse.rows:type_name -> console.v1.CostUsage
-	584,  // 455: console.v1.ListCostUsageResponse.summary:type_name -> console.v1.CostUsageSummary
-	329,  // 456: console.v1.ListCostUsageResponse.run_summary:type_name -> console.v1.CostUsageRunSummary
-	840,  // 457: console.v1.RecordProviderCostSnapshotRequest.observed_at:type_name -> google.protobuf.Timestamp
-	113,  // 458: console.v1.ListAuthorityPostureRequest.query:type_name -> console.v1.ConsoleQuery
-	504,  // 459: console.v1.ListAuthorityPostureResponse.rows:type_name -> console.v1.AuthorityLedger
-	113,  // 460: console.v1.ListAgentWorkforceRecordsRequest.query:type_name -> console.v1.ConsoleQuery
-	508,  // 461: console.v1.ListAgentWorkforceRecordsResponse.records:type_name -> console.v1.AgentWorkforceRecord
-	511,  // 462: console.v1.ListAgentWorkforceRecordsResponse.approval_queue_summary:type_name -> console.v1.AgentWorkforceApprovalQueueSummary
-	509,  // 463: console.v1.ListAgentWorkforceRecordsResponse.source_readiness:type_name -> console.v1.AgentWorkforceSourceReadiness
-	853,  // 464: console.v1.OrbControlTarget.lifecycle:type_name -> orbcontrol.v1.OrbObservedLifecycle
-	840,  // 465: console.v1.OrbControlTarget.observed_at:type_name -> google.protobuf.Timestamp
-	131,  // 466: console.v1.OrbControlTarget.allowed_actions:type_name -> console.v1.OperatingReceiptAction
-	130,  // 467: console.v1.OrbControlTarget.receipt:type_name -> console.v1.OperatingReceipt
-	113,  // 468: console.v1.ListOrbControlTargetsRequest.query:type_name -> console.v1.ConsoleQuery
-	336,  // 469: console.v1.ListOrbControlTargetsResponse.targets:type_name -> console.v1.OrbControlTarget
-	113,  // 470: console.v1.GetOrbControlTargetRequest.query:type_name -> console.v1.ConsoleQuery
-	336,  // 471: console.v1.GetOrbControlTargetResponse.target:type_name -> console.v1.OrbControlTarget
-	130,  // 472: console.v1.GetOrbControlTargetResponse.receipt:type_name -> console.v1.OperatingReceipt
-	113,  // 473: console.v1.SubmitOrbControlActionRequest.query:type_name -> console.v1.ConsoleQuery
-	854,  // 474: console.v1.SubmitOrbControlActionRequest.action:type_name -> orbcontrol.v1.OrbCommandKind
-	336,  // 475: console.v1.SubmitOrbControlActionResponse.target:type_name -> console.v1.OrbControlTarget
-	130,  // 476: console.v1.SubmitOrbControlActionResponse.receipt:type_name -> console.v1.OperatingReceipt
-	113,  // 477: console.v1.SubmitAgentWorkforceEvidenceRequest.query:type_name -> console.v1.ConsoleQuery
-	345,  // 478: console.v1.SubmitAgentWorkforceEvidenceResponse.submitted_evidence:type_name -> console.v1.AgentWorkforceSubmittedEvidence
-	508,  // 479: console.v1.SubmitAgentWorkforceEvidenceResponse.record:type_name -> console.v1.AgentWorkforceRecord
-	335,  // 480: console.v1.SubmitAgentWorkforceEvidenceResponse.records_response:type_name -> console.v1.ListAgentWorkforceRecordsResponse
-	535,  // 481: console.v1.AgentWorkforceSubmittedEvidence.evidence_ref:type_name -> console.v1.RelatedResource
-	113,  // 482: console.v1.ListFindingsRequest.query:type_name -> console.v1.ConsoleQuery
-	524,  // 483: console.v1.ListFindingsResponse.findings:type_name -> console.v1.RiskFinding
-	529,  // 484: console.v1.GetTraceDrilldownResponse.trace:type_name -> console.v1.TraceDrilldown
-	113,  // 485: console.v1.ListIntegrationTilesRequest.query:type_name -> console.v1.ConsoleQuery
-	527,  // 486: console.v1.ListIntegrationTilesResponse.tiles:type_name -> console.v1.IntegrationTile
-	354,  // 487: console.v1.ListPinnedSourcesResponse.pins:type_name -> console.v1.PinnedSource
-	840,  // 488: console.v1.PinnedSource.pinned_at:type_name -> google.protobuf.Timestamp
-	354,  // 489: console.v1.SetPinnedSourceResponse.pin:type_name -> console.v1.PinnedSource
-	528,  // 490: console.v1.GetOnboardingPlanResponse.tasks:type_name -> console.v1.OnboardingTask
-	113,  // 491: console.v1.GetWorkspaceSettingsRequest.query:type_name -> console.v1.ConsoleQuery
-	445,  // 492: console.v1.GetWorkspaceSettingsResponse.workspace:type_name -> console.v1.WorkspaceSettingsProfile
-	446,  // 493: console.v1.GetWorkspaceSettingsResponse.current_principal:type_name -> console.v1.WorkspaceSettingsPrincipal
-	450,  // 494: console.v1.GetWorkspaceSettingsResponse.members:type_name -> console.v1.WorkspaceSettingsMember
-	451,  // 495: console.v1.GetWorkspaceSettingsResponse.billing:type_name -> console.v1.WorkspaceSettingsBilling
-	452,  // 496: console.v1.GetWorkspaceSettingsResponse.policy:type_name -> console.v1.WorkspaceSettingsPolicy
-	459,  // 497: console.v1.GetWorkspaceSettingsResponse.notifications:type_name -> console.v1.WorkspaceSettingsNotifications
-	460,  // 498: console.v1.GetWorkspaceSettingsResponse.identity_providers:type_name -> console.v1.WorkspaceSettingsIdentityProvider
-	461,  // 499: console.v1.GetWorkspaceSettingsResponse.integrations:type_name -> console.v1.WorkspaceSettingsIntegration
-	447,  // 500: console.v1.GetWorkspaceSettingsResponse.capabilities:type_name -> console.v1.WorkspaceSettingsCapability
-	449,  // 501: console.v1.GetWorkspaceSettingsResponse.activity:type_name -> console.v1.WorkspaceSettingsActivityEntry
-	462,  // 502: console.v1.GetWorkspaceSettingsResponse.owner_services:type_name -> console.v1.WorkspaceSettingsOwnerStatus
-	463,  // 503: console.v1.GetWorkspaceSettingsResponse.break_glass_grant:type_name -> console.v1.WorkspaceSettingsBreakGlassGrant
-	448,  // 504: console.v1.GetWorkspaceSettingsResponse.workspaces:type_name -> console.v1.WorkspaceSettingsWorkspace
-	455,  // 505: console.v1.GetWorkspaceSettingsResponse.dex_policy:type_name -> console.v1.WorkspaceDexPolicy
-	456,  // 506: console.v1.GetWorkspaceSettingsResponse.artifact_style_guide:type_name -> console.v1.WorkspaceArtifactStyleGuide
-	363,  // 507: console.v1.GetWorkspaceSettingsResponse.task_environment_projects:type_name -> console.v1.TaskEnvironmentProjectOption
+	284,  // 415: console.v1.UpdateConnectorTriggerRequest.template:type_name -> console.v1.MissionScheduleTemplate
+	294,  // 416: console.v1.UpdateConnectorTriggerResponse.trigger:type_name -> console.v1.ConnectorTrigger
+	114,  // 417: console.v1.ListConnectorTriggersRequest.query:type_name -> console.v1.ConsoleQuery
+	294,  // 418: console.v1.ListConnectorTriggersResponse.triggers:type_name -> console.v1.ConnectorTrigger
+	114,  // 419: console.v1.DeleteConnectorTriggerRequest.query:type_name -> console.v1.ConsoleQuery
+	114,  // 420: console.v1.SetConnectorTriggerEnabledRequest.query:type_name -> console.v1.ConsoleQuery
+	294,  // 421: console.v1.SetConnectorTriggerEnabledResponse.trigger:type_name -> console.v1.ConnectorTrigger
+	845,  // 422: console.v1.ComputerMissionApexSessionReservation.expires_at:type_name -> google.protobuf.Timestamp
+	305,  // 423: console.v1.ReserveComputerMissionApexSessionResponse.reservation:type_name -> console.v1.ComputerMissionApexSessionReservation
+	305,  // 424: console.v1.BindComputerMissionApexSessionReservationResponse.reservation:type_name -> console.v1.ComputerMissionApexSessionReservation
+	310,  // 425: console.v1.BindComputerMissionApexInstructionMetadataResponse.metadata:type_name -> console.v1.ComputerMissionApexInstructionMetadata
+	857,  // 426: console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse.owner_binding:type_name -> remoterunner.v1.RunnerSessionOwnerBinding
+	114,  // 427: console.v1.GetOverviewRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 428: console.v1.GetOverviewResponse.generated_at:type_name -> google.protobuf.Timestamp
+	500,  // 429: console.v1.GetOverviewResponse.metrics:type_name -> console.v1.ConsoleMetric
+	501,  // 430: console.v1.GetOverviewResponse.top_assets:type_name -> console.v1.AiAsset
+	525,  // 431: console.v1.GetOverviewResponse.top_findings:type_name -> console.v1.RiskFinding
+	502,  // 432: console.v1.GetOverviewResponse.recent_activity:type_name -> console.v1.ActivityEvent
+	528,  // 433: console.v1.GetOverviewResponse.integration_tiles:type_name -> console.v1.IntegrationTile
+	529,  // 434: console.v1.GetOverviewResponse.onboarding_tasks:type_name -> console.v1.OnboardingTask
+	114,  // 435: console.v1.GetConsoleBootSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 436: console.v1.ConsoleSnapshotFreshness.generated_at:type_name -> google.protobuf.Timestamp
+	363,  // 437: console.v1.GetConsoleBootSnapshotResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
+	366,  // 438: console.v1.GetConsoleBootSnapshotResponse.billing_subscription:type_name -> console.v1.GetBillingSubscriptionResponse
+	336,  // 439: console.v1.GetConsoleBootSnapshotResponse.workforce:type_name -> console.v1.ListAgentWorkforceRecordsResponse
+	134,  // 440: console.v1.GetConsoleBootSnapshotResponse.operating_channels:type_name -> console.v1.ListOperatingChannelsResponse
+	142,  // 441: console.v1.GetConsoleBootSnapshotResponse.operating_thread:type_name -> console.v1.GetOperatingThreadResponse
+	318,  // 442: console.v1.GetConsoleBootSnapshotResponse.freshness:type_name -> console.v1.ConsoleSnapshotFreshness
+	114,  // 443: console.v1.ListAssetsRequest.query:type_name -> console.v1.ConsoleQuery
+	501,  // 444: console.v1.ListAssetsResponse.assets:type_name -> console.v1.AiAsset
+	501,  // 445: console.v1.GetAssetResponse.asset:type_name -> console.v1.AiAsset
+	536,  // 446: console.v1.GetAssetResponse.related_resources:type_name -> console.v1.RelatedResource
+	502,  // 447: console.v1.GetAssetResponse.recent_activity:type_name -> console.v1.ActivityEvent
+	525,  // 448: console.v1.GetAssetResponse.findings:type_name -> console.v1.RiskFinding
+	114,  // 449: console.v1.ListActivityRequest.query:type_name -> console.v1.ConsoleQuery
+	502,  // 450: console.v1.ListActivityResponse.events:type_name -> console.v1.ActivityEvent
+	114,  // 451: console.v1.ListEvalResultsRequest.query:type_name -> console.v1.ConsoleQuery
+	503,  // 452: console.v1.ListEvalResultsResponse.results:type_name -> console.v1.EvalResult
+	114,  // 453: console.v1.ListCostUsageRequest.query:type_name -> console.v1.ConsoleQuery
+	504,  // 454: console.v1.ListCostUsageResponse.rows:type_name -> console.v1.CostUsage
+	585,  // 455: console.v1.ListCostUsageResponse.summary:type_name -> console.v1.CostUsageSummary
+	330,  // 456: console.v1.ListCostUsageResponse.run_summary:type_name -> console.v1.CostUsageRunSummary
+	845,  // 457: console.v1.RecordProviderCostSnapshotRequest.observed_at:type_name -> google.protobuf.Timestamp
+	114,  // 458: console.v1.ListAuthorityPostureRequest.query:type_name -> console.v1.ConsoleQuery
+	505,  // 459: console.v1.ListAuthorityPostureResponse.rows:type_name -> console.v1.AuthorityLedger
+	114,  // 460: console.v1.ListAgentWorkforceRecordsRequest.query:type_name -> console.v1.ConsoleQuery
+	509,  // 461: console.v1.ListAgentWorkforceRecordsResponse.records:type_name -> console.v1.AgentWorkforceRecord
+	512,  // 462: console.v1.ListAgentWorkforceRecordsResponse.approval_queue_summary:type_name -> console.v1.AgentWorkforceApprovalQueueSummary
+	510,  // 463: console.v1.ListAgentWorkforceRecordsResponse.source_readiness:type_name -> console.v1.AgentWorkforceSourceReadiness
+	858,  // 464: console.v1.OrbControlTarget.lifecycle:type_name -> orbcontrol.v1.OrbObservedLifecycle
+	845,  // 465: console.v1.OrbControlTarget.observed_at:type_name -> google.protobuf.Timestamp
+	132,  // 466: console.v1.OrbControlTarget.allowed_actions:type_name -> console.v1.OperatingReceiptAction
+	131,  // 467: console.v1.OrbControlTarget.receipt:type_name -> console.v1.OperatingReceipt
+	114,  // 468: console.v1.ListOrbControlTargetsRequest.query:type_name -> console.v1.ConsoleQuery
+	337,  // 469: console.v1.ListOrbControlTargetsResponse.targets:type_name -> console.v1.OrbControlTarget
+	114,  // 470: console.v1.GetOrbControlTargetRequest.query:type_name -> console.v1.ConsoleQuery
+	337,  // 471: console.v1.GetOrbControlTargetResponse.target:type_name -> console.v1.OrbControlTarget
+	131,  // 472: console.v1.GetOrbControlTargetResponse.receipt:type_name -> console.v1.OperatingReceipt
+	114,  // 473: console.v1.SubmitOrbControlActionRequest.query:type_name -> console.v1.ConsoleQuery
+	859,  // 474: console.v1.SubmitOrbControlActionRequest.action:type_name -> orbcontrol.v1.OrbCommandKind
+	337,  // 475: console.v1.SubmitOrbControlActionResponse.target:type_name -> console.v1.OrbControlTarget
+	131,  // 476: console.v1.SubmitOrbControlActionResponse.receipt:type_name -> console.v1.OperatingReceipt
+	114,  // 477: console.v1.SubmitAgentWorkforceEvidenceRequest.query:type_name -> console.v1.ConsoleQuery
+	346,  // 478: console.v1.SubmitAgentWorkforceEvidenceResponse.submitted_evidence:type_name -> console.v1.AgentWorkforceSubmittedEvidence
+	509,  // 479: console.v1.SubmitAgentWorkforceEvidenceResponse.record:type_name -> console.v1.AgentWorkforceRecord
+	336,  // 480: console.v1.SubmitAgentWorkforceEvidenceResponse.records_response:type_name -> console.v1.ListAgentWorkforceRecordsResponse
+	536,  // 481: console.v1.AgentWorkforceSubmittedEvidence.evidence_ref:type_name -> console.v1.RelatedResource
+	114,  // 482: console.v1.ListFindingsRequest.query:type_name -> console.v1.ConsoleQuery
+	525,  // 483: console.v1.ListFindingsResponse.findings:type_name -> console.v1.RiskFinding
+	530,  // 484: console.v1.GetTraceDrilldownResponse.trace:type_name -> console.v1.TraceDrilldown
+	114,  // 485: console.v1.ListIntegrationTilesRequest.query:type_name -> console.v1.ConsoleQuery
+	528,  // 486: console.v1.ListIntegrationTilesResponse.tiles:type_name -> console.v1.IntegrationTile
+	355,  // 487: console.v1.ListPinnedSourcesResponse.pins:type_name -> console.v1.PinnedSource
+	845,  // 488: console.v1.PinnedSource.pinned_at:type_name -> google.protobuf.Timestamp
+	355,  // 489: console.v1.SetPinnedSourceResponse.pin:type_name -> console.v1.PinnedSource
+	529,  // 490: console.v1.GetOnboardingPlanResponse.tasks:type_name -> console.v1.OnboardingTask
+	114,  // 491: console.v1.GetWorkspaceSettingsRequest.query:type_name -> console.v1.ConsoleQuery
+	446,  // 492: console.v1.GetWorkspaceSettingsResponse.workspace:type_name -> console.v1.WorkspaceSettingsProfile
+	447,  // 493: console.v1.GetWorkspaceSettingsResponse.current_principal:type_name -> console.v1.WorkspaceSettingsPrincipal
+	451,  // 494: console.v1.GetWorkspaceSettingsResponse.members:type_name -> console.v1.WorkspaceSettingsMember
+	452,  // 495: console.v1.GetWorkspaceSettingsResponse.billing:type_name -> console.v1.WorkspaceSettingsBilling
+	453,  // 496: console.v1.GetWorkspaceSettingsResponse.policy:type_name -> console.v1.WorkspaceSettingsPolicy
+	460,  // 497: console.v1.GetWorkspaceSettingsResponse.notifications:type_name -> console.v1.WorkspaceSettingsNotifications
+	461,  // 498: console.v1.GetWorkspaceSettingsResponse.identity_providers:type_name -> console.v1.WorkspaceSettingsIdentityProvider
+	462,  // 499: console.v1.GetWorkspaceSettingsResponse.integrations:type_name -> console.v1.WorkspaceSettingsIntegration
+	448,  // 500: console.v1.GetWorkspaceSettingsResponse.capabilities:type_name -> console.v1.WorkspaceSettingsCapability
+	450,  // 501: console.v1.GetWorkspaceSettingsResponse.activity:type_name -> console.v1.WorkspaceSettingsActivityEntry
+	463,  // 502: console.v1.GetWorkspaceSettingsResponse.owner_services:type_name -> console.v1.WorkspaceSettingsOwnerStatus
+	464,  // 503: console.v1.GetWorkspaceSettingsResponse.break_glass_grant:type_name -> console.v1.WorkspaceSettingsBreakGlassGrant
+	449,  // 504: console.v1.GetWorkspaceSettingsResponse.workspaces:type_name -> console.v1.WorkspaceSettingsWorkspace
+	456,  // 505: console.v1.GetWorkspaceSettingsResponse.dex_policy:type_name -> console.v1.WorkspaceDexPolicy
+	457,  // 506: console.v1.GetWorkspaceSettingsResponse.artifact_style_guide:type_name -> console.v1.WorkspaceArtifactStyleGuide
+	364,  // 507: console.v1.GetWorkspaceSettingsResponse.task_environment_projects:type_name -> console.v1.TaskEnvironmentProjectOption
 	52,   // 508: console.v1.GetBillingSubscriptionResponse.status_enum:type_name -> console.v1.WorkspaceSettingsBillingStatus
-	113,  // 509: console.v1.UpdateWorkspaceProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	445,  // 510: console.v1.UpdateWorkspaceProfileRequest.profile:type_name -> console.v1.WorkspaceSettingsProfile
-	362,  // 511: console.v1.UpdateWorkspaceProfileResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
-	840,  // 512: console.v1.OperatorPreferences.updated_at:type_name -> google.protobuf.Timestamp
-	372,  // 513: console.v1.OperatorPreferences.model_preferences:type_name -> console.v1.OperatorModelPreference
-	113,  // 514: console.v1.GetOperatorPreferencesRequest.query:type_name -> console.v1.ConsoleQuery
-	374,  // 515: console.v1.GetOperatorPreferencesResponse.preferences:type_name -> console.v1.OperatorPreferences
-	113,  // 516: console.v1.UpdateOperatorPreferencesRequest.query:type_name -> console.v1.ConsoleQuery
-	373,  // 517: console.v1.UpdateOperatorPreferencesRequest.model_preference:type_name -> console.v1.OperatorModelPreferenceUpdate
-	374,  // 518: console.v1.UpdateOperatorPreferencesResponse.preferences:type_name -> console.v1.OperatorPreferences
+	114,  // 509: console.v1.UpdateWorkspaceProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	446,  // 510: console.v1.UpdateWorkspaceProfileRequest.profile:type_name -> console.v1.WorkspaceSettingsProfile
+	363,  // 511: console.v1.UpdateWorkspaceProfileResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
+	845,  // 512: console.v1.OperatorPreferences.updated_at:type_name -> google.protobuf.Timestamp
+	373,  // 513: console.v1.OperatorPreferences.model_preferences:type_name -> console.v1.OperatorModelPreference
+	114,  // 514: console.v1.GetOperatorPreferencesRequest.query:type_name -> console.v1.ConsoleQuery
+	375,  // 515: console.v1.GetOperatorPreferencesResponse.preferences:type_name -> console.v1.OperatorPreferences
+	114,  // 516: console.v1.UpdateOperatorPreferencesRequest.query:type_name -> console.v1.ConsoleQuery
+	374,  // 517: console.v1.UpdateOperatorPreferencesRequest.model_preference:type_name -> console.v1.OperatorModelPreferenceUpdate
+	375,  // 518: console.v1.UpdateOperatorPreferencesResponse.preferences:type_name -> console.v1.OperatorPreferences
 	58,   // 519: console.v1.WorkspaceGuardrailRule.detector_kind:type_name -> console.v1.GuardrailDetectorKind
 	59,   // 520: console.v1.WorkspaceGuardrailRule.action:type_name -> console.v1.GuardrailAction
-	840,  // 521: console.v1.WorkspaceGuardrailRule.updated_at:type_name -> google.protobuf.Timestamp
-	113,  // 522: console.v1.ListWorkspaceGuardrailRulesRequest.query:type_name -> console.v1.ConsoleQuery
-	379,  // 523: console.v1.ListWorkspaceGuardrailRulesResponse.rules:type_name -> console.v1.WorkspaceGuardrailRule
-	113,  // 524: console.v1.UpsertWorkspaceGuardrailRuleRequest.query:type_name -> console.v1.ConsoleQuery
-	379,  // 525: console.v1.UpsertWorkspaceGuardrailRuleRequest.rule:type_name -> console.v1.WorkspaceGuardrailRule
-	113,  // 526: console.v1.RemoveWorkspaceGuardrailRuleRequest.query:type_name -> console.v1.ConsoleQuery
-	840,  // 527: console.v1.ConnectorProfile.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 528: console.v1.ConnectorProfile.updated_at:type_name -> google.protobuf.Timestamp
-	113,  // 529: console.v1.CreateConnectorProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	384,  // 530: console.v1.CreateConnectorProfileResponse.profile:type_name -> console.v1.ConnectorProfile
-	113,  // 531: console.v1.ListConnectorProfilesRequest.query:type_name -> console.v1.ConsoleQuery
-	384,  // 532: console.v1.ListConnectorProfilesResponse.profiles:type_name -> console.v1.ConnectorProfile
-	113,  // 533: console.v1.UpdateConnectorProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	385,  // 534: console.v1.UpdateConnectorProfileRequest.scopes:type_name -> console.v1.ConnectorProfileScopeSet
-	384,  // 535: console.v1.UpdateConnectorProfileResponse.profile:type_name -> console.v1.ConnectorProfile
-	113,  // 536: console.v1.DeleteConnectorProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	113,  // 537: console.v1.ArchiveWorkspaceRequest.query:type_name -> console.v1.ConsoleQuery
-	362,  // 538: console.v1.ArchiveWorkspaceResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
-	113,  // 539: console.v1.UpdateWorkspacePolicyRequest.query:type_name -> console.v1.ConsoleQuery
-	452,  // 540: console.v1.UpdateWorkspacePolicyRequest.policy:type_name -> console.v1.WorkspaceSettingsPolicy
-	362,  // 541: console.v1.UpdateWorkspacePolicyResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
-	113,  // 542: console.v1.UpdateWorkspaceDexPolicyRequest.query:type_name -> console.v1.ConsoleQuery
-	455,  // 543: console.v1.UpdateWorkspaceDexPolicyRequest.dex_policy:type_name -> console.v1.WorkspaceDexPolicy
-	362,  // 544: console.v1.UpdateWorkspaceDexPolicyResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
-	113,  // 545: console.v1.UpdateWorkspaceArtifactStyleGuideRequest.query:type_name -> console.v1.ConsoleQuery
-	456,  // 546: console.v1.UpdateWorkspaceArtifactStyleGuideRequest.workspace_artifact_style_guide:type_name -> console.v1.WorkspaceArtifactStyleGuide
-	362,  // 547: console.v1.UpdateWorkspaceArtifactStyleGuideResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
-	113,  // 548: console.v1.EvaluateWorkspaceArtifactStyleGuideRequest.query:type_name -> console.v1.ConsoleQuery
-	456,  // 549: console.v1.EvaluateWorkspaceArtifactStyleGuideRequest.workspace_artifact_style_guide:type_name -> console.v1.WorkspaceArtifactStyleGuide
-	404,  // 550: console.v1.EvaluateWorkspaceArtifactStyleGuideResponse.violations:type_name -> console.v1.WorkspaceContentPolicyViolation
-	113,  // 551: console.v1.UpsertWorkspaceIdentityProviderRequest.query:type_name -> console.v1.ConsoleQuery
-	460,  // 552: console.v1.UpsertWorkspaceIdentityProviderRequest.provider:type_name -> console.v1.WorkspaceSettingsIdentityProvider
-	362,  // 553: console.v1.UpsertWorkspaceIdentityProviderResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
-	113,  // 554: console.v1.RemoveWorkspaceIdentityProviderRequest.query:type_name -> console.v1.ConsoleQuery
-	362,  // 555: console.v1.RemoveWorkspaceIdentityProviderResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
-	113,  // 556: console.v1.UpsertWorkspaceIntegrationRequest.query:type_name -> console.v1.ConsoleQuery
-	461,  // 557: console.v1.UpsertWorkspaceIntegrationRequest.integration:type_name -> console.v1.WorkspaceSettingsIntegration
-	362,  // 558: console.v1.UpsertWorkspaceIntegrationResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
-	113,  // 559: console.v1.RemoveWorkspaceIntegrationRequest.query:type_name -> console.v1.ConsoleQuery
-	362,  // 560: console.v1.RemoveWorkspaceIntegrationResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
-	113,  // 561: console.v1.UpdateWorkspaceBillingRequest.query:type_name -> console.v1.ConsoleQuery
-	451,  // 562: console.v1.UpdateWorkspaceBillingRequest.billing:type_name -> console.v1.WorkspaceSettingsBilling
-	113,  // 563: console.v1.UpsertWorkspaceMemberRequest.query:type_name -> console.v1.ConsoleQuery
-	450,  // 564: console.v1.UpsertWorkspaceMemberRequest.member:type_name -> console.v1.WorkspaceSettingsMember
-	113,  // 565: console.v1.RemoveWorkspaceMemberRequest.query:type_name -> console.v1.ConsoleQuery
-	113,  // 566: console.v1.UpdateWorkspaceNotificationPreferencesRequest.query:type_name -> console.v1.ConsoleQuery
-	459,  // 567: console.v1.UpdateWorkspaceNotificationPreferencesRequest.notifications:type_name -> console.v1.WorkspaceSettingsNotifications
-	113,  // 568: console.v1.EnableWorkspaceBreakGlassRequest.query:type_name -> console.v1.ConsoleQuery
-	463,  // 569: console.v1.EnableWorkspaceBreakGlassRequest.grant:type_name -> console.v1.WorkspaceSettingsBreakGlassGrant
-	113,  // 570: console.v1.DisableWorkspaceBreakGlassRequest.query:type_name -> console.v1.ConsoleQuery
-	840,  // 571: console.v1.OperatingSkill.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 572: console.v1.OperatingSkill.updated_at:type_name -> google.protobuf.Timestamp
-	423,  // 573: console.v1.OperatingSkill.analysis:type_name -> console.v1.SkillAnalysisReport
-	426,  // 574: console.v1.OperatingSkill.package_manifest:type_name -> console.v1.DexSkillPackageFile
-	424,  // 575: console.v1.OperatingSkill.inputs:type_name -> console.v1.DexSkillInputDeclaration
-	425,  // 576: console.v1.OperatingSkill.outputs:type_name -> console.v1.DexSkillOutputDeclaration
-	427,  // 577: console.v1.OperatingSkill.license_evidence:type_name -> console.v1.DexSkillLicenseEvidence
-	428,  // 578: console.v1.OperatingSkill.compatibility:type_name -> console.v1.DexSkillCompatibility
-	430,  // 579: console.v1.OperatingSkill.quality_evidence:type_name -> console.v1.DexSkillQualityEvidence
+	845,  // 521: console.v1.WorkspaceGuardrailRule.updated_at:type_name -> google.protobuf.Timestamp
+	114,  // 522: console.v1.ListWorkspaceGuardrailRulesRequest.query:type_name -> console.v1.ConsoleQuery
+	380,  // 523: console.v1.ListWorkspaceGuardrailRulesResponse.rules:type_name -> console.v1.WorkspaceGuardrailRule
+	114,  // 524: console.v1.UpsertWorkspaceGuardrailRuleRequest.query:type_name -> console.v1.ConsoleQuery
+	380,  // 525: console.v1.UpsertWorkspaceGuardrailRuleRequest.rule:type_name -> console.v1.WorkspaceGuardrailRule
+	114,  // 526: console.v1.RemoveWorkspaceGuardrailRuleRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 527: console.v1.ConnectorProfile.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 528: console.v1.ConnectorProfile.updated_at:type_name -> google.protobuf.Timestamp
+	114,  // 529: console.v1.CreateConnectorProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	385,  // 530: console.v1.CreateConnectorProfileResponse.profile:type_name -> console.v1.ConnectorProfile
+	114,  // 531: console.v1.ListConnectorProfilesRequest.query:type_name -> console.v1.ConsoleQuery
+	385,  // 532: console.v1.ListConnectorProfilesResponse.profiles:type_name -> console.v1.ConnectorProfile
+	114,  // 533: console.v1.UpdateConnectorProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	386,  // 534: console.v1.UpdateConnectorProfileRequest.scopes:type_name -> console.v1.ConnectorProfileScopeSet
+	385,  // 535: console.v1.UpdateConnectorProfileResponse.profile:type_name -> console.v1.ConnectorProfile
+	114,  // 536: console.v1.DeleteConnectorProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	114,  // 537: console.v1.ArchiveWorkspaceRequest.query:type_name -> console.v1.ConsoleQuery
+	363,  // 538: console.v1.ArchiveWorkspaceResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
+	114,  // 539: console.v1.UpdateWorkspacePolicyRequest.query:type_name -> console.v1.ConsoleQuery
+	453,  // 540: console.v1.UpdateWorkspacePolicyRequest.policy:type_name -> console.v1.WorkspaceSettingsPolicy
+	363,  // 541: console.v1.UpdateWorkspacePolicyResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
+	114,  // 542: console.v1.UpdateWorkspaceDexPolicyRequest.query:type_name -> console.v1.ConsoleQuery
+	456,  // 543: console.v1.UpdateWorkspaceDexPolicyRequest.dex_policy:type_name -> console.v1.WorkspaceDexPolicy
+	363,  // 544: console.v1.UpdateWorkspaceDexPolicyResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
+	114,  // 545: console.v1.UpdateWorkspaceArtifactStyleGuideRequest.query:type_name -> console.v1.ConsoleQuery
+	457,  // 546: console.v1.UpdateWorkspaceArtifactStyleGuideRequest.workspace_artifact_style_guide:type_name -> console.v1.WorkspaceArtifactStyleGuide
+	363,  // 547: console.v1.UpdateWorkspaceArtifactStyleGuideResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
+	114,  // 548: console.v1.EvaluateWorkspaceArtifactStyleGuideRequest.query:type_name -> console.v1.ConsoleQuery
+	457,  // 549: console.v1.EvaluateWorkspaceArtifactStyleGuideRequest.workspace_artifact_style_guide:type_name -> console.v1.WorkspaceArtifactStyleGuide
+	405,  // 550: console.v1.EvaluateWorkspaceArtifactStyleGuideResponse.violations:type_name -> console.v1.WorkspaceContentPolicyViolation
+	114,  // 551: console.v1.UpsertWorkspaceIdentityProviderRequest.query:type_name -> console.v1.ConsoleQuery
+	461,  // 552: console.v1.UpsertWorkspaceIdentityProviderRequest.provider:type_name -> console.v1.WorkspaceSettingsIdentityProvider
+	363,  // 553: console.v1.UpsertWorkspaceIdentityProviderResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
+	114,  // 554: console.v1.RemoveWorkspaceIdentityProviderRequest.query:type_name -> console.v1.ConsoleQuery
+	363,  // 555: console.v1.RemoveWorkspaceIdentityProviderResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
+	114,  // 556: console.v1.UpsertWorkspaceIntegrationRequest.query:type_name -> console.v1.ConsoleQuery
+	462,  // 557: console.v1.UpsertWorkspaceIntegrationRequest.integration:type_name -> console.v1.WorkspaceSettingsIntegration
+	363,  // 558: console.v1.UpsertWorkspaceIntegrationResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
+	114,  // 559: console.v1.RemoveWorkspaceIntegrationRequest.query:type_name -> console.v1.ConsoleQuery
+	363,  // 560: console.v1.RemoveWorkspaceIntegrationResponse.settings:type_name -> console.v1.GetWorkspaceSettingsResponse
+	114,  // 561: console.v1.UpdateWorkspaceBillingRequest.query:type_name -> console.v1.ConsoleQuery
+	452,  // 562: console.v1.UpdateWorkspaceBillingRequest.billing:type_name -> console.v1.WorkspaceSettingsBilling
+	114,  // 563: console.v1.UpsertWorkspaceMemberRequest.query:type_name -> console.v1.ConsoleQuery
+	451,  // 564: console.v1.UpsertWorkspaceMemberRequest.member:type_name -> console.v1.WorkspaceSettingsMember
+	114,  // 565: console.v1.RemoveWorkspaceMemberRequest.query:type_name -> console.v1.ConsoleQuery
+	114,  // 566: console.v1.UpdateWorkspaceNotificationPreferencesRequest.query:type_name -> console.v1.ConsoleQuery
+	460,  // 567: console.v1.UpdateWorkspaceNotificationPreferencesRequest.notifications:type_name -> console.v1.WorkspaceSettingsNotifications
+	114,  // 568: console.v1.EnableWorkspaceBreakGlassRequest.query:type_name -> console.v1.ConsoleQuery
+	464,  // 569: console.v1.EnableWorkspaceBreakGlassRequest.grant:type_name -> console.v1.WorkspaceSettingsBreakGlassGrant
+	114,  // 570: console.v1.DisableWorkspaceBreakGlassRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 571: console.v1.OperatingSkill.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 572: console.v1.OperatingSkill.updated_at:type_name -> google.protobuf.Timestamp
+	424,  // 573: console.v1.OperatingSkill.analysis:type_name -> console.v1.SkillAnalysisReport
+	427,  // 574: console.v1.OperatingSkill.package_manifest:type_name -> console.v1.DexSkillPackageFile
+	425,  // 575: console.v1.OperatingSkill.inputs:type_name -> console.v1.DexSkillInputDeclaration
+	426,  // 576: console.v1.OperatingSkill.outputs:type_name -> console.v1.DexSkillOutputDeclaration
+	428,  // 577: console.v1.OperatingSkill.license_evidence:type_name -> console.v1.DexSkillLicenseEvidence
+	429,  // 578: console.v1.OperatingSkill.compatibility:type_name -> console.v1.DexSkillCompatibility
+	431,  // 579: console.v1.OperatingSkill.quality_evidence:type_name -> console.v1.DexSkillQualityEvidence
 	63,   // 580: console.v1.OperatingSkill.lifecycle_state:type_name -> console.v1.DexSkillLifecycleState
-	431,  // 581: console.v1.OperatingSkill.update_diff:type_name -> console.v1.DexSkillUpdateDiff
-	113,  // 582: console.v1.ListWorkspaceSkillsRequest.query:type_name -> console.v1.ConsoleQuery
-	419,  // 583: console.v1.ListWorkspaceSkillsResponse.skills:type_name -> console.v1.OperatingSkill
-	841,  // 584: console.v1.SkillAnalysisFinding.severity:type_name -> common.v1.RiskLevel
+	432,  // 581: console.v1.OperatingSkill.update_diff:type_name -> console.v1.DexSkillUpdateDiff
+	114,  // 582: console.v1.ListWorkspaceSkillsRequest.query:type_name -> console.v1.ConsoleQuery
+	420,  // 583: console.v1.ListWorkspaceSkillsResponse.skills:type_name -> console.v1.OperatingSkill
+	846,  // 584: console.v1.SkillAnalysisFinding.severity:type_name -> common.v1.RiskLevel
 	60,   // 585: console.v1.SkillAnalysisReport.verdict:type_name -> console.v1.SkillAnalysisVerdict
-	422,  // 586: console.v1.SkillAnalysisReport.findings:type_name -> console.v1.SkillAnalysisFinding
+	423,  // 586: console.v1.SkillAnalysisReport.findings:type_name -> console.v1.SkillAnalysisFinding
 	61,   // 587: console.v1.DexSkillPackageFile.kind:type_name -> console.v1.DexSkillPackageFileKind
 	62,   // 588: console.v1.DexSkillQualityFixture.kind:type_name -> console.v1.DexSkillFixtureKind
-	429,  // 589: console.v1.DexSkillQualityEvidence.fixtures:type_name -> console.v1.DexSkillQualityFixture
-	841,  // 590: console.v1.DexSkillCatalogEntry.risk_level:type_name -> common.v1.RiskLevel
-	423,  // 591: console.v1.DexSkillCatalogEntry.analysis:type_name -> console.v1.SkillAnalysisReport
+	430,  // 589: console.v1.DexSkillQualityEvidence.fixtures:type_name -> console.v1.DexSkillQualityFixture
+	846,  // 590: console.v1.DexSkillCatalogEntry.risk_level:type_name -> common.v1.RiskLevel
+	424,  // 591: console.v1.DexSkillCatalogEntry.analysis:type_name -> console.v1.SkillAnalysisReport
 	65,   // 592: console.v1.DexSkillCatalogEntry.exposure:type_name -> console.v1.DexSkillCatalogExposure
-	426,  // 593: console.v1.DexSkillCatalogEntry.package_manifest:type_name -> console.v1.DexSkillPackageFile
-	424,  // 594: console.v1.DexSkillCatalogEntry.inputs:type_name -> console.v1.DexSkillInputDeclaration
-	425,  // 595: console.v1.DexSkillCatalogEntry.outputs:type_name -> console.v1.DexSkillOutputDeclaration
-	427,  // 596: console.v1.DexSkillCatalogEntry.license_evidence:type_name -> console.v1.DexSkillLicenseEvidence
-	428,  // 597: console.v1.DexSkillCatalogEntry.compatibility:type_name -> console.v1.DexSkillCompatibility
-	430,  // 598: console.v1.DexSkillCatalogEntry.quality_evidence:type_name -> console.v1.DexSkillQualityEvidence
+	427,  // 593: console.v1.DexSkillCatalogEntry.package_manifest:type_name -> console.v1.DexSkillPackageFile
+	425,  // 594: console.v1.DexSkillCatalogEntry.inputs:type_name -> console.v1.DexSkillInputDeclaration
+	426,  // 595: console.v1.DexSkillCatalogEntry.outputs:type_name -> console.v1.DexSkillOutputDeclaration
+	428,  // 596: console.v1.DexSkillCatalogEntry.license_evidence:type_name -> console.v1.DexSkillLicenseEvidence
+	429,  // 597: console.v1.DexSkillCatalogEntry.compatibility:type_name -> console.v1.DexSkillCompatibility
+	431,  // 598: console.v1.DexSkillCatalogEntry.quality_evidence:type_name -> console.v1.DexSkillQualityEvidence
 	63,   // 599: console.v1.DexSkillCatalogEntry.lifecycle_state:type_name -> console.v1.DexSkillLifecycleState
-	431,  // 600: console.v1.DexSkillCatalogEntry.update_diff:type_name -> console.v1.DexSkillUpdateDiff
+	432,  // 600: console.v1.DexSkillCatalogEntry.update_diff:type_name -> console.v1.DexSkillUpdateDiff
 	64,   // 601: console.v1.DexSkillCatalogEntry.runtime_readiness:type_name -> console.v1.DexSkillRuntimeReadiness
-	433,  // 602: console.v1.DexSkillPlaybook.steps:type_name -> console.v1.DexSkillPlaybookStep
-	113,  // 603: console.v1.BrowseDexSkillCatalogRequest.query:type_name -> console.v1.ConsoleQuery
-	432,  // 604: console.v1.BrowseDexSkillCatalogResponse.entries:type_name -> console.v1.DexSkillCatalogEntry
-	434,  // 605: console.v1.BrowseDexSkillCatalogResponse.playbooks:type_name -> console.v1.DexSkillPlaybook
-	113,  // 606: console.v1.InstallDexSkillCatalogEntryRequest.query:type_name -> console.v1.ConsoleQuery
-	419,  // 607: console.v1.InstallDexSkillCatalogEntryResponse.skill:type_name -> console.v1.OperatingSkill
-	113,  // 608: console.v1.CreateWorkspaceSkillRequest.query:type_name -> console.v1.ConsoleQuery
-	419,  // 609: console.v1.CreateWorkspaceSkillResponse.skill:type_name -> console.v1.OperatingSkill
-	113,  // 610: console.v1.UpdateWorkspaceSkillRequest.query:type_name -> console.v1.ConsoleQuery
-	419,  // 611: console.v1.UpdateWorkspaceSkillResponse.skill:type_name -> console.v1.OperatingSkill
-	113,  // 612: console.v1.DeleteWorkspaceSkillRequest.query:type_name -> console.v1.ConsoleQuery
-	840,  // 613: console.v1.WorkspaceSettingsProfile.archived_at:type_name -> google.protobuf.Timestamp
-	447,  // 614: console.v1.WorkspaceSettingsProfile.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
-	447,  // 615: console.v1.WorkspaceSettingsProfile.archive_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	434,  // 602: console.v1.DexSkillPlaybook.steps:type_name -> console.v1.DexSkillPlaybookStep
+	114,  // 603: console.v1.BrowseDexSkillCatalogRequest.query:type_name -> console.v1.ConsoleQuery
+	433,  // 604: console.v1.BrowseDexSkillCatalogResponse.entries:type_name -> console.v1.DexSkillCatalogEntry
+	435,  // 605: console.v1.BrowseDexSkillCatalogResponse.playbooks:type_name -> console.v1.DexSkillPlaybook
+	114,  // 606: console.v1.InstallDexSkillCatalogEntryRequest.query:type_name -> console.v1.ConsoleQuery
+	420,  // 607: console.v1.InstallDexSkillCatalogEntryResponse.skill:type_name -> console.v1.OperatingSkill
+	114,  // 608: console.v1.CreateWorkspaceSkillRequest.query:type_name -> console.v1.ConsoleQuery
+	420,  // 609: console.v1.CreateWorkspaceSkillResponse.skill:type_name -> console.v1.OperatingSkill
+	114,  // 610: console.v1.UpdateWorkspaceSkillRequest.query:type_name -> console.v1.ConsoleQuery
+	420,  // 611: console.v1.UpdateWorkspaceSkillResponse.skill:type_name -> console.v1.OperatingSkill
+	114,  // 612: console.v1.DeleteWorkspaceSkillRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 613: console.v1.WorkspaceSettingsProfile.archived_at:type_name -> google.protobuf.Timestamp
+	448,  // 614: console.v1.WorkspaceSettingsProfile.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	448,  // 615: console.v1.WorkspaceSettingsProfile.archive_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	50,   // 616: console.v1.WorkspaceSettingsPrincipal.rbac_role:type_name -> console.v1.WorkspaceSettingsRole
-	840,  // 617: console.v1.WorkspaceSettingsWorkspace.archived_at:type_name -> google.protobuf.Timestamp
+	845,  // 617: console.v1.WorkspaceSettingsWorkspace.archived_at:type_name -> google.protobuf.Timestamp
 	50,   // 618: console.v1.WorkspaceSettingsWorkspace.rbac_role:type_name -> console.v1.WorkspaceSettingsRole
-	447,  // 619: console.v1.WorkspaceSettingsWorkspace.capabilities:type_name -> console.v1.WorkspaceSettingsCapability
-	840,  // 620: console.v1.WorkspaceSettingsActivityEntry.created_at:type_name -> google.protobuf.Timestamp
-	837,  // 621: console.v1.WorkspaceSettingsActivityEntry.details:type_name -> console.v1.WorkspaceSettingsActivityEntry.DetailsEntry
-	447,  // 622: console.v1.WorkspaceSettingsMember.manage_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	448,  // 619: console.v1.WorkspaceSettingsWorkspace.capabilities:type_name -> console.v1.WorkspaceSettingsCapability
+	845,  // 620: console.v1.WorkspaceSettingsActivityEntry.created_at:type_name -> google.protobuf.Timestamp
+	842,  // 621: console.v1.WorkspaceSettingsActivityEntry.details:type_name -> console.v1.WorkspaceSettingsActivityEntry.DetailsEntry
+	448,  // 622: console.v1.WorkspaceSettingsMember.manage_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	50,   // 623: console.v1.WorkspaceSettingsMember.rbac_role:type_name -> console.v1.WorkspaceSettingsRole
-	840,  // 624: console.v1.WorkspaceSettingsMember.last_seen_at:type_name -> google.protobuf.Timestamp
+	845,  // 624: console.v1.WorkspaceSettingsMember.last_seen_at:type_name -> google.protobuf.Timestamp
 	53,   // 625: console.v1.WorkspaceSettingsMember.status_enum:type_name -> console.v1.WorkspaceSettingsMemberStatus
 	57,   // 626: console.v1.WorkspaceSettingsMember.source_enum:type_name -> console.v1.WorkspaceSettingsSource
 	57,   // 627: console.v1.WorkspaceSettingsMember.provisioning_source_enum:type_name -> console.v1.WorkspaceSettingsSource
-	840,  // 628: console.v1.WorkspaceSettingsBilling.renewal_at:type_name -> google.protobuf.Timestamp
-	447,  // 629: console.v1.WorkspaceSettingsBilling.manage_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	845,  // 628: console.v1.WorkspaceSettingsBilling.renewal_at:type_name -> google.protobuf.Timestamp
+	448,  // 629: console.v1.WorkspaceSettingsBilling.manage_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	52,   // 630: console.v1.WorkspaceSettingsBilling.status_enum:type_name -> console.v1.WorkspaceSettingsBillingStatus
-	447,  // 631: console.v1.WorkspaceSettingsPolicy.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	448,  // 631: console.v1.WorkspaceSettingsPolicy.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	50,   // 632: console.v1.WorkspaceSettingsPolicy.default_member_rbac_role:type_name -> console.v1.WorkspaceSettingsRole
 	51,   // 633: console.v1.WorkspaceSettingsPolicy.status_enum:type_name -> console.v1.WorkspaceSettingsAvailabilityStatus
-	454,  // 634: console.v1.WorkspaceSettingsPolicy.task_environment_retention:type_name -> console.v1.WorkspaceTaskEnvironmentRetention
-	453,  // 635: console.v1.WorkspaceTaskEnvironmentRetention.projects:type_name -> console.v1.ProjectTaskEnvironmentRetention
+	455,  // 634: console.v1.WorkspaceSettingsPolicy.task_environment_retention:type_name -> console.v1.WorkspaceTaskEnvironmentRetention
+	454,  // 635: console.v1.WorkspaceTaskEnvironmentRetention.projects:type_name -> console.v1.ProjectTaskEnvironmentRetention
 	66,   // 636: console.v1.WorkspaceDexPolicy.autonomy_mode:type_name -> console.v1.DexAutonomyMode
 	67,   // 637: console.v1.WorkspaceDexPolicy.external_action_mode:type_name -> console.v1.DexExternalActionMode
-	447,  // 638: console.v1.WorkspaceDexPolicy.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
-	447,  // 639: console.v1.WorkspaceDexPolicy.review_corrections_capability:type_name -> console.v1.WorkspaceSettingsCapability
-	840,  // 640: console.v1.WorkspaceArtifactStyleGuide.updated_at:type_name -> google.protobuf.Timestamp
-	447,  // 641: console.v1.WorkspaceArtifactStyleGuide.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
-	824,  // 642: console.v1.WorkspaceArtifactStyleGuide.brand_voices:type_name -> console.v1.WorkspaceBrandVoice
-	447,  // 643: console.v1.WorkspaceSettingsNotificationPreference.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	448,  // 638: console.v1.WorkspaceDexPolicy.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	448,  // 639: console.v1.WorkspaceDexPolicy.review_corrections_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	845,  // 640: console.v1.WorkspaceArtifactStyleGuide.updated_at:type_name -> google.protobuf.Timestamp
+	448,  // 641: console.v1.WorkspaceArtifactStyleGuide.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	825,  // 642: console.v1.WorkspaceArtifactStyleGuide.brand_voices:type_name -> console.v1.WorkspaceBrandVoice
+	448,  // 643: console.v1.WorkspaceSettingsNotificationPreference.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	68,   // 644: console.v1.WorkspaceSpendBeatSettings.cadence:type_name -> console.v1.WorkspaceSpendBeatCadence
-	447,  // 645: console.v1.WorkspaceSpendBeatSettings.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
-	457,  // 646: console.v1.WorkspaceSettingsNotifications.preferences:type_name -> console.v1.WorkspaceSettingsNotificationPreference
+	448,  // 645: console.v1.WorkspaceSpendBeatSettings.update_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	458,  // 646: console.v1.WorkspaceSettingsNotifications.preferences:type_name -> console.v1.WorkspaceSettingsNotificationPreference
 	51,   // 647: console.v1.WorkspaceSettingsNotifications.status_enum:type_name -> console.v1.WorkspaceSettingsAvailabilityStatus
-	458,  // 648: console.v1.WorkspaceSettingsNotifications.spend_beat:type_name -> console.v1.WorkspaceSpendBeatSettings
-	447,  // 649: console.v1.WorkspaceSettingsIdentityProvider.configure_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	459,  // 648: console.v1.WorkspaceSettingsNotifications.spend_beat:type_name -> console.v1.WorkspaceSpendBeatSettings
+	448,  // 649: console.v1.WorkspaceSettingsIdentityProvider.configure_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	54,   // 650: console.v1.WorkspaceSettingsIdentityProvider.status_enum:type_name -> console.v1.WorkspaceSettingsIdentityProviderStatus
 	57,   // 651: console.v1.WorkspaceSettingsIdentityProvider.source_enum:type_name -> console.v1.WorkspaceSettingsSource
-	447,  // 652: console.v1.WorkspaceSettingsIntegration.configure_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	448,  // 652: console.v1.WorkspaceSettingsIntegration.configure_capability:type_name -> console.v1.WorkspaceSettingsCapability
 	55,   // 653: console.v1.WorkspaceSettingsIntegration.status_enum:type_name -> console.v1.WorkspaceSettingsIntegrationStatus
 	57,   // 654: console.v1.WorkspaceSettingsIntegration.source_enum:type_name -> console.v1.WorkspaceSettingsSource
-	447,  // 655: console.v1.WorkspaceSettingsOwnerStatus.capability:type_name -> console.v1.WorkspaceSettingsCapability
-	840,  // 656: console.v1.WorkspaceSettingsOwnerStatus.checked_at:type_name -> google.protobuf.Timestamp
+	448,  // 655: console.v1.WorkspaceSettingsOwnerStatus.capability:type_name -> console.v1.WorkspaceSettingsCapability
+	845,  // 656: console.v1.WorkspaceSettingsOwnerStatus.checked_at:type_name -> google.protobuf.Timestamp
 	56,   // 657: console.v1.WorkspaceSettingsOwnerStatus.status_enum:type_name -> console.v1.WorkspaceSettingsOwnerServiceStatus
-	840,  // 658: console.v1.WorkspaceSettingsBreakGlassGrant.enabled_at:type_name -> google.protobuf.Timestamp
-	840,  // 659: console.v1.WorkspaceSettingsBreakGlassGrant.disabled_at:type_name -> google.protobuf.Timestamp
-	447,  // 660: console.v1.WorkspaceSettingsBreakGlassGrant.manage_capability:type_name -> console.v1.WorkspaceSettingsCapability
-	840,  // 661: console.v1.WorkspaceSettingsBreakGlassGrant.expires_at:type_name -> google.protobuf.Timestamp
+	845,  // 658: console.v1.WorkspaceSettingsBreakGlassGrant.enabled_at:type_name -> google.protobuf.Timestamp
+	845,  // 659: console.v1.WorkspaceSettingsBreakGlassGrant.disabled_at:type_name -> google.protobuf.Timestamp
+	448,  // 660: console.v1.WorkspaceSettingsBreakGlassGrant.manage_capability:type_name -> console.v1.WorkspaceSettingsCapability
+	845,  // 661: console.v1.WorkspaceSettingsBreakGlassGrant.expires_at:type_name -> google.protobuf.Timestamp
 	69,   // 662: console.v1.StaffWorkspaceDirectoryEntry.access_state:type_name -> console.v1.StaffWorkspaceAccessState
-	466,  // 663: console.v1.SearchStaffWorkspaceDirectoryResponse.entries:type_name -> console.v1.StaffWorkspaceDirectoryEntry
-	840,  // 664: console.v1.StaffGrantEventSummary.occurred_at:type_name -> google.protobuf.Timestamp
-	840,  // 665: console.v1.StaffGrantEventSummary.expires_at:type_name -> google.protobuf.Timestamp
-	840,  // 666: console.v1.StaffReceiptSummary.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 667: console.v1.StaffTraceSummary.occurred_at:type_name -> google.protobuf.Timestamp
-	840,  // 668: console.v1.StaffFailureSummary.occurred_at:type_name -> google.protobuf.Timestamp
+	467,  // 663: console.v1.SearchStaffWorkspaceDirectoryResponse.entries:type_name -> console.v1.StaffWorkspaceDirectoryEntry
+	845,  // 664: console.v1.StaffGrantEventSummary.occurred_at:type_name -> google.protobuf.Timestamp
+	845,  // 665: console.v1.StaffGrantEventSummary.expires_at:type_name -> google.protobuf.Timestamp
+	845,  // 666: console.v1.StaffReceiptSummary.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 667: console.v1.StaffTraceSummary.occurred_at:type_name -> google.protobuf.Timestamp
+	845,  // 668: console.v1.StaffFailureSummary.occurred_at:type_name -> google.protobuf.Timestamp
 	69,   // 669: console.v1.StaffWorkspaceContext.access_state:type_name -> console.v1.StaffWorkspaceAccessState
-	469,  // 670: console.v1.StaffWorkspaceContext.grant_events:type_name -> console.v1.StaffGrantEventSummary
-	470,  // 671: console.v1.StaffWorkspaceContext.receipts:type_name -> console.v1.StaffReceiptSummary
-	471,  // 672: console.v1.StaffWorkspaceContext.traces:type_name -> console.v1.StaffTraceSummary
-	472,  // 673: console.v1.StaffWorkspaceContext.failures:type_name -> console.v1.StaffFailureSummary
-	473,  // 674: console.v1.StaffWorkspaceContext.computer_environment:type_name -> console.v1.StaffComputerEnvironment
-	464,  // 675: console.v1.StaffWorkspaceContext.grant_events_capability:type_name -> console.v1.StaffContextCapability
-	464,  // 676: console.v1.StaffWorkspaceContext.receipts_capability:type_name -> console.v1.StaffContextCapability
-	464,  // 677: console.v1.StaffWorkspaceContext.traces_capability:type_name -> console.v1.StaffContextCapability
-	464,  // 678: console.v1.StaffWorkspaceContext.failures_capability:type_name -> console.v1.StaffContextCapability
-	464,  // 679: console.v1.StaffWorkspaceContext.computer_environment_capability:type_name -> console.v1.StaffContextCapability
-	840,  // 680: console.v1.StaffWorkspaceContext.active_grant_expires_at:type_name -> google.protobuf.Timestamp
-	474,  // 681: console.v1.GetStaffWorkspaceContextResponse.context:type_name -> console.v1.StaffWorkspaceContext
-	840,  // 682: console.v1.ManagedProviderAccessGrant.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 683: console.v1.ManagedProviderAccessGrant.updated_at:type_name -> google.protobuf.Timestamp
+	470,  // 670: console.v1.StaffWorkspaceContext.grant_events:type_name -> console.v1.StaffGrantEventSummary
+	471,  // 671: console.v1.StaffWorkspaceContext.receipts:type_name -> console.v1.StaffReceiptSummary
+	472,  // 672: console.v1.StaffWorkspaceContext.traces:type_name -> console.v1.StaffTraceSummary
+	473,  // 673: console.v1.StaffWorkspaceContext.failures:type_name -> console.v1.StaffFailureSummary
+	474,  // 674: console.v1.StaffWorkspaceContext.computer_environment:type_name -> console.v1.StaffComputerEnvironment
+	465,  // 675: console.v1.StaffWorkspaceContext.grant_events_capability:type_name -> console.v1.StaffContextCapability
+	465,  // 676: console.v1.StaffWorkspaceContext.receipts_capability:type_name -> console.v1.StaffContextCapability
+	465,  // 677: console.v1.StaffWorkspaceContext.traces_capability:type_name -> console.v1.StaffContextCapability
+	465,  // 678: console.v1.StaffWorkspaceContext.failures_capability:type_name -> console.v1.StaffContextCapability
+	465,  // 679: console.v1.StaffWorkspaceContext.computer_environment_capability:type_name -> console.v1.StaffContextCapability
+	845,  // 680: console.v1.StaffWorkspaceContext.active_grant_expires_at:type_name -> google.protobuf.Timestamp
+	475,  // 681: console.v1.GetStaffWorkspaceContextResponse.context:type_name -> console.v1.StaffWorkspaceContext
+	845,  // 682: console.v1.ManagedProviderAccessGrant.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 683: console.v1.ManagedProviderAccessGrant.updated_at:type_name -> google.protobuf.Timestamp
 	70,   // 684: console.v1.ManagedProviderAccessGrant.state:type_name -> console.v1.ManagedProviderAccessState
-	840,  // 685: console.v1.ManagedProviderAccessGrant.expires_at:type_name -> google.protobuf.Timestamp
-	476,  // 686: console.v1.ListManagedProviderAccessGrantsResponse.grants:type_name -> console.v1.ManagedProviderAccessGrant
+	845,  // 685: console.v1.ManagedProviderAccessGrant.expires_at:type_name -> google.protobuf.Timestamp
+	477,  // 686: console.v1.ListManagedProviderAccessGrantsResponse.grants:type_name -> console.v1.ManagedProviderAccessGrant
 	70,   // 687: console.v1.UpsertManagedProviderAccessGrantRequest.state:type_name -> console.v1.ManagedProviderAccessState
-	840,  // 688: console.v1.UpsertManagedProviderAccessGrantRequest.expires_at:type_name -> google.protobuf.Timestamp
-	476,  // 689: console.v1.UpsertManagedProviderAccessGrantResponse.grant:type_name -> console.v1.ManagedProviderAccessGrant
-	476,  // 690: console.v1.RevokeManagedProviderAccessGrantResponse.grant:type_name -> console.v1.ManagedProviderAccessGrant
+	845,  // 688: console.v1.UpsertManagedProviderAccessGrantRequest.expires_at:type_name -> google.protobuf.Timestamp
+	477,  // 689: console.v1.UpsertManagedProviderAccessGrantResponse.grant:type_name -> console.v1.ManagedProviderAccessGrant
+	477,  // 690: console.v1.RevokeManagedProviderAccessGrantResponse.grant:type_name -> console.v1.ManagedProviderAccessGrant
 	71,   // 691: console.v1.StaffInferencePurposeRoute.purpose:type_name -> console.v1.StaffInferenceRoutingPurpose
-	483,  // 692: console.v1.StaffInferencePurposeRoute.primary_target:type_name -> console.v1.InferenceProviderTarget
-	483,  // 693: console.v1.StaffInferencePurposeRoute.canary_target:type_name -> console.v1.InferenceProviderTarget
-	840,  // 694: console.v1.StaffInferenceRoutingProfile.updated_at:type_name -> google.protobuf.Timestamp
-	484,  // 695: console.v1.StaffInferenceRoutingProfile.routes:type_name -> console.v1.StaffInferencePurposeRoute
-	484,  // 696: console.v1.StaffInferenceRoutingEvent.routes:type_name -> console.v1.StaffInferencePurposeRoute
-	840,  // 697: console.v1.StaffInferenceRoutingEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	483,  // 698: console.v1.GetStaffInferenceRoutingProfileResponse.available_targets:type_name -> console.v1.InferenceProviderTarget
-	483,  // 699: console.v1.GetStaffInferenceRoutingProfileResponse.default_target:type_name -> console.v1.InferenceProviderTarget
-	483,  // 700: console.v1.GetStaffInferenceRoutingProfileResponse.effective_target:type_name -> console.v1.InferenceProviderTarget
-	485,  // 701: console.v1.GetStaffInferenceRoutingProfileResponse.profile:type_name -> console.v1.StaffInferenceRoutingProfile
-	486,  // 702: console.v1.GetStaffInferenceRoutingProfileResponse.recent_events:type_name -> console.v1.StaffInferenceRoutingEvent
-	484,  // 703: console.v1.GetStaffInferenceRoutingProfileResponse.effective_routes:type_name -> console.v1.StaffInferencePurposeRoute
+	484,  // 692: console.v1.StaffInferencePurposeRoute.primary_target:type_name -> console.v1.InferenceProviderTarget
+	484,  // 693: console.v1.StaffInferencePurposeRoute.canary_target:type_name -> console.v1.InferenceProviderTarget
+	845,  // 694: console.v1.StaffInferenceRoutingProfile.updated_at:type_name -> google.protobuf.Timestamp
+	485,  // 695: console.v1.StaffInferenceRoutingProfile.routes:type_name -> console.v1.StaffInferencePurposeRoute
+	485,  // 696: console.v1.StaffInferenceRoutingEvent.routes:type_name -> console.v1.StaffInferencePurposeRoute
+	845,  // 697: console.v1.StaffInferenceRoutingEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	484,  // 698: console.v1.GetStaffInferenceRoutingProfileResponse.available_targets:type_name -> console.v1.InferenceProviderTarget
+	484,  // 699: console.v1.GetStaffInferenceRoutingProfileResponse.default_target:type_name -> console.v1.InferenceProviderTarget
+	484,  // 700: console.v1.GetStaffInferenceRoutingProfileResponse.effective_target:type_name -> console.v1.InferenceProviderTarget
+	486,  // 701: console.v1.GetStaffInferenceRoutingProfileResponse.profile:type_name -> console.v1.StaffInferenceRoutingProfile
+	487,  // 702: console.v1.GetStaffInferenceRoutingProfileResponse.recent_events:type_name -> console.v1.StaffInferenceRoutingEvent
+	485,  // 703: console.v1.GetStaffInferenceRoutingProfileResponse.effective_routes:type_name -> console.v1.StaffInferencePurposeRoute
 	71,   // 704: console.v1.UpdateStaffInferenceRoutingProfileRequest.purpose:type_name -> console.v1.StaffInferenceRoutingPurpose
-	485,  // 705: console.v1.UpdateStaffInferenceRoutingProfileResponse.profile:type_name -> console.v1.StaffInferenceRoutingProfile
-	483,  // 706: console.v1.UpdateStaffInferenceRoutingProfileResponse.effective_target:type_name -> console.v1.InferenceProviderTarget
-	498,  // 707: console.v1.ListScenarioFixturesResponse.fixtures:type_name -> console.v1.ScenarioFixture
-	498,  // 708: console.v1.PromoteScenarioFixtureResponse.fixture:type_name -> console.v1.ScenarioFixture
-	498,  // 709: console.v1.CompareScenarioFixturesResponse.base_fixture:type_name -> console.v1.ScenarioFixture
-	498,  // 710: console.v1.CompareScenarioFixturesResponse.target_fixture:type_name -> console.v1.ScenarioFixture
-	497,  // 711: console.v1.CompareScenarioFixturesResponse.differences:type_name -> console.v1.ScenarioFixtureDifference
-	840,  // 712: console.v1.ScenarioFixture.recorded_at:type_name -> google.protobuf.Timestamp
-	840,  // 713: console.v1.ScenarioFixture.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 714: console.v1.ScenarioFixture.updated_at:type_name -> google.protobuf.Timestamp
-	841,  // 715: console.v1.AiAsset.risk_level:type_name -> common.v1.RiskLevel
-	840,  // 716: console.v1.AiAsset.last_seen_at:type_name -> google.protobuf.Timestamp
-	535,  // 717: console.v1.AiAsset.related_resources:type_name -> console.v1.RelatedResource
-	841,  // 718: console.v1.ActivityEvent.risk_level:type_name -> common.v1.RiskLevel
-	840,  // 719: console.v1.ActivityEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	535,  // 720: console.v1.ActivityEvent.related_resources:type_name -> console.v1.RelatedResource
-	841,  // 721: console.v1.EvalResult.risk_level:type_name -> common.v1.RiskLevel
-	840,  // 722: console.v1.EvalResult.occurred_at:type_name -> google.protobuf.Timestamp
-	535,  // 723: console.v1.EvalResult.related_resources:type_name -> console.v1.RelatedResource
-	841,  // 724: console.v1.CostUsage.risk_level:type_name -> common.v1.RiskLevel
-	840,  // 725: console.v1.CostUsage.occurred_at:type_name -> google.protobuf.Timestamp
-	535,  // 726: console.v1.CostUsage.related_resources:type_name -> console.v1.RelatedResource
-	840,  // 727: console.v1.CostUsage.ingested_at:type_name -> google.protobuf.Timestamp
-	840,  // 728: console.v1.AuthorityLedger.expires_at:type_name -> google.protobuf.Timestamp
-	841,  // 729: console.v1.AuthorityLedger.risk_level:type_name -> common.v1.RiskLevel
-	840,  // 730: console.v1.AuthorityLedger.occurred_at:type_name -> google.protobuf.Timestamp
-	505,  // 731: console.v1.AuthorityLedger.scope_ledger:type_name -> console.v1.AuthorityScopeLedger
-	506,  // 732: console.v1.AuthorityLedger.missing_evidence:type_name -> console.v1.AuthorityMissingEvidence
-	507,  // 733: console.v1.AuthorityLedger.denied_actions:type_name -> console.v1.AuthorityDeniedAction
-	535,  // 734: console.v1.AuthorityLedger.evidence_refs:type_name -> console.v1.RelatedResource
-	534,  // 735: console.v1.AuthorityLedger.evidence_gaps:type_name -> console.v1.SecurityDecisionEvidenceGap
-	535,  // 736: console.v1.AuthorityDeniedAction.evidence_refs:type_name -> console.v1.RelatedResource
-	841,  // 737: console.v1.AgentWorkforceRecord.risk_level:type_name -> common.v1.RiskLevel
-	519,  // 738: console.v1.AgentWorkforceRecord.run_as_identity:type_name -> console.v1.RunAsIdentitySummary
-	533,  // 739: console.v1.AgentWorkforceRecord.security_decision:type_name -> console.v1.SecurityDecisionPacket
-	520,  // 740: console.v1.AgentWorkforceRecord.action_evidence:type_name -> console.v1.AgentWorkforceActionEvidence
-	521,  // 741: console.v1.AgentWorkforceRecord.credential_authority:type_name -> console.v1.CredentialAuthoritySummary
-	522,  // 742: console.v1.AgentWorkforceRecord.cost_evidence:type_name -> console.v1.CostEvidenceSummary
-	840,  // 743: console.v1.AgentWorkforceRecord.occurred_at:type_name -> google.protobuf.Timestamp
-	523,  // 744: console.v1.AgentWorkforceRecord.debug_identifiers:type_name -> console.v1.AgentWorkforceDebugIdentifiers
-	517,  // 745: console.v1.AgentWorkforceRecord.question_summary:type_name -> console.v1.AgentWorkforceQuestionSummary
-	518,  // 746: console.v1.AgentWorkforceRecord.approval_disablement:type_name -> console.v1.AgentWorkforceApprovalDisablement
-	516,  // 747: console.v1.AgentWorkforceRecord.endpoint_guardrail:type_name -> console.v1.EndpointGuardrailSummary
-	510,  // 748: console.v1.AgentWorkforceRecord.proof_summary:type_name -> console.v1.AgentWorkforceProofSummary
-	514,  // 749: console.v1.AgentWorkforceRecord.action_authority_boundaries:type_name -> console.v1.AgentWorkforceActionAuthorityBoundary
-	509,  // 750: console.v1.AgentWorkforceRecord.source_readiness:type_name -> console.v1.AgentWorkforceSourceReadiness
-	535,  // 751: console.v1.AgentWorkforceSourceReadiness.evidence_refs:type_name -> console.v1.RelatedResource
-	535,  // 752: console.v1.AgentWorkforceProofSummary.evidence_refs:type_name -> console.v1.RelatedResource
-	512,  // 753: console.v1.AgentWorkforceApprovalQueueSummary.state_buckets:type_name -> console.v1.AgentWorkforceApprovalStateBucket
-	513,  // 754: console.v1.AgentWorkforceApprovalQueueSummary.blocker_buckets:type_name -> console.v1.AgentWorkforceApprovalBlockerBucket
-	515,  // 755: console.v1.AgentWorkforceApprovalQueueSummary.missing_evidence_buckets:type_name -> console.v1.AgentWorkforceMissingEvidenceBucket
-	535,  // 756: console.v1.EndpointGuardrailSummary.evidence_refs:type_name -> console.v1.RelatedResource
-	535,  // 757: console.v1.AgentWorkforceApprovalDisablement.evidence_refs:type_name -> console.v1.RelatedResource
-	535,  // 758: console.v1.RunAsIdentitySummary.evidence_refs:type_name -> console.v1.RelatedResource
-	841,  // 759: console.v1.AgentWorkforceActionEvidence.risk_level:type_name -> common.v1.RiskLevel
-	535,  // 760: console.v1.AgentWorkforceActionEvidence.evidence_refs:type_name -> console.v1.RelatedResource
-	840,  // 761: console.v1.AgentWorkforceActionEvidence.occurred_at:type_name -> google.protobuf.Timestamp
-	840,  // 762: console.v1.CredentialAuthoritySummary.expires_at:type_name -> google.protobuf.Timestamp
-	535,  // 763: console.v1.CredentialAuthoritySummary.evidence_refs:type_name -> console.v1.RelatedResource
-	844,  // 764: console.v1.AgentWorkforceDebugIdentifiers.attributes:type_name -> google.protobuf.Struct
-	841,  // 765: console.v1.RiskFinding.risk_level:type_name -> common.v1.RiskLevel
-	840,  // 766: console.v1.RiskFinding.detected_at:type_name -> google.protobuf.Timestamp
-	840,  // 767: console.v1.IntegrationTile.last_seen_at:type_name -> google.protobuf.Timestamp
-	840,  // 768: console.v1.IntegrationTile.last_sync_at:type_name -> google.protobuf.Timestamp
-	840,  // 769: console.v1.IntegrationTile.next_sync_at:type_name -> google.protobuf.Timestamp
-	525,  // 770: console.v1.IntegrationTile.credential_fields:type_name -> console.v1.IntegrationCredentialField
-	855,  // 771: console.v1.IntegrationTile.catalog_provenance:type_name -> connectors.v1.ConnectorCatalogProvenance
-	526,  // 772: console.v1.IntegrationTile.resource_types:type_name -> console.v1.IntegrationResourceType
-	841,  // 773: console.v1.TraceDrilldown.risk_level:type_name -> common.v1.RiskLevel
-	530,  // 774: console.v1.TraceDrilldown.spans:type_name -> console.v1.TraceSpan
-	840,  // 775: console.v1.TraceDrilldown.occurred_at:type_name -> google.protobuf.Timestamp
-	856,  // 776: console.v1.TraceDrilldown.annotations:type_name -> traces.v1.TraceAnnotation
-	532,  // 777: console.v1.TraceDrilldown.completeness_signals:type_name -> console.v1.TraceCompletenessSignal
-	533,  // 778: console.v1.TraceDrilldown.security_decision_packet:type_name -> console.v1.SecurityDecisionPacket
-	840,  // 779: console.v1.TraceSpan.started_at:type_name -> google.protobuf.Timestamp
-	840,  // 780: console.v1.TraceSpan.ended_at:type_name -> google.protobuf.Timestamp
-	844,  // 781: console.v1.TraceSpan.attributes:type_name -> google.protobuf.Struct
-	531,  // 782: console.v1.TraceSpan.references:type_name -> console.v1.TraceSpanReference
-	841,  // 783: console.v1.SecurityDecisionPacket.risk_level:type_name -> common.v1.RiskLevel
-	534,  // 784: console.v1.SecurityDecisionPacket.evidence_gaps:type_name -> console.v1.SecurityDecisionEvidenceGap
-	535,  // 785: console.v1.SecurityDecisionPacket.evidence_refs:type_name -> console.v1.RelatedResource
-	535,  // 786: console.v1.OperatingHomepageSuggestion.evidence_refs:type_name -> console.v1.RelatedResource
-	840,  // 787: console.v1.OperatingHomepageSuggestion.generated_at:type_name -> google.protobuf.Timestamp
-	840,  // 788: console.v1.OperatingHomepageSuggestion.expires_at:type_name -> google.protobuf.Timestamp
-	840,  // 789: console.v1.DexMcpServer.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 790: console.v1.DexMcpServer.updated_at:type_name -> google.protobuf.Timestamp
-	840,  // 791: console.v1.DexMcpServer.catalog_discovered_at:type_name -> google.protobuf.Timestamp
-	538,  // 792: console.v1.DexMcpServer.catalog_tools:type_name -> console.v1.DexMcpCatalogTool
-	840,  // 793: console.v1.DexMcpServer.credential_observed_at:type_name -> google.protobuf.Timestamp
-	840,  // 794: console.v1.DexMcpServer.credential_expires_at:type_name -> google.protobuf.Timestamp
-	840,  // 795: console.v1.DexMcpServer.route_observed_at:type_name -> google.protobuf.Timestamp
-	840,  // 796: console.v1.DexMcpServer.route_expires_at:type_name -> google.protobuf.Timestamp
-	857,  // 797: console.v1.DexMcpServer.source_authority:type_name -> connectors.v1.SourceAuthorityObservation
-	113,  // 798: console.v1.CreateDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
-	537,  // 799: console.v1.CreateDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
-	113,  // 800: console.v1.ListDexMcpServersRequest.query:type_name -> console.v1.ConsoleQuery
-	537,  // 801: console.v1.ListDexMcpServersResponse.servers:type_name -> console.v1.DexMcpServer
-	113,  // 802: console.v1.GetDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
-	537,  // 803: console.v1.GetDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
-	113,  // 804: console.v1.DiscoverDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
-	537,  // 805: console.v1.DiscoverDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
-	113,  // 806: console.v1.UpdateDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
-	537,  // 807: console.v1.UpdateDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
-	113,  // 808: console.v1.DeleteDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
-	840,  // 809: console.v1.DexMcpOAuthProfile.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 810: console.v1.DexMcpOAuthProfile.updated_at:type_name -> google.protobuf.Timestamp
-	113,  // 811: console.v1.InitiateDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	551,  // 812: console.v1.InitiateDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
-	840,  // 813: console.v1.InitiateDexMcpOAuthProfileResponse.expires_at:type_name -> google.protobuf.Timestamp
-	113,  // 814: console.v1.CompleteDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	551,  // 815: console.v1.CompleteDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
-	113,  // 816: console.v1.ListDexMcpOAuthProfilesRequest.query:type_name -> console.v1.ConsoleQuery
-	551,  // 817: console.v1.ListDexMcpOAuthProfilesResponse.profiles:type_name -> console.v1.DexMcpOAuthProfile
-	113,  // 818: console.v1.RevokeDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	551,  // 819: console.v1.RevokeDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
-	113,  // 820: console.v1.ReauthorizeDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	551,  // 821: console.v1.ReauthorizeDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
-	840,  // 822: console.v1.ReauthorizeDexMcpOAuthProfileResponse.expires_at:type_name -> google.protobuf.Timestamp
-	840,  // 823: console.v1.PrivateEndpoint.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 824: console.v1.PrivateEndpoint.updated_at:type_name -> google.protobuf.Timestamp
-	840,  // 825: console.v1.PrivateEndpoint.revoked_at:type_name -> google.protobuf.Timestamp
-	113,  // 826: console.v1.RegisterPrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
-	562,  // 827: console.v1.RegisterPrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
-	113,  // 828: console.v1.VerifyPrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
-	562,  // 829: console.v1.VerifyPrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
-	113,  // 830: console.v1.ListPrivateEndpointsRequest.query:type_name -> console.v1.ConsoleQuery
-	562,  // 831: console.v1.ListPrivateEndpointsResponse.endpoints:type_name -> console.v1.PrivateEndpoint
-	113,  // 832: console.v1.DeletePrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
-	562,  // 833: console.v1.DeletePrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
-	113,  // 834: console.v1.AttachPrivateEndpointToProfileRequest.query:type_name -> console.v1.ConsoleQuery
-	563,  // 835: console.v1.AttachPrivateEndpointToProfileResponse.route:type_name -> console.v1.PrivateProfileRoute
-	113,  // 836: console.v1.ListGatewayEgressOriginsRequest.query:type_name -> console.v1.ConsoleQuery
-	113,  // 837: console.v1.PrewarmOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
-	840,  // 838: console.v1.PrewarmOperatingThreadResponse.expires_at:type_name -> google.protobuf.Timestamp
+	486,  // 705: console.v1.UpdateStaffInferenceRoutingProfileResponse.profile:type_name -> console.v1.StaffInferenceRoutingProfile
+	484,  // 706: console.v1.UpdateStaffInferenceRoutingProfileResponse.effective_target:type_name -> console.v1.InferenceProviderTarget
+	499,  // 707: console.v1.ListScenarioFixturesResponse.fixtures:type_name -> console.v1.ScenarioFixture
+	499,  // 708: console.v1.PromoteScenarioFixtureResponse.fixture:type_name -> console.v1.ScenarioFixture
+	499,  // 709: console.v1.CompareScenarioFixturesResponse.base_fixture:type_name -> console.v1.ScenarioFixture
+	499,  // 710: console.v1.CompareScenarioFixturesResponse.target_fixture:type_name -> console.v1.ScenarioFixture
+	498,  // 711: console.v1.CompareScenarioFixturesResponse.differences:type_name -> console.v1.ScenarioFixtureDifference
+	845,  // 712: console.v1.ScenarioFixture.recorded_at:type_name -> google.protobuf.Timestamp
+	845,  // 713: console.v1.ScenarioFixture.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 714: console.v1.ScenarioFixture.updated_at:type_name -> google.protobuf.Timestamp
+	846,  // 715: console.v1.AiAsset.risk_level:type_name -> common.v1.RiskLevel
+	845,  // 716: console.v1.AiAsset.last_seen_at:type_name -> google.protobuf.Timestamp
+	536,  // 717: console.v1.AiAsset.related_resources:type_name -> console.v1.RelatedResource
+	846,  // 718: console.v1.ActivityEvent.risk_level:type_name -> common.v1.RiskLevel
+	845,  // 719: console.v1.ActivityEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	536,  // 720: console.v1.ActivityEvent.related_resources:type_name -> console.v1.RelatedResource
+	846,  // 721: console.v1.EvalResult.risk_level:type_name -> common.v1.RiskLevel
+	845,  // 722: console.v1.EvalResult.occurred_at:type_name -> google.protobuf.Timestamp
+	536,  // 723: console.v1.EvalResult.related_resources:type_name -> console.v1.RelatedResource
+	846,  // 724: console.v1.CostUsage.risk_level:type_name -> common.v1.RiskLevel
+	845,  // 725: console.v1.CostUsage.occurred_at:type_name -> google.protobuf.Timestamp
+	536,  // 726: console.v1.CostUsage.related_resources:type_name -> console.v1.RelatedResource
+	845,  // 727: console.v1.CostUsage.ingested_at:type_name -> google.protobuf.Timestamp
+	845,  // 728: console.v1.AuthorityLedger.expires_at:type_name -> google.protobuf.Timestamp
+	846,  // 729: console.v1.AuthorityLedger.risk_level:type_name -> common.v1.RiskLevel
+	845,  // 730: console.v1.AuthorityLedger.occurred_at:type_name -> google.protobuf.Timestamp
+	506,  // 731: console.v1.AuthorityLedger.scope_ledger:type_name -> console.v1.AuthorityScopeLedger
+	507,  // 732: console.v1.AuthorityLedger.missing_evidence:type_name -> console.v1.AuthorityMissingEvidence
+	508,  // 733: console.v1.AuthorityLedger.denied_actions:type_name -> console.v1.AuthorityDeniedAction
+	536,  // 734: console.v1.AuthorityLedger.evidence_refs:type_name -> console.v1.RelatedResource
+	535,  // 735: console.v1.AuthorityLedger.evidence_gaps:type_name -> console.v1.SecurityDecisionEvidenceGap
+	536,  // 736: console.v1.AuthorityDeniedAction.evidence_refs:type_name -> console.v1.RelatedResource
+	846,  // 737: console.v1.AgentWorkforceRecord.risk_level:type_name -> common.v1.RiskLevel
+	520,  // 738: console.v1.AgentWorkforceRecord.run_as_identity:type_name -> console.v1.RunAsIdentitySummary
+	534,  // 739: console.v1.AgentWorkforceRecord.security_decision:type_name -> console.v1.SecurityDecisionPacket
+	521,  // 740: console.v1.AgentWorkforceRecord.action_evidence:type_name -> console.v1.AgentWorkforceActionEvidence
+	522,  // 741: console.v1.AgentWorkforceRecord.credential_authority:type_name -> console.v1.CredentialAuthoritySummary
+	523,  // 742: console.v1.AgentWorkforceRecord.cost_evidence:type_name -> console.v1.CostEvidenceSummary
+	845,  // 743: console.v1.AgentWorkforceRecord.occurred_at:type_name -> google.protobuf.Timestamp
+	524,  // 744: console.v1.AgentWorkforceRecord.debug_identifiers:type_name -> console.v1.AgentWorkforceDebugIdentifiers
+	518,  // 745: console.v1.AgentWorkforceRecord.question_summary:type_name -> console.v1.AgentWorkforceQuestionSummary
+	519,  // 746: console.v1.AgentWorkforceRecord.approval_disablement:type_name -> console.v1.AgentWorkforceApprovalDisablement
+	517,  // 747: console.v1.AgentWorkforceRecord.endpoint_guardrail:type_name -> console.v1.EndpointGuardrailSummary
+	511,  // 748: console.v1.AgentWorkforceRecord.proof_summary:type_name -> console.v1.AgentWorkforceProofSummary
+	515,  // 749: console.v1.AgentWorkforceRecord.action_authority_boundaries:type_name -> console.v1.AgentWorkforceActionAuthorityBoundary
+	510,  // 750: console.v1.AgentWorkforceRecord.source_readiness:type_name -> console.v1.AgentWorkforceSourceReadiness
+	536,  // 751: console.v1.AgentWorkforceSourceReadiness.evidence_refs:type_name -> console.v1.RelatedResource
+	536,  // 752: console.v1.AgentWorkforceProofSummary.evidence_refs:type_name -> console.v1.RelatedResource
+	513,  // 753: console.v1.AgentWorkforceApprovalQueueSummary.state_buckets:type_name -> console.v1.AgentWorkforceApprovalStateBucket
+	514,  // 754: console.v1.AgentWorkforceApprovalQueueSummary.blocker_buckets:type_name -> console.v1.AgentWorkforceApprovalBlockerBucket
+	516,  // 755: console.v1.AgentWorkforceApprovalQueueSummary.missing_evidence_buckets:type_name -> console.v1.AgentWorkforceMissingEvidenceBucket
+	536,  // 756: console.v1.EndpointGuardrailSummary.evidence_refs:type_name -> console.v1.RelatedResource
+	536,  // 757: console.v1.AgentWorkforceApprovalDisablement.evidence_refs:type_name -> console.v1.RelatedResource
+	536,  // 758: console.v1.RunAsIdentitySummary.evidence_refs:type_name -> console.v1.RelatedResource
+	846,  // 759: console.v1.AgentWorkforceActionEvidence.risk_level:type_name -> common.v1.RiskLevel
+	536,  // 760: console.v1.AgentWorkforceActionEvidence.evidence_refs:type_name -> console.v1.RelatedResource
+	845,  // 761: console.v1.AgentWorkforceActionEvidence.occurred_at:type_name -> google.protobuf.Timestamp
+	845,  // 762: console.v1.CredentialAuthoritySummary.expires_at:type_name -> google.protobuf.Timestamp
+	536,  // 763: console.v1.CredentialAuthoritySummary.evidence_refs:type_name -> console.v1.RelatedResource
+	849,  // 764: console.v1.AgentWorkforceDebugIdentifiers.attributes:type_name -> google.protobuf.Struct
+	846,  // 765: console.v1.RiskFinding.risk_level:type_name -> common.v1.RiskLevel
+	845,  // 766: console.v1.RiskFinding.detected_at:type_name -> google.protobuf.Timestamp
+	845,  // 767: console.v1.IntegrationTile.last_seen_at:type_name -> google.protobuf.Timestamp
+	845,  // 768: console.v1.IntegrationTile.last_sync_at:type_name -> google.protobuf.Timestamp
+	845,  // 769: console.v1.IntegrationTile.next_sync_at:type_name -> google.protobuf.Timestamp
+	526,  // 770: console.v1.IntegrationTile.credential_fields:type_name -> console.v1.IntegrationCredentialField
+	860,  // 771: console.v1.IntegrationTile.catalog_provenance:type_name -> connectors.v1.ConnectorCatalogProvenance
+	527,  // 772: console.v1.IntegrationTile.resource_types:type_name -> console.v1.IntegrationResourceType
+	846,  // 773: console.v1.TraceDrilldown.risk_level:type_name -> common.v1.RiskLevel
+	531,  // 774: console.v1.TraceDrilldown.spans:type_name -> console.v1.TraceSpan
+	845,  // 775: console.v1.TraceDrilldown.occurred_at:type_name -> google.protobuf.Timestamp
+	861,  // 776: console.v1.TraceDrilldown.annotations:type_name -> traces.v1.TraceAnnotation
+	533,  // 777: console.v1.TraceDrilldown.completeness_signals:type_name -> console.v1.TraceCompletenessSignal
+	534,  // 778: console.v1.TraceDrilldown.security_decision_packet:type_name -> console.v1.SecurityDecisionPacket
+	845,  // 779: console.v1.TraceSpan.started_at:type_name -> google.protobuf.Timestamp
+	845,  // 780: console.v1.TraceSpan.ended_at:type_name -> google.protobuf.Timestamp
+	849,  // 781: console.v1.TraceSpan.attributes:type_name -> google.protobuf.Struct
+	532,  // 782: console.v1.TraceSpan.references:type_name -> console.v1.TraceSpanReference
+	846,  // 783: console.v1.SecurityDecisionPacket.risk_level:type_name -> common.v1.RiskLevel
+	535,  // 784: console.v1.SecurityDecisionPacket.evidence_gaps:type_name -> console.v1.SecurityDecisionEvidenceGap
+	536,  // 785: console.v1.SecurityDecisionPacket.evidence_refs:type_name -> console.v1.RelatedResource
+	536,  // 786: console.v1.OperatingHomepageSuggestion.evidence_refs:type_name -> console.v1.RelatedResource
+	845,  // 787: console.v1.OperatingHomepageSuggestion.generated_at:type_name -> google.protobuf.Timestamp
+	845,  // 788: console.v1.OperatingHomepageSuggestion.expires_at:type_name -> google.protobuf.Timestamp
+	845,  // 789: console.v1.DexMcpServer.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 790: console.v1.DexMcpServer.updated_at:type_name -> google.protobuf.Timestamp
+	845,  // 791: console.v1.DexMcpServer.catalog_discovered_at:type_name -> google.protobuf.Timestamp
+	539,  // 792: console.v1.DexMcpServer.catalog_tools:type_name -> console.v1.DexMcpCatalogTool
+	845,  // 793: console.v1.DexMcpServer.credential_observed_at:type_name -> google.protobuf.Timestamp
+	845,  // 794: console.v1.DexMcpServer.credential_expires_at:type_name -> google.protobuf.Timestamp
+	845,  // 795: console.v1.DexMcpServer.route_observed_at:type_name -> google.protobuf.Timestamp
+	845,  // 796: console.v1.DexMcpServer.route_expires_at:type_name -> google.protobuf.Timestamp
+	862,  // 797: console.v1.DexMcpServer.source_authority:type_name -> connectors.v1.SourceAuthorityObservation
+	114,  // 798: console.v1.CreateDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
+	538,  // 799: console.v1.CreateDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
+	114,  // 800: console.v1.ListDexMcpServersRequest.query:type_name -> console.v1.ConsoleQuery
+	538,  // 801: console.v1.ListDexMcpServersResponse.servers:type_name -> console.v1.DexMcpServer
+	114,  // 802: console.v1.GetDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
+	538,  // 803: console.v1.GetDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
+	114,  // 804: console.v1.DiscoverDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
+	538,  // 805: console.v1.DiscoverDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
+	114,  // 806: console.v1.UpdateDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
+	538,  // 807: console.v1.UpdateDexMcpServerResponse.server:type_name -> console.v1.DexMcpServer
+	114,  // 808: console.v1.DeleteDexMcpServerRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 809: console.v1.DexMcpOAuthProfile.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 810: console.v1.DexMcpOAuthProfile.updated_at:type_name -> google.protobuf.Timestamp
+	114,  // 811: console.v1.InitiateDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	552,  // 812: console.v1.InitiateDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
+	845,  // 813: console.v1.InitiateDexMcpOAuthProfileResponse.expires_at:type_name -> google.protobuf.Timestamp
+	114,  // 814: console.v1.CompleteDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	552,  // 815: console.v1.CompleteDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
+	114,  // 816: console.v1.ListDexMcpOAuthProfilesRequest.query:type_name -> console.v1.ConsoleQuery
+	552,  // 817: console.v1.ListDexMcpOAuthProfilesResponse.profiles:type_name -> console.v1.DexMcpOAuthProfile
+	114,  // 818: console.v1.RevokeDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	552,  // 819: console.v1.RevokeDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
+	114,  // 820: console.v1.ReauthorizeDexMcpOAuthProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	552,  // 821: console.v1.ReauthorizeDexMcpOAuthProfileResponse.profile:type_name -> console.v1.DexMcpOAuthProfile
+	845,  // 822: console.v1.ReauthorizeDexMcpOAuthProfileResponse.expires_at:type_name -> google.protobuf.Timestamp
+	845,  // 823: console.v1.PrivateEndpoint.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 824: console.v1.PrivateEndpoint.updated_at:type_name -> google.protobuf.Timestamp
+	845,  // 825: console.v1.PrivateEndpoint.revoked_at:type_name -> google.protobuf.Timestamp
+	114,  // 826: console.v1.RegisterPrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
+	563,  // 827: console.v1.RegisterPrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
+	114,  // 828: console.v1.VerifyPrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
+	563,  // 829: console.v1.VerifyPrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
+	114,  // 830: console.v1.ListPrivateEndpointsRequest.query:type_name -> console.v1.ConsoleQuery
+	563,  // 831: console.v1.ListPrivateEndpointsResponse.endpoints:type_name -> console.v1.PrivateEndpoint
+	114,  // 832: console.v1.DeletePrivateEndpointRequest.query:type_name -> console.v1.ConsoleQuery
+	563,  // 833: console.v1.DeletePrivateEndpointResponse.endpoint:type_name -> console.v1.PrivateEndpoint
+	114,  // 834: console.v1.AttachPrivateEndpointToProfileRequest.query:type_name -> console.v1.ConsoleQuery
+	564,  // 835: console.v1.AttachPrivateEndpointToProfileResponse.route:type_name -> console.v1.PrivateProfileRoute
+	114,  // 836: console.v1.ListGatewayEgressOriginsRequest.query:type_name -> console.v1.ConsoleQuery
+	114,  // 837: console.v1.PrewarmOperatingThreadRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 838: console.v1.PrewarmOperatingThreadResponse.expires_at:type_name -> google.protobuf.Timestamp
 	72,   // 839: console.v1.BootstrapThreadGatewayRequest.permissions:type_name -> console.v1.ThreadGatewayPermission
-	840,  // 840: console.v1.BootstrapThreadGatewayResponse.expires_at:type_name -> google.protobuf.Timestamp
+	845,  // 840: console.v1.BootstrapThreadGatewayResponse.expires_at:type_name -> google.protobuf.Timestamp
 	72,   // 841: console.v1.BootstrapThreadGatewayResponse.permissions:type_name -> console.v1.ThreadGatewayPermission
-	113,  // 842: console.v1.SetOperatingThreadControllerRequest.query:type_name -> console.v1.ConsoleQuery
-	125,  // 843: console.v1.SetOperatingThreadControllerResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
-	585,  // 844: console.v1.CostUsageSummary.attributions:type_name -> console.v1.CostUsageAttributionSummary
-	840,  // 845: console.v1.CostUsageSummary.as_of:type_name -> google.protobuf.Timestamp
+	114,  // 842: console.v1.SetOperatingThreadControllerRequest.query:type_name -> console.v1.ConsoleQuery
+	126,  // 843: console.v1.SetOperatingThreadControllerResponse.thread_execution:type_name -> console.v1.OperatingThreadExecution
+	586,  // 844: console.v1.CostUsageSummary.attributions:type_name -> console.v1.CostUsageAttributionSummary
+	845,  // 845: console.v1.CostUsageSummary.as_of:type_name -> google.protobuf.Timestamp
 	73,   // 846: console.v1.TenantPrivacySetting.mode:type_name -> console.v1.TenantPrivacyMode
-	840,  // 847: console.v1.TenantPrivacySetting.updated_at:type_name -> google.protobuf.Timestamp
-	113,  // 848: console.v1.GetPrivacySettingsRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 847: console.v1.TenantPrivacySetting.updated_at:type_name -> google.protobuf.Timestamp
+	114,  // 848: console.v1.GetPrivacySettingsRequest.query:type_name -> console.v1.ConsoleQuery
 	73,   // 849: console.v1.GetPrivacySettingsResponse.effective_mode:type_name -> console.v1.TenantPrivacyMode
-	586,  // 850: console.v1.GetPrivacySettingsResponse.organization:type_name -> console.v1.TenantPrivacySetting
-	586,  // 851: console.v1.GetPrivacySettingsResponse.workspace:type_name -> console.v1.TenantPrivacySetting
-	113,  // 852: console.v1.SetPrivacySettingsRequest.query:type_name -> console.v1.ConsoleQuery
+	587,  // 850: console.v1.GetPrivacySettingsResponse.organization:type_name -> console.v1.TenantPrivacySetting
+	587,  // 851: console.v1.GetPrivacySettingsResponse.workspace:type_name -> console.v1.TenantPrivacySetting
+	114,  // 852: console.v1.SetPrivacySettingsRequest.query:type_name -> console.v1.ConsoleQuery
 	74,   // 853: console.v1.SetPrivacySettingsRequest.scope:type_name -> console.v1.PrivacySettingScope
 	73,   // 854: console.v1.SetPrivacySettingsRequest.mode:type_name -> console.v1.TenantPrivacyMode
 	75,   // 855: console.v1.ManagedRule.scope:type_name -> console.v1.RuleScope
 	76,   // 856: console.v1.McpPolicy.mode:type_name -> console.v1.McpPolicyMode
-	592,  // 857: console.v1.McpPolicy.servers:type_name -> console.v1.McpServerRef
-	840,  // 858: console.v1.ManagedSetup.issued_at:type_name -> google.protobuf.Timestamp
-	590,  // 859: console.v1.ManagedSetup.rules:type_name -> console.v1.ManagedRule
-	591,  // 860: console.v1.ManagedSetup.skills:type_name -> console.v1.ManagedSkillRef
-	593,  // 861: console.v1.ManagedSetup.mcp:type_name -> console.v1.McpPolicy
-	594,  // 862: console.v1.SetManagedSetupRequest.setup:type_name -> console.v1.ManagedSetup
-	113,  // 863: console.v1.StartMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
-	113,  // 864: console.v1.ListConnectedCallsRequest.query:type_name -> console.v1.ConsoleQuery
-	601,  // 865: console.v1.ListConnectedCallsResponse.calls:type_name -> console.v1.ConnectedCall
+	593,  // 857: console.v1.McpPolicy.servers:type_name -> console.v1.McpServerRef
+	845,  // 858: console.v1.ManagedSetup.issued_at:type_name -> google.protobuf.Timestamp
+	591,  // 859: console.v1.ManagedSetup.rules:type_name -> console.v1.ManagedRule
+	592,  // 860: console.v1.ManagedSetup.skills:type_name -> console.v1.ManagedSkillRef
+	594,  // 861: console.v1.ManagedSetup.mcp:type_name -> console.v1.McpPolicy
+	595,  // 862: console.v1.SetManagedSetupRequest.setup:type_name -> console.v1.ManagedSetup
+	114,  // 863: console.v1.StartMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
+	114,  // 864: console.v1.ListConnectedCallsRequest.query:type_name -> console.v1.ConsoleQuery
+	602,  // 865: console.v1.ListConnectedCallsResponse.calls:type_name -> console.v1.ConnectedCall
 	77,   // 866: console.v1.ListConnectedCallsResponse.source_state:type_name -> console.v1.ConnectedCallSourceState
-	840,  // 867: console.v1.ConnectedCall.starts_at:type_name -> google.protobuf.Timestamp
-	840,  // 868: console.v1.ConnectedCall.ends_at:type_name -> google.protobuf.Timestamp
-	609,  // 869: console.v1.StartMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
-	113,  // 870: console.v1.GetMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
-	609,  // 871: console.v1.GetMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
-	113,  // 872: console.v1.ListMeetingCapturesRequest.query:type_name -> console.v1.ConsoleQuery
-	609,  // 873: console.v1.ListMeetingCapturesResponse.captures:type_name -> console.v1.MeetingCapture
-	113,  // 874: console.v1.StopMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
-	609,  // 875: console.v1.StopMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
-	840,  // 876: console.v1.MeetingCapture.join_at:type_name -> google.protobuf.Timestamp
-	840,  // 877: console.v1.MeetingCapture.leave_at:type_name -> google.protobuf.Timestamp
-	840,  // 878: console.v1.MeetingCapture.updated_at:type_name -> google.protobuf.Timestamp
-	840,  // 879: console.v1.MeetingCapture.occurrence_start_at:type_name -> google.protobuf.Timestamp
-	844,  // 880: console.v1.ProspectingWatchProgram.config:type_name -> google.protobuf.Struct
+	845,  // 867: console.v1.ConnectedCall.starts_at:type_name -> google.protobuf.Timestamp
+	845,  // 868: console.v1.ConnectedCall.ends_at:type_name -> google.protobuf.Timestamp
+	610,  // 869: console.v1.StartMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
+	114,  // 870: console.v1.GetMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
+	610,  // 871: console.v1.GetMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
+	114,  // 872: console.v1.ListMeetingCapturesRequest.query:type_name -> console.v1.ConsoleQuery
+	610,  // 873: console.v1.ListMeetingCapturesResponse.captures:type_name -> console.v1.MeetingCapture
+	114,  // 874: console.v1.StopMeetingCaptureRequest.query:type_name -> console.v1.ConsoleQuery
+	610,  // 875: console.v1.StopMeetingCaptureResponse.capture:type_name -> console.v1.MeetingCapture
+	845,  // 876: console.v1.MeetingCapture.join_at:type_name -> google.protobuf.Timestamp
+	845,  // 877: console.v1.MeetingCapture.leave_at:type_name -> google.protobuf.Timestamp
+	845,  // 878: console.v1.MeetingCapture.updated_at:type_name -> google.protobuf.Timestamp
+	845,  // 879: console.v1.MeetingCapture.occurrence_start_at:type_name -> google.protobuf.Timestamp
+	849,  // 880: console.v1.ProspectingWatchProgram.config:type_name -> google.protobuf.Struct
 	78,   // 881: console.v1.ProspectingWatchProgram.lifecycle:type_name -> console.v1.ProspectingWatchProgramLifecycle
-	840,  // 882: console.v1.ProspectingWatchProgram.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 883: console.v1.ProspectingWatchProgram.updated_at:type_name -> google.protobuf.Timestamp
-	113,  // 884: console.v1.CreateProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
-	844,  // 885: console.v1.CreateProspectingWatchProgramRequest.config:type_name -> google.protobuf.Struct
-	610,  // 886: console.v1.CreateProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
-	611,  // 887: console.v1.CreateProspectingWatchProgramResponse.receipt:type_name -> console.v1.ProspectingWatchProgramMutationReceipt
-	113,  // 888: console.v1.GetProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
-	610,  // 889: console.v1.GetProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
-	113,  // 890: console.v1.ListProspectingWatchProgramsRequest.query:type_name -> console.v1.ConsoleQuery
-	610,  // 891: console.v1.ListProspectingWatchProgramsResponse.programs:type_name -> console.v1.ProspectingWatchProgram
-	113,  // 892: console.v1.UpdateProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
-	844,  // 893: console.v1.UpdateProspectingWatchProgramRequest.config:type_name -> google.protobuf.Struct
+	845,  // 882: console.v1.ProspectingWatchProgram.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 883: console.v1.ProspectingWatchProgram.updated_at:type_name -> google.protobuf.Timestamp
+	114,  // 884: console.v1.CreateProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
+	849,  // 885: console.v1.CreateProspectingWatchProgramRequest.config:type_name -> google.protobuf.Struct
+	611,  // 886: console.v1.CreateProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
+	612,  // 887: console.v1.CreateProspectingWatchProgramResponse.receipt:type_name -> console.v1.ProspectingWatchProgramMutationReceipt
+	114,  // 888: console.v1.GetProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
+	611,  // 889: console.v1.GetProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
+	114,  // 890: console.v1.ListProspectingWatchProgramsRequest.query:type_name -> console.v1.ConsoleQuery
+	611,  // 891: console.v1.ListProspectingWatchProgramsResponse.programs:type_name -> console.v1.ProspectingWatchProgram
+	114,  // 892: console.v1.UpdateProspectingWatchProgramRequest.query:type_name -> console.v1.ConsoleQuery
+	849,  // 893: console.v1.UpdateProspectingWatchProgramRequest.config:type_name -> google.protobuf.Struct
 	78,   // 894: console.v1.UpdateProspectingWatchProgramRequest.lifecycle:type_name -> console.v1.ProspectingWatchProgramLifecycle
-	610,  // 895: console.v1.UpdateProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
-	611,  // 896: console.v1.UpdateProspectingWatchProgramResponse.receipt:type_name -> console.v1.ProspectingWatchProgramMutationReceipt
-	113,  // 897: console.v1.ListCommitmentsRequest.query:type_name -> console.v1.ConsoleQuery
-	622,  // 898: console.v1.ListCommitmentsResponse.commitments:type_name -> console.v1.Commitment
+	611,  // 895: console.v1.UpdateProspectingWatchProgramResponse.program:type_name -> console.v1.ProspectingWatchProgram
+	612,  // 896: console.v1.UpdateProspectingWatchProgramResponse.receipt:type_name -> console.v1.ProspectingWatchProgramMutationReceipt
+	114,  // 897: console.v1.ListCommitmentsRequest.query:type_name -> console.v1.ConsoleQuery
+	623,  // 898: console.v1.ListCommitmentsResponse.commitments:type_name -> console.v1.Commitment
 	79,   // 899: console.v1.ListCommitmentsResponse.source_state:type_name -> console.v1.CommitmentSourceState
-	840,  // 900: console.v1.Commitment.due_at:type_name -> google.protobuf.Timestamp
-	623,  // 901: console.v1.Commitment.citations:type_name -> console.v1.CommitmentCitation
-	840,  // 902: console.v1.Commitment.observed_at:type_name -> google.protobuf.Timestamp
-	840,  // 903: console.v1.CommitmentCitation.observed_at:type_name -> google.protobuf.Timestamp
-	858,  // 904: console.v1.OperatingJobRecordLink.record:type_name -> platform.v1.RecordRef
+	845,  // 900: console.v1.Commitment.due_at:type_name -> google.protobuf.Timestamp
+	624,  // 901: console.v1.Commitment.citations:type_name -> console.v1.CommitmentCitation
+	845,  // 902: console.v1.Commitment.observed_at:type_name -> google.protobuf.Timestamp
+	845,  // 903: console.v1.CommitmentCitation.observed_at:type_name -> google.protobuf.Timestamp
+	863,  // 904: console.v1.OperatingJobRecordLink.record:type_name -> platform.v1.RecordRef
 	80,   // 905: console.v1.OperatingJob.state:type_name -> console.v1.OperatingJobState
 	81,   // 906: console.v1.OperatingJob.verification_state:type_name -> console.v1.OperatingJobVerificationState
 	82,   // 907: console.v1.OperatingJob.origin:type_name -> console.v1.OperatingJobOrigin
-	840,  // 908: console.v1.OperatingJob.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 909: console.v1.OperatingJob.updated_at:type_name -> google.protobuf.Timestamp
-	624,  // 910: console.v1.OperatingJob.record_links:type_name -> console.v1.OperatingJobRecordLink
+	845,  // 908: console.v1.OperatingJob.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 909: console.v1.OperatingJob.updated_at:type_name -> google.protobuf.Timestamp
+	625,  // 910: console.v1.OperatingJob.record_links:type_name -> console.v1.OperatingJobRecordLink
 	83,   // 911: console.v1.OperatingJob.proof_state:type_name -> console.v1.OperatingJobProofState
-	113,  // 912: console.v1.ListOperatingJobsRequest.query:type_name -> console.v1.ConsoleQuery
-	625,  // 913: console.v1.ListOperatingJobsResponse.jobs:type_name -> console.v1.OperatingJob
-	113,  // 914: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest.query:type_name -> console.v1.ConsoleQuery
+	114,  // 912: console.v1.ListOperatingJobsRequest.query:type_name -> console.v1.ConsoleQuery
+	626,  // 913: console.v1.ListOperatingJobsResponse.jobs:type_name -> console.v1.OperatingJob
+	114,  // 914: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest.query:type_name -> console.v1.ConsoleQuery
 	84,   // 915: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest.action:type_name -> console.v1.OperatingHomepageSuggestionFeedbackAction
-	630,  // 916: console.v1.GetInferenceCreditBalanceResponse.balance:type_name -> console.v1.InferenceCreditBalance
-	632,  // 917: console.v1.GetInferenceCreditBalanceResponse.blocks:type_name -> console.v1.InferenceCreditBlock
-	633,  // 918: console.v1.GetInferenceCreditBalanceResponse.pricing:type_name -> console.v1.InferenceCreditPricing
-	636,  // 919: console.v1.GetInferenceCreditBalanceResponse.reconciliation:type_name -> console.v1.InferenceCreditReconciliation
-	635,  // 920: console.v1.GetInferenceCreditBalanceResponse.run_balance:type_name -> console.v1.InferenceRunCreditBalance
-	840,  // 921: console.v1.InferenceRunCreditBalance.oldest_pending_at:type_name -> google.protobuf.Timestamp
-	840,  // 922: console.v1.InferenceCreditReconciliation.oldest_pending_at:type_name -> google.protobuf.Timestamp
-	630,  // 923: console.v1.FulfillInferenceCreditCheckoutResponse.balance:type_name -> console.v1.InferenceCreditBalance
-	119,  // 924: console.v1.OperatingAutoModelRoute.target:type_name -> console.v1.OperatingModelSelection
+	631,  // 916: console.v1.GetInferenceCreditBalanceResponse.balance:type_name -> console.v1.InferenceCreditBalance
+	633,  // 917: console.v1.GetInferenceCreditBalanceResponse.blocks:type_name -> console.v1.InferenceCreditBlock
+	634,  // 918: console.v1.GetInferenceCreditBalanceResponse.pricing:type_name -> console.v1.InferenceCreditPricing
+	637,  // 919: console.v1.GetInferenceCreditBalanceResponse.reconciliation:type_name -> console.v1.InferenceCreditReconciliation
+	636,  // 920: console.v1.GetInferenceCreditBalanceResponse.run_balance:type_name -> console.v1.InferenceRunCreditBalance
+	845,  // 921: console.v1.InferenceRunCreditBalance.oldest_pending_at:type_name -> google.protobuf.Timestamp
+	845,  // 922: console.v1.InferenceCreditReconciliation.oldest_pending_at:type_name -> google.protobuf.Timestamp
+	631,  // 923: console.v1.FulfillInferenceCreditCheckoutResponse.balance:type_name -> console.v1.InferenceCreditBalance
+	120,  // 924: console.v1.OperatingAutoModelRoute.target:type_name -> console.v1.OperatingModelSelection
 	71,   // 925: console.v1.OperatingAutoModelRoute.purpose:type_name -> console.v1.StaffInferenceRoutingPurpose
 	85,   // 926: console.v1.OperatingAutoModelRoute.placement:type_name -> console.v1.OperatingExecutionPlacement
 	86,   // 927: console.v1.BusinessFieldDefinition.kind:type_name -> console.v1.BusinessFieldKind
-	642,  // 928: console.v1.BusinessObjectType.fields:type_name -> console.v1.BusinessFieldDefinition
-	643,  // 929: console.v1.BusinessObjectType.relationships:type_name -> console.v1.BusinessRelationshipDefinition
-	787,  // 930: console.v1.BusinessObjectType.blueprint_source:type_name -> console.v1.BusinessBlueprintSource
+	643,  // 928: console.v1.BusinessObjectType.fields:type_name -> console.v1.BusinessFieldDefinition
+	644,  // 929: console.v1.BusinessObjectType.relationships:type_name -> console.v1.BusinessRelationshipDefinition
+	788,  // 930: console.v1.BusinessObjectType.blueprint_source:type_name -> console.v1.BusinessBlueprintSource
 	87,   // 931: console.v1.BusinessObjectType.record_kind:type_name -> console.v1.BusinessObjectRecordKind
-	645,  // 932: console.v1.BusinessFieldValue.money:type_name -> console.v1.BusinessMoney
-	646,  // 933: console.v1.BusinessFieldValue.reference:type_name -> console.v1.BusinessObjectReference
-	647,  // 934: console.v1.BusinessFieldValue.artifact:type_name -> console.v1.BusinessArtifactReference
-	648,  // 935: console.v1.BusinessFieldValue.text_list:type_name -> console.v1.BusinessTextList
+	646,  // 932: console.v1.BusinessFieldValue.money:type_name -> console.v1.BusinessMoney
+	647,  // 933: console.v1.BusinessFieldValue.reference:type_name -> console.v1.BusinessObjectReference
+	648,  // 934: console.v1.BusinessFieldValue.artifact:type_name -> console.v1.BusinessArtifactReference
+	649,  // 935: console.v1.BusinessFieldValue.text_list:type_name -> console.v1.BusinessTextList
 	88,   // 936: console.v1.BusinessSourceField.property:type_name -> console.v1.BusinessSourceProperty
-	650,  // 937: console.v1.BusinessSourceBinding.fields:type_name -> console.v1.BusinessSourceField
+	651,  // 937: console.v1.BusinessSourceBinding.fields:type_name -> console.v1.BusinessSourceField
 	89,   // 938: console.v1.BusinessSourceBinding.state:type_name -> console.v1.BusinessSourceState
-	859,  // 939: console.v1.BusinessSourceBinding.envelope:type_name -> connectors.v1.ProviderResourceEnvelope
-	649,  // 940: console.v1.BusinessObject.values:type_name -> console.v1.BusinessFieldValue
-	651,  // 941: console.v1.BusinessObject.source:type_name -> console.v1.BusinessSourceBinding
-	652,  // 942: console.v1.BusinessObjectRevision.object:type_name -> console.v1.BusinessObject
-	644,  // 943: console.v1.DefineBusinessObjectTypeRequest.definition:type_name -> console.v1.BusinessObjectType
-	644,  // 944: console.v1.DefineBusinessObjectTypeResponse.definition:type_name -> console.v1.BusinessObjectType
-	644,  // 945: console.v1.ListBusinessObjectTypesResponse.definitions:type_name -> console.v1.BusinessObjectType
-	649,  // 946: console.v1.CreateBusinessObjectRequest.values:type_name -> console.v1.BusinessFieldValue
-	652,  // 947: console.v1.CreateBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
-	652,  // 948: console.v1.GetBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
-	663,  // 949: console.v1.GetBusinessObjectResponse.source_recovery:type_name -> console.v1.BusinessObjectSourceRecovery
+	864,  // 939: console.v1.BusinessSourceBinding.envelope:type_name -> connectors.v1.ProviderResourceEnvelope
+	650,  // 940: console.v1.BusinessObject.values:type_name -> console.v1.BusinessFieldValue
+	652,  // 941: console.v1.BusinessObject.source:type_name -> console.v1.BusinessSourceBinding
+	653,  // 942: console.v1.BusinessObjectRevision.object:type_name -> console.v1.BusinessObject
+	645,  // 943: console.v1.DefineBusinessObjectTypeRequest.definition:type_name -> console.v1.BusinessObjectType
+	645,  // 944: console.v1.DefineBusinessObjectTypeResponse.definition:type_name -> console.v1.BusinessObjectType
+	645,  // 945: console.v1.ListBusinessObjectTypesResponse.definitions:type_name -> console.v1.BusinessObjectType
+	650,  // 946: console.v1.CreateBusinessObjectRequest.values:type_name -> console.v1.BusinessFieldValue
+	653,  // 947: console.v1.CreateBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
+	653,  // 948: console.v1.GetBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
+	664,  // 949: console.v1.GetBusinessObjectResponse.source_recovery:type_name -> console.v1.BusinessObjectSourceRecovery
 	89,   // 950: console.v1.BusinessObjectSourceRecovery.source_state:type_name -> console.v1.BusinessSourceState
-	665,  // 951: console.v1.ListBusinessObjectsRequest.filter:type_name -> console.v1.BusinessObjectFilter
-	649,  // 952: console.v1.BusinessObjectFilter.unique_value:type_name -> console.v1.BusinessFieldValue
-	666,  // 953: console.v1.BusinessObjectFilter.reference:type_name -> console.v1.BusinessObjectReferenceFilter
-	652,  // 954: console.v1.ListBusinessObjectsResponse.objects:type_name -> console.v1.BusinessObject
-	649,  // 955: console.v1.UpdateBusinessObjectRequest.values:type_name -> console.v1.BusinessFieldValue
-	652,  // 956: console.v1.UpdateBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
-	652,  // 957: console.v1.DeleteBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
-	653,  // 958: console.v1.ListBusinessObjectRevisionsResponse.revisions:type_name -> console.v1.BusinessObjectRevision
-	650,  // 959: console.v1.BindBusinessObjectSourceRequest.fields:type_name -> console.v1.BusinessSourceField
-	652,  // 960: console.v1.BindBusinessObjectSourceResponse.object:type_name -> console.v1.BusinessObject
-	652,  // 961: console.v1.AdmitBusinessObjectObservationResponse.object:type_name -> console.v1.BusinessObject
+	666,  // 951: console.v1.ListBusinessObjectsRequest.filter:type_name -> console.v1.BusinessObjectFilter
+	650,  // 952: console.v1.BusinessObjectFilter.unique_value:type_name -> console.v1.BusinessFieldValue
+	667,  // 953: console.v1.BusinessObjectFilter.reference:type_name -> console.v1.BusinessObjectReferenceFilter
+	653,  // 954: console.v1.ListBusinessObjectsResponse.objects:type_name -> console.v1.BusinessObject
+	650,  // 955: console.v1.UpdateBusinessObjectRequest.values:type_name -> console.v1.BusinessFieldValue
+	653,  // 956: console.v1.UpdateBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
+	653,  // 957: console.v1.DeleteBusinessObjectResponse.object:type_name -> console.v1.BusinessObject
+	654,  // 958: console.v1.ListBusinessObjectRevisionsResponse.revisions:type_name -> console.v1.BusinessObjectRevision
+	651,  // 959: console.v1.BindBusinessObjectSourceRequest.fields:type_name -> console.v1.BusinessSourceField
+	653,  // 960: console.v1.BindBusinessObjectSourceResponse.object:type_name -> console.v1.BusinessObject
+	653,  // 961: console.v1.AdmitBusinessObjectObservationResponse.object:type_name -> console.v1.BusinessObject
 	90,   // 962: console.v1.ListBusinessObjectRelationshipsRequest.direction:type_name -> console.v1.BusinessObjectRelationshipDirection
-	654,  // 963: console.v1.ListBusinessObjectRelationshipsResponse.relationships:type_name -> console.v1.BusinessObjectRelationship
-	654,  // 964: console.v1.CreateBusinessObjectRelationshipRequest.relationship:type_name -> console.v1.BusinessObjectRelationship
-	652,  // 965: console.v1.CreateBusinessObjectRelationshipResponse.object:type_name -> console.v1.BusinessObject
-	654,  // 966: console.v1.DeleteBusinessObjectRelationshipRequest.relationship:type_name -> console.v1.BusinessObjectRelationship
-	652,  // 967: console.v1.DeleteBusinessObjectRelationshipResponse.object:type_name -> console.v1.BusinessObject
-	685,  // 968: console.v1.CaptureFormBrandingInput.logo:type_name -> console.v1.CaptureFormAssetRef
-	685,  // 969: console.v1.CaptureFormBrandingInput.favicon:type_name -> console.v1.CaptureFormAssetRef
-	685,  // 970: console.v1.CaptureFormBranding.logo:type_name -> console.v1.CaptureFormAssetRef
-	685,  // 971: console.v1.CaptureFormBranding.favicon:type_name -> console.v1.CaptureFormAssetRef
-	689,  // 972: console.v1.CaptureFormSelectSpec.options:type_name -> console.v1.CaptureFormSelectOption
+	655,  // 963: console.v1.ListBusinessObjectRelationshipsResponse.relationships:type_name -> console.v1.BusinessObjectRelationship
+	655,  // 964: console.v1.CreateBusinessObjectRelationshipRequest.relationship:type_name -> console.v1.BusinessObjectRelationship
+	653,  // 965: console.v1.CreateBusinessObjectRelationshipResponse.object:type_name -> console.v1.BusinessObject
+	655,  // 966: console.v1.DeleteBusinessObjectRelationshipRequest.relationship:type_name -> console.v1.BusinessObjectRelationship
+	653,  // 967: console.v1.DeleteBusinessObjectRelationshipResponse.object:type_name -> console.v1.BusinessObject
+	686,  // 968: console.v1.CaptureFormBrandingInput.logo:type_name -> console.v1.CaptureFormAssetRef
+	686,  // 969: console.v1.CaptureFormBrandingInput.favicon:type_name -> console.v1.CaptureFormAssetRef
+	686,  // 970: console.v1.CaptureFormBranding.logo:type_name -> console.v1.CaptureFormAssetRef
+	686,  // 971: console.v1.CaptureFormBranding.favicon:type_name -> console.v1.CaptureFormAssetRef
+	690,  // 972: console.v1.CaptureFormSelectSpec.options:type_name -> console.v1.CaptureFormSelectOption
 	99,   // 973: console.v1.CaptureFormUpload.state:type_name -> console.v1.CaptureFormUploadState
-	685,  // 974: console.v1.CaptureFormUpload.asset:type_name -> console.v1.CaptureFormAssetRef
-	840,  // 975: console.v1.CaptureFormUpload.expires_at:type_name -> google.protobuf.Timestamp
-	840,  // 976: console.v1.CaptureFormTypedValue.datetime:type_name -> google.protobuf.Timestamp
-	838,  // 977: console.v1.CaptureFormTypedValue.option_values:type_name -> console.v1.CaptureFormTypedValue.OptionValues
-	685,  // 978: console.v1.CaptureFormTypedValue.artifact:type_name -> console.v1.CaptureFormAssetRef
+	686,  // 974: console.v1.CaptureFormUpload.asset:type_name -> console.v1.CaptureFormAssetRef
+	845,  // 975: console.v1.CaptureFormUpload.expires_at:type_name -> google.protobuf.Timestamp
+	845,  // 976: console.v1.CaptureFormTypedValue.datetime:type_name -> google.protobuf.Timestamp
+	843,  // 977: console.v1.CaptureFormTypedValue.option_values:type_name -> console.v1.CaptureFormTypedValue.OptionValues
+	686,  // 978: console.v1.CaptureFormTypedValue.artifact:type_name -> console.v1.CaptureFormAssetRef
 	95,   // 979: console.v1.CaptureFormField.kind:type_name -> console.v1.CaptureFormFieldKind
 	96,   // 980: console.v1.CaptureFormField.mapping_state:type_name -> console.v1.CaptureFormMappingState
-	693,  // 981: console.v1.CaptureFormField.default_value:type_name -> console.v1.CaptureFormTypedValue
-	690,  // 982: console.v1.CaptureFormField.select:type_name -> console.v1.CaptureFormSelectSpec
-	691,  // 983: console.v1.CaptureFormField.upload:type_name -> console.v1.CaptureFormUploadSpec
+	694,  // 981: console.v1.CaptureFormField.default_value:type_name -> console.v1.CaptureFormTypedValue
+	691,  // 982: console.v1.CaptureFormField.select:type_name -> console.v1.CaptureFormSelectSpec
+	692,  // 983: console.v1.CaptureFormField.upload:type_name -> console.v1.CaptureFormUploadSpec
 	95,   // 984: console.v1.CaptureFormPublicField.kind:type_name -> console.v1.CaptureFormFieldKind
-	690,  // 985: console.v1.CaptureFormPublicField.select:type_name -> console.v1.CaptureFormSelectSpec
-	691,  // 986: console.v1.CaptureFormPublicField.upload:type_name -> console.v1.CaptureFormUploadSpec
-	684,  // 987: console.v1.CaptureFormVersionInput.object_target:type_name -> console.v1.CaptureFormObjectTarget
-	694,  // 988: console.v1.CaptureFormVersionInput.fields:type_name -> console.v1.CaptureFormField
-	686,  // 989: console.v1.CaptureFormVersionInput.branding:type_name -> console.v1.CaptureFormBrandingInput
-	684,  // 990: console.v1.CaptureFormVersion.object_target:type_name -> console.v1.CaptureFormObjectTarget
-	694,  // 991: console.v1.CaptureFormVersion.fields:type_name -> console.v1.CaptureFormField
-	687,  // 992: console.v1.CaptureFormVersion.branding:type_name -> console.v1.CaptureFormBranding
-	840,  // 993: console.v1.CaptureFormVersion.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 994: console.v1.CaptureFormPublicationInput.expires_at:type_name -> google.protobuf.Timestamp
+	691,  // 985: console.v1.CaptureFormPublicField.select:type_name -> console.v1.CaptureFormSelectSpec
+	692,  // 986: console.v1.CaptureFormPublicField.upload:type_name -> console.v1.CaptureFormUploadSpec
+	685,  // 987: console.v1.CaptureFormVersionInput.object_target:type_name -> console.v1.CaptureFormObjectTarget
+	695,  // 988: console.v1.CaptureFormVersionInput.fields:type_name -> console.v1.CaptureFormField
+	687,  // 989: console.v1.CaptureFormVersionInput.branding:type_name -> console.v1.CaptureFormBrandingInput
+	685,  // 990: console.v1.CaptureFormVersion.object_target:type_name -> console.v1.CaptureFormObjectTarget
+	695,  // 991: console.v1.CaptureFormVersion.fields:type_name -> console.v1.CaptureFormField
+	688,  // 992: console.v1.CaptureFormVersion.branding:type_name -> console.v1.CaptureFormBranding
+	845,  // 993: console.v1.CaptureFormVersion.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 994: console.v1.CaptureFormPublicationInput.expires_at:type_name -> google.protobuf.Timestamp
 	92,   // 995: console.v1.CaptureFormPublication.state:type_name -> console.v1.CaptureFormPublicationState
-	699,  // 996: console.v1.CaptureFormPublication.route:type_name -> console.v1.CaptureFormPublicRoute
-	840,  // 997: console.v1.CaptureFormPublication.published_at:type_name -> google.protobuf.Timestamp
-	840,  // 998: console.v1.CaptureFormPublication.expires_at:type_name -> google.protobuf.Timestamp
-	840,  // 999: console.v1.CaptureFormPublication.revoked_at:type_name -> google.protobuf.Timestamp
+	700,  // 996: console.v1.CaptureFormPublication.route:type_name -> console.v1.CaptureFormPublicRoute
+	845,  // 997: console.v1.CaptureFormPublication.published_at:type_name -> google.protobuf.Timestamp
+	845,  // 998: console.v1.CaptureFormPublication.expires_at:type_name -> google.protobuf.Timestamp
+	845,  // 999: console.v1.CaptureFormPublication.revoked_at:type_name -> google.protobuf.Timestamp
 	91,   // 1000: console.v1.CaptureForm.state:type_name -> console.v1.CaptureFormState
-	684,  // 1001: console.v1.CaptureForm.object_target:type_name -> console.v1.CaptureFormObjectTarget
-	687,  // 1002: console.v1.CaptureForm.branding:type_name -> console.v1.CaptureFormBranding
-	700,  // 1003: console.v1.CaptureForm.publications:type_name -> console.v1.CaptureFormPublication
-	840,  // 1004: console.v1.CaptureForm.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 1005: console.v1.CaptureForm.updated_at:type_name -> google.protobuf.Timestamp
-	688,  // 1006: console.v1.PublishedCaptureForm.branding:type_name -> console.v1.CaptureFormPublicBranding
-	695,  // 1007: console.v1.PublishedCaptureForm.fields:type_name -> console.v1.CaptureFormPublicField
-	699,  // 1008: console.v1.PublishedCaptureForm.route:type_name -> console.v1.CaptureFormPublicRoute
-	840,  // 1009: console.v1.PublishedCaptureForm.expires_at:type_name -> google.protobuf.Timestamp
-	693,  // 1010: console.v1.CaptureFormAnswer.value:type_name -> console.v1.CaptureFormTypedValue
+	685,  // 1001: console.v1.CaptureForm.object_target:type_name -> console.v1.CaptureFormObjectTarget
+	688,  // 1002: console.v1.CaptureForm.branding:type_name -> console.v1.CaptureFormBranding
+	701,  // 1003: console.v1.CaptureForm.publications:type_name -> console.v1.CaptureFormPublication
+	845,  // 1004: console.v1.CaptureForm.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 1005: console.v1.CaptureForm.updated_at:type_name -> google.protobuf.Timestamp
+	689,  // 1006: console.v1.PublishedCaptureForm.branding:type_name -> console.v1.CaptureFormPublicBranding
+	696,  // 1007: console.v1.PublishedCaptureForm.fields:type_name -> console.v1.CaptureFormPublicField
+	700,  // 1008: console.v1.PublishedCaptureForm.route:type_name -> console.v1.CaptureFormPublicRoute
+	845,  // 1009: console.v1.PublishedCaptureForm.expires_at:type_name -> google.protobuf.Timestamp
+	694,  // 1010: console.v1.CaptureFormAnswer.value:type_name -> console.v1.CaptureFormTypedValue
 	94,   // 1011: console.v1.CaptureFormReview.decision:type_name -> console.v1.CaptureFormReviewDecision
-	840,  // 1012: console.v1.CaptureFormReview.reviewed_at:type_name -> google.protobuf.Timestamp
-	649,  // 1013: console.v1.CaptureFormReview.supplemental_values:type_name -> console.v1.BusinessFieldValue
+	845,  // 1012: console.v1.CaptureFormReview.reviewed_at:type_name -> google.protobuf.Timestamp
+	650,  // 1013: console.v1.CaptureFormReview.supplemental_values:type_name -> console.v1.BusinessFieldValue
 	97,   // 1014: console.v1.CaptureFormObjectResult.state:type_name -> console.v1.CaptureFormObjectResultState
 	93,   // 1015: console.v1.CaptureFormSubmission.state:type_name -> console.v1.CaptureFormSubmissionState
-	703,  // 1016: console.v1.CaptureFormSubmission.answers:type_name -> console.v1.CaptureFormAnswer
-	704,  // 1017: console.v1.CaptureFormSubmission.review:type_name -> console.v1.CaptureFormReview
-	705,  // 1018: console.v1.CaptureFormSubmission.object_result:type_name -> console.v1.CaptureFormObjectResult
-	840,  // 1019: console.v1.CaptureFormSubmission.submitted_at:type_name -> google.protobuf.Timestamp
-	840,  // 1020: console.v1.CaptureFormSubmission.updated_at:type_name -> google.protobuf.Timestamp
+	704,  // 1016: console.v1.CaptureFormSubmission.answers:type_name -> console.v1.CaptureFormAnswer
+	705,  // 1017: console.v1.CaptureFormSubmission.review:type_name -> console.v1.CaptureFormReview
+	706,  // 1018: console.v1.CaptureFormSubmission.object_result:type_name -> console.v1.CaptureFormObjectResult
+	845,  // 1019: console.v1.CaptureFormSubmission.submitted_at:type_name -> google.protobuf.Timestamp
+	845,  // 1020: console.v1.CaptureFormSubmission.updated_at:type_name -> google.protobuf.Timestamp
 	93,   // 1021: console.v1.CaptureFormPublicSubmissionReceipt.state:type_name -> console.v1.CaptureFormSubmissionState
-	840,  // 1022: console.v1.CaptureFormPublicSubmissionReceipt.submitted_at:type_name -> google.protobuf.Timestamp
-	696,  // 1023: console.v1.CreateCaptureFormRequest.version:type_name -> console.v1.CaptureFormVersionInput
-	701,  // 1024: console.v1.CreateCaptureFormResponse.form:type_name -> console.v1.CaptureForm
-	697,  // 1025: console.v1.CreateCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
+	845,  // 1022: console.v1.CaptureFormPublicSubmissionReceipt.submitted_at:type_name -> google.protobuf.Timestamp
+	697,  // 1023: console.v1.CreateCaptureFormRequest.version:type_name -> console.v1.CaptureFormVersionInput
+	702,  // 1024: console.v1.CreateCaptureFormResponse.form:type_name -> console.v1.CaptureForm
+	698,  // 1025: console.v1.CreateCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
 	91,   // 1026: console.v1.ListCaptureFormsRequest.state:type_name -> console.v1.CaptureFormState
-	701,  // 1027: console.v1.ListCaptureFormsResponse.forms:type_name -> console.v1.CaptureForm
-	701,  // 1028: console.v1.GetCaptureFormResponse.form:type_name -> console.v1.CaptureForm
-	697,  // 1029: console.v1.GetCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
-	696,  // 1030: console.v1.UpdateCaptureFormRequest.version:type_name -> console.v1.CaptureFormVersionInput
-	701,  // 1031: console.v1.UpdateCaptureFormResponse.form:type_name -> console.v1.CaptureForm
-	697,  // 1032: console.v1.UpdateCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
-	698,  // 1033: console.v1.PublishCaptureFormRequest.publication:type_name -> console.v1.CaptureFormPublicationInput
-	701,  // 1034: console.v1.PublishCaptureFormResponse.form:type_name -> console.v1.CaptureForm
-	697,  // 1035: console.v1.PublishCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
-	700,  // 1036: console.v1.PublishCaptureFormResponse.publication:type_name -> console.v1.CaptureFormPublication
-	701,  // 1037: console.v1.RevokeCaptureFormPublicationResponse.form:type_name -> console.v1.CaptureForm
-	700,  // 1038: console.v1.RevokeCaptureFormPublicationResponse.publication:type_name -> console.v1.CaptureFormPublication
-	702,  // 1039: console.v1.GetPublishedCaptureFormResponse.form:type_name -> console.v1.PublishedCaptureForm
+	702,  // 1027: console.v1.ListCaptureFormsResponse.forms:type_name -> console.v1.CaptureForm
+	702,  // 1028: console.v1.GetCaptureFormResponse.form:type_name -> console.v1.CaptureForm
+	698,  // 1029: console.v1.GetCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
+	697,  // 1030: console.v1.UpdateCaptureFormRequest.version:type_name -> console.v1.CaptureFormVersionInput
+	702,  // 1031: console.v1.UpdateCaptureFormResponse.form:type_name -> console.v1.CaptureForm
+	698,  // 1032: console.v1.UpdateCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
+	699,  // 1033: console.v1.PublishCaptureFormRequest.publication:type_name -> console.v1.CaptureFormPublicationInput
+	702,  // 1034: console.v1.PublishCaptureFormResponse.form:type_name -> console.v1.CaptureForm
+	698,  // 1035: console.v1.PublishCaptureFormResponse.version:type_name -> console.v1.CaptureFormVersion
+	701,  // 1036: console.v1.PublishCaptureFormResponse.publication:type_name -> console.v1.CaptureFormPublication
+	702,  // 1037: console.v1.RevokeCaptureFormPublicationResponse.form:type_name -> console.v1.CaptureForm
+	701,  // 1038: console.v1.RevokeCaptureFormPublicationResponse.publication:type_name -> console.v1.CaptureFormPublication
+	703,  // 1039: console.v1.GetPublishedCaptureFormResponse.form:type_name -> console.v1.PublishedCaptureForm
 	98,   // 1040: console.v1.GetPublishedCaptureFormBrandingAssetRequest.role:type_name -> console.v1.CaptureFormBrandingAssetRole
-	703,  // 1041: console.v1.SubmitPublishedCaptureFormRequest.answers:type_name -> console.v1.CaptureFormAnswer
-	707,  // 1042: console.v1.SubmitPublishedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
-	692,  // 1043: console.v1.BeginPublishedCaptureFormUploadResponse.grant:type_name -> console.v1.CaptureFormUpload
-	845,  // 1044: console.v1.BeginPublishedCaptureFormUploadResponse.upload:type_name -> vfs.v1.VfsUploadTarget
-	846,  // 1045: console.v1.CompletePublishedCaptureFormUploadRequest.completed_parts:type_name -> vfs.v1.VfsCompletedUploadPart
-	692,  // 1046: console.v1.CompletePublishedCaptureFormUploadResponse.upload:type_name -> console.v1.CaptureFormUpload
-	706,  // 1047: console.v1.GetCaptureFormSubmissionResponse.submission:type_name -> console.v1.CaptureFormSubmission
+	704,  // 1041: console.v1.SubmitPublishedCaptureFormRequest.answers:type_name -> console.v1.CaptureFormAnswer
+	708,  // 1042: console.v1.SubmitPublishedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
+	693,  // 1043: console.v1.BeginPublishedCaptureFormUploadResponse.grant:type_name -> console.v1.CaptureFormUpload
+	850,  // 1044: console.v1.BeginPublishedCaptureFormUploadResponse.upload:type_name -> vfs.v1.VfsUploadTarget
+	851,  // 1045: console.v1.CompletePublishedCaptureFormUploadRequest.completed_parts:type_name -> vfs.v1.VfsCompletedUploadPart
+	693,  // 1046: console.v1.CompletePublishedCaptureFormUploadResponse.upload:type_name -> console.v1.CaptureFormUpload
+	707,  // 1047: console.v1.GetCaptureFormSubmissionResponse.submission:type_name -> console.v1.CaptureFormSubmission
 	93,   // 1048: console.v1.ListCaptureFormSubmissionsRequest.state:type_name -> console.v1.CaptureFormSubmissionState
-	706,  // 1049: console.v1.ListCaptureFormSubmissionsResponse.submissions:type_name -> console.v1.CaptureFormSubmission
+	707,  // 1049: console.v1.ListCaptureFormSubmissionsResponse.submissions:type_name -> console.v1.CaptureFormSubmission
 	94,   // 1050: console.v1.ReviewCaptureFormSubmissionRequest.decision:type_name -> console.v1.CaptureFormReviewDecision
-	649,  // 1051: console.v1.ReviewCaptureFormSubmissionRequest.supplemental_values:type_name -> console.v1.BusinessFieldValue
-	706,  // 1052: console.v1.ReviewCaptureFormSubmissionResponse.submission:type_name -> console.v1.CaptureFormSubmission
-	705,  // 1053: console.v1.ReviewCaptureFormSubmissionResponse.object_result:type_name -> console.v1.CaptureFormObjectResult
-	644,  // 1054: console.v1.GetBusinessObjectTypeResponse.definition:type_name -> console.v1.BusinessObjectType
-	738,  // 1055: console.v1.ListInferenceCreditReceiptsResponse.receipts:type_name -> console.v1.InferenceCreditReceipt
-	741,  // 1056: console.v1.GetInferenceCreditAutoRefillResponse.settings:type_name -> console.v1.InferenceCreditAutoRefill
-	652,  // 1057: console.v1.PrepareBusinessObjectAuthorityTransferResponse.object:type_name -> console.v1.BusinessObject
-	652,  // 1058: console.v1.FinalizeBusinessObjectAuthorityTransferResponse.object:type_name -> console.v1.BusinessObject
-	649,  // 1059: console.v1.BusinessProcessRequirement.expected:type_name -> console.v1.BusinessFieldValue
-	754,  // 1060: console.v1.BusinessProcessTransition.requirements:type_name -> console.v1.BusinessProcessRequirement
-	756,  // 1061: console.v1.BusinessProcessTransition.follow_ups:type_name -> console.v1.BusinessProcessFollowUp
-	752,  // 1062: console.v1.BusinessProcessDefinition.participants:type_name -> console.v1.BusinessProcessParticipantType
-	755,  // 1063: console.v1.BusinessProcessDefinition.transitions:type_name -> console.v1.BusinessProcessTransition
-	753,  // 1064: console.v1.BusinessProcessReceipt.evidence:type_name -> console.v1.BusinessProcessParticipant
-	753,  // 1065: console.v1.BusinessProcess.participants:type_name -> console.v1.BusinessProcessParticipant
-	758,  // 1066: console.v1.BusinessProcess.receipts:type_name -> console.v1.BusinessProcessReceipt
-	757,  // 1067: console.v1.DefineBusinessProcessRequest.definition:type_name -> console.v1.BusinessProcessDefinition
-	757,  // 1068: console.v1.DefineBusinessProcessResponse.definition:type_name -> console.v1.BusinessProcessDefinition
-	753,  // 1069: console.v1.StartBusinessProcessRequest.participants:type_name -> console.v1.BusinessProcessParticipant
-	759,  // 1070: console.v1.StartBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
-	759,  // 1071: console.v1.GetBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
-	757,  // 1072: console.v1.GetBusinessProcessResponse.definition:type_name -> console.v1.BusinessProcessDefinition
-	759,  // 1073: console.v1.ListBusinessProcessesResponse.processes:type_name -> console.v1.BusinessProcess
-	753,  // 1074: console.v1.TransitionBusinessProcessRequest.participants:type_name -> console.v1.BusinessProcessParticipant
-	759,  // 1075: console.v1.TransitionBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
-	757,  // 1076: console.v1.GetBusinessProcessDefinitionResponse.definition:type_name -> console.v1.BusinessProcessDefinition
-	757,  // 1077: console.v1.ListBusinessProcessDefinitionsResponse.definitions:type_name -> console.v1.BusinessProcessDefinition
-	129,  // 1078: console.v1.OperatingProjectSnapshotFileInput.attachment:type_name -> console.v1.OperatingAttachmentRef
-	113,  // 1079: console.v1.AcceptOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
-	774,  // 1080: console.v1.AcceptOperatingProjectSnapshotRequest.files:type_name -> console.v1.OperatingProjectSnapshotFileInput
-	842,  // 1081: console.v1.AcceptOperatingProjectSnapshotResponse.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
-	113,  // 1082: console.v1.GetOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
-	113,  // 1083: console.v1.GetOperatingTaskEnvironmentRequest.query:type_name -> console.v1.ConsoleQuery
-	840,  // 1084: console.v1.GetOperatingTaskEnvironmentResponse.last_activity_at:type_name -> google.protobuf.Timestamp
-	840,  // 1085: console.v1.GetOperatingTaskEnvironmentResponse.expires_at:type_name -> google.protobuf.Timestamp
-	780,  // 1086: console.v1.GetOperatingTaskEnvironmentResponse.stages:type_name -> console.v1.OperatingTaskEnvironmentStage
-	843,  // 1087: console.v1.GetOperatingTaskEnvironmentResponse.workspace_recipe:type_name -> toolexecution.v1.ToolExecutionWorkspaceRecipe
+	650,  // 1051: console.v1.ReviewCaptureFormSubmissionRequest.supplemental_values:type_name -> console.v1.BusinessFieldValue
+	707,  // 1052: console.v1.ReviewCaptureFormSubmissionResponse.submission:type_name -> console.v1.CaptureFormSubmission
+	706,  // 1053: console.v1.ReviewCaptureFormSubmissionResponse.object_result:type_name -> console.v1.CaptureFormObjectResult
+	645,  // 1054: console.v1.GetBusinessObjectTypeResponse.definition:type_name -> console.v1.BusinessObjectType
+	739,  // 1055: console.v1.ListInferenceCreditReceiptsResponse.receipts:type_name -> console.v1.InferenceCreditReceipt
+	742,  // 1056: console.v1.GetInferenceCreditAutoRefillResponse.settings:type_name -> console.v1.InferenceCreditAutoRefill
+	653,  // 1057: console.v1.PrepareBusinessObjectAuthorityTransferResponse.object:type_name -> console.v1.BusinessObject
+	653,  // 1058: console.v1.FinalizeBusinessObjectAuthorityTransferResponse.object:type_name -> console.v1.BusinessObject
+	650,  // 1059: console.v1.BusinessProcessRequirement.expected:type_name -> console.v1.BusinessFieldValue
+	755,  // 1060: console.v1.BusinessProcessTransition.requirements:type_name -> console.v1.BusinessProcessRequirement
+	757,  // 1061: console.v1.BusinessProcessTransition.follow_ups:type_name -> console.v1.BusinessProcessFollowUp
+	753,  // 1062: console.v1.BusinessProcessDefinition.participants:type_name -> console.v1.BusinessProcessParticipantType
+	756,  // 1063: console.v1.BusinessProcessDefinition.transitions:type_name -> console.v1.BusinessProcessTransition
+	754,  // 1064: console.v1.BusinessProcessReceipt.evidence:type_name -> console.v1.BusinessProcessParticipant
+	754,  // 1065: console.v1.BusinessProcess.participants:type_name -> console.v1.BusinessProcessParticipant
+	759,  // 1066: console.v1.BusinessProcess.receipts:type_name -> console.v1.BusinessProcessReceipt
+	758,  // 1067: console.v1.DefineBusinessProcessRequest.definition:type_name -> console.v1.BusinessProcessDefinition
+	758,  // 1068: console.v1.DefineBusinessProcessResponse.definition:type_name -> console.v1.BusinessProcessDefinition
+	754,  // 1069: console.v1.StartBusinessProcessRequest.participants:type_name -> console.v1.BusinessProcessParticipant
+	760,  // 1070: console.v1.StartBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
+	760,  // 1071: console.v1.GetBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
+	758,  // 1072: console.v1.GetBusinessProcessResponse.definition:type_name -> console.v1.BusinessProcessDefinition
+	760,  // 1073: console.v1.ListBusinessProcessesResponse.processes:type_name -> console.v1.BusinessProcess
+	754,  // 1074: console.v1.TransitionBusinessProcessRequest.participants:type_name -> console.v1.BusinessProcessParticipant
+	760,  // 1075: console.v1.TransitionBusinessProcessResponse.process:type_name -> console.v1.BusinessProcess
+	758,  // 1076: console.v1.GetBusinessProcessDefinitionResponse.definition:type_name -> console.v1.BusinessProcessDefinition
+	758,  // 1077: console.v1.ListBusinessProcessDefinitionsResponse.definitions:type_name -> console.v1.BusinessProcessDefinition
+	130,  // 1078: console.v1.OperatingProjectSnapshotFileInput.attachment:type_name -> console.v1.OperatingAttachmentRef
+	114,  // 1079: console.v1.AcceptOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
+	775,  // 1080: console.v1.AcceptOperatingProjectSnapshotRequest.files:type_name -> console.v1.OperatingProjectSnapshotFileInput
+	847,  // 1081: console.v1.AcceptOperatingProjectSnapshotResponse.project_source:type_name -> toolexecution.v1.ToolExecutionProjectSource
+	114,  // 1082: console.v1.GetOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
+	114,  // 1083: console.v1.GetOperatingTaskEnvironmentRequest.query:type_name -> console.v1.ConsoleQuery
+	845,  // 1084: console.v1.GetOperatingTaskEnvironmentResponse.last_activity_at:type_name -> google.protobuf.Timestamp
+	845,  // 1085: console.v1.GetOperatingTaskEnvironmentResponse.expires_at:type_name -> google.protobuf.Timestamp
+	781,  // 1086: console.v1.GetOperatingTaskEnvironmentResponse.stages:type_name -> console.v1.OperatingTaskEnvironmentStage
+	848,  // 1087: console.v1.GetOperatingTaskEnvironmentResponse.workspace_recipe:type_name -> toolexecution.v1.ToolExecutionWorkspaceRecipe
 	100,  // 1088: console.v1.OperatingTaskEnvironmentStage.kind:type_name -> console.v1.OperatingTaskEnvironmentStageKind
 	101,  // 1089: console.v1.OperatingTaskEnvironmentStage.state:type_name -> console.v1.OperatingTaskEnvironmentStageState
-	113,  // 1090: console.v1.ImportOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
-	644,  // 1091: console.v1.BusinessBlueprint.object_types:type_name -> console.v1.BusinessObjectType
-	757,  // 1092: console.v1.BusinessBlueprint.process:type_name -> console.v1.BusinessProcessDefinition
-	696,  // 1093: console.v1.BusinessBlueprint.intake:type_name -> console.v1.CaptureFormVersionInput
-	782,  // 1094: console.v1.ListBusinessBlueprintsResponse.blueprints:type_name -> console.v1.BusinessBlueprint
-	644,  // 1095: console.v1.CloneBusinessBlueprintResponse.object_types:type_name -> console.v1.BusinessObjectType
-	757,  // 1096: console.v1.CloneBusinessBlueprintResponse.process:type_name -> console.v1.BusinessProcessDefinition
-	701,  // 1097: console.v1.CloneBusinessBlueprintResponse.form:type_name -> console.v1.CaptureForm
-	840,  // 1098: console.v1.CaptureFormInvitation.expires_at:type_name -> google.protobuf.Timestamp
-	840,  // 1099: console.v1.CreateCaptureFormInvitationRequest.expires_at:type_name -> google.protobuf.Timestamp
-	649,  // 1100: console.v1.CreateCaptureFormInvitationRequest.bound_values:type_name -> console.v1.BusinessFieldValue
-	788,  // 1101: console.v1.CreateCaptureFormInvitationResponse.invitation:type_name -> console.v1.CaptureFormInvitation
-	788,  // 1102: console.v1.RevokeCaptureFormInvitationResponse.invitation:type_name -> console.v1.CaptureFormInvitation
-	702,  // 1103: console.v1.GetInvitedCaptureFormResponse.form:type_name -> console.v1.PublishedCaptureForm
-	707,  // 1104: console.v1.GetInvitedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
-	703,  // 1105: console.v1.SubmitInvitedCaptureFormRequest.answers:type_name -> console.v1.CaptureFormAnswer
-	707,  // 1106: console.v1.SubmitInvitedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
+	114,  // 1090: console.v1.ImportOperatingProjectSnapshotRequest.query:type_name -> console.v1.ConsoleQuery
+	645,  // 1091: console.v1.BusinessBlueprint.object_types:type_name -> console.v1.BusinessObjectType
+	758,  // 1092: console.v1.BusinessBlueprint.process:type_name -> console.v1.BusinessProcessDefinition
+	697,  // 1093: console.v1.BusinessBlueprint.intake:type_name -> console.v1.CaptureFormVersionInput
+	783,  // 1094: console.v1.ListBusinessBlueprintsResponse.blueprints:type_name -> console.v1.BusinessBlueprint
+	645,  // 1095: console.v1.CloneBusinessBlueprintResponse.object_types:type_name -> console.v1.BusinessObjectType
+	758,  // 1096: console.v1.CloneBusinessBlueprintResponse.process:type_name -> console.v1.BusinessProcessDefinition
+	702,  // 1097: console.v1.CloneBusinessBlueprintResponse.form:type_name -> console.v1.CaptureForm
+	845,  // 1098: console.v1.CaptureFormInvitation.expires_at:type_name -> google.protobuf.Timestamp
+	845,  // 1099: console.v1.CreateCaptureFormInvitationRequest.expires_at:type_name -> google.protobuf.Timestamp
+	650,  // 1100: console.v1.CreateCaptureFormInvitationRequest.bound_values:type_name -> console.v1.BusinessFieldValue
+	789,  // 1101: console.v1.CreateCaptureFormInvitationResponse.invitation:type_name -> console.v1.CaptureFormInvitation
+	789,  // 1102: console.v1.RevokeCaptureFormInvitationResponse.invitation:type_name -> console.v1.CaptureFormInvitation
+	703,  // 1103: console.v1.GetInvitedCaptureFormResponse.form:type_name -> console.v1.PublishedCaptureForm
+	708,  // 1104: console.v1.GetInvitedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
+	704,  // 1105: console.v1.SubmitInvitedCaptureFormRequest.answers:type_name -> console.v1.CaptureFormAnswer
+	708,  // 1106: console.v1.SubmitInvitedCaptureFormResponse.receipt:type_name -> console.v1.CaptureFormPublicSubmissionReceipt
 	102,  // 1107: console.v1.GetManagedInferenceReadinessResponse.status:type_name -> console.v1.ManagedInferenceReadinessStatus
 	103,  // 1108: console.v1.GetManagedInferenceReadinessResponse.blockers:type_name -> console.v1.ManagedInferenceBlocker
 	104,  // 1109: console.v1.GetManagedInferenceReadinessResponse.next_actions:type_name -> console.v1.ManagedInferenceNextAction
 	70,   // 1110: console.v1.GetManagedInferenceReadinessResponse.enrollment_state:type_name -> console.v1.ManagedProviderAccessState
-	630,  // 1111: console.v1.GetManagedInferenceReadinessResponse.funding:type_name -> console.v1.InferenceCreditBalance
-	483,  // 1112: console.v1.GetManagedInferenceReadinessResponse.target:type_name -> console.v1.InferenceProviderTarget
-	840,  // 1113: console.v1.GetManagedInferenceReadinessResponse.evaluated_at:type_name -> google.protobuf.Timestamp
-	860,  // 1114: console.v1.GetManagedInferenceReadinessResponse.budget:type_name -> meter.v1.GetBudgetDashboardResponse
-	861,  // 1115: console.v1.GetStaffManagedInferenceFundingRequest.request:type_name -> meter.v1.GetPrepaidCreditBalanceRequest
-	862,  // 1116: console.v1.GrantStaffManagedInferenceCreditsRequest.request:type_name -> meter.v1.GrantDevelopmentCreditsRequest
-	863,  // 1117: console.v1.GetStaffManagedInferenceUsageRequest.request:type_name -> meter.v1.QueryUsageRequest
-	864,  // 1118: console.v1.GetStaffManagedInferenceBudgetRequest.request:type_name -> meter.v1.GetBudgetDashboardRequest
-	865,  // 1119: console.v1.SetStaffManagedInferenceBudgetRequest.request:type_name -> meter.v1.SetBudgetRequest
-	840,  // 1120: console.v1.ManagedProviderAccessEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	806,  // 1121: console.v1.ListManagedProviderAccessEventsResponse.events:type_name -> console.v1.ManagedProviderAccessEvent
-	866,  // 1122: console.v1.ListStaffManagedInferenceAdminEventsRequest.request:type_name -> meter.v1.ListManagedInferenceAdminEventsRequest
-	840,  // 1123: console.v1.ManagedExecutionGrantEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	810,  // 1124: console.v1.ListStaffManagedExecutionGrantEventsResponse.events:type_name -> console.v1.ManagedExecutionGrantEvent
-	813,  // 1125: console.v1.ListStaffManagedExecutionOutcomesResponse.records:type_name -> console.v1.ManagedExecutionOutcome
-	815,  // 1126: console.v1.ProspectingDraft.target_account:type_name -> console.v1.ProspectingDraftTargetAccount
+	631,  // 1111: console.v1.GetManagedInferenceReadinessResponse.funding:type_name -> console.v1.InferenceCreditBalance
+	484,  // 1112: console.v1.GetManagedInferenceReadinessResponse.target:type_name -> console.v1.InferenceProviderTarget
+	845,  // 1113: console.v1.GetManagedInferenceReadinessResponse.evaluated_at:type_name -> google.protobuf.Timestamp
+	865,  // 1114: console.v1.GetManagedInferenceReadinessResponse.budget:type_name -> meter.v1.GetBudgetDashboardResponse
+	866,  // 1115: console.v1.GetStaffManagedInferenceFundingRequest.request:type_name -> meter.v1.GetPrepaidCreditBalanceRequest
+	867,  // 1116: console.v1.GrantStaffManagedInferenceCreditsRequest.request:type_name -> meter.v1.GrantDevelopmentCreditsRequest
+	868,  // 1117: console.v1.GetStaffManagedInferenceUsageRequest.request:type_name -> meter.v1.QueryUsageRequest
+	869,  // 1118: console.v1.GetStaffManagedInferenceBudgetRequest.request:type_name -> meter.v1.GetBudgetDashboardRequest
+	870,  // 1119: console.v1.SetStaffManagedInferenceBudgetRequest.request:type_name -> meter.v1.SetBudgetRequest
+	845,  // 1120: console.v1.ManagedProviderAccessEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	807,  // 1121: console.v1.ListManagedProviderAccessEventsResponse.events:type_name -> console.v1.ManagedProviderAccessEvent
+	871,  // 1122: console.v1.ListStaffManagedInferenceAdminEventsRequest.request:type_name -> meter.v1.ListManagedInferenceAdminEventsRequest
+	845,  // 1123: console.v1.ManagedExecutionGrantEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	811,  // 1124: console.v1.ListStaffManagedExecutionGrantEventsResponse.events:type_name -> console.v1.ManagedExecutionGrantEvent
+	814,  // 1125: console.v1.ListStaffManagedExecutionOutcomesResponse.records:type_name -> console.v1.ManagedExecutionOutcome
+	816,  // 1126: console.v1.ProspectingDraft.target_account:type_name -> console.v1.ProspectingDraftTargetAccount
 	105,  // 1127: console.v1.ProspectingDraft.channel:type_name -> console.v1.ProspectingDraftChannel
 	106,  // 1128: console.v1.ProspectingDraft.tone:type_name -> console.v1.ProspectingDraftTone
 	107,  // 1129: console.v1.ProspectingDraft.review_state:type_name -> console.v1.ProspectingDraftReviewState
-	840,  // 1130: console.v1.ProspectingDraft.created_at:type_name -> google.protobuf.Timestamp
-	840,  // 1131: console.v1.ProspectingDraft.updated_at:type_name -> google.protobuf.Timestamp
-	113,  // 1132: console.v1.CreateProspectingDraftRequest.query:type_name -> console.v1.ConsoleQuery
-	815,  // 1133: console.v1.CreateProspectingDraftRequest.target_account:type_name -> console.v1.ProspectingDraftTargetAccount
+	845,  // 1130: console.v1.ProspectingDraft.created_at:type_name -> google.protobuf.Timestamp
+	845,  // 1131: console.v1.ProspectingDraft.updated_at:type_name -> google.protobuf.Timestamp
+	114,  // 1132: console.v1.CreateProspectingDraftRequest.query:type_name -> console.v1.ConsoleQuery
+	816,  // 1133: console.v1.CreateProspectingDraftRequest.target_account:type_name -> console.v1.ProspectingDraftTargetAccount
 	105,  // 1134: console.v1.CreateProspectingDraftRequest.channel:type_name -> console.v1.ProspectingDraftChannel
 	106,  // 1135: console.v1.CreateProspectingDraftRequest.tone:type_name -> console.v1.ProspectingDraftTone
-	816,  // 1136: console.v1.CreateProspectingDraftResponse.draft:type_name -> console.v1.ProspectingDraft
-	817,  // 1137: console.v1.CreateProspectingDraftResponse.receipt:type_name -> console.v1.ProspectingDraftMutationReceipt
-	113,  // 1138: console.v1.ListProspectingDraftsRequest.query:type_name -> console.v1.ConsoleQuery
-	816,  // 1139: console.v1.ListProspectingDraftsResponse.drafts:type_name -> console.v1.ProspectingDraft
-	113,  // 1140: console.v1.ReviewProspectingDraftRequest.query:type_name -> console.v1.ConsoleQuery
+	817,  // 1136: console.v1.CreateProspectingDraftResponse.draft:type_name -> console.v1.ProspectingDraft
+	818,  // 1137: console.v1.CreateProspectingDraftResponse.receipt:type_name -> console.v1.ProspectingDraftMutationReceipt
+	114,  // 1138: console.v1.ListProspectingDraftsRequest.query:type_name -> console.v1.ConsoleQuery
+	817,  // 1139: console.v1.ListProspectingDraftsResponse.drafts:type_name -> console.v1.ProspectingDraft
+	114,  // 1140: console.v1.ReviewProspectingDraftRequest.query:type_name -> console.v1.ConsoleQuery
 	107,  // 1141: console.v1.ReviewProspectingDraftRequest.decision:type_name -> console.v1.ProspectingDraftReviewState
-	816,  // 1142: console.v1.ReviewProspectingDraftResponse.draft:type_name -> console.v1.ProspectingDraft
-	817,  // 1143: console.v1.ReviewProspectingDraftResponse.receipt:type_name -> console.v1.ProspectingDraftMutationReceipt
-	839,  // 1144: console.v1.WorkspaceBrandVoice.scopes:type_name -> console.v1.WorkspaceBrandVoice.Scope
-	840,  // 1145: console.v1.WorkspaceBrandVoice.updated_at:type_name -> google.protobuf.Timestamp
-	113,  // 1146: console.v1.GetProductIssueRecoveryRequest.query:type_name -> console.v1.ConsoleQuery
-	113,  // 1147: console.v1.ReplyProductIssueRecoveryRequest.query:type_name -> console.v1.ConsoleQuery
-	831,  // 1148: console.v1.ProductIssueRecoveryResponse.recovery:type_name -> console.v1.ProductIssueRecovery
-	835,  // 1149: console.v1.ListStaffProductIssueRecoveriesResponse.recoveries:type_name -> console.v1.StaffProductIssueRecoverySummary
-	840,  // 1150: console.v1.StaffProductIssueRecoverySummary.created_at:type_name -> google.protobuf.Timestamp
-	783,  // 1151: console.v1.ConsoleService.ListBusinessBlueprints:input_type -> console.v1.ListBusinessBlueprintsRequest
-	785,  // 1152: console.v1.ConsoleService.CloneBusinessBlueprint:input_type -> console.v1.CloneBusinessBlueprintRequest
-	770,  // 1153: console.v1.ConsoleService.GetBusinessProcessDefinition:input_type -> console.v1.GetBusinessProcessDefinitionRequest
-	772,  // 1154: console.v1.ConsoleService.ListBusinessProcessDefinitions:input_type -> console.v1.ListBusinessProcessDefinitionsRequest
-	760,  // 1155: console.v1.ConsoleService.DefineBusinessProcess:input_type -> console.v1.DefineBusinessProcessRequest
-	762,  // 1156: console.v1.ConsoleService.StartBusinessProcess:input_type -> console.v1.StartBusinessProcessRequest
-	764,  // 1157: console.v1.ConsoleService.GetBusinessProcess:input_type -> console.v1.GetBusinessProcessRequest
-	766,  // 1158: console.v1.ConsoleService.ListBusinessProcesses:input_type -> console.v1.ListBusinessProcessesRequest
-	768,  // 1159: console.v1.ConsoleService.TransitionBusinessProcess:input_type -> console.v1.TransitionBusinessProcessRequest
-	748,  // 1160: console.v1.ConsoleService.PrepareBusinessObjectAuthorityTransfer:input_type -> console.v1.PrepareBusinessObjectAuthorityTransferRequest
-	750,  // 1161: console.v1.ConsoleService.FinalizeBusinessObjectAuthorityTransfer:input_type -> console.v1.FinalizeBusinessObjectAuthorityTransferRequest
-	655,  // 1162: console.v1.ConsoleService.DefineBusinessObjectType:input_type -> console.v1.DefineBusinessObjectTypeRequest
-	736,  // 1163: console.v1.ConsoleService.GetBusinessObjectType:input_type -> console.v1.GetBusinessObjectTypeRequest
-	657,  // 1164: console.v1.ConsoleService.ListBusinessObjectTypes:input_type -> console.v1.ListBusinessObjectTypesRequest
-	659,  // 1165: console.v1.ConsoleService.CreateBusinessObject:input_type -> console.v1.CreateBusinessObjectRequest
-	661,  // 1166: console.v1.ConsoleService.GetBusinessObject:input_type -> console.v1.GetBusinessObjectRequest
-	664,  // 1167: console.v1.ConsoleService.ListBusinessObjects:input_type -> console.v1.ListBusinessObjectsRequest
-	668,  // 1168: console.v1.ConsoleService.UpdateBusinessObject:input_type -> console.v1.UpdateBusinessObjectRequest
-	670,  // 1169: console.v1.ConsoleService.DeleteBusinessObject:input_type -> console.v1.DeleteBusinessObjectRequest
-	672,  // 1170: console.v1.ConsoleService.ListBusinessObjectRevisions:input_type -> console.v1.ListBusinessObjectRevisionsRequest
-	674,  // 1171: console.v1.ConsoleService.BindBusinessObjectSource:input_type -> console.v1.BindBusinessObjectSourceRequest
-	676,  // 1172: console.v1.ConsoleService.AdmitBusinessObjectObservation:input_type -> console.v1.AdmitBusinessObjectObservationRequest
-	678,  // 1173: console.v1.ConsoleService.ListBusinessObjectRelationships:input_type -> console.v1.ListBusinessObjectRelationshipsRequest
-	680,  // 1174: console.v1.ConsoleService.CreateBusinessObjectRelationship:input_type -> console.v1.CreateBusinessObjectRelationshipRequest
-	682,  // 1175: console.v1.ConsoleService.DeleteBusinessObjectRelationship:input_type -> console.v1.DeleteBusinessObjectRelationshipRequest
-	708,  // 1176: console.v1.ConsoleService.CreateCaptureForm:input_type -> console.v1.CreateCaptureFormRequest
-	710,  // 1177: console.v1.ConsoleService.ListCaptureForms:input_type -> console.v1.ListCaptureFormsRequest
-	712,  // 1178: console.v1.ConsoleService.GetCaptureForm:input_type -> console.v1.GetCaptureFormRequest
-	714,  // 1179: console.v1.ConsoleService.UpdateCaptureForm:input_type -> console.v1.UpdateCaptureFormRequest
-	716,  // 1180: console.v1.ConsoleService.PublishCaptureForm:input_type -> console.v1.PublishCaptureFormRequest
-	718,  // 1181: console.v1.ConsoleService.RevokeCaptureFormPublication:input_type -> console.v1.RevokeCaptureFormPublicationRequest
-	789,  // 1182: console.v1.ConsoleService.CreateCaptureFormInvitation:input_type -> console.v1.CreateCaptureFormInvitationRequest
-	791,  // 1183: console.v1.ConsoleService.RevokeCaptureFormInvitation:input_type -> console.v1.RevokeCaptureFormInvitationRequest
-	793,  // 1184: console.v1.ConsoleService.GetInvitedCaptureForm:input_type -> console.v1.GetInvitedCaptureFormRequest
-	795,  // 1185: console.v1.ConsoleService.SubmitInvitedCaptureForm:input_type -> console.v1.SubmitInvitedCaptureFormRequest
-	720,  // 1186: console.v1.ConsoleService.GetPublishedCaptureForm:input_type -> console.v1.GetPublishedCaptureFormRequest
-	722,  // 1187: console.v1.ConsoleService.GetPublishedCaptureFormBrandingAsset:input_type -> console.v1.GetPublishedCaptureFormBrandingAssetRequest
-	724,  // 1188: console.v1.ConsoleService.SubmitPublishedCaptureForm:input_type -> console.v1.SubmitPublishedCaptureFormRequest
-	726,  // 1189: console.v1.ConsoleService.BeginPublishedCaptureFormUpload:input_type -> console.v1.BeginPublishedCaptureFormUploadRequest
-	728,  // 1190: console.v1.ConsoleService.CompletePublishedCaptureFormUpload:input_type -> console.v1.CompletePublishedCaptureFormUploadRequest
-	730,  // 1191: console.v1.ConsoleService.GetCaptureFormSubmission:input_type -> console.v1.GetCaptureFormSubmissionRequest
-	732,  // 1192: console.v1.ConsoleService.ListCaptureFormSubmissions:input_type -> console.v1.ListCaptureFormSubmissionsRequest
-	734,  // 1193: console.v1.ConsoleService.ReviewCaptureFormSubmission:input_type -> console.v1.ReviewCaptureFormSubmissionRequest
-	742,  // 1194: console.v1.ConsoleService.GetInferenceCreditAutoRefill:input_type -> console.v1.GetInferenceCreditAutoRefillRequest
-	744,  // 1195: console.v1.ConsoleService.UpdateInferenceCreditAutoRefill:input_type -> console.v1.UpdateInferenceCreditAutoRefillRequest
-	746,  // 1196: console.v1.ConsoleService.CompleteInferenceCreditAutoRefill:input_type -> console.v1.CompleteInferenceCreditAutoRefillRequest
-	739,  // 1197: console.v1.ConsoleService.ListInferenceCreditReceipts:input_type -> console.v1.ListInferenceCreditReceiptsRequest
-	314,  // 1198: console.v1.ConsoleService.GetOverview:input_type -> console.v1.GetOverviewRequest
-	316,  // 1199: console.v1.ConsoleService.GetConsoleBootSnapshot:input_type -> console.v1.GetConsoleBootSnapshotRequest
-	319,  // 1200: console.v1.ConsoleService.ListAssets:input_type -> console.v1.ListAssetsRequest
-	321,  // 1201: console.v1.ConsoleService.GetAsset:input_type -> console.v1.GetAssetRequest
-	323,  // 1202: console.v1.ConsoleService.ListActivity:input_type -> console.v1.ListActivityRequest
-	465,  // 1203: console.v1.ConsoleService.SearchStaffWorkspaceDirectory:input_type -> console.v1.SearchStaffWorkspaceDirectoryRequest
-	468,  // 1204: console.v1.ConsoleService.GetStaffWorkspaceContext:input_type -> console.v1.GetStaffWorkspaceContextRequest
-	800,  // 1205: console.v1.ConsoleService.GetStaffManagedInferenceFunding:input_type -> console.v1.GetStaffManagedInferenceFundingRequest
-	801,  // 1206: console.v1.ConsoleService.GrantStaffManagedInferenceCredits:input_type -> console.v1.GrantStaffManagedInferenceCreditsRequest
-	802,  // 1207: console.v1.ConsoleService.GetStaffManagedInferenceUsage:input_type -> console.v1.GetStaffManagedInferenceUsageRequest
-	803,  // 1208: console.v1.ConsoleService.GetStaffManagedInferenceBudget:input_type -> console.v1.GetStaffManagedInferenceBudgetRequest
-	804,  // 1209: console.v1.ConsoleService.SetStaffManagedInferenceBudget:input_type -> console.v1.SetStaffManagedInferenceBudgetRequest
-	797,  // 1210: console.v1.ConsoleService.GetStaffManagedInferenceReadiness:input_type -> console.v1.GetStaffManagedInferenceReadinessRequest
-	798,  // 1211: console.v1.ConsoleService.GetManagedInferenceReadiness:input_type -> console.v1.GetManagedInferenceReadinessRequest
-	477,  // 1212: console.v1.ConsoleService.ListManagedProviderAccessGrants:input_type -> console.v1.ListManagedProviderAccessGrantsRequest
-	805,  // 1213: console.v1.ConsoleService.ListManagedProviderAccessEvents:input_type -> console.v1.ListManagedProviderAccessEventsRequest
-	808,  // 1214: console.v1.ConsoleService.ListStaffManagedInferenceAdminEvents:input_type -> console.v1.ListStaffManagedInferenceAdminEventsRequest
-	809,  // 1215: console.v1.ConsoleService.ListStaffManagedExecutionGrantEvents:input_type -> console.v1.ListStaffManagedExecutionGrantEventsRequest
-	812,  // 1216: console.v1.ConsoleService.ListStaffManagedExecutionOutcomes:input_type -> console.v1.ListStaffManagedExecutionOutcomesRequest
-	479,  // 1217: console.v1.ConsoleService.UpsertManagedProviderAccessGrant:input_type -> console.v1.UpsertManagedProviderAccessGrantRequest
-	481,  // 1218: console.v1.ConsoleService.RevokeManagedProviderAccessGrant:input_type -> console.v1.RevokeManagedProviderAccessGrantRequest
-	487,  // 1219: console.v1.ConsoleService.GetStaffInferenceRoutingProfile:input_type -> console.v1.GetStaffInferenceRoutingProfileRequest
-	489,  // 1220: console.v1.ConsoleService.UpdateStaffInferenceRoutingProfile:input_type -> console.v1.UpdateStaffInferenceRoutingProfileRequest
-	325,  // 1221: console.v1.ConsoleService.ListEvalResults:input_type -> console.v1.ListEvalResultsRequest
-	327,  // 1222: console.v1.ConsoleService.ListCostUsage:input_type -> console.v1.ListCostUsageRequest
-	330,  // 1223: console.v1.ConsoleService.RecordProviderCostSnapshot:input_type -> console.v1.RecordProviderCostSnapshotRequest
-	332,  // 1224: console.v1.ConsoleService.ListAuthorityPosture:input_type -> console.v1.ListAuthorityPostureRequest
-	334,  // 1225: console.v1.ConsoleService.ListAgentWorkforceRecords:input_type -> console.v1.ListAgentWorkforceRecordsRequest
-	337,  // 1226: console.v1.ConsoleService.ListOrbControlTargets:input_type -> console.v1.ListOrbControlTargetsRequest
-	339,  // 1227: console.v1.ConsoleService.GetOrbControlTarget:input_type -> console.v1.GetOrbControlTargetRequest
-	341,  // 1228: console.v1.ConsoleService.SubmitOrbControlAction:input_type -> console.v1.SubmitOrbControlActionRequest
-	343,  // 1229: console.v1.ConsoleService.SubmitAgentWorkforceEvidence:input_type -> console.v1.SubmitAgentWorkforceEvidenceRequest
-	346,  // 1230: console.v1.ConsoleService.ListFindings:input_type -> console.v1.ListFindingsRequest
-	348,  // 1231: console.v1.ConsoleService.GetTraceDrilldown:input_type -> console.v1.GetTraceDrilldownRequest
-	350,  // 1232: console.v1.ConsoleService.ListIntegrationTiles:input_type -> console.v1.ListIntegrationTilesRequest
-	352,  // 1233: console.v1.ConsoleService.ListPinnedSources:input_type -> console.v1.ListPinnedSourcesRequest
-	355,  // 1234: console.v1.ConsoleService.SetPinnedSource:input_type -> console.v1.SetPinnedSourceRequest
-	357,  // 1235: console.v1.ConsoleService.UnpinSource:input_type -> console.v1.UnpinSourceRequest
-	539,  // 1236: console.v1.ConsoleService.CreateDexMcpServer:input_type -> console.v1.CreateDexMcpServerRequest
-	541,  // 1237: console.v1.ConsoleService.ListDexMcpServers:input_type -> console.v1.ListDexMcpServersRequest
-	543,  // 1238: console.v1.ConsoleService.GetDexMcpServer:input_type -> console.v1.GetDexMcpServerRequest
-	545,  // 1239: console.v1.ConsoleService.DiscoverDexMcpServer:input_type -> console.v1.DiscoverDexMcpServerRequest
-	547,  // 1240: console.v1.ConsoleService.UpdateDexMcpServer:input_type -> console.v1.UpdateDexMcpServerRequest
-	549,  // 1241: console.v1.ConsoleService.DeleteDexMcpServer:input_type -> console.v1.DeleteDexMcpServerRequest
-	552,  // 1242: console.v1.ConsoleService.InitiateDexMcpOAuthProfile:input_type -> console.v1.InitiateDexMcpOAuthProfileRequest
-	554,  // 1243: console.v1.ConsoleService.CompleteDexMcpOAuthProfile:input_type -> console.v1.CompleteDexMcpOAuthProfileRequest
-	556,  // 1244: console.v1.ConsoleService.ListDexMcpOAuthProfiles:input_type -> console.v1.ListDexMcpOAuthProfilesRequest
-	558,  // 1245: console.v1.ConsoleService.RevokeDexMcpOAuthProfile:input_type -> console.v1.RevokeDexMcpOAuthProfileRequest
-	560,  // 1246: console.v1.ConsoleService.ReauthorizeDexMcpOAuthProfile:input_type -> console.v1.ReauthorizeDexMcpOAuthProfileRequest
-	564,  // 1247: console.v1.ConsoleService.RegisterPrivateEndpoint:input_type -> console.v1.RegisterPrivateEndpointRequest
-	566,  // 1248: console.v1.ConsoleService.VerifyPrivateEndpoint:input_type -> console.v1.VerifyPrivateEndpointRequest
-	568,  // 1249: console.v1.ConsoleService.ListPrivateEndpoints:input_type -> console.v1.ListPrivateEndpointsRequest
-	570,  // 1250: console.v1.ConsoleService.DeletePrivateEndpoint:input_type -> console.v1.DeletePrivateEndpointRequest
-	572,  // 1251: console.v1.ConsoleService.AttachPrivateEndpointToProfile:input_type -> console.v1.AttachPrivateEndpointToProfileRequest
-	574,  // 1252: console.v1.ConsoleService.ListGatewayEgressOrigins:input_type -> console.v1.ListGatewayEgressOriginsRequest
-	359,  // 1253: console.v1.ConsoleService.GetOnboardingPlan:input_type -> console.v1.GetOnboardingPlanRequest
-	132,  // 1254: console.v1.ConsoleService.ListOperatingChannels:input_type -> console.v1.ListOperatingChannelsRequest
-	626,  // 1255: console.v1.ConsoleService.ListOperatingJobs:input_type -> console.v1.ListOperatingJobsRequest
-	134,  // 1256: console.v1.ConsoleService.ArchiveOperatingThread:input_type -> console.v1.ArchiveOperatingThreadRequest
-	136,  // 1257: console.v1.ConsoleService.ForkOperatingThread:input_type -> console.v1.ForkOperatingThreadRequest
-	138,  // 1258: console.v1.ConsoleService.RenameOperatingThread:input_type -> console.v1.RenameOperatingThreadRequest
-	140,  // 1259: console.v1.ConsoleService.GetOperatingThread:input_type -> console.v1.GetOperatingThreadRequest
-	580,  // 1260: console.v1.ConsoleService.BootstrapThreadGateway:input_type -> console.v1.BootstrapThreadGatewayRequest
-	577,  // 1261: console.v1.ConsoleService.PrewarmOperatingThread:input_type -> console.v1.PrewarmOperatingThreadRequest
-	146,  // 1262: console.v1.ConsoleService.ListOperatingThreadEvents:input_type -> console.v1.ListOperatingThreadEventsRequest
-	148,  // 1263: console.v1.ConsoleService.WatchOperatingThread:input_type -> console.v1.WatchOperatingThreadRequest
-	142,  // 1264: console.v1.ConsoleService.RespondOperatingThread:input_type -> console.v1.RespondOperatingThreadRequest
-	144,  // 1265: console.v1.ConsoleService.InterruptOperatingThread:input_type -> console.v1.InterruptOperatingThreadRequest
-	212,  // 1266: console.v1.ConsoleService.SearchOperatingHistory:input_type -> console.v1.SearchOperatingHistoryRequest
-	215,  // 1267: console.v1.ConsoleService.GetOperatingHistoryContext:input_type -> console.v1.GetOperatingHistoryContextRequest
-	775,  // 1268: console.v1.ConsoleService.AcceptOperatingProjectSnapshot:input_type -> console.v1.AcceptOperatingProjectSnapshotRequest
-	781,  // 1269: console.v1.ConsoleService.ImportOperatingProjectSnapshot:input_type -> console.v1.ImportOperatingProjectSnapshotRequest
-	778,  // 1270: console.v1.ConsoleService.GetOperatingTaskEnvironment:input_type -> console.v1.GetOperatingTaskEnvironmentRequest
-	777,  // 1271: console.v1.ConsoleService.GetOperatingProjectSnapshot:input_type -> console.v1.GetOperatingProjectSnapshotRequest
-	151,  // 1272: console.v1.ConsoleService.SubmitOperatingMessage:input_type -> console.v1.SubmitOperatingMessageRequest
-	161,  // 1273: console.v1.ConsoleService.SubmitOperatingCorrection:input_type -> console.v1.SubmitOperatingCorrectionRequest
-	164,  // 1274: console.v1.ConsoleService.SubmitOperatingFeedback:input_type -> console.v1.SubmitOperatingFeedbackRequest
-	167,  // 1275: console.v1.ConsoleService.SubmitProductIssueReport:input_type -> console.v1.SubmitProductIssueReportRequest
-	168,  // 1276: console.v1.ConsoleService.SubmitNativeProductIssueReport:input_type -> console.v1.SubmitNativeProductIssueReportRequest
-	173,  // 1277: console.v1.ConsoleService.ListStaffProductIssueReports:input_type -> console.v1.ListStaffProductIssueReportsRequest
-	175,  // 1278: console.v1.ConsoleService.EngageStaffProductIssueReport:input_type -> console.v1.EngageStaffProductIssueReportRequest
-	833,  // 1279: console.v1.ConsoleService.ListStaffProductIssueRecoveries:input_type -> console.v1.ListStaffProductIssueRecoveriesRequest
-	825,  // 1280: console.v1.ConsoleService.PrepareStaffProductIssueRecovery:input_type -> console.v1.PrepareStaffProductIssueRecoveryRequest
-	826,  // 1281: console.v1.ConsoleService.ScanStaffProductIssueRecovery:input_type -> console.v1.ScanStaffProductIssueRecoveryRequest
-	827,  // 1282: console.v1.ConsoleService.ReviewStaffProductIssueRecovery:input_type -> console.v1.ReviewStaffProductIssueRecoveryRequest
-	828,  // 1283: console.v1.ConsoleService.ExecuteStaffProductIssueRecovery:input_type -> console.v1.ExecuteStaffProductIssueRecoveryRequest
-	829,  // 1284: console.v1.ConsoleService.GetProductIssueRecovery:input_type -> console.v1.GetProductIssueRecoveryRequest
-	830,  // 1285: console.v1.ConsoleService.ReplyProductIssueRecovery:input_type -> console.v1.ReplyProductIssueRecoveryRequest
-	177,  // 1286: console.v1.ConsoleService.GetOperatingFeedback:input_type -> console.v1.GetOperatingFeedbackRequest
-	179,  // 1287: console.v1.ConsoleService.ResolveOperatingFeedbackRemediation:input_type -> console.v1.ResolveOperatingFeedbackRemediationRequest
-	185,  // 1288: console.v1.ConsoleService.ListCustomerIntelligenceFacts:input_type -> console.v1.ListCustomerIntelligenceFactsRequest
-	187,  // 1289: console.v1.ConsoleService.GetCustomerIntelligenceFact:input_type -> console.v1.GetCustomerIntelligenceFactRequest
-	189,  // 1290: console.v1.ConsoleService.ReviewCustomerIntelligenceFact:input_type -> console.v1.ReviewCustomerIntelligenceFactRequest
-	191,  // 1291: console.v1.ConsoleService.ProposeCustomerIntelligenceFact:input_type -> console.v1.ProposeCustomerIntelligenceFactRequest
-	193,  // 1292: console.v1.ConsoleService.RespondToCustomerFactConfirmation:input_type -> console.v1.RespondToCustomerFactConfirmationRequest
-	195,  // 1293: console.v1.ConsoleService.AggregateCustomerIntelligencePatterns:input_type -> console.v1.AggregateCustomerIntelligencePatternsRequest
-	198,  // 1294: console.v1.ConsoleService.ListOperatingCorrections:input_type -> console.v1.ListOperatingCorrectionsRequest
-	200,  // 1295: console.v1.ConsoleService.ReviewOperatingCorrection:input_type -> console.v1.ReviewOperatingCorrectionRequest
-	202,  // 1296: console.v1.ConsoleService.ListWorkspaceMemories:input_type -> console.v1.ListWorkspaceMemoriesRequest
-	205,  // 1297: console.v1.ConsoleService.CorrectWorkspaceMemory:input_type -> console.v1.CorrectWorkspaceMemoryRequest
-	207,  // 1298: console.v1.ConsoleService.ReviewWorkspaceMemory:input_type -> console.v1.ReviewWorkspaceMemoryRequest
-	209,  // 1299: console.v1.ConsoleService.ForgetWorkspaceMemory:input_type -> console.v1.ForgetWorkspaceMemoryRequest
-	152,  // 1300: console.v1.ConsoleService.BeginOperatingAttachmentUpload:input_type -> console.v1.BeginOperatingAttachmentUploadRequest
-	154,  // 1301: console.v1.ConsoleService.CompleteOperatingAttachmentUpload:input_type -> console.v1.CompleteOperatingAttachmentUploadRequest
-	156,  // 1302: console.v1.ConsoleService.ListOperatingAttachments:input_type -> console.v1.ListOperatingAttachmentsRequest
-	229,  // 1303: console.v1.ConsoleService.ResolveOperatingReceiptAction:input_type -> console.v1.ResolveOperatingReceiptActionRequest
-	231,  // 1304: console.v1.ConsoleService.GetOperatingReceipt:input_type -> console.v1.GetOperatingReceiptRequest
-	250,  // 1305: console.v1.ConsoleService.SubmitComputerMission:input_type -> console.v1.SubmitComputerMissionRequest
-	252,  // 1306: console.v1.ConsoleService.GetComputerMission:input_type -> console.v1.GetComputerMissionRequest
-	254,  // 1307: console.v1.ConsoleService.CancelComputerMission:input_type -> console.v1.CancelComputerMissionRequest
-	256,  // 1308: console.v1.ConsoleService.ContinueComputerMission:input_type -> console.v1.ContinueComputerMissionRequest
-	258,  // 1309: console.v1.ConsoleService.PauseComputerMission:input_type -> console.v1.PauseComputerMissionRequest
-	260,  // 1310: console.v1.ConsoleService.ResumeComputerMission:input_type -> console.v1.ResumeComputerMissionRequest
-	262,  // 1311: console.v1.ConsoleService.WakeComputerMission:input_type -> console.v1.WakeComputerMissionRequest
-	264,  // 1312: console.v1.ConsoleService.GuideComputerMission:input_type -> console.v1.GuideComputerMissionRequest
-	271,  // 1313: console.v1.ConsoleService.ListComputerMissionCanaryDefinitions:input_type -> console.v1.ListComputerMissionCanaryDefinitionsRequest
-	273,  // 1314: console.v1.ConsoleService.StartComputerMissionCanaryRun:input_type -> console.v1.StartComputerMissionCanaryRunRequest
-	275,  // 1315: console.v1.ConsoleService.GetComputerMissionCanaryRun:input_type -> console.v1.GetComputerMissionCanaryRunRequest
-	277,  // 1316: console.v1.ConsoleService.ListComputerMissionCanaryRuns:input_type -> console.v1.ListComputerMissionCanaryRunsRequest
-	279,  // 1317: console.v1.ConsoleService.GetComputerMissionCanaryEvidence:input_type -> console.v1.GetComputerMissionCanaryEvidenceRequest
-	281,  // 1318: console.v1.ConsoleService.OperateComputerMissionCanaryRun:input_type -> console.v1.OperateComputerMissionCanaryRunRequest
-	285,  // 1319: console.v1.ConsoleService.CreateMissionSchedule:input_type -> console.v1.CreateMissionScheduleRequest
-	287,  // 1320: console.v1.ConsoleService.UpdateMissionSchedule:input_type -> console.v1.UpdateMissionScheduleRequest
-	289,  // 1321: console.v1.ConsoleService.SetMissionScheduleEnabled:input_type -> console.v1.SetMissionScheduleEnabledRequest
-	291,  // 1322: console.v1.ConsoleService.ListMissionSchedules:input_type -> console.v1.ListMissionSchedulesRequest
-	294,  // 1323: console.v1.ConsoleService.CreateConnectorTrigger:input_type -> console.v1.CreateConnectorTriggerRequest
-	296,  // 1324: console.v1.ConsoleService.UpdateConnectorTrigger:input_type -> console.v1.UpdateConnectorTriggerRequest
-	298,  // 1325: console.v1.ConsoleService.ListConnectorTriggers:input_type -> console.v1.ListConnectorTriggersRequest
-	300,  // 1326: console.v1.ConsoleService.DeleteConnectorTrigger:input_type -> console.v1.DeleteConnectorTriggerRequest
-	302,  // 1327: console.v1.ConsoleService.SetConnectorTriggerEnabled:input_type -> console.v1.SetConnectorTriggerEnabledRequest
-	305,  // 1328: console.v1.ConsoleService.ReserveComputerMissionApexSession:input_type -> console.v1.ReserveComputerMissionApexSessionRequest
-	307,  // 1329: console.v1.ConsoleService.BindComputerMissionApexSessionReservation:input_type -> console.v1.BindComputerMissionApexSessionReservationRequest
-	310,  // 1330: console.v1.ConsoleService.BindComputerMissionApexInstructionMetadata:input_type -> console.v1.BindComputerMissionApexInstructionMetadataRequest
-	312,  // 1331: console.v1.ConsoleService.AuthorizeComputerMissionApexSessionAdoption:input_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionRequest
-	361,  // 1332: console.v1.ConsoleService.GetWorkspaceSettings:input_type -> console.v1.GetWorkspaceSettingsRequest
-	375,  // 1333: console.v1.ConsoleService.GetOperatorPreferences:input_type -> console.v1.GetOperatorPreferencesRequest
-	377,  // 1334: console.v1.ConsoleService.UpdateOperatorPreferences:input_type -> console.v1.UpdateOperatorPreferencesRequest
-	386,  // 1335: console.v1.ConsoleService.CreateConnectorProfile:input_type -> console.v1.CreateConnectorProfileRequest
-	388,  // 1336: console.v1.ConsoleService.ListConnectorProfiles:input_type -> console.v1.ListConnectorProfilesRequest
-	390,  // 1337: console.v1.ConsoleService.UpdateConnectorProfile:input_type -> console.v1.UpdateConnectorProfileRequest
-	392,  // 1338: console.v1.ConsoleService.DeleteConnectorProfile:input_type -> console.v1.DeleteConnectorProfileRequest
-	599,  // 1339: console.v1.ConsoleService.ListConnectedCalls:input_type -> console.v1.ListConnectedCallsRequest
-	598,  // 1340: console.v1.ConsoleService.StartMeetingCapture:input_type -> console.v1.StartMeetingCaptureRequest
-	603,  // 1341: console.v1.ConsoleService.GetMeetingCapture:input_type -> console.v1.GetMeetingCaptureRequest
-	605,  // 1342: console.v1.ConsoleService.ListMeetingCaptures:input_type -> console.v1.ListMeetingCapturesRequest
-	607,  // 1343: console.v1.ConsoleService.StopMeetingCapture:input_type -> console.v1.StopMeetingCaptureRequest
-	620,  // 1344: console.v1.ConsoleService.ListCommitments:input_type -> console.v1.ListCommitmentsRequest
-	364,  // 1345: console.v1.ConsoleService.GetBillingSubscription:input_type -> console.v1.GetBillingSubscriptionRequest
-	366,  // 1346: console.v1.ConsoleService.CreateBillingPortalSession:input_type -> console.v1.CreateBillingPortalSessionRequest
-	368,  // 1347: console.v1.ConsoleService.CreateBillingCheckoutSession:input_type -> console.v1.CreateBillingCheckoutSessionRequest
-	631,  // 1348: console.v1.ConsoleService.GetInferenceCreditBalance:input_type -> console.v1.GetInferenceCreditBalanceRequest
-	637,  // 1349: console.v1.ConsoleService.CreateInferenceCreditCheckout:input_type -> console.v1.CreateInferenceCreditCheckoutRequest
-	639,  // 1350: console.v1.ConsoleService.FulfillInferenceCreditCheckout:input_type -> console.v1.FulfillInferenceCreditCheckoutRequest
-	370,  // 1351: console.v1.ConsoleService.UpdateWorkspaceProfile:input_type -> console.v1.UpdateWorkspaceProfileRequest
-	394,  // 1352: console.v1.ConsoleService.ArchiveWorkspace:input_type -> console.v1.ArchiveWorkspaceRequest
-	396,  // 1353: console.v1.ConsoleService.UpdateWorkspacePolicy:input_type -> console.v1.UpdateWorkspacePolicyRequest
-	398,  // 1354: console.v1.ConsoleService.UpdateWorkspaceDexPolicy:input_type -> console.v1.UpdateWorkspaceDexPolicyRequest
-	400,  // 1355: console.v1.ConsoleService.UpdateWorkspaceArtifactStyleGuide:input_type -> console.v1.UpdateWorkspaceArtifactStyleGuideRequest
-	402,  // 1356: console.v1.ConsoleService.EvaluateWorkspaceArtifactStyleGuide:input_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideRequest
-	405,  // 1357: console.v1.ConsoleService.UpsertWorkspaceIdentityProvider:input_type -> console.v1.UpsertWorkspaceIdentityProviderRequest
-	407,  // 1358: console.v1.ConsoleService.RemoveWorkspaceIdentityProvider:input_type -> console.v1.RemoveWorkspaceIdentityProviderRequest
-	409,  // 1359: console.v1.ConsoleService.UpsertWorkspaceIntegration:input_type -> console.v1.UpsertWorkspaceIntegrationRequest
-	411,  // 1360: console.v1.ConsoleService.RemoveWorkspaceIntegration:input_type -> console.v1.RemoveWorkspaceIntegrationRequest
-	413,  // 1361: console.v1.ConsoleService.UpdateWorkspaceBilling:input_type -> console.v1.UpdateWorkspaceBillingRequest
-	414,  // 1362: console.v1.ConsoleService.UpsertWorkspaceMember:input_type -> console.v1.UpsertWorkspaceMemberRequest
-	415,  // 1363: console.v1.ConsoleService.RemoveWorkspaceMember:input_type -> console.v1.RemoveWorkspaceMemberRequest
-	416,  // 1364: console.v1.ConsoleService.UpdateWorkspaceNotificationPreferences:input_type -> console.v1.UpdateWorkspaceNotificationPreferencesRequest
-	417,  // 1365: console.v1.ConsoleService.EnableWorkspaceBreakGlass:input_type -> console.v1.EnableWorkspaceBreakGlassRequest
-	418,  // 1366: console.v1.ConsoleService.DisableWorkspaceBreakGlass:input_type -> console.v1.DisableWorkspaceBreakGlassRequest
-	420,  // 1367: console.v1.ConsoleService.ListWorkspaceSkills:input_type -> console.v1.ListWorkspaceSkillsRequest
-	435,  // 1368: console.v1.ConsoleService.BrowseDexSkillCatalog:input_type -> console.v1.BrowseDexSkillCatalogRequest
-	437,  // 1369: console.v1.ConsoleService.InstallDexSkillCatalogEntry:input_type -> console.v1.InstallDexSkillCatalogEntryRequest
-	439,  // 1370: console.v1.ConsoleService.CreateWorkspaceSkill:input_type -> console.v1.CreateWorkspaceSkillRequest
-	441,  // 1371: console.v1.ConsoleService.UpdateWorkspaceSkill:input_type -> console.v1.UpdateWorkspaceSkillRequest
-	443,  // 1372: console.v1.ConsoleService.DeleteWorkspaceSkill:input_type -> console.v1.DeleteWorkspaceSkillRequest
-	491,  // 1373: console.v1.ConsoleService.ListScenarioFixtures:input_type -> console.v1.ListScenarioFixturesRequest
-	493,  // 1374: console.v1.ConsoleService.PromoteScenarioFixture:input_type -> console.v1.PromoteScenarioFixtureRequest
-	495,  // 1375: console.v1.ConsoleService.CompareScenarioFixtures:input_type -> console.v1.CompareScenarioFixturesRequest
-	380,  // 1376: console.v1.ConsoleService.ListWorkspaceGuardrailRules:input_type -> console.v1.ListWorkspaceGuardrailRulesRequest
-	382,  // 1377: console.v1.ConsoleService.UpsertWorkspaceGuardrailRule:input_type -> console.v1.UpsertWorkspaceGuardrailRuleRequest
-	383,  // 1378: console.v1.ConsoleService.RemoveWorkspaceGuardrailRule:input_type -> console.v1.RemoveWorkspaceGuardrailRuleRequest
-	582,  // 1379: console.v1.ConsoleService.SetOperatingThreadController:input_type -> console.v1.SetOperatingThreadControllerRequest
-	587,  // 1380: console.v1.ConsoleService.GetPrivacySettings:input_type -> console.v1.GetPrivacySettingsRequest
-	589,  // 1381: console.v1.ConsoleService.SetPrivacySettings:input_type -> console.v1.SetPrivacySettingsRequest
-	612,  // 1382: console.v1.ConsoleService.CreateProspectingWatchProgram:input_type -> console.v1.CreateProspectingWatchProgramRequest
-	614,  // 1383: console.v1.ConsoleService.GetProspectingWatchProgram:input_type -> console.v1.GetProspectingWatchProgramRequest
-	616,  // 1384: console.v1.ConsoleService.ListProspectingWatchPrograms:input_type -> console.v1.ListProspectingWatchProgramsRequest
-	618,  // 1385: console.v1.ConsoleService.UpdateProspectingWatchProgram:input_type -> console.v1.UpdateProspectingWatchProgramRequest
-	818,  // 1386: console.v1.ConsoleService.CreateProspectingDraft:input_type -> console.v1.CreateProspectingDraftRequest
-	820,  // 1387: console.v1.ConsoleService.ListProspectingDrafts:input_type -> console.v1.ListProspectingDraftsRequest
-	822,  // 1388: console.v1.ConsoleService.ReviewProspectingDraft:input_type -> console.v1.ReviewProspectingDraftRequest
-	628,  // 1389: console.v1.ConsoleService.RecordOperatingHomepageSuggestionFeedback:input_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
-	108,  // 1390: console.v1.WorkspaceKeyService.GetWorkspaceKeyConfig:input_type -> console.v1.GetWorkspaceKeyConfigRequest
-	109,  // 1391: console.v1.WorkspaceKeyService.PutWorkspaceKeyConfig:input_type -> console.v1.PutWorkspaceKeyConfigRequest
-	110,  // 1392: console.v1.WorkspaceKeyService.DeleteWorkspaceKeyConfig:input_type -> console.v1.DeleteWorkspaceKeyConfigRequest
-	595,  // 1393: console.v1.ManagedSetupService.GetManagedSetup:input_type -> console.v1.GetManagedSetupRequest
-	596,  // 1394: console.v1.ManagedSetupService.SetManagedSetup:input_type -> console.v1.SetManagedSetupRequest
-	784,  // 1395: console.v1.ConsoleService.ListBusinessBlueprints:output_type -> console.v1.ListBusinessBlueprintsResponse
-	786,  // 1396: console.v1.ConsoleService.CloneBusinessBlueprint:output_type -> console.v1.CloneBusinessBlueprintResponse
-	771,  // 1397: console.v1.ConsoleService.GetBusinessProcessDefinition:output_type -> console.v1.GetBusinessProcessDefinitionResponse
-	773,  // 1398: console.v1.ConsoleService.ListBusinessProcessDefinitions:output_type -> console.v1.ListBusinessProcessDefinitionsResponse
-	761,  // 1399: console.v1.ConsoleService.DefineBusinessProcess:output_type -> console.v1.DefineBusinessProcessResponse
-	763,  // 1400: console.v1.ConsoleService.StartBusinessProcess:output_type -> console.v1.StartBusinessProcessResponse
-	765,  // 1401: console.v1.ConsoleService.GetBusinessProcess:output_type -> console.v1.GetBusinessProcessResponse
-	767,  // 1402: console.v1.ConsoleService.ListBusinessProcesses:output_type -> console.v1.ListBusinessProcessesResponse
-	769,  // 1403: console.v1.ConsoleService.TransitionBusinessProcess:output_type -> console.v1.TransitionBusinessProcessResponse
-	749,  // 1404: console.v1.ConsoleService.PrepareBusinessObjectAuthorityTransfer:output_type -> console.v1.PrepareBusinessObjectAuthorityTransferResponse
-	751,  // 1405: console.v1.ConsoleService.FinalizeBusinessObjectAuthorityTransfer:output_type -> console.v1.FinalizeBusinessObjectAuthorityTransferResponse
-	656,  // 1406: console.v1.ConsoleService.DefineBusinessObjectType:output_type -> console.v1.DefineBusinessObjectTypeResponse
-	737,  // 1407: console.v1.ConsoleService.GetBusinessObjectType:output_type -> console.v1.GetBusinessObjectTypeResponse
-	658,  // 1408: console.v1.ConsoleService.ListBusinessObjectTypes:output_type -> console.v1.ListBusinessObjectTypesResponse
-	660,  // 1409: console.v1.ConsoleService.CreateBusinessObject:output_type -> console.v1.CreateBusinessObjectResponse
-	662,  // 1410: console.v1.ConsoleService.GetBusinessObject:output_type -> console.v1.GetBusinessObjectResponse
-	667,  // 1411: console.v1.ConsoleService.ListBusinessObjects:output_type -> console.v1.ListBusinessObjectsResponse
-	669,  // 1412: console.v1.ConsoleService.UpdateBusinessObject:output_type -> console.v1.UpdateBusinessObjectResponse
-	671,  // 1413: console.v1.ConsoleService.DeleteBusinessObject:output_type -> console.v1.DeleteBusinessObjectResponse
-	673,  // 1414: console.v1.ConsoleService.ListBusinessObjectRevisions:output_type -> console.v1.ListBusinessObjectRevisionsResponse
-	675,  // 1415: console.v1.ConsoleService.BindBusinessObjectSource:output_type -> console.v1.BindBusinessObjectSourceResponse
-	677,  // 1416: console.v1.ConsoleService.AdmitBusinessObjectObservation:output_type -> console.v1.AdmitBusinessObjectObservationResponse
-	679,  // 1417: console.v1.ConsoleService.ListBusinessObjectRelationships:output_type -> console.v1.ListBusinessObjectRelationshipsResponse
-	681,  // 1418: console.v1.ConsoleService.CreateBusinessObjectRelationship:output_type -> console.v1.CreateBusinessObjectRelationshipResponse
-	683,  // 1419: console.v1.ConsoleService.DeleteBusinessObjectRelationship:output_type -> console.v1.DeleteBusinessObjectRelationshipResponse
-	709,  // 1420: console.v1.ConsoleService.CreateCaptureForm:output_type -> console.v1.CreateCaptureFormResponse
-	711,  // 1421: console.v1.ConsoleService.ListCaptureForms:output_type -> console.v1.ListCaptureFormsResponse
-	713,  // 1422: console.v1.ConsoleService.GetCaptureForm:output_type -> console.v1.GetCaptureFormResponse
-	715,  // 1423: console.v1.ConsoleService.UpdateCaptureForm:output_type -> console.v1.UpdateCaptureFormResponse
-	717,  // 1424: console.v1.ConsoleService.PublishCaptureForm:output_type -> console.v1.PublishCaptureFormResponse
-	719,  // 1425: console.v1.ConsoleService.RevokeCaptureFormPublication:output_type -> console.v1.RevokeCaptureFormPublicationResponse
-	790,  // 1426: console.v1.ConsoleService.CreateCaptureFormInvitation:output_type -> console.v1.CreateCaptureFormInvitationResponse
-	792,  // 1427: console.v1.ConsoleService.RevokeCaptureFormInvitation:output_type -> console.v1.RevokeCaptureFormInvitationResponse
-	794,  // 1428: console.v1.ConsoleService.GetInvitedCaptureForm:output_type -> console.v1.GetInvitedCaptureFormResponse
-	796,  // 1429: console.v1.ConsoleService.SubmitInvitedCaptureForm:output_type -> console.v1.SubmitInvitedCaptureFormResponse
-	721,  // 1430: console.v1.ConsoleService.GetPublishedCaptureForm:output_type -> console.v1.GetPublishedCaptureFormResponse
-	723,  // 1431: console.v1.ConsoleService.GetPublishedCaptureFormBrandingAsset:output_type -> console.v1.GetPublishedCaptureFormBrandingAssetResponse
-	725,  // 1432: console.v1.ConsoleService.SubmitPublishedCaptureForm:output_type -> console.v1.SubmitPublishedCaptureFormResponse
-	727,  // 1433: console.v1.ConsoleService.BeginPublishedCaptureFormUpload:output_type -> console.v1.BeginPublishedCaptureFormUploadResponse
-	729,  // 1434: console.v1.ConsoleService.CompletePublishedCaptureFormUpload:output_type -> console.v1.CompletePublishedCaptureFormUploadResponse
-	731,  // 1435: console.v1.ConsoleService.GetCaptureFormSubmission:output_type -> console.v1.GetCaptureFormSubmissionResponse
-	733,  // 1436: console.v1.ConsoleService.ListCaptureFormSubmissions:output_type -> console.v1.ListCaptureFormSubmissionsResponse
-	735,  // 1437: console.v1.ConsoleService.ReviewCaptureFormSubmission:output_type -> console.v1.ReviewCaptureFormSubmissionResponse
-	743,  // 1438: console.v1.ConsoleService.GetInferenceCreditAutoRefill:output_type -> console.v1.GetInferenceCreditAutoRefillResponse
-	745,  // 1439: console.v1.ConsoleService.UpdateInferenceCreditAutoRefill:output_type -> console.v1.UpdateInferenceCreditAutoRefillResponse
-	747,  // 1440: console.v1.ConsoleService.CompleteInferenceCreditAutoRefill:output_type -> console.v1.CompleteInferenceCreditAutoRefillResponse
-	740,  // 1441: console.v1.ConsoleService.ListInferenceCreditReceipts:output_type -> console.v1.ListInferenceCreditReceiptsResponse
-	315,  // 1442: console.v1.ConsoleService.GetOverview:output_type -> console.v1.GetOverviewResponse
-	318,  // 1443: console.v1.ConsoleService.GetConsoleBootSnapshot:output_type -> console.v1.GetConsoleBootSnapshotResponse
-	320,  // 1444: console.v1.ConsoleService.ListAssets:output_type -> console.v1.ListAssetsResponse
-	322,  // 1445: console.v1.ConsoleService.GetAsset:output_type -> console.v1.GetAssetResponse
-	324,  // 1446: console.v1.ConsoleService.ListActivity:output_type -> console.v1.ListActivityResponse
-	467,  // 1447: console.v1.ConsoleService.SearchStaffWorkspaceDirectory:output_type -> console.v1.SearchStaffWorkspaceDirectoryResponse
-	475,  // 1448: console.v1.ConsoleService.GetStaffWorkspaceContext:output_type -> console.v1.GetStaffWorkspaceContextResponse
-	867,  // 1449: console.v1.ConsoleService.GetStaffManagedInferenceFunding:output_type -> meter.v1.GetPrepaidCreditBalanceResponse
-	868,  // 1450: console.v1.ConsoleService.GrantStaffManagedInferenceCredits:output_type -> meter.v1.GrantDevelopmentCreditsResponse
-	869,  // 1451: console.v1.ConsoleService.GetStaffManagedInferenceUsage:output_type -> meter.v1.QueryUsageResponse
-	860,  // 1452: console.v1.ConsoleService.GetStaffManagedInferenceBudget:output_type -> meter.v1.GetBudgetDashboardResponse
-	870,  // 1453: console.v1.ConsoleService.SetStaffManagedInferenceBudget:output_type -> meter.v1.SetBudgetResponse
-	799,  // 1454: console.v1.ConsoleService.GetStaffManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
-	799,  // 1455: console.v1.ConsoleService.GetManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
-	478,  // 1456: console.v1.ConsoleService.ListManagedProviderAccessGrants:output_type -> console.v1.ListManagedProviderAccessGrantsResponse
-	807,  // 1457: console.v1.ConsoleService.ListManagedProviderAccessEvents:output_type -> console.v1.ListManagedProviderAccessEventsResponse
-	871,  // 1458: console.v1.ConsoleService.ListStaffManagedInferenceAdminEvents:output_type -> meter.v1.ListManagedInferenceAdminEventsResponse
-	811,  // 1459: console.v1.ConsoleService.ListStaffManagedExecutionGrantEvents:output_type -> console.v1.ListStaffManagedExecutionGrantEventsResponse
-	814,  // 1460: console.v1.ConsoleService.ListStaffManagedExecutionOutcomes:output_type -> console.v1.ListStaffManagedExecutionOutcomesResponse
-	480,  // 1461: console.v1.ConsoleService.UpsertManagedProviderAccessGrant:output_type -> console.v1.UpsertManagedProviderAccessGrantResponse
-	482,  // 1462: console.v1.ConsoleService.RevokeManagedProviderAccessGrant:output_type -> console.v1.RevokeManagedProviderAccessGrantResponse
-	488,  // 1463: console.v1.ConsoleService.GetStaffInferenceRoutingProfile:output_type -> console.v1.GetStaffInferenceRoutingProfileResponse
-	490,  // 1464: console.v1.ConsoleService.UpdateStaffInferenceRoutingProfile:output_type -> console.v1.UpdateStaffInferenceRoutingProfileResponse
-	326,  // 1465: console.v1.ConsoleService.ListEvalResults:output_type -> console.v1.ListEvalResultsResponse
-	328,  // 1466: console.v1.ConsoleService.ListCostUsage:output_type -> console.v1.ListCostUsageResponse
-	331,  // 1467: console.v1.ConsoleService.RecordProviderCostSnapshot:output_type -> console.v1.RecordProviderCostSnapshotResponse
-	333,  // 1468: console.v1.ConsoleService.ListAuthorityPosture:output_type -> console.v1.ListAuthorityPostureResponse
-	335,  // 1469: console.v1.ConsoleService.ListAgentWorkforceRecords:output_type -> console.v1.ListAgentWorkforceRecordsResponse
-	338,  // 1470: console.v1.ConsoleService.ListOrbControlTargets:output_type -> console.v1.ListOrbControlTargetsResponse
-	340,  // 1471: console.v1.ConsoleService.GetOrbControlTarget:output_type -> console.v1.GetOrbControlTargetResponse
-	342,  // 1472: console.v1.ConsoleService.SubmitOrbControlAction:output_type -> console.v1.SubmitOrbControlActionResponse
-	344,  // 1473: console.v1.ConsoleService.SubmitAgentWorkforceEvidence:output_type -> console.v1.SubmitAgentWorkforceEvidenceResponse
-	347,  // 1474: console.v1.ConsoleService.ListFindings:output_type -> console.v1.ListFindingsResponse
-	349,  // 1475: console.v1.ConsoleService.GetTraceDrilldown:output_type -> console.v1.GetTraceDrilldownResponse
-	351,  // 1476: console.v1.ConsoleService.ListIntegrationTiles:output_type -> console.v1.ListIntegrationTilesResponse
-	353,  // 1477: console.v1.ConsoleService.ListPinnedSources:output_type -> console.v1.ListPinnedSourcesResponse
-	356,  // 1478: console.v1.ConsoleService.SetPinnedSource:output_type -> console.v1.SetPinnedSourceResponse
-	358,  // 1479: console.v1.ConsoleService.UnpinSource:output_type -> console.v1.UnpinSourceResponse
-	540,  // 1480: console.v1.ConsoleService.CreateDexMcpServer:output_type -> console.v1.CreateDexMcpServerResponse
-	542,  // 1481: console.v1.ConsoleService.ListDexMcpServers:output_type -> console.v1.ListDexMcpServersResponse
-	544,  // 1482: console.v1.ConsoleService.GetDexMcpServer:output_type -> console.v1.GetDexMcpServerResponse
-	546,  // 1483: console.v1.ConsoleService.DiscoverDexMcpServer:output_type -> console.v1.DiscoverDexMcpServerResponse
-	548,  // 1484: console.v1.ConsoleService.UpdateDexMcpServer:output_type -> console.v1.UpdateDexMcpServerResponse
-	550,  // 1485: console.v1.ConsoleService.DeleteDexMcpServer:output_type -> console.v1.DeleteDexMcpServerResponse
-	553,  // 1486: console.v1.ConsoleService.InitiateDexMcpOAuthProfile:output_type -> console.v1.InitiateDexMcpOAuthProfileResponse
-	555,  // 1487: console.v1.ConsoleService.CompleteDexMcpOAuthProfile:output_type -> console.v1.CompleteDexMcpOAuthProfileResponse
-	557,  // 1488: console.v1.ConsoleService.ListDexMcpOAuthProfiles:output_type -> console.v1.ListDexMcpOAuthProfilesResponse
-	559,  // 1489: console.v1.ConsoleService.RevokeDexMcpOAuthProfile:output_type -> console.v1.RevokeDexMcpOAuthProfileResponse
-	561,  // 1490: console.v1.ConsoleService.ReauthorizeDexMcpOAuthProfile:output_type -> console.v1.ReauthorizeDexMcpOAuthProfileResponse
-	565,  // 1491: console.v1.ConsoleService.RegisterPrivateEndpoint:output_type -> console.v1.RegisterPrivateEndpointResponse
-	567,  // 1492: console.v1.ConsoleService.VerifyPrivateEndpoint:output_type -> console.v1.VerifyPrivateEndpointResponse
-	569,  // 1493: console.v1.ConsoleService.ListPrivateEndpoints:output_type -> console.v1.ListPrivateEndpointsResponse
-	571,  // 1494: console.v1.ConsoleService.DeletePrivateEndpoint:output_type -> console.v1.DeletePrivateEndpointResponse
-	573,  // 1495: console.v1.ConsoleService.AttachPrivateEndpointToProfile:output_type -> console.v1.AttachPrivateEndpointToProfileResponse
-	575,  // 1496: console.v1.ConsoleService.ListGatewayEgressOrigins:output_type -> console.v1.ListGatewayEgressOriginsResponse
-	360,  // 1497: console.v1.ConsoleService.GetOnboardingPlan:output_type -> console.v1.GetOnboardingPlanResponse
-	133,  // 1498: console.v1.ConsoleService.ListOperatingChannels:output_type -> console.v1.ListOperatingChannelsResponse
-	627,  // 1499: console.v1.ConsoleService.ListOperatingJobs:output_type -> console.v1.ListOperatingJobsResponse
-	135,  // 1500: console.v1.ConsoleService.ArchiveOperatingThread:output_type -> console.v1.ArchiveOperatingThreadResponse
-	137,  // 1501: console.v1.ConsoleService.ForkOperatingThread:output_type -> console.v1.ForkOperatingThreadResponse
-	139,  // 1502: console.v1.ConsoleService.RenameOperatingThread:output_type -> console.v1.RenameOperatingThreadResponse
-	141,  // 1503: console.v1.ConsoleService.GetOperatingThread:output_type -> console.v1.GetOperatingThreadResponse
-	581,  // 1504: console.v1.ConsoleService.BootstrapThreadGateway:output_type -> console.v1.BootstrapThreadGatewayResponse
-	578,  // 1505: console.v1.ConsoleService.PrewarmOperatingThread:output_type -> console.v1.PrewarmOperatingThreadResponse
-	147,  // 1506: console.v1.ConsoleService.ListOperatingThreadEvents:output_type -> console.v1.ListOperatingThreadEventsResponse
-	149,  // 1507: console.v1.ConsoleService.WatchOperatingThread:output_type -> console.v1.WatchOperatingThreadResponse
-	143,  // 1508: console.v1.ConsoleService.RespondOperatingThread:output_type -> console.v1.RespondOperatingThreadResponse
-	145,  // 1509: console.v1.ConsoleService.InterruptOperatingThread:output_type -> console.v1.InterruptOperatingThreadResponse
-	214,  // 1510: console.v1.ConsoleService.SearchOperatingHistory:output_type -> console.v1.SearchOperatingHistoryResponse
-	217,  // 1511: console.v1.ConsoleService.GetOperatingHistoryContext:output_type -> console.v1.GetOperatingHistoryContextResponse
-	776,  // 1512: console.v1.ConsoleService.AcceptOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
-	776,  // 1513: console.v1.ConsoleService.ImportOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
-	779,  // 1514: console.v1.ConsoleService.GetOperatingTaskEnvironment:output_type -> console.v1.GetOperatingTaskEnvironmentResponse
-	776,  // 1515: console.v1.ConsoleService.GetOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
-	158,  // 1516: console.v1.ConsoleService.SubmitOperatingMessage:output_type -> console.v1.SubmitOperatingMessageResponse
-	162,  // 1517: console.v1.ConsoleService.SubmitOperatingCorrection:output_type -> console.v1.SubmitOperatingCorrectionResponse
-	165,  // 1518: console.v1.ConsoleService.SubmitOperatingFeedback:output_type -> console.v1.SubmitOperatingFeedbackResponse
-	171,  // 1519: console.v1.ConsoleService.SubmitProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
-	171,  // 1520: console.v1.ConsoleService.SubmitNativeProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
-	174,  // 1521: console.v1.ConsoleService.ListStaffProductIssueReports:output_type -> console.v1.ListStaffProductIssueReportsResponse
-	176,  // 1522: console.v1.ConsoleService.EngageStaffProductIssueReport:output_type -> console.v1.EngageStaffProductIssueReportResponse
-	834,  // 1523: console.v1.ConsoleService.ListStaffProductIssueRecoveries:output_type -> console.v1.ListStaffProductIssueRecoveriesResponse
-	832,  // 1524: console.v1.ConsoleService.PrepareStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	832,  // 1525: console.v1.ConsoleService.ScanStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	832,  // 1526: console.v1.ConsoleService.ReviewStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	832,  // 1527: console.v1.ConsoleService.ExecuteStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	832,  // 1528: console.v1.ConsoleService.GetProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	832,  // 1529: console.v1.ConsoleService.ReplyProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	178,  // 1530: console.v1.ConsoleService.GetOperatingFeedback:output_type -> console.v1.GetOperatingFeedbackResponse
-	180,  // 1531: console.v1.ConsoleService.ResolveOperatingFeedbackRemediation:output_type -> console.v1.ResolveOperatingFeedbackRemediationResponse
-	186,  // 1532: console.v1.ConsoleService.ListCustomerIntelligenceFacts:output_type -> console.v1.ListCustomerIntelligenceFactsResponse
-	188,  // 1533: console.v1.ConsoleService.GetCustomerIntelligenceFact:output_type -> console.v1.GetCustomerIntelligenceFactResponse
-	190,  // 1534: console.v1.ConsoleService.ReviewCustomerIntelligenceFact:output_type -> console.v1.ReviewCustomerIntelligenceFactResponse
-	192,  // 1535: console.v1.ConsoleService.ProposeCustomerIntelligenceFact:output_type -> console.v1.ProposeCustomerIntelligenceFactResponse
-	194,  // 1536: console.v1.ConsoleService.RespondToCustomerFactConfirmation:output_type -> console.v1.RespondToCustomerFactConfirmationResponse
-	197,  // 1537: console.v1.ConsoleService.AggregateCustomerIntelligencePatterns:output_type -> console.v1.AggregateCustomerIntelligencePatternsResponse
-	199,  // 1538: console.v1.ConsoleService.ListOperatingCorrections:output_type -> console.v1.ListOperatingCorrectionsResponse
-	201,  // 1539: console.v1.ConsoleService.ReviewOperatingCorrection:output_type -> console.v1.ReviewOperatingCorrectionResponse
-	203,  // 1540: console.v1.ConsoleService.ListWorkspaceMemories:output_type -> console.v1.ListWorkspaceMemoriesResponse
-	206,  // 1541: console.v1.ConsoleService.CorrectWorkspaceMemory:output_type -> console.v1.CorrectWorkspaceMemoryResponse
-	208,  // 1542: console.v1.ConsoleService.ReviewWorkspaceMemory:output_type -> console.v1.ReviewWorkspaceMemoryResponse
-	210,  // 1543: console.v1.ConsoleService.ForgetWorkspaceMemory:output_type -> console.v1.ForgetWorkspaceMemoryResponse
-	153,  // 1544: console.v1.ConsoleService.BeginOperatingAttachmentUpload:output_type -> console.v1.BeginOperatingAttachmentUploadResponse
-	155,  // 1545: console.v1.ConsoleService.CompleteOperatingAttachmentUpload:output_type -> console.v1.CompleteOperatingAttachmentUploadResponse
-	157,  // 1546: console.v1.ConsoleService.ListOperatingAttachments:output_type -> console.v1.ListOperatingAttachmentsResponse
-	230,  // 1547: console.v1.ConsoleService.ResolveOperatingReceiptAction:output_type -> console.v1.ResolveOperatingReceiptActionResponse
-	234,  // 1548: console.v1.ConsoleService.GetOperatingReceipt:output_type -> console.v1.GetOperatingReceiptResponse
-	251,  // 1549: console.v1.ConsoleService.SubmitComputerMission:output_type -> console.v1.SubmitComputerMissionResponse
-	253,  // 1550: console.v1.ConsoleService.GetComputerMission:output_type -> console.v1.GetComputerMissionResponse
-	255,  // 1551: console.v1.ConsoleService.CancelComputerMission:output_type -> console.v1.CancelComputerMissionResponse
-	257,  // 1552: console.v1.ConsoleService.ContinueComputerMission:output_type -> console.v1.ContinueComputerMissionResponse
-	259,  // 1553: console.v1.ConsoleService.PauseComputerMission:output_type -> console.v1.PauseComputerMissionResponse
-	261,  // 1554: console.v1.ConsoleService.ResumeComputerMission:output_type -> console.v1.ResumeComputerMissionResponse
-	263,  // 1555: console.v1.ConsoleService.WakeComputerMission:output_type -> console.v1.WakeComputerMissionResponse
-	265,  // 1556: console.v1.ConsoleService.GuideComputerMission:output_type -> console.v1.GuideComputerMissionResponse
-	272,  // 1557: console.v1.ConsoleService.ListComputerMissionCanaryDefinitions:output_type -> console.v1.ListComputerMissionCanaryDefinitionsResponse
-	274,  // 1558: console.v1.ConsoleService.StartComputerMissionCanaryRun:output_type -> console.v1.StartComputerMissionCanaryRunResponse
-	276,  // 1559: console.v1.ConsoleService.GetComputerMissionCanaryRun:output_type -> console.v1.GetComputerMissionCanaryRunResponse
-	278,  // 1560: console.v1.ConsoleService.ListComputerMissionCanaryRuns:output_type -> console.v1.ListComputerMissionCanaryRunsResponse
-	280,  // 1561: console.v1.ConsoleService.GetComputerMissionCanaryEvidence:output_type -> console.v1.GetComputerMissionCanaryEvidenceResponse
-	282,  // 1562: console.v1.ConsoleService.OperateComputerMissionCanaryRun:output_type -> console.v1.OperateComputerMissionCanaryRunResponse
-	286,  // 1563: console.v1.ConsoleService.CreateMissionSchedule:output_type -> console.v1.CreateMissionScheduleResponse
-	288,  // 1564: console.v1.ConsoleService.UpdateMissionSchedule:output_type -> console.v1.UpdateMissionScheduleResponse
-	290,  // 1565: console.v1.ConsoleService.SetMissionScheduleEnabled:output_type -> console.v1.SetMissionScheduleEnabledResponse
-	292,  // 1566: console.v1.ConsoleService.ListMissionSchedules:output_type -> console.v1.ListMissionSchedulesResponse
-	295,  // 1567: console.v1.ConsoleService.CreateConnectorTrigger:output_type -> console.v1.CreateConnectorTriggerResponse
-	297,  // 1568: console.v1.ConsoleService.UpdateConnectorTrigger:output_type -> console.v1.UpdateConnectorTriggerResponse
-	299,  // 1569: console.v1.ConsoleService.ListConnectorTriggers:output_type -> console.v1.ListConnectorTriggersResponse
-	301,  // 1570: console.v1.ConsoleService.DeleteConnectorTrigger:output_type -> console.v1.DeleteConnectorTriggerResponse
-	303,  // 1571: console.v1.ConsoleService.SetConnectorTriggerEnabled:output_type -> console.v1.SetConnectorTriggerEnabledResponse
-	306,  // 1572: console.v1.ConsoleService.ReserveComputerMissionApexSession:output_type -> console.v1.ReserveComputerMissionApexSessionResponse
-	308,  // 1573: console.v1.ConsoleService.BindComputerMissionApexSessionReservation:output_type -> console.v1.BindComputerMissionApexSessionReservationResponse
-	311,  // 1574: console.v1.ConsoleService.BindComputerMissionApexInstructionMetadata:output_type -> console.v1.BindComputerMissionApexInstructionMetadataResponse
-	313,  // 1575: console.v1.ConsoleService.AuthorizeComputerMissionApexSessionAdoption:output_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse
-	362,  // 1576: console.v1.ConsoleService.GetWorkspaceSettings:output_type -> console.v1.GetWorkspaceSettingsResponse
-	376,  // 1577: console.v1.ConsoleService.GetOperatorPreferences:output_type -> console.v1.GetOperatorPreferencesResponse
-	378,  // 1578: console.v1.ConsoleService.UpdateOperatorPreferences:output_type -> console.v1.UpdateOperatorPreferencesResponse
-	387,  // 1579: console.v1.ConsoleService.CreateConnectorProfile:output_type -> console.v1.CreateConnectorProfileResponse
-	389,  // 1580: console.v1.ConsoleService.ListConnectorProfiles:output_type -> console.v1.ListConnectorProfilesResponse
-	391,  // 1581: console.v1.ConsoleService.UpdateConnectorProfile:output_type -> console.v1.UpdateConnectorProfileResponse
-	393,  // 1582: console.v1.ConsoleService.DeleteConnectorProfile:output_type -> console.v1.DeleteConnectorProfileResponse
-	600,  // 1583: console.v1.ConsoleService.ListConnectedCalls:output_type -> console.v1.ListConnectedCallsResponse
-	602,  // 1584: console.v1.ConsoleService.StartMeetingCapture:output_type -> console.v1.StartMeetingCaptureResponse
-	604,  // 1585: console.v1.ConsoleService.GetMeetingCapture:output_type -> console.v1.GetMeetingCaptureResponse
-	606,  // 1586: console.v1.ConsoleService.ListMeetingCaptures:output_type -> console.v1.ListMeetingCapturesResponse
-	608,  // 1587: console.v1.ConsoleService.StopMeetingCapture:output_type -> console.v1.StopMeetingCaptureResponse
-	621,  // 1588: console.v1.ConsoleService.ListCommitments:output_type -> console.v1.ListCommitmentsResponse
-	365,  // 1589: console.v1.ConsoleService.GetBillingSubscription:output_type -> console.v1.GetBillingSubscriptionResponse
-	367,  // 1590: console.v1.ConsoleService.CreateBillingPortalSession:output_type -> console.v1.CreateBillingPortalSessionResponse
-	369,  // 1591: console.v1.ConsoleService.CreateBillingCheckoutSession:output_type -> console.v1.CreateBillingCheckoutSessionResponse
-	634,  // 1592: console.v1.ConsoleService.GetInferenceCreditBalance:output_type -> console.v1.GetInferenceCreditBalanceResponse
-	638,  // 1593: console.v1.ConsoleService.CreateInferenceCreditCheckout:output_type -> console.v1.CreateInferenceCreditCheckoutResponse
-	640,  // 1594: console.v1.ConsoleService.FulfillInferenceCreditCheckout:output_type -> console.v1.FulfillInferenceCreditCheckoutResponse
-	371,  // 1595: console.v1.ConsoleService.UpdateWorkspaceProfile:output_type -> console.v1.UpdateWorkspaceProfileResponse
-	395,  // 1596: console.v1.ConsoleService.ArchiveWorkspace:output_type -> console.v1.ArchiveWorkspaceResponse
-	397,  // 1597: console.v1.ConsoleService.UpdateWorkspacePolicy:output_type -> console.v1.UpdateWorkspacePolicyResponse
-	399,  // 1598: console.v1.ConsoleService.UpdateWorkspaceDexPolicy:output_type -> console.v1.UpdateWorkspaceDexPolicyResponse
-	401,  // 1599: console.v1.ConsoleService.UpdateWorkspaceArtifactStyleGuide:output_type -> console.v1.UpdateWorkspaceArtifactStyleGuideResponse
-	403,  // 1600: console.v1.ConsoleService.EvaluateWorkspaceArtifactStyleGuide:output_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideResponse
-	406,  // 1601: console.v1.ConsoleService.UpsertWorkspaceIdentityProvider:output_type -> console.v1.UpsertWorkspaceIdentityProviderResponse
-	408,  // 1602: console.v1.ConsoleService.RemoveWorkspaceIdentityProvider:output_type -> console.v1.RemoveWorkspaceIdentityProviderResponse
-	410,  // 1603: console.v1.ConsoleService.UpsertWorkspaceIntegration:output_type -> console.v1.UpsertWorkspaceIntegrationResponse
-	412,  // 1604: console.v1.ConsoleService.RemoveWorkspaceIntegration:output_type -> console.v1.RemoveWorkspaceIntegrationResponse
-	362,  // 1605: console.v1.ConsoleService.UpdateWorkspaceBilling:output_type -> console.v1.GetWorkspaceSettingsResponse
-	362,  // 1606: console.v1.ConsoleService.UpsertWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
-	362,  // 1607: console.v1.ConsoleService.RemoveWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
-	362,  // 1608: console.v1.ConsoleService.UpdateWorkspaceNotificationPreferences:output_type -> console.v1.GetWorkspaceSettingsResponse
-	362,  // 1609: console.v1.ConsoleService.EnableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
-	362,  // 1610: console.v1.ConsoleService.DisableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
-	421,  // 1611: console.v1.ConsoleService.ListWorkspaceSkills:output_type -> console.v1.ListWorkspaceSkillsResponse
-	436,  // 1612: console.v1.ConsoleService.BrowseDexSkillCatalog:output_type -> console.v1.BrowseDexSkillCatalogResponse
-	438,  // 1613: console.v1.ConsoleService.InstallDexSkillCatalogEntry:output_type -> console.v1.InstallDexSkillCatalogEntryResponse
-	440,  // 1614: console.v1.ConsoleService.CreateWorkspaceSkill:output_type -> console.v1.CreateWorkspaceSkillResponse
-	442,  // 1615: console.v1.ConsoleService.UpdateWorkspaceSkill:output_type -> console.v1.UpdateWorkspaceSkillResponse
-	444,  // 1616: console.v1.ConsoleService.DeleteWorkspaceSkill:output_type -> console.v1.DeleteWorkspaceSkillResponse
-	492,  // 1617: console.v1.ConsoleService.ListScenarioFixtures:output_type -> console.v1.ListScenarioFixturesResponse
-	494,  // 1618: console.v1.ConsoleService.PromoteScenarioFixture:output_type -> console.v1.PromoteScenarioFixtureResponse
-	496,  // 1619: console.v1.ConsoleService.CompareScenarioFixtures:output_type -> console.v1.CompareScenarioFixturesResponse
-	381,  // 1620: console.v1.ConsoleService.ListWorkspaceGuardrailRules:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
-	381,  // 1621: console.v1.ConsoleService.UpsertWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
-	381,  // 1622: console.v1.ConsoleService.RemoveWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
-	583,  // 1623: console.v1.ConsoleService.SetOperatingThreadController:output_type -> console.v1.SetOperatingThreadControllerResponse
-	588,  // 1624: console.v1.ConsoleService.GetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
-	588,  // 1625: console.v1.ConsoleService.SetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
-	613,  // 1626: console.v1.ConsoleService.CreateProspectingWatchProgram:output_type -> console.v1.CreateProspectingWatchProgramResponse
-	615,  // 1627: console.v1.ConsoleService.GetProspectingWatchProgram:output_type -> console.v1.GetProspectingWatchProgramResponse
-	617,  // 1628: console.v1.ConsoleService.ListProspectingWatchPrograms:output_type -> console.v1.ListProspectingWatchProgramsResponse
-	619,  // 1629: console.v1.ConsoleService.UpdateProspectingWatchProgram:output_type -> console.v1.UpdateProspectingWatchProgramResponse
-	819,  // 1630: console.v1.ConsoleService.CreateProspectingDraft:output_type -> console.v1.CreateProspectingDraftResponse
-	821,  // 1631: console.v1.ConsoleService.ListProspectingDrafts:output_type -> console.v1.ListProspectingDraftsResponse
-	823,  // 1632: console.v1.ConsoleService.ReviewProspectingDraft:output_type -> console.v1.ReviewProspectingDraftResponse
-	629,  // 1633: console.v1.ConsoleService.RecordOperatingHomepageSuggestionFeedback:output_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
-	111,  // 1634: console.v1.WorkspaceKeyService.GetWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
-	111,  // 1635: console.v1.WorkspaceKeyService.PutWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
-	111,  // 1636: console.v1.WorkspaceKeyService.DeleteWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
-	594,  // 1637: console.v1.ManagedSetupService.GetManagedSetup:output_type -> console.v1.ManagedSetup
-	594,  // 1638: console.v1.ManagedSetupService.SetManagedSetup:output_type -> console.v1.ManagedSetup
-	1395, // [1395:1639] is the sub-list for method output_type
-	1151, // [1151:1395] is the sub-list for method input_type
-	1151, // [1151:1151] is the sub-list for extension type_name
-	1151, // [1151:1151] is the sub-list for extension extendee
-	0,    // [0:1151] is the sub-list for field type_name
+	817,  // 1142: console.v1.ReviewProspectingDraftResponse.draft:type_name -> console.v1.ProspectingDraft
+	818,  // 1143: console.v1.ReviewProspectingDraftResponse.receipt:type_name -> console.v1.ProspectingDraftMutationReceipt
+	844,  // 1144: console.v1.WorkspaceBrandVoice.scopes:type_name -> console.v1.WorkspaceBrandVoice.Scope
+	845,  // 1145: console.v1.WorkspaceBrandVoice.updated_at:type_name -> google.protobuf.Timestamp
+	114,  // 1146: console.v1.GetProductIssueRecoveryRequest.query:type_name -> console.v1.ConsoleQuery
+	114,  // 1147: console.v1.ReplyProductIssueRecoveryRequest.query:type_name -> console.v1.ConsoleQuery
+	832,  // 1148: console.v1.ProductIssueRecoveryResponse.recovery:type_name -> console.v1.ProductIssueRecovery
+	836,  // 1149: console.v1.ListStaffProductIssueRecoveriesResponse.recoveries:type_name -> console.v1.StaffProductIssueRecoverySummary
+	845,  // 1150: console.v1.StaffProductIssueRecoverySummary.created_at:type_name -> google.protobuf.Timestamp
+	108,  // 1151: console.v1.ComplianceRequirementFinding.status:type_name -> console.v1.ComplianceFindingStatus
+	845,  // 1152: console.v1.ComplianceSubjectAssessment.source_updated_at:type_name -> google.protobuf.Timestamp
+	845,  // 1153: console.v1.ComplianceSubjectAssessment.assessed_at:type_name -> google.protobuf.Timestamp
+	108,  // 1154: console.v1.ComplianceSubjectAssessment.status:type_name -> console.v1.ComplianceFindingStatus
+	838,  // 1155: console.v1.ComplianceSubjectAssessment.findings:type_name -> console.v1.ComplianceRequirementFinding
+	839,  // 1156: console.v1.AssessComplianceSubjectResponse.assessment:type_name -> console.v1.ComplianceSubjectAssessment
+	837,  // 1157: console.v1.ConsoleService.AssessComplianceSubject:input_type -> console.v1.AssessComplianceSubjectRequest
+	784,  // 1158: console.v1.ConsoleService.ListBusinessBlueprints:input_type -> console.v1.ListBusinessBlueprintsRequest
+	786,  // 1159: console.v1.ConsoleService.CloneBusinessBlueprint:input_type -> console.v1.CloneBusinessBlueprintRequest
+	771,  // 1160: console.v1.ConsoleService.GetBusinessProcessDefinition:input_type -> console.v1.GetBusinessProcessDefinitionRequest
+	773,  // 1161: console.v1.ConsoleService.ListBusinessProcessDefinitions:input_type -> console.v1.ListBusinessProcessDefinitionsRequest
+	761,  // 1162: console.v1.ConsoleService.DefineBusinessProcess:input_type -> console.v1.DefineBusinessProcessRequest
+	763,  // 1163: console.v1.ConsoleService.StartBusinessProcess:input_type -> console.v1.StartBusinessProcessRequest
+	765,  // 1164: console.v1.ConsoleService.GetBusinessProcess:input_type -> console.v1.GetBusinessProcessRequest
+	767,  // 1165: console.v1.ConsoleService.ListBusinessProcesses:input_type -> console.v1.ListBusinessProcessesRequest
+	769,  // 1166: console.v1.ConsoleService.TransitionBusinessProcess:input_type -> console.v1.TransitionBusinessProcessRequest
+	749,  // 1167: console.v1.ConsoleService.PrepareBusinessObjectAuthorityTransfer:input_type -> console.v1.PrepareBusinessObjectAuthorityTransferRequest
+	751,  // 1168: console.v1.ConsoleService.FinalizeBusinessObjectAuthorityTransfer:input_type -> console.v1.FinalizeBusinessObjectAuthorityTransferRequest
+	656,  // 1169: console.v1.ConsoleService.DefineBusinessObjectType:input_type -> console.v1.DefineBusinessObjectTypeRequest
+	737,  // 1170: console.v1.ConsoleService.GetBusinessObjectType:input_type -> console.v1.GetBusinessObjectTypeRequest
+	658,  // 1171: console.v1.ConsoleService.ListBusinessObjectTypes:input_type -> console.v1.ListBusinessObjectTypesRequest
+	660,  // 1172: console.v1.ConsoleService.CreateBusinessObject:input_type -> console.v1.CreateBusinessObjectRequest
+	662,  // 1173: console.v1.ConsoleService.GetBusinessObject:input_type -> console.v1.GetBusinessObjectRequest
+	665,  // 1174: console.v1.ConsoleService.ListBusinessObjects:input_type -> console.v1.ListBusinessObjectsRequest
+	669,  // 1175: console.v1.ConsoleService.UpdateBusinessObject:input_type -> console.v1.UpdateBusinessObjectRequest
+	671,  // 1176: console.v1.ConsoleService.DeleteBusinessObject:input_type -> console.v1.DeleteBusinessObjectRequest
+	673,  // 1177: console.v1.ConsoleService.ListBusinessObjectRevisions:input_type -> console.v1.ListBusinessObjectRevisionsRequest
+	675,  // 1178: console.v1.ConsoleService.BindBusinessObjectSource:input_type -> console.v1.BindBusinessObjectSourceRequest
+	677,  // 1179: console.v1.ConsoleService.AdmitBusinessObjectObservation:input_type -> console.v1.AdmitBusinessObjectObservationRequest
+	679,  // 1180: console.v1.ConsoleService.ListBusinessObjectRelationships:input_type -> console.v1.ListBusinessObjectRelationshipsRequest
+	681,  // 1181: console.v1.ConsoleService.CreateBusinessObjectRelationship:input_type -> console.v1.CreateBusinessObjectRelationshipRequest
+	683,  // 1182: console.v1.ConsoleService.DeleteBusinessObjectRelationship:input_type -> console.v1.DeleteBusinessObjectRelationshipRequest
+	709,  // 1183: console.v1.ConsoleService.CreateCaptureForm:input_type -> console.v1.CreateCaptureFormRequest
+	711,  // 1184: console.v1.ConsoleService.ListCaptureForms:input_type -> console.v1.ListCaptureFormsRequest
+	713,  // 1185: console.v1.ConsoleService.GetCaptureForm:input_type -> console.v1.GetCaptureFormRequest
+	715,  // 1186: console.v1.ConsoleService.UpdateCaptureForm:input_type -> console.v1.UpdateCaptureFormRequest
+	717,  // 1187: console.v1.ConsoleService.PublishCaptureForm:input_type -> console.v1.PublishCaptureFormRequest
+	719,  // 1188: console.v1.ConsoleService.RevokeCaptureFormPublication:input_type -> console.v1.RevokeCaptureFormPublicationRequest
+	790,  // 1189: console.v1.ConsoleService.CreateCaptureFormInvitation:input_type -> console.v1.CreateCaptureFormInvitationRequest
+	792,  // 1190: console.v1.ConsoleService.RevokeCaptureFormInvitation:input_type -> console.v1.RevokeCaptureFormInvitationRequest
+	794,  // 1191: console.v1.ConsoleService.GetInvitedCaptureForm:input_type -> console.v1.GetInvitedCaptureFormRequest
+	796,  // 1192: console.v1.ConsoleService.SubmitInvitedCaptureForm:input_type -> console.v1.SubmitInvitedCaptureFormRequest
+	721,  // 1193: console.v1.ConsoleService.GetPublishedCaptureForm:input_type -> console.v1.GetPublishedCaptureFormRequest
+	723,  // 1194: console.v1.ConsoleService.GetPublishedCaptureFormBrandingAsset:input_type -> console.v1.GetPublishedCaptureFormBrandingAssetRequest
+	725,  // 1195: console.v1.ConsoleService.SubmitPublishedCaptureForm:input_type -> console.v1.SubmitPublishedCaptureFormRequest
+	727,  // 1196: console.v1.ConsoleService.BeginPublishedCaptureFormUpload:input_type -> console.v1.BeginPublishedCaptureFormUploadRequest
+	729,  // 1197: console.v1.ConsoleService.CompletePublishedCaptureFormUpload:input_type -> console.v1.CompletePublishedCaptureFormUploadRequest
+	731,  // 1198: console.v1.ConsoleService.GetCaptureFormSubmission:input_type -> console.v1.GetCaptureFormSubmissionRequest
+	733,  // 1199: console.v1.ConsoleService.ListCaptureFormSubmissions:input_type -> console.v1.ListCaptureFormSubmissionsRequest
+	735,  // 1200: console.v1.ConsoleService.ReviewCaptureFormSubmission:input_type -> console.v1.ReviewCaptureFormSubmissionRequest
+	743,  // 1201: console.v1.ConsoleService.GetInferenceCreditAutoRefill:input_type -> console.v1.GetInferenceCreditAutoRefillRequest
+	745,  // 1202: console.v1.ConsoleService.UpdateInferenceCreditAutoRefill:input_type -> console.v1.UpdateInferenceCreditAutoRefillRequest
+	747,  // 1203: console.v1.ConsoleService.CompleteInferenceCreditAutoRefill:input_type -> console.v1.CompleteInferenceCreditAutoRefillRequest
+	740,  // 1204: console.v1.ConsoleService.ListInferenceCreditReceipts:input_type -> console.v1.ListInferenceCreditReceiptsRequest
+	315,  // 1205: console.v1.ConsoleService.GetOverview:input_type -> console.v1.GetOverviewRequest
+	317,  // 1206: console.v1.ConsoleService.GetConsoleBootSnapshot:input_type -> console.v1.GetConsoleBootSnapshotRequest
+	320,  // 1207: console.v1.ConsoleService.ListAssets:input_type -> console.v1.ListAssetsRequest
+	322,  // 1208: console.v1.ConsoleService.GetAsset:input_type -> console.v1.GetAssetRequest
+	324,  // 1209: console.v1.ConsoleService.ListActivity:input_type -> console.v1.ListActivityRequest
+	466,  // 1210: console.v1.ConsoleService.SearchStaffWorkspaceDirectory:input_type -> console.v1.SearchStaffWorkspaceDirectoryRequest
+	469,  // 1211: console.v1.ConsoleService.GetStaffWorkspaceContext:input_type -> console.v1.GetStaffWorkspaceContextRequest
+	801,  // 1212: console.v1.ConsoleService.GetStaffManagedInferenceFunding:input_type -> console.v1.GetStaffManagedInferenceFundingRequest
+	802,  // 1213: console.v1.ConsoleService.GrantStaffManagedInferenceCredits:input_type -> console.v1.GrantStaffManagedInferenceCreditsRequest
+	803,  // 1214: console.v1.ConsoleService.GetStaffManagedInferenceUsage:input_type -> console.v1.GetStaffManagedInferenceUsageRequest
+	804,  // 1215: console.v1.ConsoleService.GetStaffManagedInferenceBudget:input_type -> console.v1.GetStaffManagedInferenceBudgetRequest
+	805,  // 1216: console.v1.ConsoleService.SetStaffManagedInferenceBudget:input_type -> console.v1.SetStaffManagedInferenceBudgetRequest
+	798,  // 1217: console.v1.ConsoleService.GetStaffManagedInferenceReadiness:input_type -> console.v1.GetStaffManagedInferenceReadinessRequest
+	799,  // 1218: console.v1.ConsoleService.GetManagedInferenceReadiness:input_type -> console.v1.GetManagedInferenceReadinessRequest
+	478,  // 1219: console.v1.ConsoleService.ListManagedProviderAccessGrants:input_type -> console.v1.ListManagedProviderAccessGrantsRequest
+	806,  // 1220: console.v1.ConsoleService.ListManagedProviderAccessEvents:input_type -> console.v1.ListManagedProviderAccessEventsRequest
+	809,  // 1221: console.v1.ConsoleService.ListStaffManagedInferenceAdminEvents:input_type -> console.v1.ListStaffManagedInferenceAdminEventsRequest
+	810,  // 1222: console.v1.ConsoleService.ListStaffManagedExecutionGrantEvents:input_type -> console.v1.ListStaffManagedExecutionGrantEventsRequest
+	813,  // 1223: console.v1.ConsoleService.ListStaffManagedExecutionOutcomes:input_type -> console.v1.ListStaffManagedExecutionOutcomesRequest
+	480,  // 1224: console.v1.ConsoleService.UpsertManagedProviderAccessGrant:input_type -> console.v1.UpsertManagedProviderAccessGrantRequest
+	482,  // 1225: console.v1.ConsoleService.RevokeManagedProviderAccessGrant:input_type -> console.v1.RevokeManagedProviderAccessGrantRequest
+	488,  // 1226: console.v1.ConsoleService.GetStaffInferenceRoutingProfile:input_type -> console.v1.GetStaffInferenceRoutingProfileRequest
+	490,  // 1227: console.v1.ConsoleService.UpdateStaffInferenceRoutingProfile:input_type -> console.v1.UpdateStaffInferenceRoutingProfileRequest
+	326,  // 1228: console.v1.ConsoleService.ListEvalResults:input_type -> console.v1.ListEvalResultsRequest
+	328,  // 1229: console.v1.ConsoleService.ListCostUsage:input_type -> console.v1.ListCostUsageRequest
+	331,  // 1230: console.v1.ConsoleService.RecordProviderCostSnapshot:input_type -> console.v1.RecordProviderCostSnapshotRequest
+	333,  // 1231: console.v1.ConsoleService.ListAuthorityPosture:input_type -> console.v1.ListAuthorityPostureRequest
+	335,  // 1232: console.v1.ConsoleService.ListAgentWorkforceRecords:input_type -> console.v1.ListAgentWorkforceRecordsRequest
+	338,  // 1233: console.v1.ConsoleService.ListOrbControlTargets:input_type -> console.v1.ListOrbControlTargetsRequest
+	340,  // 1234: console.v1.ConsoleService.GetOrbControlTarget:input_type -> console.v1.GetOrbControlTargetRequest
+	342,  // 1235: console.v1.ConsoleService.SubmitOrbControlAction:input_type -> console.v1.SubmitOrbControlActionRequest
+	344,  // 1236: console.v1.ConsoleService.SubmitAgentWorkforceEvidence:input_type -> console.v1.SubmitAgentWorkforceEvidenceRequest
+	347,  // 1237: console.v1.ConsoleService.ListFindings:input_type -> console.v1.ListFindingsRequest
+	349,  // 1238: console.v1.ConsoleService.GetTraceDrilldown:input_type -> console.v1.GetTraceDrilldownRequest
+	351,  // 1239: console.v1.ConsoleService.ListIntegrationTiles:input_type -> console.v1.ListIntegrationTilesRequest
+	353,  // 1240: console.v1.ConsoleService.ListPinnedSources:input_type -> console.v1.ListPinnedSourcesRequest
+	356,  // 1241: console.v1.ConsoleService.SetPinnedSource:input_type -> console.v1.SetPinnedSourceRequest
+	358,  // 1242: console.v1.ConsoleService.UnpinSource:input_type -> console.v1.UnpinSourceRequest
+	540,  // 1243: console.v1.ConsoleService.CreateDexMcpServer:input_type -> console.v1.CreateDexMcpServerRequest
+	542,  // 1244: console.v1.ConsoleService.ListDexMcpServers:input_type -> console.v1.ListDexMcpServersRequest
+	544,  // 1245: console.v1.ConsoleService.GetDexMcpServer:input_type -> console.v1.GetDexMcpServerRequest
+	546,  // 1246: console.v1.ConsoleService.DiscoverDexMcpServer:input_type -> console.v1.DiscoverDexMcpServerRequest
+	548,  // 1247: console.v1.ConsoleService.UpdateDexMcpServer:input_type -> console.v1.UpdateDexMcpServerRequest
+	550,  // 1248: console.v1.ConsoleService.DeleteDexMcpServer:input_type -> console.v1.DeleteDexMcpServerRequest
+	553,  // 1249: console.v1.ConsoleService.InitiateDexMcpOAuthProfile:input_type -> console.v1.InitiateDexMcpOAuthProfileRequest
+	555,  // 1250: console.v1.ConsoleService.CompleteDexMcpOAuthProfile:input_type -> console.v1.CompleteDexMcpOAuthProfileRequest
+	557,  // 1251: console.v1.ConsoleService.ListDexMcpOAuthProfiles:input_type -> console.v1.ListDexMcpOAuthProfilesRequest
+	559,  // 1252: console.v1.ConsoleService.RevokeDexMcpOAuthProfile:input_type -> console.v1.RevokeDexMcpOAuthProfileRequest
+	561,  // 1253: console.v1.ConsoleService.ReauthorizeDexMcpOAuthProfile:input_type -> console.v1.ReauthorizeDexMcpOAuthProfileRequest
+	565,  // 1254: console.v1.ConsoleService.RegisterPrivateEndpoint:input_type -> console.v1.RegisterPrivateEndpointRequest
+	567,  // 1255: console.v1.ConsoleService.VerifyPrivateEndpoint:input_type -> console.v1.VerifyPrivateEndpointRequest
+	569,  // 1256: console.v1.ConsoleService.ListPrivateEndpoints:input_type -> console.v1.ListPrivateEndpointsRequest
+	571,  // 1257: console.v1.ConsoleService.DeletePrivateEndpoint:input_type -> console.v1.DeletePrivateEndpointRequest
+	573,  // 1258: console.v1.ConsoleService.AttachPrivateEndpointToProfile:input_type -> console.v1.AttachPrivateEndpointToProfileRequest
+	575,  // 1259: console.v1.ConsoleService.ListGatewayEgressOrigins:input_type -> console.v1.ListGatewayEgressOriginsRequest
+	360,  // 1260: console.v1.ConsoleService.GetOnboardingPlan:input_type -> console.v1.GetOnboardingPlanRequest
+	133,  // 1261: console.v1.ConsoleService.ListOperatingChannels:input_type -> console.v1.ListOperatingChannelsRequest
+	627,  // 1262: console.v1.ConsoleService.ListOperatingJobs:input_type -> console.v1.ListOperatingJobsRequest
+	135,  // 1263: console.v1.ConsoleService.ArchiveOperatingThread:input_type -> console.v1.ArchiveOperatingThreadRequest
+	137,  // 1264: console.v1.ConsoleService.ForkOperatingThread:input_type -> console.v1.ForkOperatingThreadRequest
+	139,  // 1265: console.v1.ConsoleService.RenameOperatingThread:input_type -> console.v1.RenameOperatingThreadRequest
+	141,  // 1266: console.v1.ConsoleService.GetOperatingThread:input_type -> console.v1.GetOperatingThreadRequest
+	581,  // 1267: console.v1.ConsoleService.BootstrapThreadGateway:input_type -> console.v1.BootstrapThreadGatewayRequest
+	578,  // 1268: console.v1.ConsoleService.PrewarmOperatingThread:input_type -> console.v1.PrewarmOperatingThreadRequest
+	147,  // 1269: console.v1.ConsoleService.ListOperatingThreadEvents:input_type -> console.v1.ListOperatingThreadEventsRequest
+	149,  // 1270: console.v1.ConsoleService.WatchOperatingThread:input_type -> console.v1.WatchOperatingThreadRequest
+	143,  // 1271: console.v1.ConsoleService.RespondOperatingThread:input_type -> console.v1.RespondOperatingThreadRequest
+	145,  // 1272: console.v1.ConsoleService.InterruptOperatingThread:input_type -> console.v1.InterruptOperatingThreadRequest
+	213,  // 1273: console.v1.ConsoleService.SearchOperatingHistory:input_type -> console.v1.SearchOperatingHistoryRequest
+	216,  // 1274: console.v1.ConsoleService.GetOperatingHistoryContext:input_type -> console.v1.GetOperatingHistoryContextRequest
+	776,  // 1275: console.v1.ConsoleService.AcceptOperatingProjectSnapshot:input_type -> console.v1.AcceptOperatingProjectSnapshotRequest
+	782,  // 1276: console.v1.ConsoleService.ImportOperatingProjectSnapshot:input_type -> console.v1.ImportOperatingProjectSnapshotRequest
+	779,  // 1277: console.v1.ConsoleService.GetOperatingTaskEnvironment:input_type -> console.v1.GetOperatingTaskEnvironmentRequest
+	778,  // 1278: console.v1.ConsoleService.GetOperatingProjectSnapshot:input_type -> console.v1.GetOperatingProjectSnapshotRequest
+	152,  // 1279: console.v1.ConsoleService.SubmitOperatingMessage:input_type -> console.v1.SubmitOperatingMessageRequest
+	162,  // 1280: console.v1.ConsoleService.SubmitOperatingCorrection:input_type -> console.v1.SubmitOperatingCorrectionRequest
+	165,  // 1281: console.v1.ConsoleService.SubmitOperatingFeedback:input_type -> console.v1.SubmitOperatingFeedbackRequest
+	168,  // 1282: console.v1.ConsoleService.SubmitProductIssueReport:input_type -> console.v1.SubmitProductIssueReportRequest
+	169,  // 1283: console.v1.ConsoleService.SubmitNativeProductIssueReport:input_type -> console.v1.SubmitNativeProductIssueReportRequest
+	174,  // 1284: console.v1.ConsoleService.ListStaffProductIssueReports:input_type -> console.v1.ListStaffProductIssueReportsRequest
+	176,  // 1285: console.v1.ConsoleService.EngageStaffProductIssueReport:input_type -> console.v1.EngageStaffProductIssueReportRequest
+	834,  // 1286: console.v1.ConsoleService.ListStaffProductIssueRecoveries:input_type -> console.v1.ListStaffProductIssueRecoveriesRequest
+	826,  // 1287: console.v1.ConsoleService.PrepareStaffProductIssueRecovery:input_type -> console.v1.PrepareStaffProductIssueRecoveryRequest
+	827,  // 1288: console.v1.ConsoleService.ScanStaffProductIssueRecovery:input_type -> console.v1.ScanStaffProductIssueRecoveryRequest
+	828,  // 1289: console.v1.ConsoleService.ReviewStaffProductIssueRecovery:input_type -> console.v1.ReviewStaffProductIssueRecoveryRequest
+	829,  // 1290: console.v1.ConsoleService.ExecuteStaffProductIssueRecovery:input_type -> console.v1.ExecuteStaffProductIssueRecoveryRequest
+	830,  // 1291: console.v1.ConsoleService.GetProductIssueRecovery:input_type -> console.v1.GetProductIssueRecoveryRequest
+	831,  // 1292: console.v1.ConsoleService.ReplyProductIssueRecovery:input_type -> console.v1.ReplyProductIssueRecoveryRequest
+	178,  // 1293: console.v1.ConsoleService.GetOperatingFeedback:input_type -> console.v1.GetOperatingFeedbackRequest
+	180,  // 1294: console.v1.ConsoleService.ResolveOperatingFeedbackRemediation:input_type -> console.v1.ResolveOperatingFeedbackRemediationRequest
+	186,  // 1295: console.v1.ConsoleService.ListCustomerIntelligenceFacts:input_type -> console.v1.ListCustomerIntelligenceFactsRequest
+	188,  // 1296: console.v1.ConsoleService.GetCustomerIntelligenceFact:input_type -> console.v1.GetCustomerIntelligenceFactRequest
+	190,  // 1297: console.v1.ConsoleService.ReviewCustomerIntelligenceFact:input_type -> console.v1.ReviewCustomerIntelligenceFactRequest
+	192,  // 1298: console.v1.ConsoleService.ProposeCustomerIntelligenceFact:input_type -> console.v1.ProposeCustomerIntelligenceFactRequest
+	194,  // 1299: console.v1.ConsoleService.RespondToCustomerFactConfirmation:input_type -> console.v1.RespondToCustomerFactConfirmationRequest
+	196,  // 1300: console.v1.ConsoleService.AggregateCustomerIntelligencePatterns:input_type -> console.v1.AggregateCustomerIntelligencePatternsRequest
+	199,  // 1301: console.v1.ConsoleService.ListOperatingCorrections:input_type -> console.v1.ListOperatingCorrectionsRequest
+	201,  // 1302: console.v1.ConsoleService.ReviewOperatingCorrection:input_type -> console.v1.ReviewOperatingCorrectionRequest
+	203,  // 1303: console.v1.ConsoleService.ListWorkspaceMemories:input_type -> console.v1.ListWorkspaceMemoriesRequest
+	206,  // 1304: console.v1.ConsoleService.CorrectWorkspaceMemory:input_type -> console.v1.CorrectWorkspaceMemoryRequest
+	208,  // 1305: console.v1.ConsoleService.ReviewWorkspaceMemory:input_type -> console.v1.ReviewWorkspaceMemoryRequest
+	210,  // 1306: console.v1.ConsoleService.ForgetWorkspaceMemory:input_type -> console.v1.ForgetWorkspaceMemoryRequest
+	153,  // 1307: console.v1.ConsoleService.BeginOperatingAttachmentUpload:input_type -> console.v1.BeginOperatingAttachmentUploadRequest
+	155,  // 1308: console.v1.ConsoleService.CompleteOperatingAttachmentUpload:input_type -> console.v1.CompleteOperatingAttachmentUploadRequest
+	157,  // 1309: console.v1.ConsoleService.ListOperatingAttachments:input_type -> console.v1.ListOperatingAttachmentsRequest
+	230,  // 1310: console.v1.ConsoleService.ResolveOperatingReceiptAction:input_type -> console.v1.ResolveOperatingReceiptActionRequest
+	232,  // 1311: console.v1.ConsoleService.GetOperatingReceipt:input_type -> console.v1.GetOperatingReceiptRequest
+	251,  // 1312: console.v1.ConsoleService.SubmitComputerMission:input_type -> console.v1.SubmitComputerMissionRequest
+	253,  // 1313: console.v1.ConsoleService.GetComputerMission:input_type -> console.v1.GetComputerMissionRequest
+	255,  // 1314: console.v1.ConsoleService.CancelComputerMission:input_type -> console.v1.CancelComputerMissionRequest
+	257,  // 1315: console.v1.ConsoleService.ContinueComputerMission:input_type -> console.v1.ContinueComputerMissionRequest
+	259,  // 1316: console.v1.ConsoleService.PauseComputerMission:input_type -> console.v1.PauseComputerMissionRequest
+	261,  // 1317: console.v1.ConsoleService.ResumeComputerMission:input_type -> console.v1.ResumeComputerMissionRequest
+	263,  // 1318: console.v1.ConsoleService.WakeComputerMission:input_type -> console.v1.WakeComputerMissionRequest
+	265,  // 1319: console.v1.ConsoleService.GuideComputerMission:input_type -> console.v1.GuideComputerMissionRequest
+	272,  // 1320: console.v1.ConsoleService.ListComputerMissionCanaryDefinitions:input_type -> console.v1.ListComputerMissionCanaryDefinitionsRequest
+	274,  // 1321: console.v1.ConsoleService.StartComputerMissionCanaryRun:input_type -> console.v1.StartComputerMissionCanaryRunRequest
+	276,  // 1322: console.v1.ConsoleService.GetComputerMissionCanaryRun:input_type -> console.v1.GetComputerMissionCanaryRunRequest
+	278,  // 1323: console.v1.ConsoleService.ListComputerMissionCanaryRuns:input_type -> console.v1.ListComputerMissionCanaryRunsRequest
+	280,  // 1324: console.v1.ConsoleService.GetComputerMissionCanaryEvidence:input_type -> console.v1.GetComputerMissionCanaryEvidenceRequest
+	282,  // 1325: console.v1.ConsoleService.OperateComputerMissionCanaryRun:input_type -> console.v1.OperateComputerMissionCanaryRunRequest
+	286,  // 1326: console.v1.ConsoleService.CreateMissionSchedule:input_type -> console.v1.CreateMissionScheduleRequest
+	288,  // 1327: console.v1.ConsoleService.UpdateMissionSchedule:input_type -> console.v1.UpdateMissionScheduleRequest
+	290,  // 1328: console.v1.ConsoleService.SetMissionScheduleEnabled:input_type -> console.v1.SetMissionScheduleEnabledRequest
+	292,  // 1329: console.v1.ConsoleService.ListMissionSchedules:input_type -> console.v1.ListMissionSchedulesRequest
+	295,  // 1330: console.v1.ConsoleService.CreateConnectorTrigger:input_type -> console.v1.CreateConnectorTriggerRequest
+	297,  // 1331: console.v1.ConsoleService.UpdateConnectorTrigger:input_type -> console.v1.UpdateConnectorTriggerRequest
+	299,  // 1332: console.v1.ConsoleService.ListConnectorTriggers:input_type -> console.v1.ListConnectorTriggersRequest
+	301,  // 1333: console.v1.ConsoleService.DeleteConnectorTrigger:input_type -> console.v1.DeleteConnectorTriggerRequest
+	303,  // 1334: console.v1.ConsoleService.SetConnectorTriggerEnabled:input_type -> console.v1.SetConnectorTriggerEnabledRequest
+	306,  // 1335: console.v1.ConsoleService.ReserveComputerMissionApexSession:input_type -> console.v1.ReserveComputerMissionApexSessionRequest
+	308,  // 1336: console.v1.ConsoleService.BindComputerMissionApexSessionReservation:input_type -> console.v1.BindComputerMissionApexSessionReservationRequest
+	311,  // 1337: console.v1.ConsoleService.BindComputerMissionApexInstructionMetadata:input_type -> console.v1.BindComputerMissionApexInstructionMetadataRequest
+	313,  // 1338: console.v1.ConsoleService.AuthorizeComputerMissionApexSessionAdoption:input_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionRequest
+	362,  // 1339: console.v1.ConsoleService.GetWorkspaceSettings:input_type -> console.v1.GetWorkspaceSettingsRequest
+	376,  // 1340: console.v1.ConsoleService.GetOperatorPreferences:input_type -> console.v1.GetOperatorPreferencesRequest
+	378,  // 1341: console.v1.ConsoleService.UpdateOperatorPreferences:input_type -> console.v1.UpdateOperatorPreferencesRequest
+	387,  // 1342: console.v1.ConsoleService.CreateConnectorProfile:input_type -> console.v1.CreateConnectorProfileRequest
+	389,  // 1343: console.v1.ConsoleService.ListConnectorProfiles:input_type -> console.v1.ListConnectorProfilesRequest
+	391,  // 1344: console.v1.ConsoleService.UpdateConnectorProfile:input_type -> console.v1.UpdateConnectorProfileRequest
+	393,  // 1345: console.v1.ConsoleService.DeleteConnectorProfile:input_type -> console.v1.DeleteConnectorProfileRequest
+	600,  // 1346: console.v1.ConsoleService.ListConnectedCalls:input_type -> console.v1.ListConnectedCallsRequest
+	599,  // 1347: console.v1.ConsoleService.StartMeetingCapture:input_type -> console.v1.StartMeetingCaptureRequest
+	604,  // 1348: console.v1.ConsoleService.GetMeetingCapture:input_type -> console.v1.GetMeetingCaptureRequest
+	606,  // 1349: console.v1.ConsoleService.ListMeetingCaptures:input_type -> console.v1.ListMeetingCapturesRequest
+	608,  // 1350: console.v1.ConsoleService.StopMeetingCapture:input_type -> console.v1.StopMeetingCaptureRequest
+	621,  // 1351: console.v1.ConsoleService.ListCommitments:input_type -> console.v1.ListCommitmentsRequest
+	365,  // 1352: console.v1.ConsoleService.GetBillingSubscription:input_type -> console.v1.GetBillingSubscriptionRequest
+	367,  // 1353: console.v1.ConsoleService.CreateBillingPortalSession:input_type -> console.v1.CreateBillingPortalSessionRequest
+	369,  // 1354: console.v1.ConsoleService.CreateBillingCheckoutSession:input_type -> console.v1.CreateBillingCheckoutSessionRequest
+	632,  // 1355: console.v1.ConsoleService.GetInferenceCreditBalance:input_type -> console.v1.GetInferenceCreditBalanceRequest
+	638,  // 1356: console.v1.ConsoleService.CreateInferenceCreditCheckout:input_type -> console.v1.CreateInferenceCreditCheckoutRequest
+	640,  // 1357: console.v1.ConsoleService.FulfillInferenceCreditCheckout:input_type -> console.v1.FulfillInferenceCreditCheckoutRequest
+	371,  // 1358: console.v1.ConsoleService.UpdateWorkspaceProfile:input_type -> console.v1.UpdateWorkspaceProfileRequest
+	395,  // 1359: console.v1.ConsoleService.ArchiveWorkspace:input_type -> console.v1.ArchiveWorkspaceRequest
+	397,  // 1360: console.v1.ConsoleService.UpdateWorkspacePolicy:input_type -> console.v1.UpdateWorkspacePolicyRequest
+	399,  // 1361: console.v1.ConsoleService.UpdateWorkspaceDexPolicy:input_type -> console.v1.UpdateWorkspaceDexPolicyRequest
+	401,  // 1362: console.v1.ConsoleService.UpdateWorkspaceArtifactStyleGuide:input_type -> console.v1.UpdateWorkspaceArtifactStyleGuideRequest
+	403,  // 1363: console.v1.ConsoleService.EvaluateWorkspaceArtifactStyleGuide:input_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideRequest
+	406,  // 1364: console.v1.ConsoleService.UpsertWorkspaceIdentityProvider:input_type -> console.v1.UpsertWorkspaceIdentityProviderRequest
+	408,  // 1365: console.v1.ConsoleService.RemoveWorkspaceIdentityProvider:input_type -> console.v1.RemoveWorkspaceIdentityProviderRequest
+	410,  // 1366: console.v1.ConsoleService.UpsertWorkspaceIntegration:input_type -> console.v1.UpsertWorkspaceIntegrationRequest
+	412,  // 1367: console.v1.ConsoleService.RemoveWorkspaceIntegration:input_type -> console.v1.RemoveWorkspaceIntegrationRequest
+	414,  // 1368: console.v1.ConsoleService.UpdateWorkspaceBilling:input_type -> console.v1.UpdateWorkspaceBillingRequest
+	415,  // 1369: console.v1.ConsoleService.UpsertWorkspaceMember:input_type -> console.v1.UpsertWorkspaceMemberRequest
+	416,  // 1370: console.v1.ConsoleService.RemoveWorkspaceMember:input_type -> console.v1.RemoveWorkspaceMemberRequest
+	417,  // 1371: console.v1.ConsoleService.UpdateWorkspaceNotificationPreferences:input_type -> console.v1.UpdateWorkspaceNotificationPreferencesRequest
+	418,  // 1372: console.v1.ConsoleService.EnableWorkspaceBreakGlass:input_type -> console.v1.EnableWorkspaceBreakGlassRequest
+	419,  // 1373: console.v1.ConsoleService.DisableWorkspaceBreakGlass:input_type -> console.v1.DisableWorkspaceBreakGlassRequest
+	421,  // 1374: console.v1.ConsoleService.ListWorkspaceSkills:input_type -> console.v1.ListWorkspaceSkillsRequest
+	436,  // 1375: console.v1.ConsoleService.BrowseDexSkillCatalog:input_type -> console.v1.BrowseDexSkillCatalogRequest
+	438,  // 1376: console.v1.ConsoleService.InstallDexSkillCatalogEntry:input_type -> console.v1.InstallDexSkillCatalogEntryRequest
+	440,  // 1377: console.v1.ConsoleService.CreateWorkspaceSkill:input_type -> console.v1.CreateWorkspaceSkillRequest
+	442,  // 1378: console.v1.ConsoleService.UpdateWorkspaceSkill:input_type -> console.v1.UpdateWorkspaceSkillRequest
+	444,  // 1379: console.v1.ConsoleService.DeleteWorkspaceSkill:input_type -> console.v1.DeleteWorkspaceSkillRequest
+	492,  // 1380: console.v1.ConsoleService.ListScenarioFixtures:input_type -> console.v1.ListScenarioFixturesRequest
+	494,  // 1381: console.v1.ConsoleService.PromoteScenarioFixture:input_type -> console.v1.PromoteScenarioFixtureRequest
+	496,  // 1382: console.v1.ConsoleService.CompareScenarioFixtures:input_type -> console.v1.CompareScenarioFixturesRequest
+	381,  // 1383: console.v1.ConsoleService.ListWorkspaceGuardrailRules:input_type -> console.v1.ListWorkspaceGuardrailRulesRequest
+	383,  // 1384: console.v1.ConsoleService.UpsertWorkspaceGuardrailRule:input_type -> console.v1.UpsertWorkspaceGuardrailRuleRequest
+	384,  // 1385: console.v1.ConsoleService.RemoveWorkspaceGuardrailRule:input_type -> console.v1.RemoveWorkspaceGuardrailRuleRequest
+	583,  // 1386: console.v1.ConsoleService.SetOperatingThreadController:input_type -> console.v1.SetOperatingThreadControllerRequest
+	588,  // 1387: console.v1.ConsoleService.GetPrivacySettings:input_type -> console.v1.GetPrivacySettingsRequest
+	590,  // 1388: console.v1.ConsoleService.SetPrivacySettings:input_type -> console.v1.SetPrivacySettingsRequest
+	613,  // 1389: console.v1.ConsoleService.CreateProspectingWatchProgram:input_type -> console.v1.CreateProspectingWatchProgramRequest
+	615,  // 1390: console.v1.ConsoleService.GetProspectingWatchProgram:input_type -> console.v1.GetProspectingWatchProgramRequest
+	617,  // 1391: console.v1.ConsoleService.ListProspectingWatchPrograms:input_type -> console.v1.ListProspectingWatchProgramsRequest
+	619,  // 1392: console.v1.ConsoleService.UpdateProspectingWatchProgram:input_type -> console.v1.UpdateProspectingWatchProgramRequest
+	819,  // 1393: console.v1.ConsoleService.CreateProspectingDraft:input_type -> console.v1.CreateProspectingDraftRequest
+	821,  // 1394: console.v1.ConsoleService.ListProspectingDrafts:input_type -> console.v1.ListProspectingDraftsRequest
+	823,  // 1395: console.v1.ConsoleService.ReviewProspectingDraft:input_type -> console.v1.ReviewProspectingDraftRequest
+	629,  // 1396: console.v1.ConsoleService.RecordOperatingHomepageSuggestionFeedback:input_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
+	109,  // 1397: console.v1.WorkspaceKeyService.GetWorkspaceKeyConfig:input_type -> console.v1.GetWorkspaceKeyConfigRequest
+	110,  // 1398: console.v1.WorkspaceKeyService.PutWorkspaceKeyConfig:input_type -> console.v1.PutWorkspaceKeyConfigRequest
+	111,  // 1399: console.v1.WorkspaceKeyService.DeleteWorkspaceKeyConfig:input_type -> console.v1.DeleteWorkspaceKeyConfigRequest
+	596,  // 1400: console.v1.ManagedSetupService.GetManagedSetup:input_type -> console.v1.GetManagedSetupRequest
+	597,  // 1401: console.v1.ManagedSetupService.SetManagedSetup:input_type -> console.v1.SetManagedSetupRequest
+	840,  // 1402: console.v1.ConsoleService.AssessComplianceSubject:output_type -> console.v1.AssessComplianceSubjectResponse
+	785,  // 1403: console.v1.ConsoleService.ListBusinessBlueprints:output_type -> console.v1.ListBusinessBlueprintsResponse
+	787,  // 1404: console.v1.ConsoleService.CloneBusinessBlueprint:output_type -> console.v1.CloneBusinessBlueprintResponse
+	772,  // 1405: console.v1.ConsoleService.GetBusinessProcessDefinition:output_type -> console.v1.GetBusinessProcessDefinitionResponse
+	774,  // 1406: console.v1.ConsoleService.ListBusinessProcessDefinitions:output_type -> console.v1.ListBusinessProcessDefinitionsResponse
+	762,  // 1407: console.v1.ConsoleService.DefineBusinessProcess:output_type -> console.v1.DefineBusinessProcessResponse
+	764,  // 1408: console.v1.ConsoleService.StartBusinessProcess:output_type -> console.v1.StartBusinessProcessResponse
+	766,  // 1409: console.v1.ConsoleService.GetBusinessProcess:output_type -> console.v1.GetBusinessProcessResponse
+	768,  // 1410: console.v1.ConsoleService.ListBusinessProcesses:output_type -> console.v1.ListBusinessProcessesResponse
+	770,  // 1411: console.v1.ConsoleService.TransitionBusinessProcess:output_type -> console.v1.TransitionBusinessProcessResponse
+	750,  // 1412: console.v1.ConsoleService.PrepareBusinessObjectAuthorityTransfer:output_type -> console.v1.PrepareBusinessObjectAuthorityTransferResponse
+	752,  // 1413: console.v1.ConsoleService.FinalizeBusinessObjectAuthorityTransfer:output_type -> console.v1.FinalizeBusinessObjectAuthorityTransferResponse
+	657,  // 1414: console.v1.ConsoleService.DefineBusinessObjectType:output_type -> console.v1.DefineBusinessObjectTypeResponse
+	738,  // 1415: console.v1.ConsoleService.GetBusinessObjectType:output_type -> console.v1.GetBusinessObjectTypeResponse
+	659,  // 1416: console.v1.ConsoleService.ListBusinessObjectTypes:output_type -> console.v1.ListBusinessObjectTypesResponse
+	661,  // 1417: console.v1.ConsoleService.CreateBusinessObject:output_type -> console.v1.CreateBusinessObjectResponse
+	663,  // 1418: console.v1.ConsoleService.GetBusinessObject:output_type -> console.v1.GetBusinessObjectResponse
+	668,  // 1419: console.v1.ConsoleService.ListBusinessObjects:output_type -> console.v1.ListBusinessObjectsResponse
+	670,  // 1420: console.v1.ConsoleService.UpdateBusinessObject:output_type -> console.v1.UpdateBusinessObjectResponse
+	672,  // 1421: console.v1.ConsoleService.DeleteBusinessObject:output_type -> console.v1.DeleteBusinessObjectResponse
+	674,  // 1422: console.v1.ConsoleService.ListBusinessObjectRevisions:output_type -> console.v1.ListBusinessObjectRevisionsResponse
+	676,  // 1423: console.v1.ConsoleService.BindBusinessObjectSource:output_type -> console.v1.BindBusinessObjectSourceResponse
+	678,  // 1424: console.v1.ConsoleService.AdmitBusinessObjectObservation:output_type -> console.v1.AdmitBusinessObjectObservationResponse
+	680,  // 1425: console.v1.ConsoleService.ListBusinessObjectRelationships:output_type -> console.v1.ListBusinessObjectRelationshipsResponse
+	682,  // 1426: console.v1.ConsoleService.CreateBusinessObjectRelationship:output_type -> console.v1.CreateBusinessObjectRelationshipResponse
+	684,  // 1427: console.v1.ConsoleService.DeleteBusinessObjectRelationship:output_type -> console.v1.DeleteBusinessObjectRelationshipResponse
+	710,  // 1428: console.v1.ConsoleService.CreateCaptureForm:output_type -> console.v1.CreateCaptureFormResponse
+	712,  // 1429: console.v1.ConsoleService.ListCaptureForms:output_type -> console.v1.ListCaptureFormsResponse
+	714,  // 1430: console.v1.ConsoleService.GetCaptureForm:output_type -> console.v1.GetCaptureFormResponse
+	716,  // 1431: console.v1.ConsoleService.UpdateCaptureForm:output_type -> console.v1.UpdateCaptureFormResponse
+	718,  // 1432: console.v1.ConsoleService.PublishCaptureForm:output_type -> console.v1.PublishCaptureFormResponse
+	720,  // 1433: console.v1.ConsoleService.RevokeCaptureFormPublication:output_type -> console.v1.RevokeCaptureFormPublicationResponse
+	791,  // 1434: console.v1.ConsoleService.CreateCaptureFormInvitation:output_type -> console.v1.CreateCaptureFormInvitationResponse
+	793,  // 1435: console.v1.ConsoleService.RevokeCaptureFormInvitation:output_type -> console.v1.RevokeCaptureFormInvitationResponse
+	795,  // 1436: console.v1.ConsoleService.GetInvitedCaptureForm:output_type -> console.v1.GetInvitedCaptureFormResponse
+	797,  // 1437: console.v1.ConsoleService.SubmitInvitedCaptureForm:output_type -> console.v1.SubmitInvitedCaptureFormResponse
+	722,  // 1438: console.v1.ConsoleService.GetPublishedCaptureForm:output_type -> console.v1.GetPublishedCaptureFormResponse
+	724,  // 1439: console.v1.ConsoleService.GetPublishedCaptureFormBrandingAsset:output_type -> console.v1.GetPublishedCaptureFormBrandingAssetResponse
+	726,  // 1440: console.v1.ConsoleService.SubmitPublishedCaptureForm:output_type -> console.v1.SubmitPublishedCaptureFormResponse
+	728,  // 1441: console.v1.ConsoleService.BeginPublishedCaptureFormUpload:output_type -> console.v1.BeginPublishedCaptureFormUploadResponse
+	730,  // 1442: console.v1.ConsoleService.CompletePublishedCaptureFormUpload:output_type -> console.v1.CompletePublishedCaptureFormUploadResponse
+	732,  // 1443: console.v1.ConsoleService.GetCaptureFormSubmission:output_type -> console.v1.GetCaptureFormSubmissionResponse
+	734,  // 1444: console.v1.ConsoleService.ListCaptureFormSubmissions:output_type -> console.v1.ListCaptureFormSubmissionsResponse
+	736,  // 1445: console.v1.ConsoleService.ReviewCaptureFormSubmission:output_type -> console.v1.ReviewCaptureFormSubmissionResponse
+	744,  // 1446: console.v1.ConsoleService.GetInferenceCreditAutoRefill:output_type -> console.v1.GetInferenceCreditAutoRefillResponse
+	746,  // 1447: console.v1.ConsoleService.UpdateInferenceCreditAutoRefill:output_type -> console.v1.UpdateInferenceCreditAutoRefillResponse
+	748,  // 1448: console.v1.ConsoleService.CompleteInferenceCreditAutoRefill:output_type -> console.v1.CompleteInferenceCreditAutoRefillResponse
+	741,  // 1449: console.v1.ConsoleService.ListInferenceCreditReceipts:output_type -> console.v1.ListInferenceCreditReceiptsResponse
+	316,  // 1450: console.v1.ConsoleService.GetOverview:output_type -> console.v1.GetOverviewResponse
+	319,  // 1451: console.v1.ConsoleService.GetConsoleBootSnapshot:output_type -> console.v1.GetConsoleBootSnapshotResponse
+	321,  // 1452: console.v1.ConsoleService.ListAssets:output_type -> console.v1.ListAssetsResponse
+	323,  // 1453: console.v1.ConsoleService.GetAsset:output_type -> console.v1.GetAssetResponse
+	325,  // 1454: console.v1.ConsoleService.ListActivity:output_type -> console.v1.ListActivityResponse
+	468,  // 1455: console.v1.ConsoleService.SearchStaffWorkspaceDirectory:output_type -> console.v1.SearchStaffWorkspaceDirectoryResponse
+	476,  // 1456: console.v1.ConsoleService.GetStaffWorkspaceContext:output_type -> console.v1.GetStaffWorkspaceContextResponse
+	872,  // 1457: console.v1.ConsoleService.GetStaffManagedInferenceFunding:output_type -> meter.v1.GetPrepaidCreditBalanceResponse
+	873,  // 1458: console.v1.ConsoleService.GrantStaffManagedInferenceCredits:output_type -> meter.v1.GrantDevelopmentCreditsResponse
+	874,  // 1459: console.v1.ConsoleService.GetStaffManagedInferenceUsage:output_type -> meter.v1.QueryUsageResponse
+	865,  // 1460: console.v1.ConsoleService.GetStaffManagedInferenceBudget:output_type -> meter.v1.GetBudgetDashboardResponse
+	875,  // 1461: console.v1.ConsoleService.SetStaffManagedInferenceBudget:output_type -> meter.v1.SetBudgetResponse
+	800,  // 1462: console.v1.ConsoleService.GetStaffManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
+	800,  // 1463: console.v1.ConsoleService.GetManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
+	479,  // 1464: console.v1.ConsoleService.ListManagedProviderAccessGrants:output_type -> console.v1.ListManagedProviderAccessGrantsResponse
+	808,  // 1465: console.v1.ConsoleService.ListManagedProviderAccessEvents:output_type -> console.v1.ListManagedProviderAccessEventsResponse
+	876,  // 1466: console.v1.ConsoleService.ListStaffManagedInferenceAdminEvents:output_type -> meter.v1.ListManagedInferenceAdminEventsResponse
+	812,  // 1467: console.v1.ConsoleService.ListStaffManagedExecutionGrantEvents:output_type -> console.v1.ListStaffManagedExecutionGrantEventsResponse
+	815,  // 1468: console.v1.ConsoleService.ListStaffManagedExecutionOutcomes:output_type -> console.v1.ListStaffManagedExecutionOutcomesResponse
+	481,  // 1469: console.v1.ConsoleService.UpsertManagedProviderAccessGrant:output_type -> console.v1.UpsertManagedProviderAccessGrantResponse
+	483,  // 1470: console.v1.ConsoleService.RevokeManagedProviderAccessGrant:output_type -> console.v1.RevokeManagedProviderAccessGrantResponse
+	489,  // 1471: console.v1.ConsoleService.GetStaffInferenceRoutingProfile:output_type -> console.v1.GetStaffInferenceRoutingProfileResponse
+	491,  // 1472: console.v1.ConsoleService.UpdateStaffInferenceRoutingProfile:output_type -> console.v1.UpdateStaffInferenceRoutingProfileResponse
+	327,  // 1473: console.v1.ConsoleService.ListEvalResults:output_type -> console.v1.ListEvalResultsResponse
+	329,  // 1474: console.v1.ConsoleService.ListCostUsage:output_type -> console.v1.ListCostUsageResponse
+	332,  // 1475: console.v1.ConsoleService.RecordProviderCostSnapshot:output_type -> console.v1.RecordProviderCostSnapshotResponse
+	334,  // 1476: console.v1.ConsoleService.ListAuthorityPosture:output_type -> console.v1.ListAuthorityPostureResponse
+	336,  // 1477: console.v1.ConsoleService.ListAgentWorkforceRecords:output_type -> console.v1.ListAgentWorkforceRecordsResponse
+	339,  // 1478: console.v1.ConsoleService.ListOrbControlTargets:output_type -> console.v1.ListOrbControlTargetsResponse
+	341,  // 1479: console.v1.ConsoleService.GetOrbControlTarget:output_type -> console.v1.GetOrbControlTargetResponse
+	343,  // 1480: console.v1.ConsoleService.SubmitOrbControlAction:output_type -> console.v1.SubmitOrbControlActionResponse
+	345,  // 1481: console.v1.ConsoleService.SubmitAgentWorkforceEvidence:output_type -> console.v1.SubmitAgentWorkforceEvidenceResponse
+	348,  // 1482: console.v1.ConsoleService.ListFindings:output_type -> console.v1.ListFindingsResponse
+	350,  // 1483: console.v1.ConsoleService.GetTraceDrilldown:output_type -> console.v1.GetTraceDrilldownResponse
+	352,  // 1484: console.v1.ConsoleService.ListIntegrationTiles:output_type -> console.v1.ListIntegrationTilesResponse
+	354,  // 1485: console.v1.ConsoleService.ListPinnedSources:output_type -> console.v1.ListPinnedSourcesResponse
+	357,  // 1486: console.v1.ConsoleService.SetPinnedSource:output_type -> console.v1.SetPinnedSourceResponse
+	359,  // 1487: console.v1.ConsoleService.UnpinSource:output_type -> console.v1.UnpinSourceResponse
+	541,  // 1488: console.v1.ConsoleService.CreateDexMcpServer:output_type -> console.v1.CreateDexMcpServerResponse
+	543,  // 1489: console.v1.ConsoleService.ListDexMcpServers:output_type -> console.v1.ListDexMcpServersResponse
+	545,  // 1490: console.v1.ConsoleService.GetDexMcpServer:output_type -> console.v1.GetDexMcpServerResponse
+	547,  // 1491: console.v1.ConsoleService.DiscoverDexMcpServer:output_type -> console.v1.DiscoverDexMcpServerResponse
+	549,  // 1492: console.v1.ConsoleService.UpdateDexMcpServer:output_type -> console.v1.UpdateDexMcpServerResponse
+	551,  // 1493: console.v1.ConsoleService.DeleteDexMcpServer:output_type -> console.v1.DeleteDexMcpServerResponse
+	554,  // 1494: console.v1.ConsoleService.InitiateDexMcpOAuthProfile:output_type -> console.v1.InitiateDexMcpOAuthProfileResponse
+	556,  // 1495: console.v1.ConsoleService.CompleteDexMcpOAuthProfile:output_type -> console.v1.CompleteDexMcpOAuthProfileResponse
+	558,  // 1496: console.v1.ConsoleService.ListDexMcpOAuthProfiles:output_type -> console.v1.ListDexMcpOAuthProfilesResponse
+	560,  // 1497: console.v1.ConsoleService.RevokeDexMcpOAuthProfile:output_type -> console.v1.RevokeDexMcpOAuthProfileResponse
+	562,  // 1498: console.v1.ConsoleService.ReauthorizeDexMcpOAuthProfile:output_type -> console.v1.ReauthorizeDexMcpOAuthProfileResponse
+	566,  // 1499: console.v1.ConsoleService.RegisterPrivateEndpoint:output_type -> console.v1.RegisterPrivateEndpointResponse
+	568,  // 1500: console.v1.ConsoleService.VerifyPrivateEndpoint:output_type -> console.v1.VerifyPrivateEndpointResponse
+	570,  // 1501: console.v1.ConsoleService.ListPrivateEndpoints:output_type -> console.v1.ListPrivateEndpointsResponse
+	572,  // 1502: console.v1.ConsoleService.DeletePrivateEndpoint:output_type -> console.v1.DeletePrivateEndpointResponse
+	574,  // 1503: console.v1.ConsoleService.AttachPrivateEndpointToProfile:output_type -> console.v1.AttachPrivateEndpointToProfileResponse
+	576,  // 1504: console.v1.ConsoleService.ListGatewayEgressOrigins:output_type -> console.v1.ListGatewayEgressOriginsResponse
+	361,  // 1505: console.v1.ConsoleService.GetOnboardingPlan:output_type -> console.v1.GetOnboardingPlanResponse
+	134,  // 1506: console.v1.ConsoleService.ListOperatingChannels:output_type -> console.v1.ListOperatingChannelsResponse
+	628,  // 1507: console.v1.ConsoleService.ListOperatingJobs:output_type -> console.v1.ListOperatingJobsResponse
+	136,  // 1508: console.v1.ConsoleService.ArchiveOperatingThread:output_type -> console.v1.ArchiveOperatingThreadResponse
+	138,  // 1509: console.v1.ConsoleService.ForkOperatingThread:output_type -> console.v1.ForkOperatingThreadResponse
+	140,  // 1510: console.v1.ConsoleService.RenameOperatingThread:output_type -> console.v1.RenameOperatingThreadResponse
+	142,  // 1511: console.v1.ConsoleService.GetOperatingThread:output_type -> console.v1.GetOperatingThreadResponse
+	582,  // 1512: console.v1.ConsoleService.BootstrapThreadGateway:output_type -> console.v1.BootstrapThreadGatewayResponse
+	579,  // 1513: console.v1.ConsoleService.PrewarmOperatingThread:output_type -> console.v1.PrewarmOperatingThreadResponse
+	148,  // 1514: console.v1.ConsoleService.ListOperatingThreadEvents:output_type -> console.v1.ListOperatingThreadEventsResponse
+	150,  // 1515: console.v1.ConsoleService.WatchOperatingThread:output_type -> console.v1.WatchOperatingThreadResponse
+	144,  // 1516: console.v1.ConsoleService.RespondOperatingThread:output_type -> console.v1.RespondOperatingThreadResponse
+	146,  // 1517: console.v1.ConsoleService.InterruptOperatingThread:output_type -> console.v1.InterruptOperatingThreadResponse
+	215,  // 1518: console.v1.ConsoleService.SearchOperatingHistory:output_type -> console.v1.SearchOperatingHistoryResponse
+	218,  // 1519: console.v1.ConsoleService.GetOperatingHistoryContext:output_type -> console.v1.GetOperatingHistoryContextResponse
+	777,  // 1520: console.v1.ConsoleService.AcceptOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
+	777,  // 1521: console.v1.ConsoleService.ImportOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
+	780,  // 1522: console.v1.ConsoleService.GetOperatingTaskEnvironment:output_type -> console.v1.GetOperatingTaskEnvironmentResponse
+	777,  // 1523: console.v1.ConsoleService.GetOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
+	159,  // 1524: console.v1.ConsoleService.SubmitOperatingMessage:output_type -> console.v1.SubmitOperatingMessageResponse
+	163,  // 1525: console.v1.ConsoleService.SubmitOperatingCorrection:output_type -> console.v1.SubmitOperatingCorrectionResponse
+	166,  // 1526: console.v1.ConsoleService.SubmitOperatingFeedback:output_type -> console.v1.SubmitOperatingFeedbackResponse
+	172,  // 1527: console.v1.ConsoleService.SubmitProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
+	172,  // 1528: console.v1.ConsoleService.SubmitNativeProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
+	175,  // 1529: console.v1.ConsoleService.ListStaffProductIssueReports:output_type -> console.v1.ListStaffProductIssueReportsResponse
+	177,  // 1530: console.v1.ConsoleService.EngageStaffProductIssueReport:output_type -> console.v1.EngageStaffProductIssueReportResponse
+	835,  // 1531: console.v1.ConsoleService.ListStaffProductIssueRecoveries:output_type -> console.v1.ListStaffProductIssueRecoveriesResponse
+	833,  // 1532: console.v1.ConsoleService.PrepareStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	833,  // 1533: console.v1.ConsoleService.ScanStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	833,  // 1534: console.v1.ConsoleService.ReviewStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	833,  // 1535: console.v1.ConsoleService.ExecuteStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	833,  // 1536: console.v1.ConsoleService.GetProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	833,  // 1537: console.v1.ConsoleService.ReplyProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	179,  // 1538: console.v1.ConsoleService.GetOperatingFeedback:output_type -> console.v1.GetOperatingFeedbackResponse
+	181,  // 1539: console.v1.ConsoleService.ResolveOperatingFeedbackRemediation:output_type -> console.v1.ResolveOperatingFeedbackRemediationResponse
+	187,  // 1540: console.v1.ConsoleService.ListCustomerIntelligenceFacts:output_type -> console.v1.ListCustomerIntelligenceFactsResponse
+	189,  // 1541: console.v1.ConsoleService.GetCustomerIntelligenceFact:output_type -> console.v1.GetCustomerIntelligenceFactResponse
+	191,  // 1542: console.v1.ConsoleService.ReviewCustomerIntelligenceFact:output_type -> console.v1.ReviewCustomerIntelligenceFactResponse
+	193,  // 1543: console.v1.ConsoleService.ProposeCustomerIntelligenceFact:output_type -> console.v1.ProposeCustomerIntelligenceFactResponse
+	195,  // 1544: console.v1.ConsoleService.RespondToCustomerFactConfirmation:output_type -> console.v1.RespondToCustomerFactConfirmationResponse
+	198,  // 1545: console.v1.ConsoleService.AggregateCustomerIntelligencePatterns:output_type -> console.v1.AggregateCustomerIntelligencePatternsResponse
+	200,  // 1546: console.v1.ConsoleService.ListOperatingCorrections:output_type -> console.v1.ListOperatingCorrectionsResponse
+	202,  // 1547: console.v1.ConsoleService.ReviewOperatingCorrection:output_type -> console.v1.ReviewOperatingCorrectionResponse
+	204,  // 1548: console.v1.ConsoleService.ListWorkspaceMemories:output_type -> console.v1.ListWorkspaceMemoriesResponse
+	207,  // 1549: console.v1.ConsoleService.CorrectWorkspaceMemory:output_type -> console.v1.CorrectWorkspaceMemoryResponse
+	209,  // 1550: console.v1.ConsoleService.ReviewWorkspaceMemory:output_type -> console.v1.ReviewWorkspaceMemoryResponse
+	211,  // 1551: console.v1.ConsoleService.ForgetWorkspaceMemory:output_type -> console.v1.ForgetWorkspaceMemoryResponse
+	154,  // 1552: console.v1.ConsoleService.BeginOperatingAttachmentUpload:output_type -> console.v1.BeginOperatingAttachmentUploadResponse
+	156,  // 1553: console.v1.ConsoleService.CompleteOperatingAttachmentUpload:output_type -> console.v1.CompleteOperatingAttachmentUploadResponse
+	158,  // 1554: console.v1.ConsoleService.ListOperatingAttachments:output_type -> console.v1.ListOperatingAttachmentsResponse
+	231,  // 1555: console.v1.ConsoleService.ResolveOperatingReceiptAction:output_type -> console.v1.ResolveOperatingReceiptActionResponse
+	235,  // 1556: console.v1.ConsoleService.GetOperatingReceipt:output_type -> console.v1.GetOperatingReceiptResponse
+	252,  // 1557: console.v1.ConsoleService.SubmitComputerMission:output_type -> console.v1.SubmitComputerMissionResponse
+	254,  // 1558: console.v1.ConsoleService.GetComputerMission:output_type -> console.v1.GetComputerMissionResponse
+	256,  // 1559: console.v1.ConsoleService.CancelComputerMission:output_type -> console.v1.CancelComputerMissionResponse
+	258,  // 1560: console.v1.ConsoleService.ContinueComputerMission:output_type -> console.v1.ContinueComputerMissionResponse
+	260,  // 1561: console.v1.ConsoleService.PauseComputerMission:output_type -> console.v1.PauseComputerMissionResponse
+	262,  // 1562: console.v1.ConsoleService.ResumeComputerMission:output_type -> console.v1.ResumeComputerMissionResponse
+	264,  // 1563: console.v1.ConsoleService.WakeComputerMission:output_type -> console.v1.WakeComputerMissionResponse
+	266,  // 1564: console.v1.ConsoleService.GuideComputerMission:output_type -> console.v1.GuideComputerMissionResponse
+	273,  // 1565: console.v1.ConsoleService.ListComputerMissionCanaryDefinitions:output_type -> console.v1.ListComputerMissionCanaryDefinitionsResponse
+	275,  // 1566: console.v1.ConsoleService.StartComputerMissionCanaryRun:output_type -> console.v1.StartComputerMissionCanaryRunResponse
+	277,  // 1567: console.v1.ConsoleService.GetComputerMissionCanaryRun:output_type -> console.v1.GetComputerMissionCanaryRunResponse
+	279,  // 1568: console.v1.ConsoleService.ListComputerMissionCanaryRuns:output_type -> console.v1.ListComputerMissionCanaryRunsResponse
+	281,  // 1569: console.v1.ConsoleService.GetComputerMissionCanaryEvidence:output_type -> console.v1.GetComputerMissionCanaryEvidenceResponse
+	283,  // 1570: console.v1.ConsoleService.OperateComputerMissionCanaryRun:output_type -> console.v1.OperateComputerMissionCanaryRunResponse
+	287,  // 1571: console.v1.ConsoleService.CreateMissionSchedule:output_type -> console.v1.CreateMissionScheduleResponse
+	289,  // 1572: console.v1.ConsoleService.UpdateMissionSchedule:output_type -> console.v1.UpdateMissionScheduleResponse
+	291,  // 1573: console.v1.ConsoleService.SetMissionScheduleEnabled:output_type -> console.v1.SetMissionScheduleEnabledResponse
+	293,  // 1574: console.v1.ConsoleService.ListMissionSchedules:output_type -> console.v1.ListMissionSchedulesResponse
+	296,  // 1575: console.v1.ConsoleService.CreateConnectorTrigger:output_type -> console.v1.CreateConnectorTriggerResponse
+	298,  // 1576: console.v1.ConsoleService.UpdateConnectorTrigger:output_type -> console.v1.UpdateConnectorTriggerResponse
+	300,  // 1577: console.v1.ConsoleService.ListConnectorTriggers:output_type -> console.v1.ListConnectorTriggersResponse
+	302,  // 1578: console.v1.ConsoleService.DeleteConnectorTrigger:output_type -> console.v1.DeleteConnectorTriggerResponse
+	304,  // 1579: console.v1.ConsoleService.SetConnectorTriggerEnabled:output_type -> console.v1.SetConnectorTriggerEnabledResponse
+	307,  // 1580: console.v1.ConsoleService.ReserveComputerMissionApexSession:output_type -> console.v1.ReserveComputerMissionApexSessionResponse
+	309,  // 1581: console.v1.ConsoleService.BindComputerMissionApexSessionReservation:output_type -> console.v1.BindComputerMissionApexSessionReservationResponse
+	312,  // 1582: console.v1.ConsoleService.BindComputerMissionApexInstructionMetadata:output_type -> console.v1.BindComputerMissionApexInstructionMetadataResponse
+	314,  // 1583: console.v1.ConsoleService.AuthorizeComputerMissionApexSessionAdoption:output_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse
+	363,  // 1584: console.v1.ConsoleService.GetWorkspaceSettings:output_type -> console.v1.GetWorkspaceSettingsResponse
+	377,  // 1585: console.v1.ConsoleService.GetOperatorPreferences:output_type -> console.v1.GetOperatorPreferencesResponse
+	379,  // 1586: console.v1.ConsoleService.UpdateOperatorPreferences:output_type -> console.v1.UpdateOperatorPreferencesResponse
+	388,  // 1587: console.v1.ConsoleService.CreateConnectorProfile:output_type -> console.v1.CreateConnectorProfileResponse
+	390,  // 1588: console.v1.ConsoleService.ListConnectorProfiles:output_type -> console.v1.ListConnectorProfilesResponse
+	392,  // 1589: console.v1.ConsoleService.UpdateConnectorProfile:output_type -> console.v1.UpdateConnectorProfileResponse
+	394,  // 1590: console.v1.ConsoleService.DeleteConnectorProfile:output_type -> console.v1.DeleteConnectorProfileResponse
+	601,  // 1591: console.v1.ConsoleService.ListConnectedCalls:output_type -> console.v1.ListConnectedCallsResponse
+	603,  // 1592: console.v1.ConsoleService.StartMeetingCapture:output_type -> console.v1.StartMeetingCaptureResponse
+	605,  // 1593: console.v1.ConsoleService.GetMeetingCapture:output_type -> console.v1.GetMeetingCaptureResponse
+	607,  // 1594: console.v1.ConsoleService.ListMeetingCaptures:output_type -> console.v1.ListMeetingCapturesResponse
+	609,  // 1595: console.v1.ConsoleService.StopMeetingCapture:output_type -> console.v1.StopMeetingCaptureResponse
+	622,  // 1596: console.v1.ConsoleService.ListCommitments:output_type -> console.v1.ListCommitmentsResponse
+	366,  // 1597: console.v1.ConsoleService.GetBillingSubscription:output_type -> console.v1.GetBillingSubscriptionResponse
+	368,  // 1598: console.v1.ConsoleService.CreateBillingPortalSession:output_type -> console.v1.CreateBillingPortalSessionResponse
+	370,  // 1599: console.v1.ConsoleService.CreateBillingCheckoutSession:output_type -> console.v1.CreateBillingCheckoutSessionResponse
+	635,  // 1600: console.v1.ConsoleService.GetInferenceCreditBalance:output_type -> console.v1.GetInferenceCreditBalanceResponse
+	639,  // 1601: console.v1.ConsoleService.CreateInferenceCreditCheckout:output_type -> console.v1.CreateInferenceCreditCheckoutResponse
+	641,  // 1602: console.v1.ConsoleService.FulfillInferenceCreditCheckout:output_type -> console.v1.FulfillInferenceCreditCheckoutResponse
+	372,  // 1603: console.v1.ConsoleService.UpdateWorkspaceProfile:output_type -> console.v1.UpdateWorkspaceProfileResponse
+	396,  // 1604: console.v1.ConsoleService.ArchiveWorkspace:output_type -> console.v1.ArchiveWorkspaceResponse
+	398,  // 1605: console.v1.ConsoleService.UpdateWorkspacePolicy:output_type -> console.v1.UpdateWorkspacePolicyResponse
+	400,  // 1606: console.v1.ConsoleService.UpdateWorkspaceDexPolicy:output_type -> console.v1.UpdateWorkspaceDexPolicyResponse
+	402,  // 1607: console.v1.ConsoleService.UpdateWorkspaceArtifactStyleGuide:output_type -> console.v1.UpdateWorkspaceArtifactStyleGuideResponse
+	404,  // 1608: console.v1.ConsoleService.EvaluateWorkspaceArtifactStyleGuide:output_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideResponse
+	407,  // 1609: console.v1.ConsoleService.UpsertWorkspaceIdentityProvider:output_type -> console.v1.UpsertWorkspaceIdentityProviderResponse
+	409,  // 1610: console.v1.ConsoleService.RemoveWorkspaceIdentityProvider:output_type -> console.v1.RemoveWorkspaceIdentityProviderResponse
+	411,  // 1611: console.v1.ConsoleService.UpsertWorkspaceIntegration:output_type -> console.v1.UpsertWorkspaceIntegrationResponse
+	413,  // 1612: console.v1.ConsoleService.RemoveWorkspaceIntegration:output_type -> console.v1.RemoveWorkspaceIntegrationResponse
+	363,  // 1613: console.v1.ConsoleService.UpdateWorkspaceBilling:output_type -> console.v1.GetWorkspaceSettingsResponse
+	363,  // 1614: console.v1.ConsoleService.UpsertWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
+	363,  // 1615: console.v1.ConsoleService.RemoveWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
+	363,  // 1616: console.v1.ConsoleService.UpdateWorkspaceNotificationPreferences:output_type -> console.v1.GetWorkspaceSettingsResponse
+	363,  // 1617: console.v1.ConsoleService.EnableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
+	363,  // 1618: console.v1.ConsoleService.DisableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
+	422,  // 1619: console.v1.ConsoleService.ListWorkspaceSkills:output_type -> console.v1.ListWorkspaceSkillsResponse
+	437,  // 1620: console.v1.ConsoleService.BrowseDexSkillCatalog:output_type -> console.v1.BrowseDexSkillCatalogResponse
+	439,  // 1621: console.v1.ConsoleService.InstallDexSkillCatalogEntry:output_type -> console.v1.InstallDexSkillCatalogEntryResponse
+	441,  // 1622: console.v1.ConsoleService.CreateWorkspaceSkill:output_type -> console.v1.CreateWorkspaceSkillResponse
+	443,  // 1623: console.v1.ConsoleService.UpdateWorkspaceSkill:output_type -> console.v1.UpdateWorkspaceSkillResponse
+	445,  // 1624: console.v1.ConsoleService.DeleteWorkspaceSkill:output_type -> console.v1.DeleteWorkspaceSkillResponse
+	493,  // 1625: console.v1.ConsoleService.ListScenarioFixtures:output_type -> console.v1.ListScenarioFixturesResponse
+	495,  // 1626: console.v1.ConsoleService.PromoteScenarioFixture:output_type -> console.v1.PromoteScenarioFixtureResponse
+	497,  // 1627: console.v1.ConsoleService.CompareScenarioFixtures:output_type -> console.v1.CompareScenarioFixturesResponse
+	382,  // 1628: console.v1.ConsoleService.ListWorkspaceGuardrailRules:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
+	382,  // 1629: console.v1.ConsoleService.UpsertWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
+	382,  // 1630: console.v1.ConsoleService.RemoveWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
+	584,  // 1631: console.v1.ConsoleService.SetOperatingThreadController:output_type -> console.v1.SetOperatingThreadControllerResponse
+	589,  // 1632: console.v1.ConsoleService.GetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
+	589,  // 1633: console.v1.ConsoleService.SetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
+	614,  // 1634: console.v1.ConsoleService.CreateProspectingWatchProgram:output_type -> console.v1.CreateProspectingWatchProgramResponse
+	616,  // 1635: console.v1.ConsoleService.GetProspectingWatchProgram:output_type -> console.v1.GetProspectingWatchProgramResponse
+	618,  // 1636: console.v1.ConsoleService.ListProspectingWatchPrograms:output_type -> console.v1.ListProspectingWatchProgramsResponse
+	620,  // 1637: console.v1.ConsoleService.UpdateProspectingWatchProgram:output_type -> console.v1.UpdateProspectingWatchProgramResponse
+	820,  // 1638: console.v1.ConsoleService.CreateProspectingDraft:output_type -> console.v1.CreateProspectingDraftResponse
+	822,  // 1639: console.v1.ConsoleService.ListProspectingDrafts:output_type -> console.v1.ListProspectingDraftsResponse
+	824,  // 1640: console.v1.ConsoleService.ReviewProspectingDraft:output_type -> console.v1.ReviewProspectingDraftResponse
+	630,  // 1641: console.v1.ConsoleService.RecordOperatingHomepageSuggestionFeedback:output_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
+	112,  // 1642: console.v1.WorkspaceKeyService.GetWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
+	112,  // 1643: console.v1.WorkspaceKeyService.PutWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
+	112,  // 1644: console.v1.WorkspaceKeyService.DeleteWorkspaceKeyConfig:output_type -> console.v1.WorkspaceKeyConfigResponse
+	595,  // 1645: console.v1.ManagedSetupService.GetManagedSetup:output_type -> console.v1.ManagedSetup
+	595,  // 1646: console.v1.ManagedSetupService.SetManagedSetup:output_type -> console.v1.ManagedSetup
+	1402, // [1402:1647] is the sub-list for method output_type
+	1157, // [1157:1402] is the sub-list for method input_type
+	1157, // [1157:1157] is the sub-list for extension type_name
+	1157, // [1157:1157] is the sub-list for extension extendee
+	0,    // [0:1157] is the sub-list for field type_name
 }
 
 func init() { file_console_v1_console_proto_init() }
@@ -75250,8 +75676,8 @@ func file_console_v1_console_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_console_v1_console_proto_rawDesc), len(file_console_v1_console_proto_rawDesc)),
-			NumEnums:      108,
-			NumMessages:   732,
+			NumEnums:      109,
+			NumMessages:   736,
 			NumExtensions: 0,
 			NumServices:   3,
 		},
