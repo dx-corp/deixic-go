@@ -27,9 +27,11 @@ var File_deixic_v1_deixic_proto protoreflect.FileDescriptor
 
 const file_deixic_v1_deixic_proto_rawDesc = "" +
 	"\n" +
-	"\x16deixic/v1/deixic.proto\x12\tdeixic.v1\x1a\x15common/v1/authz.proto\x1a\x18console/v1/console.proto\x1a\x14meter/v1/meter.proto2\xb1\xbd\x02\n" +
+	"\x16deixic/v1/deixic.proto\x12\tdeixic.v1\x1a\x15common/v1/authz.proto\x1a\x18console/v1/console.proto\x1a\x14meter/v1/meter.proto2\x97\xc0\x02\n" +
 	"\rDeixicService\x12\xab\x01\n" +
-	"\x17AssessComplianceSubject\x12*.console.v1.AssessComplianceSubjectRequest\x1a+.console.v1.AssessComplianceSubjectResponse\"7\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x0forganization_id\x12\xa8\x01\n" +
+	"\x17AssessComplianceSubject\x12*.console.v1.AssessComplianceSubjectRequest\x1a+.console.v1.AssessComplianceSubjectResponse\"7\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x0forganization_id\x12\xb5\x01\n" +
+	"\x1aRecordComplianceAssessment\x12-.console.v1.RecordComplianceAssessmentRequest\x1a..console.v1.RecordComplianceAssessmentResponse\"8\xca\xf3\x18\rconsole:write\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x02\xea\xf3\x18\x0forganization_id\x12\xab\x01\n" +
+	"\x17GetComplianceAssessment\x12*.console.v1.GetComplianceAssessmentRequest\x1a+.console.v1.GetComplianceAssessmentResponse\"7\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x0forganization_id\x12\xa8\x01\n" +
 	"\x16ListBusinessBlueprints\x12).console.v1.ListBusinessBlueprintsRequest\x1a*.console.v1.ListBusinessBlueprintsResponse\"7\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x0forganization_id\x12\xa9\x01\n" +
 	"\x16CloneBusinessBlueprint\x12).console.v1.CloneBusinessBlueprintRequest\x1a*.console.v1.CloneBusinessBlueprintResponse\"8\xca\xf3\x18\rconsole:write\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x02\xea\xf3\x18\x0forganization_id\x12\xba\x01\n" +
 	"\x1cGetBusinessProcessDefinition\x12/.console.v1.GetBusinessProcessDefinitionRequest\x1a0.console.v1.GetBusinessProcessDefinitionResponse\"7\xca\xf3\x18\fconsole:read\xd2\xf3\x18\fworkspace_id\xd8\xf3\x18\x01\xea\xf3\x18\x0forganization_id\x12\xc0\x01\n" +
@@ -276,951 +278,959 @@ const file_deixic_v1_deixic_proto_rawDesc = "" +
 
 var file_deixic_v1_deixic_proto_goTypes = []any{
 	(*v1.AssessComplianceSubjectRequest)(nil),                      // 0: console.v1.AssessComplianceSubjectRequest
-	(*v1.ListBusinessBlueprintsRequest)(nil),                       // 1: console.v1.ListBusinessBlueprintsRequest
-	(*v1.CloneBusinessBlueprintRequest)(nil),                       // 2: console.v1.CloneBusinessBlueprintRequest
-	(*v1.GetBusinessProcessDefinitionRequest)(nil),                 // 3: console.v1.GetBusinessProcessDefinitionRequest
-	(*v1.ListBusinessProcessDefinitionsRequest)(nil),               // 4: console.v1.ListBusinessProcessDefinitionsRequest
-	(*v1.DefineBusinessProcessRequest)(nil),                        // 5: console.v1.DefineBusinessProcessRequest
-	(*v1.StartBusinessProcessRequest)(nil),                         // 6: console.v1.StartBusinessProcessRequest
-	(*v1.GetBusinessProcessRequest)(nil),                           // 7: console.v1.GetBusinessProcessRequest
-	(*v1.ListBusinessProcessesRequest)(nil),                        // 8: console.v1.ListBusinessProcessesRequest
-	(*v1.TransitionBusinessProcessRequest)(nil),                    // 9: console.v1.TransitionBusinessProcessRequest
-	(*v1.PrepareBusinessObjectAuthorityTransferRequest)(nil),       // 10: console.v1.PrepareBusinessObjectAuthorityTransferRequest
-	(*v1.FinalizeBusinessObjectAuthorityTransferRequest)(nil),      // 11: console.v1.FinalizeBusinessObjectAuthorityTransferRequest
-	(*v1.DefineBusinessObjectTypeRequest)(nil),                     // 12: console.v1.DefineBusinessObjectTypeRequest
-	(*v1.GetBusinessObjectTypeRequest)(nil),                        // 13: console.v1.GetBusinessObjectTypeRequest
-	(*v1.ListBusinessObjectTypesRequest)(nil),                      // 14: console.v1.ListBusinessObjectTypesRequest
-	(*v1.CreateBusinessObjectRequest)(nil),                         // 15: console.v1.CreateBusinessObjectRequest
-	(*v1.GetBusinessObjectRequest)(nil),                            // 16: console.v1.GetBusinessObjectRequest
-	(*v1.ListBusinessObjectsRequest)(nil),                          // 17: console.v1.ListBusinessObjectsRequest
-	(*v1.UpdateBusinessObjectRequest)(nil),                         // 18: console.v1.UpdateBusinessObjectRequest
-	(*v1.DeleteBusinessObjectRequest)(nil),                         // 19: console.v1.DeleteBusinessObjectRequest
-	(*v1.ListBusinessObjectRevisionsRequest)(nil),                  // 20: console.v1.ListBusinessObjectRevisionsRequest
-	(*v1.BindBusinessObjectSourceRequest)(nil),                     // 21: console.v1.BindBusinessObjectSourceRequest
-	(*v1.AdmitBusinessObjectObservationRequest)(nil),               // 22: console.v1.AdmitBusinessObjectObservationRequest
-	(*v1.ListBusinessObjectRelationshipsRequest)(nil),              // 23: console.v1.ListBusinessObjectRelationshipsRequest
-	(*v1.CreateBusinessObjectRelationshipRequest)(nil),             // 24: console.v1.CreateBusinessObjectRelationshipRequest
-	(*v1.DeleteBusinessObjectRelationshipRequest)(nil),             // 25: console.v1.DeleteBusinessObjectRelationshipRequest
-	(*v1.CreateCaptureFormRequest)(nil),                            // 26: console.v1.CreateCaptureFormRequest
-	(*v1.ListCaptureFormsRequest)(nil),                             // 27: console.v1.ListCaptureFormsRequest
-	(*v1.GetCaptureFormRequest)(nil),                               // 28: console.v1.GetCaptureFormRequest
-	(*v1.UpdateCaptureFormRequest)(nil),                            // 29: console.v1.UpdateCaptureFormRequest
-	(*v1.PublishCaptureFormRequest)(nil),                           // 30: console.v1.PublishCaptureFormRequest
-	(*v1.RevokeCaptureFormPublicationRequest)(nil),                 // 31: console.v1.RevokeCaptureFormPublicationRequest
-	(*v1.CreateCaptureFormInvitationRequest)(nil),                  // 32: console.v1.CreateCaptureFormInvitationRequest
-	(*v1.RevokeCaptureFormInvitationRequest)(nil),                  // 33: console.v1.RevokeCaptureFormInvitationRequest
-	(*v1.GetInvitedCaptureFormRequest)(nil),                        // 34: console.v1.GetInvitedCaptureFormRequest
-	(*v1.SubmitInvitedCaptureFormRequest)(nil),                     // 35: console.v1.SubmitInvitedCaptureFormRequest
-	(*v1.GetPublishedCaptureFormRequest)(nil),                      // 36: console.v1.GetPublishedCaptureFormRequest
-	(*v1.GetPublishedCaptureFormBrandingAssetRequest)(nil),         // 37: console.v1.GetPublishedCaptureFormBrandingAssetRequest
-	(*v1.SubmitPublishedCaptureFormRequest)(nil),                   // 38: console.v1.SubmitPublishedCaptureFormRequest
-	(*v1.BeginPublishedCaptureFormUploadRequest)(nil),              // 39: console.v1.BeginPublishedCaptureFormUploadRequest
-	(*v1.CompletePublishedCaptureFormUploadRequest)(nil),           // 40: console.v1.CompletePublishedCaptureFormUploadRequest
-	(*v1.GetCaptureFormSubmissionRequest)(nil),                     // 41: console.v1.GetCaptureFormSubmissionRequest
-	(*v1.ListCaptureFormSubmissionsRequest)(nil),                   // 42: console.v1.ListCaptureFormSubmissionsRequest
-	(*v1.ReviewCaptureFormSubmissionRequest)(nil),                  // 43: console.v1.ReviewCaptureFormSubmissionRequest
-	(*v1.GetInferenceCreditAutoRefillRequest)(nil),                 // 44: console.v1.GetInferenceCreditAutoRefillRequest
-	(*v1.UpdateInferenceCreditAutoRefillRequest)(nil),              // 45: console.v1.UpdateInferenceCreditAutoRefillRequest
-	(*v1.CompleteInferenceCreditAutoRefillRequest)(nil),            // 46: console.v1.CompleteInferenceCreditAutoRefillRequest
-	(*v1.ListInferenceCreditReceiptsRequest)(nil),                  // 47: console.v1.ListInferenceCreditReceiptsRequest
-	(*v1.GetInferenceCreditBalanceRequest)(nil),                    // 48: console.v1.GetInferenceCreditBalanceRequest
-	(*v1.CreateInferenceCreditCheckoutRequest)(nil),                // 49: console.v1.CreateInferenceCreditCheckoutRequest
-	(*v1.FulfillInferenceCreditCheckoutRequest)(nil),               // 50: console.v1.FulfillInferenceCreditCheckoutRequest
-	(*v1.GetOverviewRequest)(nil),                                  // 51: console.v1.GetOverviewRequest
-	(*v1.ListAssetsRequest)(nil),                                   // 52: console.v1.ListAssetsRequest
-	(*v1.GetAssetRequest)(nil),                                     // 53: console.v1.GetAssetRequest
-	(*v1.ListFindingsRequest)(nil),                                 // 54: console.v1.ListFindingsRequest
-	(*v1.GetTraceDrilldownRequest)(nil),                            // 55: console.v1.GetTraceDrilldownRequest
-	(*v1.GetOnboardingPlanRequest)(nil),                            // 56: console.v1.GetOnboardingPlanRequest
-	(*v1.ListAuthorityPostureRequest)(nil),                         // 57: console.v1.ListAuthorityPostureRequest
-	(*v1.ListAgentWorkforceRecordsRequest)(nil),                    // 58: console.v1.ListAgentWorkforceRecordsRequest
-	(*v1.SubmitAgentWorkforceEvidenceRequest)(nil),                 // 59: console.v1.SubmitAgentWorkforceEvidenceRequest
-	(*v1.ListIntegrationTilesRequest)(nil),                         // 60: console.v1.ListIntegrationTilesRequest
-	(*v1.ListPinnedSourcesRequest)(nil),                            // 61: console.v1.ListPinnedSourcesRequest
-	(*v1.ListOrbControlTargetsRequest)(nil),                        // 62: console.v1.ListOrbControlTargetsRequest
-	(*v1.GetOrbControlTargetRequest)(nil),                          // 63: console.v1.GetOrbControlTargetRequest
-	(*v1.SubmitOrbControlActionRequest)(nil),                       // 64: console.v1.SubmitOrbControlActionRequest
-	(*v1.SetPinnedSourceRequest)(nil),                              // 65: console.v1.SetPinnedSourceRequest
-	(*v1.UnpinSourceRequest)(nil),                                  // 66: console.v1.UnpinSourceRequest
-	(*v1.ListActivityRequest)(nil),                                 // 67: console.v1.ListActivityRequest
-	(*v1.SearchStaffWorkspaceDirectoryRequest)(nil),                // 68: console.v1.SearchStaffWorkspaceDirectoryRequest
-	(*v1.GetStaffWorkspaceContextRequest)(nil),                     // 69: console.v1.GetStaffWorkspaceContextRequest
-	(*v1.GetStaffManagedInferenceFundingRequest)(nil),              // 70: console.v1.GetStaffManagedInferenceFundingRequest
-	(*v1.GrantStaffManagedInferenceCreditsRequest)(nil),            // 71: console.v1.GrantStaffManagedInferenceCreditsRequest
-	(*v1.GetStaffManagedInferenceUsageRequest)(nil),                // 72: console.v1.GetStaffManagedInferenceUsageRequest
-	(*v1.GetStaffManagedInferenceBudgetRequest)(nil),               // 73: console.v1.GetStaffManagedInferenceBudgetRequest
-	(*v1.SetStaffManagedInferenceBudgetRequest)(nil),               // 74: console.v1.SetStaffManagedInferenceBudgetRequest
-	(*v1.GetStaffManagedInferenceReadinessRequest)(nil),            // 75: console.v1.GetStaffManagedInferenceReadinessRequest
-	(*v1.GetManagedInferenceReadinessRequest)(nil),                 // 76: console.v1.GetManagedInferenceReadinessRequest
-	(*v1.ListManagedProviderAccessEventsRequest)(nil),              // 77: console.v1.ListManagedProviderAccessEventsRequest
-	(*v1.ListStaffManagedInferenceAdminEventsRequest)(nil),         // 78: console.v1.ListStaffManagedInferenceAdminEventsRequest
-	(*v1.ListStaffManagedExecutionGrantEventsRequest)(nil),         // 79: console.v1.ListStaffManagedExecutionGrantEventsRequest
-	(*v1.ListStaffManagedExecutionOutcomesRequest)(nil),            // 80: console.v1.ListStaffManagedExecutionOutcomesRequest
-	(*v1.ListManagedProviderAccessGrantsRequest)(nil),              // 81: console.v1.ListManagedProviderAccessGrantsRequest
-	(*v1.UpsertManagedProviderAccessGrantRequest)(nil),             // 82: console.v1.UpsertManagedProviderAccessGrantRequest
-	(*v1.RevokeManagedProviderAccessGrantRequest)(nil),             // 83: console.v1.RevokeManagedProviderAccessGrantRequest
-	(*v1.GetStaffInferenceRoutingProfileRequest)(nil),              // 84: console.v1.GetStaffInferenceRoutingProfileRequest
-	(*v1.UpdateStaffInferenceRoutingProfileRequest)(nil),           // 85: console.v1.UpdateStaffInferenceRoutingProfileRequest
-	(*v1.ListCostUsageRequest)(nil),                                // 86: console.v1.ListCostUsageRequest
-	(*v1.ListEvalResultsRequest)(nil),                              // 87: console.v1.ListEvalResultsRequest
-	(*v1.RecordProviderCostSnapshotRequest)(nil),                   // 88: console.v1.RecordProviderCostSnapshotRequest
-	(*v1.GetConsoleBootSnapshotRequest)(nil),                       // 89: console.v1.GetConsoleBootSnapshotRequest
-	(*v1.GetOperatorPreferencesRequest)(nil),                       // 90: console.v1.GetOperatorPreferencesRequest
-	(*v1.UpdateOperatorPreferencesRequest)(nil),                    // 91: console.v1.UpdateOperatorPreferencesRequest
-	(*v1.ListWorkspaceGuardrailRulesRequest)(nil),                  // 92: console.v1.ListWorkspaceGuardrailRulesRequest
-	(*v1.UpsertWorkspaceGuardrailRuleRequest)(nil),                 // 93: console.v1.UpsertWorkspaceGuardrailRuleRequest
-	(*v1.RemoveWorkspaceGuardrailRuleRequest)(nil),                 // 94: console.v1.RemoveWorkspaceGuardrailRuleRequest
-	(*v1.CreateDexMcpServerRequest)(nil),                           // 95: console.v1.CreateDexMcpServerRequest
-	(*v1.ListDexMcpServersRequest)(nil),                            // 96: console.v1.ListDexMcpServersRequest
-	(*v1.GetDexMcpServerRequest)(nil),                              // 97: console.v1.GetDexMcpServerRequest
-	(*v1.DiscoverDexMcpServerRequest)(nil),                         // 98: console.v1.DiscoverDexMcpServerRequest
-	(*v1.UpdateDexMcpServerRequest)(nil),                           // 99: console.v1.UpdateDexMcpServerRequest
-	(*v1.DeleteDexMcpServerRequest)(nil),                           // 100: console.v1.DeleteDexMcpServerRequest
-	(*v1.InitiateDexMcpOAuthProfileRequest)(nil),                   // 101: console.v1.InitiateDexMcpOAuthProfileRequest
-	(*v1.CompleteDexMcpOAuthProfileRequest)(nil),                   // 102: console.v1.CompleteDexMcpOAuthProfileRequest
-	(*v1.ListDexMcpOAuthProfilesRequest)(nil),                      // 103: console.v1.ListDexMcpOAuthProfilesRequest
-	(*v1.RevokeDexMcpOAuthProfileRequest)(nil),                     // 104: console.v1.RevokeDexMcpOAuthProfileRequest
-	(*v1.ReauthorizeDexMcpOAuthProfileRequest)(nil),                // 105: console.v1.ReauthorizeDexMcpOAuthProfileRequest
-	(*v1.RegisterPrivateEndpointRequest)(nil),                      // 106: console.v1.RegisterPrivateEndpointRequest
-	(*v1.VerifyPrivateEndpointRequest)(nil),                        // 107: console.v1.VerifyPrivateEndpointRequest
-	(*v1.ListPrivateEndpointsRequest)(nil),                         // 108: console.v1.ListPrivateEndpointsRequest
-	(*v1.DeletePrivateEndpointRequest)(nil),                        // 109: console.v1.DeletePrivateEndpointRequest
-	(*v1.AttachPrivateEndpointToProfileRequest)(nil),               // 110: console.v1.AttachPrivateEndpointToProfileRequest
-	(*v1.ListGatewayEgressOriginsRequest)(nil),                     // 111: console.v1.ListGatewayEgressOriginsRequest
-	(*v1.ListOperatingChannelsRequest)(nil),                        // 112: console.v1.ListOperatingChannelsRequest
-	(*v1.ListOperatingJobsRequest)(nil),                            // 113: console.v1.ListOperatingJobsRequest
-	(*v1.ArchiveOperatingThreadRequest)(nil),                       // 114: console.v1.ArchiveOperatingThreadRequest
-	(*v1.ForkOperatingThreadRequest)(nil),                          // 115: console.v1.ForkOperatingThreadRequest
-	(*v1.RenameOperatingThreadRequest)(nil),                        // 116: console.v1.RenameOperatingThreadRequest
-	(*v1.GetOperatingThreadRequest)(nil),                           // 117: console.v1.GetOperatingThreadRequest
-	(*v1.BootstrapThreadGatewayRequest)(nil),                       // 118: console.v1.BootstrapThreadGatewayRequest
-	(*v1.PrewarmOperatingThreadRequest)(nil),                       // 119: console.v1.PrewarmOperatingThreadRequest
-	(*v1.RespondOperatingThreadRequest)(nil),                       // 120: console.v1.RespondOperatingThreadRequest
-	(*v1.InterruptOperatingThreadRequest)(nil),                     // 121: console.v1.InterruptOperatingThreadRequest
-	(*v1.SetOperatingThreadControllerRequest)(nil),                 // 122: console.v1.SetOperatingThreadControllerRequest
-	(*v1.ListOperatingThreadEventsRequest)(nil),                    // 123: console.v1.ListOperatingThreadEventsRequest
-	(*v1.WatchOperatingThreadRequest)(nil),                         // 124: console.v1.WatchOperatingThreadRequest
-	(*v1.SearchOperatingHistoryRequest)(nil),                       // 125: console.v1.SearchOperatingHistoryRequest
-	(*v1.GetOperatingHistoryContextRequest)(nil),                   // 126: console.v1.GetOperatingHistoryContextRequest
-	(*v1.GetOperatingReceiptRequest)(nil),                          // 127: console.v1.GetOperatingReceiptRequest
-	(*v1.SubmitComputerMissionRequest)(nil),                        // 128: console.v1.SubmitComputerMissionRequest
-	(*v1.GetComputerMissionRequest)(nil),                           // 129: console.v1.GetComputerMissionRequest
-	(*v1.CancelComputerMissionRequest)(nil),                        // 130: console.v1.CancelComputerMissionRequest
-	(*v1.ContinueComputerMissionRequest)(nil),                      // 131: console.v1.ContinueComputerMissionRequest
-	(*v1.PauseComputerMissionRequest)(nil),                         // 132: console.v1.PauseComputerMissionRequest
-	(*v1.ResumeComputerMissionRequest)(nil),                        // 133: console.v1.ResumeComputerMissionRequest
-	(*v1.WakeComputerMissionRequest)(nil),                          // 134: console.v1.WakeComputerMissionRequest
-	(*v1.GuideComputerMissionRequest)(nil),                         // 135: console.v1.GuideComputerMissionRequest
-	(*v1.ListComputerMissionCanaryDefinitionsRequest)(nil),         // 136: console.v1.ListComputerMissionCanaryDefinitionsRequest
-	(*v1.StartComputerMissionCanaryRunRequest)(nil),                // 137: console.v1.StartComputerMissionCanaryRunRequest
-	(*v1.GetComputerMissionCanaryRunRequest)(nil),                  // 138: console.v1.GetComputerMissionCanaryRunRequest
-	(*v1.ListComputerMissionCanaryRunsRequest)(nil),                // 139: console.v1.ListComputerMissionCanaryRunsRequest
-	(*v1.GetComputerMissionCanaryEvidenceRequest)(nil),             // 140: console.v1.GetComputerMissionCanaryEvidenceRequest
-	(*v1.OperateComputerMissionCanaryRunRequest)(nil),              // 141: console.v1.OperateComputerMissionCanaryRunRequest
-	(*v1.CreateMissionScheduleRequest)(nil),                        // 142: console.v1.CreateMissionScheduleRequest
-	(*v1.UpdateMissionScheduleRequest)(nil),                        // 143: console.v1.UpdateMissionScheduleRequest
-	(*v1.SetMissionScheduleEnabledRequest)(nil),                    // 144: console.v1.SetMissionScheduleEnabledRequest
-	(*v1.ListMissionSchedulesRequest)(nil),                         // 145: console.v1.ListMissionSchedulesRequest
-	(*v1.CreateConnectorTriggerRequest)(nil),                       // 146: console.v1.CreateConnectorTriggerRequest
-	(*v1.UpdateConnectorTriggerRequest)(nil),                       // 147: console.v1.UpdateConnectorTriggerRequest
-	(*v1.ListConnectorTriggersRequest)(nil),                        // 148: console.v1.ListConnectorTriggersRequest
-	(*v1.DeleteConnectorTriggerRequest)(nil),                       // 149: console.v1.DeleteConnectorTriggerRequest
-	(*v1.SetConnectorTriggerEnabledRequest)(nil),                   // 150: console.v1.SetConnectorTriggerEnabledRequest
-	(*v1.ReserveComputerMissionApexSessionRequest)(nil),            // 151: console.v1.ReserveComputerMissionApexSessionRequest
-	(*v1.BindComputerMissionApexSessionReservationRequest)(nil),    // 152: console.v1.BindComputerMissionApexSessionReservationRequest
-	(*v1.BindComputerMissionApexInstructionMetadataRequest)(nil),   // 153: console.v1.BindComputerMissionApexInstructionMetadataRequest
-	(*v1.AuthorizeComputerMissionApexSessionAdoptionRequest)(nil),  // 154: console.v1.AuthorizeComputerMissionApexSessionAdoptionRequest
-	(*v1.ResolveOperatingReceiptActionRequest)(nil),                // 155: console.v1.ResolveOperatingReceiptActionRequest
-	(*v1.SubmitOperatingMessageRequest)(nil),                       // 156: console.v1.SubmitOperatingMessageRequest
-	(*v1.SubmitOperatingCorrectionRequest)(nil),                    // 157: console.v1.SubmitOperatingCorrectionRequest
-	(*v1.ListWorkspaceMemoriesRequest)(nil),                        // 158: console.v1.ListWorkspaceMemoriesRequest
-	(*v1.CorrectWorkspaceMemoryRequest)(nil),                       // 159: console.v1.CorrectWorkspaceMemoryRequest
-	(*v1.ReviewWorkspaceMemoryRequest)(nil),                        // 160: console.v1.ReviewWorkspaceMemoryRequest
-	(*v1.ForgetWorkspaceMemoryRequest)(nil),                        // 161: console.v1.ForgetWorkspaceMemoryRequest
-	(*v1.SubmitOperatingFeedbackRequest)(nil),                      // 162: console.v1.SubmitOperatingFeedbackRequest
-	(*v1.RecordOperatingHomepageSuggestionFeedbackRequest)(nil),    // 163: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
-	(*v1.SubmitProductIssueReportRequest)(nil),                     // 164: console.v1.SubmitProductIssueReportRequest
-	(*v1.SubmitNativeProductIssueReportRequest)(nil),               // 165: console.v1.SubmitNativeProductIssueReportRequest
-	(*v1.ListStaffProductIssueReportsRequest)(nil),                 // 166: console.v1.ListStaffProductIssueReportsRequest
-	(*v1.EngageStaffProductIssueReportRequest)(nil),                // 167: console.v1.EngageStaffProductIssueReportRequest
-	(*v1.ListStaffProductIssueRecoveriesRequest)(nil),              // 168: console.v1.ListStaffProductIssueRecoveriesRequest
-	(*v1.PrepareStaffProductIssueRecoveryRequest)(nil),             // 169: console.v1.PrepareStaffProductIssueRecoveryRequest
-	(*v1.ScanStaffProductIssueRecoveryRequest)(nil),                // 170: console.v1.ScanStaffProductIssueRecoveryRequest
-	(*v1.ReviewStaffProductIssueRecoveryRequest)(nil),              // 171: console.v1.ReviewStaffProductIssueRecoveryRequest
-	(*v1.ExecuteStaffProductIssueRecoveryRequest)(nil),             // 172: console.v1.ExecuteStaffProductIssueRecoveryRequest
-	(*v1.GetProductIssueRecoveryRequest)(nil),                      // 173: console.v1.GetProductIssueRecoveryRequest
-	(*v1.ReplyProductIssueRecoveryRequest)(nil),                    // 174: console.v1.ReplyProductIssueRecoveryRequest
-	(*v1.GetOperatingFeedbackRequest)(nil),                         // 175: console.v1.GetOperatingFeedbackRequest
-	(*v1.ResolveOperatingFeedbackRemediationRequest)(nil),          // 176: console.v1.ResolveOperatingFeedbackRemediationRequest
-	(*v1.ListCustomerIntelligenceFactsRequest)(nil),                // 177: console.v1.ListCustomerIntelligenceFactsRequest
-	(*v1.GetCustomerIntelligenceFactRequest)(nil),                  // 178: console.v1.GetCustomerIntelligenceFactRequest
-	(*v1.ReviewCustomerIntelligenceFactRequest)(nil),               // 179: console.v1.ReviewCustomerIntelligenceFactRequest
-	(*v1.ProposeCustomerIntelligenceFactRequest)(nil),              // 180: console.v1.ProposeCustomerIntelligenceFactRequest
-	(*v1.RespondToCustomerFactConfirmationRequest)(nil),            // 181: console.v1.RespondToCustomerFactConfirmationRequest
-	(*v1.AggregateCustomerIntelligencePatternsRequest)(nil),        // 182: console.v1.AggregateCustomerIntelligencePatternsRequest
-	(*v1.CreateProspectingWatchProgramRequest)(nil),                // 183: console.v1.CreateProspectingWatchProgramRequest
-	(*v1.GetProspectingWatchProgramRequest)(nil),                   // 184: console.v1.GetProspectingWatchProgramRequest
-	(*v1.ListProspectingWatchProgramsRequest)(nil),                 // 185: console.v1.ListProspectingWatchProgramsRequest
-	(*v1.UpdateProspectingWatchProgramRequest)(nil),                // 186: console.v1.UpdateProspectingWatchProgramRequest
-	(*v1.CreateProspectingDraftRequest)(nil),                       // 187: console.v1.CreateProspectingDraftRequest
-	(*v1.ListProspectingDraftsRequest)(nil),                        // 188: console.v1.ListProspectingDraftsRequest
-	(*v1.ReviewProspectingDraftRequest)(nil),                       // 189: console.v1.ReviewProspectingDraftRequest
-	(*v1.ListOperatingCorrectionsRequest)(nil),                     // 190: console.v1.ListOperatingCorrectionsRequest
-	(*v1.ReviewOperatingCorrectionRequest)(nil),                    // 191: console.v1.ReviewOperatingCorrectionRequest
-	(*v1.BeginOperatingAttachmentUploadRequest)(nil),               // 192: console.v1.BeginOperatingAttachmentUploadRequest
-	(*v1.CompleteOperatingAttachmentUploadRequest)(nil),            // 193: console.v1.CompleteOperatingAttachmentUploadRequest
-	(*v1.AcceptOperatingProjectSnapshotRequest)(nil),               // 194: console.v1.AcceptOperatingProjectSnapshotRequest
-	(*v1.ImportOperatingProjectSnapshotRequest)(nil),               // 195: console.v1.ImportOperatingProjectSnapshotRequest
-	(*v1.GetOperatingTaskEnvironmentRequest)(nil),                  // 196: console.v1.GetOperatingTaskEnvironmentRequest
-	(*v1.GetOperatingProjectSnapshotRequest)(nil),                  // 197: console.v1.GetOperatingProjectSnapshotRequest
-	(*v1.ListOperatingAttachmentsRequest)(nil),                     // 198: console.v1.ListOperatingAttachmentsRequest
-	(*v1.GetPrivacySettingsRequest)(nil),                           // 199: console.v1.GetPrivacySettingsRequest
-	(*v1.SetPrivacySettingsRequest)(nil),                           // 200: console.v1.SetPrivacySettingsRequest
-	(*v1.GetWorkspaceSettingsRequest)(nil),                         // 201: console.v1.GetWorkspaceSettingsRequest
-	(*v1.GetBillingSubscriptionRequest)(nil),                       // 202: console.v1.GetBillingSubscriptionRequest
-	(*v1.CreateBillingPortalSessionRequest)(nil),                   // 203: console.v1.CreateBillingPortalSessionRequest
-	(*v1.CreateBillingCheckoutSessionRequest)(nil),                 // 204: console.v1.CreateBillingCheckoutSessionRequest
-	(*v1.UpdateWorkspaceProfileRequest)(nil),                       // 205: console.v1.UpdateWorkspaceProfileRequest
-	(*v1.ArchiveWorkspaceRequest)(nil),                             // 206: console.v1.ArchiveWorkspaceRequest
-	(*v1.UpdateWorkspacePolicyRequest)(nil),                        // 207: console.v1.UpdateWorkspacePolicyRequest
-	(*v1.UpdateWorkspaceDexPolicyRequest)(nil),                     // 208: console.v1.UpdateWorkspaceDexPolicyRequest
-	(*v1.UpdateWorkspaceArtifactStyleGuideRequest)(nil),            // 209: console.v1.UpdateWorkspaceArtifactStyleGuideRequest
-	(*v1.EvaluateWorkspaceArtifactStyleGuideRequest)(nil),          // 210: console.v1.EvaluateWorkspaceArtifactStyleGuideRequest
-	(*v1.UpsertWorkspaceIdentityProviderRequest)(nil),              // 211: console.v1.UpsertWorkspaceIdentityProviderRequest
-	(*v1.RemoveWorkspaceIdentityProviderRequest)(nil),              // 212: console.v1.RemoveWorkspaceIdentityProviderRequest
-	(*v1.UpsertWorkspaceIntegrationRequest)(nil),                   // 213: console.v1.UpsertWorkspaceIntegrationRequest
-	(*v1.RemoveWorkspaceIntegrationRequest)(nil),                   // 214: console.v1.RemoveWorkspaceIntegrationRequest
-	(*v1.UpdateWorkspaceBillingRequest)(nil),                       // 215: console.v1.UpdateWorkspaceBillingRequest
-	(*v1.UpsertWorkspaceMemberRequest)(nil),                        // 216: console.v1.UpsertWorkspaceMemberRequest
-	(*v1.RemoveWorkspaceMemberRequest)(nil),                        // 217: console.v1.RemoveWorkspaceMemberRequest
-	(*v1.UpdateWorkspaceNotificationPreferencesRequest)(nil),       // 218: console.v1.UpdateWorkspaceNotificationPreferencesRequest
-	(*v1.EnableWorkspaceBreakGlassRequest)(nil),                    // 219: console.v1.EnableWorkspaceBreakGlassRequest
-	(*v1.DisableWorkspaceBreakGlassRequest)(nil),                   // 220: console.v1.DisableWorkspaceBreakGlassRequest
-	(*v1.ListWorkspaceSkillsRequest)(nil),                          // 221: console.v1.ListWorkspaceSkillsRequest
-	(*v1.BrowseDexSkillCatalogRequest)(nil),                        // 222: console.v1.BrowseDexSkillCatalogRequest
-	(*v1.InstallDexSkillCatalogEntryRequest)(nil),                  // 223: console.v1.InstallDexSkillCatalogEntryRequest
-	(*v1.CreateWorkspaceSkillRequest)(nil),                         // 224: console.v1.CreateWorkspaceSkillRequest
-	(*v1.UpdateWorkspaceSkillRequest)(nil),                         // 225: console.v1.UpdateWorkspaceSkillRequest
-	(*v1.DeleteWorkspaceSkillRequest)(nil),                         // 226: console.v1.DeleteWorkspaceSkillRequest
-	(*v1.ListScenarioFixturesRequest)(nil),                         // 227: console.v1.ListScenarioFixturesRequest
-	(*v1.PromoteScenarioFixtureRequest)(nil),                       // 228: console.v1.PromoteScenarioFixtureRequest
-	(*v1.CompareScenarioFixturesRequest)(nil),                      // 229: console.v1.CompareScenarioFixturesRequest
-	(*v1.CreateConnectorProfileRequest)(nil),                       // 230: console.v1.CreateConnectorProfileRequest
-	(*v1.ListConnectorProfilesRequest)(nil),                        // 231: console.v1.ListConnectorProfilesRequest
-	(*v1.UpdateConnectorProfileRequest)(nil),                       // 232: console.v1.UpdateConnectorProfileRequest
-	(*v1.DeleteConnectorProfileRequest)(nil),                       // 233: console.v1.DeleteConnectorProfileRequest
-	(*v1.ListConnectedCallsRequest)(nil),                           // 234: console.v1.ListConnectedCallsRequest
-	(*v1.StartMeetingCaptureRequest)(nil),                          // 235: console.v1.StartMeetingCaptureRequest
-	(*v1.GetMeetingCaptureRequest)(nil),                            // 236: console.v1.GetMeetingCaptureRequest
-	(*v1.ListMeetingCapturesRequest)(nil),                          // 237: console.v1.ListMeetingCapturesRequest
-	(*v1.StopMeetingCaptureRequest)(nil),                           // 238: console.v1.StopMeetingCaptureRequest
-	(*v1.ListCommitmentsRequest)(nil),                              // 239: console.v1.ListCommitmentsRequest
-	(*v1.AssessComplianceSubjectResponse)(nil),                     // 240: console.v1.AssessComplianceSubjectResponse
-	(*v1.ListBusinessBlueprintsResponse)(nil),                      // 241: console.v1.ListBusinessBlueprintsResponse
-	(*v1.CloneBusinessBlueprintResponse)(nil),                      // 242: console.v1.CloneBusinessBlueprintResponse
-	(*v1.GetBusinessProcessDefinitionResponse)(nil),                // 243: console.v1.GetBusinessProcessDefinitionResponse
-	(*v1.ListBusinessProcessDefinitionsResponse)(nil),              // 244: console.v1.ListBusinessProcessDefinitionsResponse
-	(*v1.DefineBusinessProcessResponse)(nil),                       // 245: console.v1.DefineBusinessProcessResponse
-	(*v1.StartBusinessProcessResponse)(nil),                        // 246: console.v1.StartBusinessProcessResponse
-	(*v1.GetBusinessProcessResponse)(nil),                          // 247: console.v1.GetBusinessProcessResponse
-	(*v1.ListBusinessProcessesResponse)(nil),                       // 248: console.v1.ListBusinessProcessesResponse
-	(*v1.TransitionBusinessProcessResponse)(nil),                   // 249: console.v1.TransitionBusinessProcessResponse
-	(*v1.PrepareBusinessObjectAuthorityTransferResponse)(nil),      // 250: console.v1.PrepareBusinessObjectAuthorityTransferResponse
-	(*v1.FinalizeBusinessObjectAuthorityTransferResponse)(nil),     // 251: console.v1.FinalizeBusinessObjectAuthorityTransferResponse
-	(*v1.DefineBusinessObjectTypeResponse)(nil),                    // 252: console.v1.DefineBusinessObjectTypeResponse
-	(*v1.GetBusinessObjectTypeResponse)(nil),                       // 253: console.v1.GetBusinessObjectTypeResponse
-	(*v1.ListBusinessObjectTypesResponse)(nil),                     // 254: console.v1.ListBusinessObjectTypesResponse
-	(*v1.CreateBusinessObjectResponse)(nil),                        // 255: console.v1.CreateBusinessObjectResponse
-	(*v1.GetBusinessObjectResponse)(nil),                           // 256: console.v1.GetBusinessObjectResponse
-	(*v1.ListBusinessObjectsResponse)(nil),                         // 257: console.v1.ListBusinessObjectsResponse
-	(*v1.UpdateBusinessObjectResponse)(nil),                        // 258: console.v1.UpdateBusinessObjectResponse
-	(*v1.DeleteBusinessObjectResponse)(nil),                        // 259: console.v1.DeleteBusinessObjectResponse
-	(*v1.ListBusinessObjectRevisionsResponse)(nil),                 // 260: console.v1.ListBusinessObjectRevisionsResponse
-	(*v1.BindBusinessObjectSourceResponse)(nil),                    // 261: console.v1.BindBusinessObjectSourceResponse
-	(*v1.AdmitBusinessObjectObservationResponse)(nil),              // 262: console.v1.AdmitBusinessObjectObservationResponse
-	(*v1.ListBusinessObjectRelationshipsResponse)(nil),             // 263: console.v1.ListBusinessObjectRelationshipsResponse
-	(*v1.CreateBusinessObjectRelationshipResponse)(nil),            // 264: console.v1.CreateBusinessObjectRelationshipResponse
-	(*v1.DeleteBusinessObjectRelationshipResponse)(nil),            // 265: console.v1.DeleteBusinessObjectRelationshipResponse
-	(*v1.CreateCaptureFormResponse)(nil),                           // 266: console.v1.CreateCaptureFormResponse
-	(*v1.ListCaptureFormsResponse)(nil),                            // 267: console.v1.ListCaptureFormsResponse
-	(*v1.GetCaptureFormResponse)(nil),                              // 268: console.v1.GetCaptureFormResponse
-	(*v1.UpdateCaptureFormResponse)(nil),                           // 269: console.v1.UpdateCaptureFormResponse
-	(*v1.PublishCaptureFormResponse)(nil),                          // 270: console.v1.PublishCaptureFormResponse
-	(*v1.RevokeCaptureFormPublicationResponse)(nil),                // 271: console.v1.RevokeCaptureFormPublicationResponse
-	(*v1.CreateCaptureFormInvitationResponse)(nil),                 // 272: console.v1.CreateCaptureFormInvitationResponse
-	(*v1.RevokeCaptureFormInvitationResponse)(nil),                 // 273: console.v1.RevokeCaptureFormInvitationResponse
-	(*v1.GetInvitedCaptureFormResponse)(nil),                       // 274: console.v1.GetInvitedCaptureFormResponse
-	(*v1.SubmitInvitedCaptureFormResponse)(nil),                    // 275: console.v1.SubmitInvitedCaptureFormResponse
-	(*v1.GetPublishedCaptureFormResponse)(nil),                     // 276: console.v1.GetPublishedCaptureFormResponse
-	(*v1.GetPublishedCaptureFormBrandingAssetResponse)(nil),        // 277: console.v1.GetPublishedCaptureFormBrandingAssetResponse
-	(*v1.SubmitPublishedCaptureFormResponse)(nil),                  // 278: console.v1.SubmitPublishedCaptureFormResponse
-	(*v1.BeginPublishedCaptureFormUploadResponse)(nil),             // 279: console.v1.BeginPublishedCaptureFormUploadResponse
-	(*v1.CompletePublishedCaptureFormUploadResponse)(nil),          // 280: console.v1.CompletePublishedCaptureFormUploadResponse
-	(*v1.GetCaptureFormSubmissionResponse)(nil),                    // 281: console.v1.GetCaptureFormSubmissionResponse
-	(*v1.ListCaptureFormSubmissionsResponse)(nil),                  // 282: console.v1.ListCaptureFormSubmissionsResponse
-	(*v1.ReviewCaptureFormSubmissionResponse)(nil),                 // 283: console.v1.ReviewCaptureFormSubmissionResponse
-	(*v1.GetInferenceCreditAutoRefillResponse)(nil),                // 284: console.v1.GetInferenceCreditAutoRefillResponse
-	(*v1.UpdateInferenceCreditAutoRefillResponse)(nil),             // 285: console.v1.UpdateInferenceCreditAutoRefillResponse
-	(*v1.CompleteInferenceCreditAutoRefillResponse)(nil),           // 286: console.v1.CompleteInferenceCreditAutoRefillResponse
-	(*v1.ListInferenceCreditReceiptsResponse)(nil),                 // 287: console.v1.ListInferenceCreditReceiptsResponse
-	(*v1.GetInferenceCreditBalanceResponse)(nil),                   // 288: console.v1.GetInferenceCreditBalanceResponse
-	(*v1.CreateInferenceCreditCheckoutResponse)(nil),               // 289: console.v1.CreateInferenceCreditCheckoutResponse
-	(*v1.FulfillInferenceCreditCheckoutResponse)(nil),              // 290: console.v1.FulfillInferenceCreditCheckoutResponse
-	(*v1.GetOverviewResponse)(nil),                                 // 291: console.v1.GetOverviewResponse
-	(*v1.ListAssetsResponse)(nil),                                  // 292: console.v1.ListAssetsResponse
-	(*v1.GetAssetResponse)(nil),                                    // 293: console.v1.GetAssetResponse
-	(*v1.ListFindingsResponse)(nil),                                // 294: console.v1.ListFindingsResponse
-	(*v1.GetTraceDrilldownResponse)(nil),                           // 295: console.v1.GetTraceDrilldownResponse
-	(*v1.GetOnboardingPlanResponse)(nil),                           // 296: console.v1.GetOnboardingPlanResponse
-	(*v1.ListAuthorityPostureResponse)(nil),                        // 297: console.v1.ListAuthorityPostureResponse
-	(*v1.ListAgentWorkforceRecordsResponse)(nil),                   // 298: console.v1.ListAgentWorkforceRecordsResponse
-	(*v1.SubmitAgentWorkforceEvidenceResponse)(nil),                // 299: console.v1.SubmitAgentWorkforceEvidenceResponse
-	(*v1.ListIntegrationTilesResponse)(nil),                        // 300: console.v1.ListIntegrationTilesResponse
-	(*v1.ListPinnedSourcesResponse)(nil),                           // 301: console.v1.ListPinnedSourcesResponse
-	(*v1.ListOrbControlTargetsResponse)(nil),                       // 302: console.v1.ListOrbControlTargetsResponse
-	(*v1.GetOrbControlTargetResponse)(nil),                         // 303: console.v1.GetOrbControlTargetResponse
-	(*v1.SubmitOrbControlActionResponse)(nil),                      // 304: console.v1.SubmitOrbControlActionResponse
-	(*v1.SetPinnedSourceResponse)(nil),                             // 305: console.v1.SetPinnedSourceResponse
-	(*v1.UnpinSourceResponse)(nil),                                 // 306: console.v1.UnpinSourceResponse
-	(*v1.ListActivityResponse)(nil),                                // 307: console.v1.ListActivityResponse
-	(*v1.SearchStaffWorkspaceDirectoryResponse)(nil),               // 308: console.v1.SearchStaffWorkspaceDirectoryResponse
-	(*v1.GetStaffWorkspaceContextResponse)(nil),                    // 309: console.v1.GetStaffWorkspaceContextResponse
-	(*v11.GetPrepaidCreditBalanceResponse)(nil),                    // 310: meter.v1.GetPrepaidCreditBalanceResponse
-	(*v11.GrantDevelopmentCreditsResponse)(nil),                    // 311: meter.v1.GrantDevelopmentCreditsResponse
-	(*v11.QueryUsageResponse)(nil),                                 // 312: meter.v1.QueryUsageResponse
-	(*v11.GetBudgetDashboardResponse)(nil),                         // 313: meter.v1.GetBudgetDashboardResponse
-	(*v11.SetBudgetResponse)(nil),                                  // 314: meter.v1.SetBudgetResponse
-	(*v1.GetManagedInferenceReadinessResponse)(nil),                // 315: console.v1.GetManagedInferenceReadinessResponse
-	(*v1.ListManagedProviderAccessEventsResponse)(nil),             // 316: console.v1.ListManagedProviderAccessEventsResponse
-	(*v11.ListManagedInferenceAdminEventsResponse)(nil),            // 317: meter.v1.ListManagedInferenceAdminEventsResponse
-	(*v1.ListStaffManagedExecutionGrantEventsResponse)(nil),        // 318: console.v1.ListStaffManagedExecutionGrantEventsResponse
-	(*v1.ListStaffManagedExecutionOutcomesResponse)(nil),           // 319: console.v1.ListStaffManagedExecutionOutcomesResponse
-	(*v1.ListManagedProviderAccessGrantsResponse)(nil),             // 320: console.v1.ListManagedProviderAccessGrantsResponse
-	(*v1.UpsertManagedProviderAccessGrantResponse)(nil),            // 321: console.v1.UpsertManagedProviderAccessGrantResponse
-	(*v1.RevokeManagedProviderAccessGrantResponse)(nil),            // 322: console.v1.RevokeManagedProviderAccessGrantResponse
-	(*v1.GetStaffInferenceRoutingProfileResponse)(nil),             // 323: console.v1.GetStaffInferenceRoutingProfileResponse
-	(*v1.UpdateStaffInferenceRoutingProfileResponse)(nil),          // 324: console.v1.UpdateStaffInferenceRoutingProfileResponse
-	(*v1.ListCostUsageResponse)(nil),                               // 325: console.v1.ListCostUsageResponse
-	(*v1.ListEvalResultsResponse)(nil),                             // 326: console.v1.ListEvalResultsResponse
-	(*v1.RecordProviderCostSnapshotResponse)(nil),                  // 327: console.v1.RecordProviderCostSnapshotResponse
-	(*v1.GetConsoleBootSnapshotResponse)(nil),                      // 328: console.v1.GetConsoleBootSnapshotResponse
-	(*v1.GetOperatorPreferencesResponse)(nil),                      // 329: console.v1.GetOperatorPreferencesResponse
-	(*v1.UpdateOperatorPreferencesResponse)(nil),                   // 330: console.v1.UpdateOperatorPreferencesResponse
-	(*v1.ListWorkspaceGuardrailRulesResponse)(nil),                 // 331: console.v1.ListWorkspaceGuardrailRulesResponse
-	(*v1.CreateDexMcpServerResponse)(nil),                          // 332: console.v1.CreateDexMcpServerResponse
-	(*v1.ListDexMcpServersResponse)(nil),                           // 333: console.v1.ListDexMcpServersResponse
-	(*v1.GetDexMcpServerResponse)(nil),                             // 334: console.v1.GetDexMcpServerResponse
-	(*v1.DiscoverDexMcpServerResponse)(nil),                        // 335: console.v1.DiscoverDexMcpServerResponse
-	(*v1.UpdateDexMcpServerResponse)(nil),                          // 336: console.v1.UpdateDexMcpServerResponse
-	(*v1.DeleteDexMcpServerResponse)(nil),                          // 337: console.v1.DeleteDexMcpServerResponse
-	(*v1.InitiateDexMcpOAuthProfileResponse)(nil),                  // 338: console.v1.InitiateDexMcpOAuthProfileResponse
-	(*v1.CompleteDexMcpOAuthProfileResponse)(nil),                  // 339: console.v1.CompleteDexMcpOAuthProfileResponse
-	(*v1.ListDexMcpOAuthProfilesResponse)(nil),                     // 340: console.v1.ListDexMcpOAuthProfilesResponse
-	(*v1.RevokeDexMcpOAuthProfileResponse)(nil),                    // 341: console.v1.RevokeDexMcpOAuthProfileResponse
-	(*v1.ReauthorizeDexMcpOAuthProfileResponse)(nil),               // 342: console.v1.ReauthorizeDexMcpOAuthProfileResponse
-	(*v1.RegisterPrivateEndpointResponse)(nil),                     // 343: console.v1.RegisterPrivateEndpointResponse
-	(*v1.VerifyPrivateEndpointResponse)(nil),                       // 344: console.v1.VerifyPrivateEndpointResponse
-	(*v1.ListPrivateEndpointsResponse)(nil),                        // 345: console.v1.ListPrivateEndpointsResponse
-	(*v1.DeletePrivateEndpointResponse)(nil),                       // 346: console.v1.DeletePrivateEndpointResponse
-	(*v1.AttachPrivateEndpointToProfileResponse)(nil),              // 347: console.v1.AttachPrivateEndpointToProfileResponse
-	(*v1.ListGatewayEgressOriginsResponse)(nil),                    // 348: console.v1.ListGatewayEgressOriginsResponse
-	(*v1.ListOperatingChannelsResponse)(nil),                       // 349: console.v1.ListOperatingChannelsResponse
-	(*v1.ListOperatingJobsResponse)(nil),                           // 350: console.v1.ListOperatingJobsResponse
-	(*v1.ArchiveOperatingThreadResponse)(nil),                      // 351: console.v1.ArchiveOperatingThreadResponse
-	(*v1.ForkOperatingThreadResponse)(nil),                         // 352: console.v1.ForkOperatingThreadResponse
-	(*v1.RenameOperatingThreadResponse)(nil),                       // 353: console.v1.RenameOperatingThreadResponse
-	(*v1.GetOperatingThreadResponse)(nil),                          // 354: console.v1.GetOperatingThreadResponse
-	(*v1.BootstrapThreadGatewayResponse)(nil),                      // 355: console.v1.BootstrapThreadGatewayResponse
-	(*v1.PrewarmOperatingThreadResponse)(nil),                      // 356: console.v1.PrewarmOperatingThreadResponse
-	(*v1.RespondOperatingThreadResponse)(nil),                      // 357: console.v1.RespondOperatingThreadResponse
-	(*v1.InterruptOperatingThreadResponse)(nil),                    // 358: console.v1.InterruptOperatingThreadResponse
-	(*v1.SetOperatingThreadControllerResponse)(nil),                // 359: console.v1.SetOperatingThreadControllerResponse
-	(*v1.ListOperatingThreadEventsResponse)(nil),                   // 360: console.v1.ListOperatingThreadEventsResponse
-	(*v1.WatchOperatingThreadResponse)(nil),                        // 361: console.v1.WatchOperatingThreadResponse
-	(*v1.SearchOperatingHistoryResponse)(nil),                      // 362: console.v1.SearchOperatingHistoryResponse
-	(*v1.GetOperatingHistoryContextResponse)(nil),                  // 363: console.v1.GetOperatingHistoryContextResponse
-	(*v1.GetOperatingReceiptResponse)(nil),                         // 364: console.v1.GetOperatingReceiptResponse
-	(*v1.SubmitComputerMissionResponse)(nil),                       // 365: console.v1.SubmitComputerMissionResponse
-	(*v1.GetComputerMissionResponse)(nil),                          // 366: console.v1.GetComputerMissionResponse
-	(*v1.CancelComputerMissionResponse)(nil),                       // 367: console.v1.CancelComputerMissionResponse
-	(*v1.ContinueComputerMissionResponse)(nil),                     // 368: console.v1.ContinueComputerMissionResponse
-	(*v1.PauseComputerMissionResponse)(nil),                        // 369: console.v1.PauseComputerMissionResponse
-	(*v1.ResumeComputerMissionResponse)(nil),                       // 370: console.v1.ResumeComputerMissionResponse
-	(*v1.WakeComputerMissionResponse)(nil),                         // 371: console.v1.WakeComputerMissionResponse
-	(*v1.GuideComputerMissionResponse)(nil),                        // 372: console.v1.GuideComputerMissionResponse
-	(*v1.ListComputerMissionCanaryDefinitionsResponse)(nil),        // 373: console.v1.ListComputerMissionCanaryDefinitionsResponse
-	(*v1.StartComputerMissionCanaryRunResponse)(nil),               // 374: console.v1.StartComputerMissionCanaryRunResponse
-	(*v1.GetComputerMissionCanaryRunResponse)(nil),                 // 375: console.v1.GetComputerMissionCanaryRunResponse
-	(*v1.ListComputerMissionCanaryRunsResponse)(nil),               // 376: console.v1.ListComputerMissionCanaryRunsResponse
-	(*v1.GetComputerMissionCanaryEvidenceResponse)(nil),            // 377: console.v1.GetComputerMissionCanaryEvidenceResponse
-	(*v1.OperateComputerMissionCanaryRunResponse)(nil),             // 378: console.v1.OperateComputerMissionCanaryRunResponse
-	(*v1.CreateMissionScheduleResponse)(nil),                       // 379: console.v1.CreateMissionScheduleResponse
-	(*v1.UpdateMissionScheduleResponse)(nil),                       // 380: console.v1.UpdateMissionScheduleResponse
-	(*v1.SetMissionScheduleEnabledResponse)(nil),                   // 381: console.v1.SetMissionScheduleEnabledResponse
-	(*v1.ListMissionSchedulesResponse)(nil),                        // 382: console.v1.ListMissionSchedulesResponse
-	(*v1.CreateConnectorTriggerResponse)(nil),                      // 383: console.v1.CreateConnectorTriggerResponse
-	(*v1.UpdateConnectorTriggerResponse)(nil),                      // 384: console.v1.UpdateConnectorTriggerResponse
-	(*v1.ListConnectorTriggersResponse)(nil),                       // 385: console.v1.ListConnectorTriggersResponse
-	(*v1.DeleteConnectorTriggerResponse)(nil),                      // 386: console.v1.DeleteConnectorTriggerResponse
-	(*v1.SetConnectorTriggerEnabledResponse)(nil),                  // 387: console.v1.SetConnectorTriggerEnabledResponse
-	(*v1.ReserveComputerMissionApexSessionResponse)(nil),           // 388: console.v1.ReserveComputerMissionApexSessionResponse
-	(*v1.BindComputerMissionApexSessionReservationResponse)(nil),   // 389: console.v1.BindComputerMissionApexSessionReservationResponse
-	(*v1.BindComputerMissionApexInstructionMetadataResponse)(nil),  // 390: console.v1.BindComputerMissionApexInstructionMetadataResponse
-	(*v1.AuthorizeComputerMissionApexSessionAdoptionResponse)(nil), // 391: console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse
-	(*v1.ResolveOperatingReceiptActionResponse)(nil),               // 392: console.v1.ResolveOperatingReceiptActionResponse
-	(*v1.SubmitOperatingMessageResponse)(nil),                      // 393: console.v1.SubmitOperatingMessageResponse
-	(*v1.SubmitOperatingCorrectionResponse)(nil),                   // 394: console.v1.SubmitOperatingCorrectionResponse
-	(*v1.ListWorkspaceMemoriesResponse)(nil),                       // 395: console.v1.ListWorkspaceMemoriesResponse
-	(*v1.CorrectWorkspaceMemoryResponse)(nil),                      // 396: console.v1.CorrectWorkspaceMemoryResponse
-	(*v1.ReviewWorkspaceMemoryResponse)(nil),                       // 397: console.v1.ReviewWorkspaceMemoryResponse
-	(*v1.ForgetWorkspaceMemoryResponse)(nil),                       // 398: console.v1.ForgetWorkspaceMemoryResponse
-	(*v1.SubmitOperatingFeedbackResponse)(nil),                     // 399: console.v1.SubmitOperatingFeedbackResponse
-	(*v1.RecordOperatingHomepageSuggestionFeedbackResponse)(nil),   // 400: console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
-	(*v1.SubmitProductIssueReportResponse)(nil),                    // 401: console.v1.SubmitProductIssueReportResponse
-	(*v1.ListStaffProductIssueReportsResponse)(nil),                // 402: console.v1.ListStaffProductIssueReportsResponse
-	(*v1.EngageStaffProductIssueReportResponse)(nil),               // 403: console.v1.EngageStaffProductIssueReportResponse
-	(*v1.ListStaffProductIssueRecoveriesResponse)(nil),             // 404: console.v1.ListStaffProductIssueRecoveriesResponse
-	(*v1.ProductIssueRecoveryResponse)(nil),                        // 405: console.v1.ProductIssueRecoveryResponse
-	(*v1.GetOperatingFeedbackResponse)(nil),                        // 406: console.v1.GetOperatingFeedbackResponse
-	(*v1.ResolveOperatingFeedbackRemediationResponse)(nil),         // 407: console.v1.ResolveOperatingFeedbackRemediationResponse
-	(*v1.ListCustomerIntelligenceFactsResponse)(nil),               // 408: console.v1.ListCustomerIntelligenceFactsResponse
-	(*v1.GetCustomerIntelligenceFactResponse)(nil),                 // 409: console.v1.GetCustomerIntelligenceFactResponse
-	(*v1.ReviewCustomerIntelligenceFactResponse)(nil),              // 410: console.v1.ReviewCustomerIntelligenceFactResponse
-	(*v1.ProposeCustomerIntelligenceFactResponse)(nil),             // 411: console.v1.ProposeCustomerIntelligenceFactResponse
-	(*v1.RespondToCustomerFactConfirmationResponse)(nil),           // 412: console.v1.RespondToCustomerFactConfirmationResponse
-	(*v1.AggregateCustomerIntelligencePatternsResponse)(nil),       // 413: console.v1.AggregateCustomerIntelligencePatternsResponse
-	(*v1.CreateProspectingWatchProgramResponse)(nil),               // 414: console.v1.CreateProspectingWatchProgramResponse
-	(*v1.GetProspectingWatchProgramResponse)(nil),                  // 415: console.v1.GetProspectingWatchProgramResponse
-	(*v1.ListProspectingWatchProgramsResponse)(nil),                // 416: console.v1.ListProspectingWatchProgramsResponse
-	(*v1.UpdateProspectingWatchProgramResponse)(nil),               // 417: console.v1.UpdateProspectingWatchProgramResponse
-	(*v1.CreateProspectingDraftResponse)(nil),                      // 418: console.v1.CreateProspectingDraftResponse
-	(*v1.ListProspectingDraftsResponse)(nil),                       // 419: console.v1.ListProspectingDraftsResponse
-	(*v1.ReviewProspectingDraftResponse)(nil),                      // 420: console.v1.ReviewProspectingDraftResponse
-	(*v1.ListOperatingCorrectionsResponse)(nil),                    // 421: console.v1.ListOperatingCorrectionsResponse
-	(*v1.ReviewOperatingCorrectionResponse)(nil),                   // 422: console.v1.ReviewOperatingCorrectionResponse
-	(*v1.BeginOperatingAttachmentUploadResponse)(nil),              // 423: console.v1.BeginOperatingAttachmentUploadResponse
-	(*v1.CompleteOperatingAttachmentUploadResponse)(nil),           // 424: console.v1.CompleteOperatingAttachmentUploadResponse
-	(*v1.AcceptOperatingProjectSnapshotResponse)(nil),              // 425: console.v1.AcceptOperatingProjectSnapshotResponse
-	(*v1.GetOperatingTaskEnvironmentResponse)(nil),                 // 426: console.v1.GetOperatingTaskEnvironmentResponse
-	(*v1.ListOperatingAttachmentsResponse)(nil),                    // 427: console.v1.ListOperatingAttachmentsResponse
-	(*v1.GetPrivacySettingsResponse)(nil),                          // 428: console.v1.GetPrivacySettingsResponse
-	(*v1.GetWorkspaceSettingsResponse)(nil),                        // 429: console.v1.GetWorkspaceSettingsResponse
-	(*v1.GetBillingSubscriptionResponse)(nil),                      // 430: console.v1.GetBillingSubscriptionResponse
-	(*v1.CreateBillingPortalSessionResponse)(nil),                  // 431: console.v1.CreateBillingPortalSessionResponse
-	(*v1.CreateBillingCheckoutSessionResponse)(nil),                // 432: console.v1.CreateBillingCheckoutSessionResponse
-	(*v1.UpdateWorkspaceProfileResponse)(nil),                      // 433: console.v1.UpdateWorkspaceProfileResponse
-	(*v1.ArchiveWorkspaceResponse)(nil),                            // 434: console.v1.ArchiveWorkspaceResponse
-	(*v1.UpdateWorkspacePolicyResponse)(nil),                       // 435: console.v1.UpdateWorkspacePolicyResponse
-	(*v1.UpdateWorkspaceDexPolicyResponse)(nil),                    // 436: console.v1.UpdateWorkspaceDexPolicyResponse
-	(*v1.UpdateWorkspaceArtifactStyleGuideResponse)(nil),           // 437: console.v1.UpdateWorkspaceArtifactStyleGuideResponse
-	(*v1.EvaluateWorkspaceArtifactStyleGuideResponse)(nil),         // 438: console.v1.EvaluateWorkspaceArtifactStyleGuideResponse
-	(*v1.UpsertWorkspaceIdentityProviderResponse)(nil),             // 439: console.v1.UpsertWorkspaceIdentityProviderResponse
-	(*v1.RemoveWorkspaceIdentityProviderResponse)(nil),             // 440: console.v1.RemoveWorkspaceIdentityProviderResponse
-	(*v1.UpsertWorkspaceIntegrationResponse)(nil),                  // 441: console.v1.UpsertWorkspaceIntegrationResponse
-	(*v1.RemoveWorkspaceIntegrationResponse)(nil),                  // 442: console.v1.RemoveWorkspaceIntegrationResponse
-	(*v1.ListWorkspaceSkillsResponse)(nil),                         // 443: console.v1.ListWorkspaceSkillsResponse
-	(*v1.BrowseDexSkillCatalogResponse)(nil),                       // 444: console.v1.BrowseDexSkillCatalogResponse
-	(*v1.InstallDexSkillCatalogEntryResponse)(nil),                 // 445: console.v1.InstallDexSkillCatalogEntryResponse
-	(*v1.CreateWorkspaceSkillResponse)(nil),                        // 446: console.v1.CreateWorkspaceSkillResponse
-	(*v1.UpdateWorkspaceSkillResponse)(nil),                        // 447: console.v1.UpdateWorkspaceSkillResponse
-	(*v1.DeleteWorkspaceSkillResponse)(nil),                        // 448: console.v1.DeleteWorkspaceSkillResponse
-	(*v1.ListScenarioFixturesResponse)(nil),                        // 449: console.v1.ListScenarioFixturesResponse
-	(*v1.PromoteScenarioFixtureResponse)(nil),                      // 450: console.v1.PromoteScenarioFixtureResponse
-	(*v1.CompareScenarioFixturesResponse)(nil),                     // 451: console.v1.CompareScenarioFixturesResponse
-	(*v1.CreateConnectorProfileResponse)(nil),                      // 452: console.v1.CreateConnectorProfileResponse
-	(*v1.ListConnectorProfilesResponse)(nil),                       // 453: console.v1.ListConnectorProfilesResponse
-	(*v1.UpdateConnectorProfileResponse)(nil),                      // 454: console.v1.UpdateConnectorProfileResponse
-	(*v1.DeleteConnectorProfileResponse)(nil),                      // 455: console.v1.DeleteConnectorProfileResponse
-	(*v1.ListConnectedCallsResponse)(nil),                          // 456: console.v1.ListConnectedCallsResponse
-	(*v1.StartMeetingCaptureResponse)(nil),                         // 457: console.v1.StartMeetingCaptureResponse
-	(*v1.GetMeetingCaptureResponse)(nil),                           // 458: console.v1.GetMeetingCaptureResponse
-	(*v1.ListMeetingCapturesResponse)(nil),                         // 459: console.v1.ListMeetingCapturesResponse
-	(*v1.StopMeetingCaptureResponse)(nil),                          // 460: console.v1.StopMeetingCaptureResponse
-	(*v1.ListCommitmentsResponse)(nil),                             // 461: console.v1.ListCommitmentsResponse
+	(*v1.RecordComplianceAssessmentRequest)(nil),                   // 1: console.v1.RecordComplianceAssessmentRequest
+	(*v1.GetComplianceAssessmentRequest)(nil),                      // 2: console.v1.GetComplianceAssessmentRequest
+	(*v1.ListBusinessBlueprintsRequest)(nil),                       // 3: console.v1.ListBusinessBlueprintsRequest
+	(*v1.CloneBusinessBlueprintRequest)(nil),                       // 4: console.v1.CloneBusinessBlueprintRequest
+	(*v1.GetBusinessProcessDefinitionRequest)(nil),                 // 5: console.v1.GetBusinessProcessDefinitionRequest
+	(*v1.ListBusinessProcessDefinitionsRequest)(nil),               // 6: console.v1.ListBusinessProcessDefinitionsRequest
+	(*v1.DefineBusinessProcessRequest)(nil),                        // 7: console.v1.DefineBusinessProcessRequest
+	(*v1.StartBusinessProcessRequest)(nil),                         // 8: console.v1.StartBusinessProcessRequest
+	(*v1.GetBusinessProcessRequest)(nil),                           // 9: console.v1.GetBusinessProcessRequest
+	(*v1.ListBusinessProcessesRequest)(nil),                        // 10: console.v1.ListBusinessProcessesRequest
+	(*v1.TransitionBusinessProcessRequest)(nil),                    // 11: console.v1.TransitionBusinessProcessRequest
+	(*v1.PrepareBusinessObjectAuthorityTransferRequest)(nil),       // 12: console.v1.PrepareBusinessObjectAuthorityTransferRequest
+	(*v1.FinalizeBusinessObjectAuthorityTransferRequest)(nil),      // 13: console.v1.FinalizeBusinessObjectAuthorityTransferRequest
+	(*v1.DefineBusinessObjectTypeRequest)(nil),                     // 14: console.v1.DefineBusinessObjectTypeRequest
+	(*v1.GetBusinessObjectTypeRequest)(nil),                        // 15: console.v1.GetBusinessObjectTypeRequest
+	(*v1.ListBusinessObjectTypesRequest)(nil),                      // 16: console.v1.ListBusinessObjectTypesRequest
+	(*v1.CreateBusinessObjectRequest)(nil),                         // 17: console.v1.CreateBusinessObjectRequest
+	(*v1.GetBusinessObjectRequest)(nil),                            // 18: console.v1.GetBusinessObjectRequest
+	(*v1.ListBusinessObjectsRequest)(nil),                          // 19: console.v1.ListBusinessObjectsRequest
+	(*v1.UpdateBusinessObjectRequest)(nil),                         // 20: console.v1.UpdateBusinessObjectRequest
+	(*v1.DeleteBusinessObjectRequest)(nil),                         // 21: console.v1.DeleteBusinessObjectRequest
+	(*v1.ListBusinessObjectRevisionsRequest)(nil),                  // 22: console.v1.ListBusinessObjectRevisionsRequest
+	(*v1.BindBusinessObjectSourceRequest)(nil),                     // 23: console.v1.BindBusinessObjectSourceRequest
+	(*v1.AdmitBusinessObjectObservationRequest)(nil),               // 24: console.v1.AdmitBusinessObjectObservationRequest
+	(*v1.ListBusinessObjectRelationshipsRequest)(nil),              // 25: console.v1.ListBusinessObjectRelationshipsRequest
+	(*v1.CreateBusinessObjectRelationshipRequest)(nil),             // 26: console.v1.CreateBusinessObjectRelationshipRequest
+	(*v1.DeleteBusinessObjectRelationshipRequest)(nil),             // 27: console.v1.DeleteBusinessObjectRelationshipRequest
+	(*v1.CreateCaptureFormRequest)(nil),                            // 28: console.v1.CreateCaptureFormRequest
+	(*v1.ListCaptureFormsRequest)(nil),                             // 29: console.v1.ListCaptureFormsRequest
+	(*v1.GetCaptureFormRequest)(nil),                               // 30: console.v1.GetCaptureFormRequest
+	(*v1.UpdateCaptureFormRequest)(nil),                            // 31: console.v1.UpdateCaptureFormRequest
+	(*v1.PublishCaptureFormRequest)(nil),                           // 32: console.v1.PublishCaptureFormRequest
+	(*v1.RevokeCaptureFormPublicationRequest)(nil),                 // 33: console.v1.RevokeCaptureFormPublicationRequest
+	(*v1.CreateCaptureFormInvitationRequest)(nil),                  // 34: console.v1.CreateCaptureFormInvitationRequest
+	(*v1.RevokeCaptureFormInvitationRequest)(nil),                  // 35: console.v1.RevokeCaptureFormInvitationRequest
+	(*v1.GetInvitedCaptureFormRequest)(nil),                        // 36: console.v1.GetInvitedCaptureFormRequest
+	(*v1.SubmitInvitedCaptureFormRequest)(nil),                     // 37: console.v1.SubmitInvitedCaptureFormRequest
+	(*v1.GetPublishedCaptureFormRequest)(nil),                      // 38: console.v1.GetPublishedCaptureFormRequest
+	(*v1.GetPublishedCaptureFormBrandingAssetRequest)(nil),         // 39: console.v1.GetPublishedCaptureFormBrandingAssetRequest
+	(*v1.SubmitPublishedCaptureFormRequest)(nil),                   // 40: console.v1.SubmitPublishedCaptureFormRequest
+	(*v1.BeginPublishedCaptureFormUploadRequest)(nil),              // 41: console.v1.BeginPublishedCaptureFormUploadRequest
+	(*v1.CompletePublishedCaptureFormUploadRequest)(nil),           // 42: console.v1.CompletePublishedCaptureFormUploadRequest
+	(*v1.GetCaptureFormSubmissionRequest)(nil),                     // 43: console.v1.GetCaptureFormSubmissionRequest
+	(*v1.ListCaptureFormSubmissionsRequest)(nil),                   // 44: console.v1.ListCaptureFormSubmissionsRequest
+	(*v1.ReviewCaptureFormSubmissionRequest)(nil),                  // 45: console.v1.ReviewCaptureFormSubmissionRequest
+	(*v1.GetInferenceCreditAutoRefillRequest)(nil),                 // 46: console.v1.GetInferenceCreditAutoRefillRequest
+	(*v1.UpdateInferenceCreditAutoRefillRequest)(nil),              // 47: console.v1.UpdateInferenceCreditAutoRefillRequest
+	(*v1.CompleteInferenceCreditAutoRefillRequest)(nil),            // 48: console.v1.CompleteInferenceCreditAutoRefillRequest
+	(*v1.ListInferenceCreditReceiptsRequest)(nil),                  // 49: console.v1.ListInferenceCreditReceiptsRequest
+	(*v1.GetInferenceCreditBalanceRequest)(nil),                    // 50: console.v1.GetInferenceCreditBalanceRequest
+	(*v1.CreateInferenceCreditCheckoutRequest)(nil),                // 51: console.v1.CreateInferenceCreditCheckoutRequest
+	(*v1.FulfillInferenceCreditCheckoutRequest)(nil),               // 52: console.v1.FulfillInferenceCreditCheckoutRequest
+	(*v1.GetOverviewRequest)(nil),                                  // 53: console.v1.GetOverviewRequest
+	(*v1.ListAssetsRequest)(nil),                                   // 54: console.v1.ListAssetsRequest
+	(*v1.GetAssetRequest)(nil),                                     // 55: console.v1.GetAssetRequest
+	(*v1.ListFindingsRequest)(nil),                                 // 56: console.v1.ListFindingsRequest
+	(*v1.GetTraceDrilldownRequest)(nil),                            // 57: console.v1.GetTraceDrilldownRequest
+	(*v1.GetOnboardingPlanRequest)(nil),                            // 58: console.v1.GetOnboardingPlanRequest
+	(*v1.ListAuthorityPostureRequest)(nil),                         // 59: console.v1.ListAuthorityPostureRequest
+	(*v1.ListAgentWorkforceRecordsRequest)(nil),                    // 60: console.v1.ListAgentWorkforceRecordsRequest
+	(*v1.SubmitAgentWorkforceEvidenceRequest)(nil),                 // 61: console.v1.SubmitAgentWorkforceEvidenceRequest
+	(*v1.ListIntegrationTilesRequest)(nil),                         // 62: console.v1.ListIntegrationTilesRequest
+	(*v1.ListPinnedSourcesRequest)(nil),                            // 63: console.v1.ListPinnedSourcesRequest
+	(*v1.ListOrbControlTargetsRequest)(nil),                        // 64: console.v1.ListOrbControlTargetsRequest
+	(*v1.GetOrbControlTargetRequest)(nil),                          // 65: console.v1.GetOrbControlTargetRequest
+	(*v1.SubmitOrbControlActionRequest)(nil),                       // 66: console.v1.SubmitOrbControlActionRequest
+	(*v1.SetPinnedSourceRequest)(nil),                              // 67: console.v1.SetPinnedSourceRequest
+	(*v1.UnpinSourceRequest)(nil),                                  // 68: console.v1.UnpinSourceRequest
+	(*v1.ListActivityRequest)(nil),                                 // 69: console.v1.ListActivityRequest
+	(*v1.SearchStaffWorkspaceDirectoryRequest)(nil),                // 70: console.v1.SearchStaffWorkspaceDirectoryRequest
+	(*v1.GetStaffWorkspaceContextRequest)(nil),                     // 71: console.v1.GetStaffWorkspaceContextRequest
+	(*v1.GetStaffManagedInferenceFundingRequest)(nil),              // 72: console.v1.GetStaffManagedInferenceFundingRequest
+	(*v1.GrantStaffManagedInferenceCreditsRequest)(nil),            // 73: console.v1.GrantStaffManagedInferenceCreditsRequest
+	(*v1.GetStaffManagedInferenceUsageRequest)(nil),                // 74: console.v1.GetStaffManagedInferenceUsageRequest
+	(*v1.GetStaffManagedInferenceBudgetRequest)(nil),               // 75: console.v1.GetStaffManagedInferenceBudgetRequest
+	(*v1.SetStaffManagedInferenceBudgetRequest)(nil),               // 76: console.v1.SetStaffManagedInferenceBudgetRequest
+	(*v1.GetStaffManagedInferenceReadinessRequest)(nil),            // 77: console.v1.GetStaffManagedInferenceReadinessRequest
+	(*v1.GetManagedInferenceReadinessRequest)(nil),                 // 78: console.v1.GetManagedInferenceReadinessRequest
+	(*v1.ListManagedProviderAccessEventsRequest)(nil),              // 79: console.v1.ListManagedProviderAccessEventsRequest
+	(*v1.ListStaffManagedInferenceAdminEventsRequest)(nil),         // 80: console.v1.ListStaffManagedInferenceAdminEventsRequest
+	(*v1.ListStaffManagedExecutionGrantEventsRequest)(nil),         // 81: console.v1.ListStaffManagedExecutionGrantEventsRequest
+	(*v1.ListStaffManagedExecutionOutcomesRequest)(nil),            // 82: console.v1.ListStaffManagedExecutionOutcomesRequest
+	(*v1.ListManagedProviderAccessGrantsRequest)(nil),              // 83: console.v1.ListManagedProviderAccessGrantsRequest
+	(*v1.UpsertManagedProviderAccessGrantRequest)(nil),             // 84: console.v1.UpsertManagedProviderAccessGrantRequest
+	(*v1.RevokeManagedProviderAccessGrantRequest)(nil),             // 85: console.v1.RevokeManagedProviderAccessGrantRequest
+	(*v1.GetStaffInferenceRoutingProfileRequest)(nil),              // 86: console.v1.GetStaffInferenceRoutingProfileRequest
+	(*v1.UpdateStaffInferenceRoutingProfileRequest)(nil),           // 87: console.v1.UpdateStaffInferenceRoutingProfileRequest
+	(*v1.ListCostUsageRequest)(nil),                                // 88: console.v1.ListCostUsageRequest
+	(*v1.ListEvalResultsRequest)(nil),                              // 89: console.v1.ListEvalResultsRequest
+	(*v1.RecordProviderCostSnapshotRequest)(nil),                   // 90: console.v1.RecordProviderCostSnapshotRequest
+	(*v1.GetConsoleBootSnapshotRequest)(nil),                       // 91: console.v1.GetConsoleBootSnapshotRequest
+	(*v1.GetOperatorPreferencesRequest)(nil),                       // 92: console.v1.GetOperatorPreferencesRequest
+	(*v1.UpdateOperatorPreferencesRequest)(nil),                    // 93: console.v1.UpdateOperatorPreferencesRequest
+	(*v1.ListWorkspaceGuardrailRulesRequest)(nil),                  // 94: console.v1.ListWorkspaceGuardrailRulesRequest
+	(*v1.UpsertWorkspaceGuardrailRuleRequest)(nil),                 // 95: console.v1.UpsertWorkspaceGuardrailRuleRequest
+	(*v1.RemoveWorkspaceGuardrailRuleRequest)(nil),                 // 96: console.v1.RemoveWorkspaceGuardrailRuleRequest
+	(*v1.CreateDexMcpServerRequest)(nil),                           // 97: console.v1.CreateDexMcpServerRequest
+	(*v1.ListDexMcpServersRequest)(nil),                            // 98: console.v1.ListDexMcpServersRequest
+	(*v1.GetDexMcpServerRequest)(nil),                              // 99: console.v1.GetDexMcpServerRequest
+	(*v1.DiscoverDexMcpServerRequest)(nil),                         // 100: console.v1.DiscoverDexMcpServerRequest
+	(*v1.UpdateDexMcpServerRequest)(nil),                           // 101: console.v1.UpdateDexMcpServerRequest
+	(*v1.DeleteDexMcpServerRequest)(nil),                           // 102: console.v1.DeleteDexMcpServerRequest
+	(*v1.InitiateDexMcpOAuthProfileRequest)(nil),                   // 103: console.v1.InitiateDexMcpOAuthProfileRequest
+	(*v1.CompleteDexMcpOAuthProfileRequest)(nil),                   // 104: console.v1.CompleteDexMcpOAuthProfileRequest
+	(*v1.ListDexMcpOAuthProfilesRequest)(nil),                      // 105: console.v1.ListDexMcpOAuthProfilesRequest
+	(*v1.RevokeDexMcpOAuthProfileRequest)(nil),                     // 106: console.v1.RevokeDexMcpOAuthProfileRequest
+	(*v1.ReauthorizeDexMcpOAuthProfileRequest)(nil),                // 107: console.v1.ReauthorizeDexMcpOAuthProfileRequest
+	(*v1.RegisterPrivateEndpointRequest)(nil),                      // 108: console.v1.RegisterPrivateEndpointRequest
+	(*v1.VerifyPrivateEndpointRequest)(nil),                        // 109: console.v1.VerifyPrivateEndpointRequest
+	(*v1.ListPrivateEndpointsRequest)(nil),                         // 110: console.v1.ListPrivateEndpointsRequest
+	(*v1.DeletePrivateEndpointRequest)(nil),                        // 111: console.v1.DeletePrivateEndpointRequest
+	(*v1.AttachPrivateEndpointToProfileRequest)(nil),               // 112: console.v1.AttachPrivateEndpointToProfileRequest
+	(*v1.ListGatewayEgressOriginsRequest)(nil),                     // 113: console.v1.ListGatewayEgressOriginsRequest
+	(*v1.ListOperatingChannelsRequest)(nil),                        // 114: console.v1.ListOperatingChannelsRequest
+	(*v1.ListOperatingJobsRequest)(nil),                            // 115: console.v1.ListOperatingJobsRequest
+	(*v1.ArchiveOperatingThreadRequest)(nil),                       // 116: console.v1.ArchiveOperatingThreadRequest
+	(*v1.ForkOperatingThreadRequest)(nil),                          // 117: console.v1.ForkOperatingThreadRequest
+	(*v1.RenameOperatingThreadRequest)(nil),                        // 118: console.v1.RenameOperatingThreadRequest
+	(*v1.GetOperatingThreadRequest)(nil),                           // 119: console.v1.GetOperatingThreadRequest
+	(*v1.BootstrapThreadGatewayRequest)(nil),                       // 120: console.v1.BootstrapThreadGatewayRequest
+	(*v1.PrewarmOperatingThreadRequest)(nil),                       // 121: console.v1.PrewarmOperatingThreadRequest
+	(*v1.RespondOperatingThreadRequest)(nil),                       // 122: console.v1.RespondOperatingThreadRequest
+	(*v1.InterruptOperatingThreadRequest)(nil),                     // 123: console.v1.InterruptOperatingThreadRequest
+	(*v1.SetOperatingThreadControllerRequest)(nil),                 // 124: console.v1.SetOperatingThreadControllerRequest
+	(*v1.ListOperatingThreadEventsRequest)(nil),                    // 125: console.v1.ListOperatingThreadEventsRequest
+	(*v1.WatchOperatingThreadRequest)(nil),                         // 126: console.v1.WatchOperatingThreadRequest
+	(*v1.SearchOperatingHistoryRequest)(nil),                       // 127: console.v1.SearchOperatingHistoryRequest
+	(*v1.GetOperatingHistoryContextRequest)(nil),                   // 128: console.v1.GetOperatingHistoryContextRequest
+	(*v1.GetOperatingReceiptRequest)(nil),                          // 129: console.v1.GetOperatingReceiptRequest
+	(*v1.SubmitComputerMissionRequest)(nil),                        // 130: console.v1.SubmitComputerMissionRequest
+	(*v1.GetComputerMissionRequest)(nil),                           // 131: console.v1.GetComputerMissionRequest
+	(*v1.CancelComputerMissionRequest)(nil),                        // 132: console.v1.CancelComputerMissionRequest
+	(*v1.ContinueComputerMissionRequest)(nil),                      // 133: console.v1.ContinueComputerMissionRequest
+	(*v1.PauseComputerMissionRequest)(nil),                         // 134: console.v1.PauseComputerMissionRequest
+	(*v1.ResumeComputerMissionRequest)(nil),                        // 135: console.v1.ResumeComputerMissionRequest
+	(*v1.WakeComputerMissionRequest)(nil),                          // 136: console.v1.WakeComputerMissionRequest
+	(*v1.GuideComputerMissionRequest)(nil),                         // 137: console.v1.GuideComputerMissionRequest
+	(*v1.ListComputerMissionCanaryDefinitionsRequest)(nil),         // 138: console.v1.ListComputerMissionCanaryDefinitionsRequest
+	(*v1.StartComputerMissionCanaryRunRequest)(nil),                // 139: console.v1.StartComputerMissionCanaryRunRequest
+	(*v1.GetComputerMissionCanaryRunRequest)(nil),                  // 140: console.v1.GetComputerMissionCanaryRunRequest
+	(*v1.ListComputerMissionCanaryRunsRequest)(nil),                // 141: console.v1.ListComputerMissionCanaryRunsRequest
+	(*v1.GetComputerMissionCanaryEvidenceRequest)(nil),             // 142: console.v1.GetComputerMissionCanaryEvidenceRequest
+	(*v1.OperateComputerMissionCanaryRunRequest)(nil),              // 143: console.v1.OperateComputerMissionCanaryRunRequest
+	(*v1.CreateMissionScheduleRequest)(nil),                        // 144: console.v1.CreateMissionScheduleRequest
+	(*v1.UpdateMissionScheduleRequest)(nil),                        // 145: console.v1.UpdateMissionScheduleRequest
+	(*v1.SetMissionScheduleEnabledRequest)(nil),                    // 146: console.v1.SetMissionScheduleEnabledRequest
+	(*v1.ListMissionSchedulesRequest)(nil),                         // 147: console.v1.ListMissionSchedulesRequest
+	(*v1.CreateConnectorTriggerRequest)(nil),                       // 148: console.v1.CreateConnectorTriggerRequest
+	(*v1.UpdateConnectorTriggerRequest)(nil),                       // 149: console.v1.UpdateConnectorTriggerRequest
+	(*v1.ListConnectorTriggersRequest)(nil),                        // 150: console.v1.ListConnectorTriggersRequest
+	(*v1.DeleteConnectorTriggerRequest)(nil),                       // 151: console.v1.DeleteConnectorTriggerRequest
+	(*v1.SetConnectorTriggerEnabledRequest)(nil),                   // 152: console.v1.SetConnectorTriggerEnabledRequest
+	(*v1.ReserveComputerMissionApexSessionRequest)(nil),            // 153: console.v1.ReserveComputerMissionApexSessionRequest
+	(*v1.BindComputerMissionApexSessionReservationRequest)(nil),    // 154: console.v1.BindComputerMissionApexSessionReservationRequest
+	(*v1.BindComputerMissionApexInstructionMetadataRequest)(nil),   // 155: console.v1.BindComputerMissionApexInstructionMetadataRequest
+	(*v1.AuthorizeComputerMissionApexSessionAdoptionRequest)(nil),  // 156: console.v1.AuthorizeComputerMissionApexSessionAdoptionRequest
+	(*v1.ResolveOperatingReceiptActionRequest)(nil),                // 157: console.v1.ResolveOperatingReceiptActionRequest
+	(*v1.SubmitOperatingMessageRequest)(nil),                       // 158: console.v1.SubmitOperatingMessageRequest
+	(*v1.SubmitOperatingCorrectionRequest)(nil),                    // 159: console.v1.SubmitOperatingCorrectionRequest
+	(*v1.ListWorkspaceMemoriesRequest)(nil),                        // 160: console.v1.ListWorkspaceMemoriesRequest
+	(*v1.CorrectWorkspaceMemoryRequest)(nil),                       // 161: console.v1.CorrectWorkspaceMemoryRequest
+	(*v1.ReviewWorkspaceMemoryRequest)(nil),                        // 162: console.v1.ReviewWorkspaceMemoryRequest
+	(*v1.ForgetWorkspaceMemoryRequest)(nil),                        // 163: console.v1.ForgetWorkspaceMemoryRequest
+	(*v1.SubmitOperatingFeedbackRequest)(nil),                      // 164: console.v1.SubmitOperatingFeedbackRequest
+	(*v1.RecordOperatingHomepageSuggestionFeedbackRequest)(nil),    // 165: console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
+	(*v1.SubmitProductIssueReportRequest)(nil),                     // 166: console.v1.SubmitProductIssueReportRequest
+	(*v1.SubmitNativeProductIssueReportRequest)(nil),               // 167: console.v1.SubmitNativeProductIssueReportRequest
+	(*v1.ListStaffProductIssueReportsRequest)(nil),                 // 168: console.v1.ListStaffProductIssueReportsRequest
+	(*v1.EngageStaffProductIssueReportRequest)(nil),                // 169: console.v1.EngageStaffProductIssueReportRequest
+	(*v1.ListStaffProductIssueRecoveriesRequest)(nil),              // 170: console.v1.ListStaffProductIssueRecoveriesRequest
+	(*v1.PrepareStaffProductIssueRecoveryRequest)(nil),             // 171: console.v1.PrepareStaffProductIssueRecoveryRequest
+	(*v1.ScanStaffProductIssueRecoveryRequest)(nil),                // 172: console.v1.ScanStaffProductIssueRecoveryRequest
+	(*v1.ReviewStaffProductIssueRecoveryRequest)(nil),              // 173: console.v1.ReviewStaffProductIssueRecoveryRequest
+	(*v1.ExecuteStaffProductIssueRecoveryRequest)(nil),             // 174: console.v1.ExecuteStaffProductIssueRecoveryRequest
+	(*v1.GetProductIssueRecoveryRequest)(nil),                      // 175: console.v1.GetProductIssueRecoveryRequest
+	(*v1.ReplyProductIssueRecoveryRequest)(nil),                    // 176: console.v1.ReplyProductIssueRecoveryRequest
+	(*v1.GetOperatingFeedbackRequest)(nil),                         // 177: console.v1.GetOperatingFeedbackRequest
+	(*v1.ResolveOperatingFeedbackRemediationRequest)(nil),          // 178: console.v1.ResolveOperatingFeedbackRemediationRequest
+	(*v1.ListCustomerIntelligenceFactsRequest)(nil),                // 179: console.v1.ListCustomerIntelligenceFactsRequest
+	(*v1.GetCustomerIntelligenceFactRequest)(nil),                  // 180: console.v1.GetCustomerIntelligenceFactRequest
+	(*v1.ReviewCustomerIntelligenceFactRequest)(nil),               // 181: console.v1.ReviewCustomerIntelligenceFactRequest
+	(*v1.ProposeCustomerIntelligenceFactRequest)(nil),              // 182: console.v1.ProposeCustomerIntelligenceFactRequest
+	(*v1.RespondToCustomerFactConfirmationRequest)(nil),            // 183: console.v1.RespondToCustomerFactConfirmationRequest
+	(*v1.AggregateCustomerIntelligencePatternsRequest)(nil),        // 184: console.v1.AggregateCustomerIntelligencePatternsRequest
+	(*v1.CreateProspectingWatchProgramRequest)(nil),                // 185: console.v1.CreateProspectingWatchProgramRequest
+	(*v1.GetProspectingWatchProgramRequest)(nil),                   // 186: console.v1.GetProspectingWatchProgramRequest
+	(*v1.ListProspectingWatchProgramsRequest)(nil),                 // 187: console.v1.ListProspectingWatchProgramsRequest
+	(*v1.UpdateProspectingWatchProgramRequest)(nil),                // 188: console.v1.UpdateProspectingWatchProgramRequest
+	(*v1.CreateProspectingDraftRequest)(nil),                       // 189: console.v1.CreateProspectingDraftRequest
+	(*v1.ListProspectingDraftsRequest)(nil),                        // 190: console.v1.ListProspectingDraftsRequest
+	(*v1.ReviewProspectingDraftRequest)(nil),                       // 191: console.v1.ReviewProspectingDraftRequest
+	(*v1.ListOperatingCorrectionsRequest)(nil),                     // 192: console.v1.ListOperatingCorrectionsRequest
+	(*v1.ReviewOperatingCorrectionRequest)(nil),                    // 193: console.v1.ReviewOperatingCorrectionRequest
+	(*v1.BeginOperatingAttachmentUploadRequest)(nil),               // 194: console.v1.BeginOperatingAttachmentUploadRequest
+	(*v1.CompleteOperatingAttachmentUploadRequest)(nil),            // 195: console.v1.CompleteOperatingAttachmentUploadRequest
+	(*v1.AcceptOperatingProjectSnapshotRequest)(nil),               // 196: console.v1.AcceptOperatingProjectSnapshotRequest
+	(*v1.ImportOperatingProjectSnapshotRequest)(nil),               // 197: console.v1.ImportOperatingProjectSnapshotRequest
+	(*v1.GetOperatingTaskEnvironmentRequest)(nil),                  // 198: console.v1.GetOperatingTaskEnvironmentRequest
+	(*v1.GetOperatingProjectSnapshotRequest)(nil),                  // 199: console.v1.GetOperatingProjectSnapshotRequest
+	(*v1.ListOperatingAttachmentsRequest)(nil),                     // 200: console.v1.ListOperatingAttachmentsRequest
+	(*v1.GetPrivacySettingsRequest)(nil),                           // 201: console.v1.GetPrivacySettingsRequest
+	(*v1.SetPrivacySettingsRequest)(nil),                           // 202: console.v1.SetPrivacySettingsRequest
+	(*v1.GetWorkspaceSettingsRequest)(nil),                         // 203: console.v1.GetWorkspaceSettingsRequest
+	(*v1.GetBillingSubscriptionRequest)(nil),                       // 204: console.v1.GetBillingSubscriptionRequest
+	(*v1.CreateBillingPortalSessionRequest)(nil),                   // 205: console.v1.CreateBillingPortalSessionRequest
+	(*v1.CreateBillingCheckoutSessionRequest)(nil),                 // 206: console.v1.CreateBillingCheckoutSessionRequest
+	(*v1.UpdateWorkspaceProfileRequest)(nil),                       // 207: console.v1.UpdateWorkspaceProfileRequest
+	(*v1.ArchiveWorkspaceRequest)(nil),                             // 208: console.v1.ArchiveWorkspaceRequest
+	(*v1.UpdateWorkspacePolicyRequest)(nil),                        // 209: console.v1.UpdateWorkspacePolicyRequest
+	(*v1.UpdateWorkspaceDexPolicyRequest)(nil),                     // 210: console.v1.UpdateWorkspaceDexPolicyRequest
+	(*v1.UpdateWorkspaceArtifactStyleGuideRequest)(nil),            // 211: console.v1.UpdateWorkspaceArtifactStyleGuideRequest
+	(*v1.EvaluateWorkspaceArtifactStyleGuideRequest)(nil),          // 212: console.v1.EvaluateWorkspaceArtifactStyleGuideRequest
+	(*v1.UpsertWorkspaceIdentityProviderRequest)(nil),              // 213: console.v1.UpsertWorkspaceIdentityProviderRequest
+	(*v1.RemoveWorkspaceIdentityProviderRequest)(nil),              // 214: console.v1.RemoveWorkspaceIdentityProviderRequest
+	(*v1.UpsertWorkspaceIntegrationRequest)(nil),                   // 215: console.v1.UpsertWorkspaceIntegrationRequest
+	(*v1.RemoveWorkspaceIntegrationRequest)(nil),                   // 216: console.v1.RemoveWorkspaceIntegrationRequest
+	(*v1.UpdateWorkspaceBillingRequest)(nil),                       // 217: console.v1.UpdateWorkspaceBillingRequest
+	(*v1.UpsertWorkspaceMemberRequest)(nil),                        // 218: console.v1.UpsertWorkspaceMemberRequest
+	(*v1.RemoveWorkspaceMemberRequest)(nil),                        // 219: console.v1.RemoveWorkspaceMemberRequest
+	(*v1.UpdateWorkspaceNotificationPreferencesRequest)(nil),       // 220: console.v1.UpdateWorkspaceNotificationPreferencesRequest
+	(*v1.EnableWorkspaceBreakGlassRequest)(nil),                    // 221: console.v1.EnableWorkspaceBreakGlassRequest
+	(*v1.DisableWorkspaceBreakGlassRequest)(nil),                   // 222: console.v1.DisableWorkspaceBreakGlassRequest
+	(*v1.ListWorkspaceSkillsRequest)(nil),                          // 223: console.v1.ListWorkspaceSkillsRequest
+	(*v1.BrowseDexSkillCatalogRequest)(nil),                        // 224: console.v1.BrowseDexSkillCatalogRequest
+	(*v1.InstallDexSkillCatalogEntryRequest)(nil),                  // 225: console.v1.InstallDexSkillCatalogEntryRequest
+	(*v1.CreateWorkspaceSkillRequest)(nil),                         // 226: console.v1.CreateWorkspaceSkillRequest
+	(*v1.UpdateWorkspaceSkillRequest)(nil),                         // 227: console.v1.UpdateWorkspaceSkillRequest
+	(*v1.DeleteWorkspaceSkillRequest)(nil),                         // 228: console.v1.DeleteWorkspaceSkillRequest
+	(*v1.ListScenarioFixturesRequest)(nil),                         // 229: console.v1.ListScenarioFixturesRequest
+	(*v1.PromoteScenarioFixtureRequest)(nil),                       // 230: console.v1.PromoteScenarioFixtureRequest
+	(*v1.CompareScenarioFixturesRequest)(nil),                      // 231: console.v1.CompareScenarioFixturesRequest
+	(*v1.CreateConnectorProfileRequest)(nil),                       // 232: console.v1.CreateConnectorProfileRequest
+	(*v1.ListConnectorProfilesRequest)(nil),                        // 233: console.v1.ListConnectorProfilesRequest
+	(*v1.UpdateConnectorProfileRequest)(nil),                       // 234: console.v1.UpdateConnectorProfileRequest
+	(*v1.DeleteConnectorProfileRequest)(nil),                       // 235: console.v1.DeleteConnectorProfileRequest
+	(*v1.ListConnectedCallsRequest)(nil),                           // 236: console.v1.ListConnectedCallsRequest
+	(*v1.StartMeetingCaptureRequest)(nil),                          // 237: console.v1.StartMeetingCaptureRequest
+	(*v1.GetMeetingCaptureRequest)(nil),                            // 238: console.v1.GetMeetingCaptureRequest
+	(*v1.ListMeetingCapturesRequest)(nil),                          // 239: console.v1.ListMeetingCapturesRequest
+	(*v1.StopMeetingCaptureRequest)(nil),                           // 240: console.v1.StopMeetingCaptureRequest
+	(*v1.ListCommitmentsRequest)(nil),                              // 241: console.v1.ListCommitmentsRequest
+	(*v1.AssessComplianceSubjectResponse)(nil),                     // 242: console.v1.AssessComplianceSubjectResponse
+	(*v1.RecordComplianceAssessmentResponse)(nil),                  // 243: console.v1.RecordComplianceAssessmentResponse
+	(*v1.GetComplianceAssessmentResponse)(nil),                     // 244: console.v1.GetComplianceAssessmentResponse
+	(*v1.ListBusinessBlueprintsResponse)(nil),                      // 245: console.v1.ListBusinessBlueprintsResponse
+	(*v1.CloneBusinessBlueprintResponse)(nil),                      // 246: console.v1.CloneBusinessBlueprintResponse
+	(*v1.GetBusinessProcessDefinitionResponse)(nil),                // 247: console.v1.GetBusinessProcessDefinitionResponse
+	(*v1.ListBusinessProcessDefinitionsResponse)(nil),              // 248: console.v1.ListBusinessProcessDefinitionsResponse
+	(*v1.DefineBusinessProcessResponse)(nil),                       // 249: console.v1.DefineBusinessProcessResponse
+	(*v1.StartBusinessProcessResponse)(nil),                        // 250: console.v1.StartBusinessProcessResponse
+	(*v1.GetBusinessProcessResponse)(nil),                          // 251: console.v1.GetBusinessProcessResponse
+	(*v1.ListBusinessProcessesResponse)(nil),                       // 252: console.v1.ListBusinessProcessesResponse
+	(*v1.TransitionBusinessProcessResponse)(nil),                   // 253: console.v1.TransitionBusinessProcessResponse
+	(*v1.PrepareBusinessObjectAuthorityTransferResponse)(nil),      // 254: console.v1.PrepareBusinessObjectAuthorityTransferResponse
+	(*v1.FinalizeBusinessObjectAuthorityTransferResponse)(nil),     // 255: console.v1.FinalizeBusinessObjectAuthorityTransferResponse
+	(*v1.DefineBusinessObjectTypeResponse)(nil),                    // 256: console.v1.DefineBusinessObjectTypeResponse
+	(*v1.GetBusinessObjectTypeResponse)(nil),                       // 257: console.v1.GetBusinessObjectTypeResponse
+	(*v1.ListBusinessObjectTypesResponse)(nil),                     // 258: console.v1.ListBusinessObjectTypesResponse
+	(*v1.CreateBusinessObjectResponse)(nil),                        // 259: console.v1.CreateBusinessObjectResponse
+	(*v1.GetBusinessObjectResponse)(nil),                           // 260: console.v1.GetBusinessObjectResponse
+	(*v1.ListBusinessObjectsResponse)(nil),                         // 261: console.v1.ListBusinessObjectsResponse
+	(*v1.UpdateBusinessObjectResponse)(nil),                        // 262: console.v1.UpdateBusinessObjectResponse
+	(*v1.DeleteBusinessObjectResponse)(nil),                        // 263: console.v1.DeleteBusinessObjectResponse
+	(*v1.ListBusinessObjectRevisionsResponse)(nil),                 // 264: console.v1.ListBusinessObjectRevisionsResponse
+	(*v1.BindBusinessObjectSourceResponse)(nil),                    // 265: console.v1.BindBusinessObjectSourceResponse
+	(*v1.AdmitBusinessObjectObservationResponse)(nil),              // 266: console.v1.AdmitBusinessObjectObservationResponse
+	(*v1.ListBusinessObjectRelationshipsResponse)(nil),             // 267: console.v1.ListBusinessObjectRelationshipsResponse
+	(*v1.CreateBusinessObjectRelationshipResponse)(nil),            // 268: console.v1.CreateBusinessObjectRelationshipResponse
+	(*v1.DeleteBusinessObjectRelationshipResponse)(nil),            // 269: console.v1.DeleteBusinessObjectRelationshipResponse
+	(*v1.CreateCaptureFormResponse)(nil),                           // 270: console.v1.CreateCaptureFormResponse
+	(*v1.ListCaptureFormsResponse)(nil),                            // 271: console.v1.ListCaptureFormsResponse
+	(*v1.GetCaptureFormResponse)(nil),                              // 272: console.v1.GetCaptureFormResponse
+	(*v1.UpdateCaptureFormResponse)(nil),                           // 273: console.v1.UpdateCaptureFormResponse
+	(*v1.PublishCaptureFormResponse)(nil),                          // 274: console.v1.PublishCaptureFormResponse
+	(*v1.RevokeCaptureFormPublicationResponse)(nil),                // 275: console.v1.RevokeCaptureFormPublicationResponse
+	(*v1.CreateCaptureFormInvitationResponse)(nil),                 // 276: console.v1.CreateCaptureFormInvitationResponse
+	(*v1.RevokeCaptureFormInvitationResponse)(nil),                 // 277: console.v1.RevokeCaptureFormInvitationResponse
+	(*v1.GetInvitedCaptureFormResponse)(nil),                       // 278: console.v1.GetInvitedCaptureFormResponse
+	(*v1.SubmitInvitedCaptureFormResponse)(nil),                    // 279: console.v1.SubmitInvitedCaptureFormResponse
+	(*v1.GetPublishedCaptureFormResponse)(nil),                     // 280: console.v1.GetPublishedCaptureFormResponse
+	(*v1.GetPublishedCaptureFormBrandingAssetResponse)(nil),        // 281: console.v1.GetPublishedCaptureFormBrandingAssetResponse
+	(*v1.SubmitPublishedCaptureFormResponse)(nil),                  // 282: console.v1.SubmitPublishedCaptureFormResponse
+	(*v1.BeginPublishedCaptureFormUploadResponse)(nil),             // 283: console.v1.BeginPublishedCaptureFormUploadResponse
+	(*v1.CompletePublishedCaptureFormUploadResponse)(nil),          // 284: console.v1.CompletePublishedCaptureFormUploadResponse
+	(*v1.GetCaptureFormSubmissionResponse)(nil),                    // 285: console.v1.GetCaptureFormSubmissionResponse
+	(*v1.ListCaptureFormSubmissionsResponse)(nil),                  // 286: console.v1.ListCaptureFormSubmissionsResponse
+	(*v1.ReviewCaptureFormSubmissionResponse)(nil),                 // 287: console.v1.ReviewCaptureFormSubmissionResponse
+	(*v1.GetInferenceCreditAutoRefillResponse)(nil),                // 288: console.v1.GetInferenceCreditAutoRefillResponse
+	(*v1.UpdateInferenceCreditAutoRefillResponse)(nil),             // 289: console.v1.UpdateInferenceCreditAutoRefillResponse
+	(*v1.CompleteInferenceCreditAutoRefillResponse)(nil),           // 290: console.v1.CompleteInferenceCreditAutoRefillResponse
+	(*v1.ListInferenceCreditReceiptsResponse)(nil),                 // 291: console.v1.ListInferenceCreditReceiptsResponse
+	(*v1.GetInferenceCreditBalanceResponse)(nil),                   // 292: console.v1.GetInferenceCreditBalanceResponse
+	(*v1.CreateInferenceCreditCheckoutResponse)(nil),               // 293: console.v1.CreateInferenceCreditCheckoutResponse
+	(*v1.FulfillInferenceCreditCheckoutResponse)(nil),              // 294: console.v1.FulfillInferenceCreditCheckoutResponse
+	(*v1.GetOverviewResponse)(nil),                                 // 295: console.v1.GetOverviewResponse
+	(*v1.ListAssetsResponse)(nil),                                  // 296: console.v1.ListAssetsResponse
+	(*v1.GetAssetResponse)(nil),                                    // 297: console.v1.GetAssetResponse
+	(*v1.ListFindingsResponse)(nil),                                // 298: console.v1.ListFindingsResponse
+	(*v1.GetTraceDrilldownResponse)(nil),                           // 299: console.v1.GetTraceDrilldownResponse
+	(*v1.GetOnboardingPlanResponse)(nil),                           // 300: console.v1.GetOnboardingPlanResponse
+	(*v1.ListAuthorityPostureResponse)(nil),                        // 301: console.v1.ListAuthorityPostureResponse
+	(*v1.ListAgentWorkforceRecordsResponse)(nil),                   // 302: console.v1.ListAgentWorkforceRecordsResponse
+	(*v1.SubmitAgentWorkforceEvidenceResponse)(nil),                // 303: console.v1.SubmitAgentWorkforceEvidenceResponse
+	(*v1.ListIntegrationTilesResponse)(nil),                        // 304: console.v1.ListIntegrationTilesResponse
+	(*v1.ListPinnedSourcesResponse)(nil),                           // 305: console.v1.ListPinnedSourcesResponse
+	(*v1.ListOrbControlTargetsResponse)(nil),                       // 306: console.v1.ListOrbControlTargetsResponse
+	(*v1.GetOrbControlTargetResponse)(nil),                         // 307: console.v1.GetOrbControlTargetResponse
+	(*v1.SubmitOrbControlActionResponse)(nil),                      // 308: console.v1.SubmitOrbControlActionResponse
+	(*v1.SetPinnedSourceResponse)(nil),                             // 309: console.v1.SetPinnedSourceResponse
+	(*v1.UnpinSourceResponse)(nil),                                 // 310: console.v1.UnpinSourceResponse
+	(*v1.ListActivityResponse)(nil),                                // 311: console.v1.ListActivityResponse
+	(*v1.SearchStaffWorkspaceDirectoryResponse)(nil),               // 312: console.v1.SearchStaffWorkspaceDirectoryResponse
+	(*v1.GetStaffWorkspaceContextResponse)(nil),                    // 313: console.v1.GetStaffWorkspaceContextResponse
+	(*v11.GetPrepaidCreditBalanceResponse)(nil),                    // 314: meter.v1.GetPrepaidCreditBalanceResponse
+	(*v11.GrantDevelopmentCreditsResponse)(nil),                    // 315: meter.v1.GrantDevelopmentCreditsResponse
+	(*v11.QueryUsageResponse)(nil),                                 // 316: meter.v1.QueryUsageResponse
+	(*v11.GetBudgetDashboardResponse)(nil),                         // 317: meter.v1.GetBudgetDashboardResponse
+	(*v11.SetBudgetResponse)(nil),                                  // 318: meter.v1.SetBudgetResponse
+	(*v1.GetManagedInferenceReadinessResponse)(nil),                // 319: console.v1.GetManagedInferenceReadinessResponse
+	(*v1.ListManagedProviderAccessEventsResponse)(nil),             // 320: console.v1.ListManagedProviderAccessEventsResponse
+	(*v11.ListManagedInferenceAdminEventsResponse)(nil),            // 321: meter.v1.ListManagedInferenceAdminEventsResponse
+	(*v1.ListStaffManagedExecutionGrantEventsResponse)(nil),        // 322: console.v1.ListStaffManagedExecutionGrantEventsResponse
+	(*v1.ListStaffManagedExecutionOutcomesResponse)(nil),           // 323: console.v1.ListStaffManagedExecutionOutcomesResponse
+	(*v1.ListManagedProviderAccessGrantsResponse)(nil),             // 324: console.v1.ListManagedProviderAccessGrantsResponse
+	(*v1.UpsertManagedProviderAccessGrantResponse)(nil),            // 325: console.v1.UpsertManagedProviderAccessGrantResponse
+	(*v1.RevokeManagedProviderAccessGrantResponse)(nil),            // 326: console.v1.RevokeManagedProviderAccessGrantResponse
+	(*v1.GetStaffInferenceRoutingProfileResponse)(nil),             // 327: console.v1.GetStaffInferenceRoutingProfileResponse
+	(*v1.UpdateStaffInferenceRoutingProfileResponse)(nil),          // 328: console.v1.UpdateStaffInferenceRoutingProfileResponse
+	(*v1.ListCostUsageResponse)(nil),                               // 329: console.v1.ListCostUsageResponse
+	(*v1.ListEvalResultsResponse)(nil),                             // 330: console.v1.ListEvalResultsResponse
+	(*v1.RecordProviderCostSnapshotResponse)(nil),                  // 331: console.v1.RecordProviderCostSnapshotResponse
+	(*v1.GetConsoleBootSnapshotResponse)(nil),                      // 332: console.v1.GetConsoleBootSnapshotResponse
+	(*v1.GetOperatorPreferencesResponse)(nil),                      // 333: console.v1.GetOperatorPreferencesResponse
+	(*v1.UpdateOperatorPreferencesResponse)(nil),                   // 334: console.v1.UpdateOperatorPreferencesResponse
+	(*v1.ListWorkspaceGuardrailRulesResponse)(nil),                 // 335: console.v1.ListWorkspaceGuardrailRulesResponse
+	(*v1.CreateDexMcpServerResponse)(nil),                          // 336: console.v1.CreateDexMcpServerResponse
+	(*v1.ListDexMcpServersResponse)(nil),                           // 337: console.v1.ListDexMcpServersResponse
+	(*v1.GetDexMcpServerResponse)(nil),                             // 338: console.v1.GetDexMcpServerResponse
+	(*v1.DiscoverDexMcpServerResponse)(nil),                        // 339: console.v1.DiscoverDexMcpServerResponse
+	(*v1.UpdateDexMcpServerResponse)(nil),                          // 340: console.v1.UpdateDexMcpServerResponse
+	(*v1.DeleteDexMcpServerResponse)(nil),                          // 341: console.v1.DeleteDexMcpServerResponse
+	(*v1.InitiateDexMcpOAuthProfileResponse)(nil),                  // 342: console.v1.InitiateDexMcpOAuthProfileResponse
+	(*v1.CompleteDexMcpOAuthProfileResponse)(nil),                  // 343: console.v1.CompleteDexMcpOAuthProfileResponse
+	(*v1.ListDexMcpOAuthProfilesResponse)(nil),                     // 344: console.v1.ListDexMcpOAuthProfilesResponse
+	(*v1.RevokeDexMcpOAuthProfileResponse)(nil),                    // 345: console.v1.RevokeDexMcpOAuthProfileResponse
+	(*v1.ReauthorizeDexMcpOAuthProfileResponse)(nil),               // 346: console.v1.ReauthorizeDexMcpOAuthProfileResponse
+	(*v1.RegisterPrivateEndpointResponse)(nil),                     // 347: console.v1.RegisterPrivateEndpointResponse
+	(*v1.VerifyPrivateEndpointResponse)(nil),                       // 348: console.v1.VerifyPrivateEndpointResponse
+	(*v1.ListPrivateEndpointsResponse)(nil),                        // 349: console.v1.ListPrivateEndpointsResponse
+	(*v1.DeletePrivateEndpointResponse)(nil),                       // 350: console.v1.DeletePrivateEndpointResponse
+	(*v1.AttachPrivateEndpointToProfileResponse)(nil),              // 351: console.v1.AttachPrivateEndpointToProfileResponse
+	(*v1.ListGatewayEgressOriginsResponse)(nil),                    // 352: console.v1.ListGatewayEgressOriginsResponse
+	(*v1.ListOperatingChannelsResponse)(nil),                       // 353: console.v1.ListOperatingChannelsResponse
+	(*v1.ListOperatingJobsResponse)(nil),                           // 354: console.v1.ListOperatingJobsResponse
+	(*v1.ArchiveOperatingThreadResponse)(nil),                      // 355: console.v1.ArchiveOperatingThreadResponse
+	(*v1.ForkOperatingThreadResponse)(nil),                         // 356: console.v1.ForkOperatingThreadResponse
+	(*v1.RenameOperatingThreadResponse)(nil),                       // 357: console.v1.RenameOperatingThreadResponse
+	(*v1.GetOperatingThreadResponse)(nil),                          // 358: console.v1.GetOperatingThreadResponse
+	(*v1.BootstrapThreadGatewayResponse)(nil),                      // 359: console.v1.BootstrapThreadGatewayResponse
+	(*v1.PrewarmOperatingThreadResponse)(nil),                      // 360: console.v1.PrewarmOperatingThreadResponse
+	(*v1.RespondOperatingThreadResponse)(nil),                      // 361: console.v1.RespondOperatingThreadResponse
+	(*v1.InterruptOperatingThreadResponse)(nil),                    // 362: console.v1.InterruptOperatingThreadResponse
+	(*v1.SetOperatingThreadControllerResponse)(nil),                // 363: console.v1.SetOperatingThreadControllerResponse
+	(*v1.ListOperatingThreadEventsResponse)(nil),                   // 364: console.v1.ListOperatingThreadEventsResponse
+	(*v1.WatchOperatingThreadResponse)(nil),                        // 365: console.v1.WatchOperatingThreadResponse
+	(*v1.SearchOperatingHistoryResponse)(nil),                      // 366: console.v1.SearchOperatingHistoryResponse
+	(*v1.GetOperatingHistoryContextResponse)(nil),                  // 367: console.v1.GetOperatingHistoryContextResponse
+	(*v1.GetOperatingReceiptResponse)(nil),                         // 368: console.v1.GetOperatingReceiptResponse
+	(*v1.SubmitComputerMissionResponse)(nil),                       // 369: console.v1.SubmitComputerMissionResponse
+	(*v1.GetComputerMissionResponse)(nil),                          // 370: console.v1.GetComputerMissionResponse
+	(*v1.CancelComputerMissionResponse)(nil),                       // 371: console.v1.CancelComputerMissionResponse
+	(*v1.ContinueComputerMissionResponse)(nil),                     // 372: console.v1.ContinueComputerMissionResponse
+	(*v1.PauseComputerMissionResponse)(nil),                        // 373: console.v1.PauseComputerMissionResponse
+	(*v1.ResumeComputerMissionResponse)(nil),                       // 374: console.v1.ResumeComputerMissionResponse
+	(*v1.WakeComputerMissionResponse)(nil),                         // 375: console.v1.WakeComputerMissionResponse
+	(*v1.GuideComputerMissionResponse)(nil),                        // 376: console.v1.GuideComputerMissionResponse
+	(*v1.ListComputerMissionCanaryDefinitionsResponse)(nil),        // 377: console.v1.ListComputerMissionCanaryDefinitionsResponse
+	(*v1.StartComputerMissionCanaryRunResponse)(nil),               // 378: console.v1.StartComputerMissionCanaryRunResponse
+	(*v1.GetComputerMissionCanaryRunResponse)(nil),                 // 379: console.v1.GetComputerMissionCanaryRunResponse
+	(*v1.ListComputerMissionCanaryRunsResponse)(nil),               // 380: console.v1.ListComputerMissionCanaryRunsResponse
+	(*v1.GetComputerMissionCanaryEvidenceResponse)(nil),            // 381: console.v1.GetComputerMissionCanaryEvidenceResponse
+	(*v1.OperateComputerMissionCanaryRunResponse)(nil),             // 382: console.v1.OperateComputerMissionCanaryRunResponse
+	(*v1.CreateMissionScheduleResponse)(nil),                       // 383: console.v1.CreateMissionScheduleResponse
+	(*v1.UpdateMissionScheduleResponse)(nil),                       // 384: console.v1.UpdateMissionScheduleResponse
+	(*v1.SetMissionScheduleEnabledResponse)(nil),                   // 385: console.v1.SetMissionScheduleEnabledResponse
+	(*v1.ListMissionSchedulesResponse)(nil),                        // 386: console.v1.ListMissionSchedulesResponse
+	(*v1.CreateConnectorTriggerResponse)(nil),                      // 387: console.v1.CreateConnectorTriggerResponse
+	(*v1.UpdateConnectorTriggerResponse)(nil),                      // 388: console.v1.UpdateConnectorTriggerResponse
+	(*v1.ListConnectorTriggersResponse)(nil),                       // 389: console.v1.ListConnectorTriggersResponse
+	(*v1.DeleteConnectorTriggerResponse)(nil),                      // 390: console.v1.DeleteConnectorTriggerResponse
+	(*v1.SetConnectorTriggerEnabledResponse)(nil),                  // 391: console.v1.SetConnectorTriggerEnabledResponse
+	(*v1.ReserveComputerMissionApexSessionResponse)(nil),           // 392: console.v1.ReserveComputerMissionApexSessionResponse
+	(*v1.BindComputerMissionApexSessionReservationResponse)(nil),   // 393: console.v1.BindComputerMissionApexSessionReservationResponse
+	(*v1.BindComputerMissionApexInstructionMetadataResponse)(nil),  // 394: console.v1.BindComputerMissionApexInstructionMetadataResponse
+	(*v1.AuthorizeComputerMissionApexSessionAdoptionResponse)(nil), // 395: console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse
+	(*v1.ResolveOperatingReceiptActionResponse)(nil),               // 396: console.v1.ResolveOperatingReceiptActionResponse
+	(*v1.SubmitOperatingMessageResponse)(nil),                      // 397: console.v1.SubmitOperatingMessageResponse
+	(*v1.SubmitOperatingCorrectionResponse)(nil),                   // 398: console.v1.SubmitOperatingCorrectionResponse
+	(*v1.ListWorkspaceMemoriesResponse)(nil),                       // 399: console.v1.ListWorkspaceMemoriesResponse
+	(*v1.CorrectWorkspaceMemoryResponse)(nil),                      // 400: console.v1.CorrectWorkspaceMemoryResponse
+	(*v1.ReviewWorkspaceMemoryResponse)(nil),                       // 401: console.v1.ReviewWorkspaceMemoryResponse
+	(*v1.ForgetWorkspaceMemoryResponse)(nil),                       // 402: console.v1.ForgetWorkspaceMemoryResponse
+	(*v1.SubmitOperatingFeedbackResponse)(nil),                     // 403: console.v1.SubmitOperatingFeedbackResponse
+	(*v1.RecordOperatingHomepageSuggestionFeedbackResponse)(nil),   // 404: console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
+	(*v1.SubmitProductIssueReportResponse)(nil),                    // 405: console.v1.SubmitProductIssueReportResponse
+	(*v1.ListStaffProductIssueReportsResponse)(nil),                // 406: console.v1.ListStaffProductIssueReportsResponse
+	(*v1.EngageStaffProductIssueReportResponse)(nil),               // 407: console.v1.EngageStaffProductIssueReportResponse
+	(*v1.ListStaffProductIssueRecoveriesResponse)(nil),             // 408: console.v1.ListStaffProductIssueRecoveriesResponse
+	(*v1.ProductIssueRecoveryResponse)(nil),                        // 409: console.v1.ProductIssueRecoveryResponse
+	(*v1.GetOperatingFeedbackResponse)(nil),                        // 410: console.v1.GetOperatingFeedbackResponse
+	(*v1.ResolveOperatingFeedbackRemediationResponse)(nil),         // 411: console.v1.ResolveOperatingFeedbackRemediationResponse
+	(*v1.ListCustomerIntelligenceFactsResponse)(nil),               // 412: console.v1.ListCustomerIntelligenceFactsResponse
+	(*v1.GetCustomerIntelligenceFactResponse)(nil),                 // 413: console.v1.GetCustomerIntelligenceFactResponse
+	(*v1.ReviewCustomerIntelligenceFactResponse)(nil),              // 414: console.v1.ReviewCustomerIntelligenceFactResponse
+	(*v1.ProposeCustomerIntelligenceFactResponse)(nil),             // 415: console.v1.ProposeCustomerIntelligenceFactResponse
+	(*v1.RespondToCustomerFactConfirmationResponse)(nil),           // 416: console.v1.RespondToCustomerFactConfirmationResponse
+	(*v1.AggregateCustomerIntelligencePatternsResponse)(nil),       // 417: console.v1.AggregateCustomerIntelligencePatternsResponse
+	(*v1.CreateProspectingWatchProgramResponse)(nil),               // 418: console.v1.CreateProspectingWatchProgramResponse
+	(*v1.GetProspectingWatchProgramResponse)(nil),                  // 419: console.v1.GetProspectingWatchProgramResponse
+	(*v1.ListProspectingWatchProgramsResponse)(nil),                // 420: console.v1.ListProspectingWatchProgramsResponse
+	(*v1.UpdateProspectingWatchProgramResponse)(nil),               // 421: console.v1.UpdateProspectingWatchProgramResponse
+	(*v1.CreateProspectingDraftResponse)(nil),                      // 422: console.v1.CreateProspectingDraftResponse
+	(*v1.ListProspectingDraftsResponse)(nil),                       // 423: console.v1.ListProspectingDraftsResponse
+	(*v1.ReviewProspectingDraftResponse)(nil),                      // 424: console.v1.ReviewProspectingDraftResponse
+	(*v1.ListOperatingCorrectionsResponse)(nil),                    // 425: console.v1.ListOperatingCorrectionsResponse
+	(*v1.ReviewOperatingCorrectionResponse)(nil),                   // 426: console.v1.ReviewOperatingCorrectionResponse
+	(*v1.BeginOperatingAttachmentUploadResponse)(nil),              // 427: console.v1.BeginOperatingAttachmentUploadResponse
+	(*v1.CompleteOperatingAttachmentUploadResponse)(nil),           // 428: console.v1.CompleteOperatingAttachmentUploadResponse
+	(*v1.AcceptOperatingProjectSnapshotResponse)(nil),              // 429: console.v1.AcceptOperatingProjectSnapshotResponse
+	(*v1.GetOperatingTaskEnvironmentResponse)(nil),                 // 430: console.v1.GetOperatingTaskEnvironmentResponse
+	(*v1.ListOperatingAttachmentsResponse)(nil),                    // 431: console.v1.ListOperatingAttachmentsResponse
+	(*v1.GetPrivacySettingsResponse)(nil),                          // 432: console.v1.GetPrivacySettingsResponse
+	(*v1.GetWorkspaceSettingsResponse)(nil),                        // 433: console.v1.GetWorkspaceSettingsResponse
+	(*v1.GetBillingSubscriptionResponse)(nil),                      // 434: console.v1.GetBillingSubscriptionResponse
+	(*v1.CreateBillingPortalSessionResponse)(nil),                  // 435: console.v1.CreateBillingPortalSessionResponse
+	(*v1.CreateBillingCheckoutSessionResponse)(nil),                // 436: console.v1.CreateBillingCheckoutSessionResponse
+	(*v1.UpdateWorkspaceProfileResponse)(nil),                      // 437: console.v1.UpdateWorkspaceProfileResponse
+	(*v1.ArchiveWorkspaceResponse)(nil),                            // 438: console.v1.ArchiveWorkspaceResponse
+	(*v1.UpdateWorkspacePolicyResponse)(nil),                       // 439: console.v1.UpdateWorkspacePolicyResponse
+	(*v1.UpdateWorkspaceDexPolicyResponse)(nil),                    // 440: console.v1.UpdateWorkspaceDexPolicyResponse
+	(*v1.UpdateWorkspaceArtifactStyleGuideResponse)(nil),           // 441: console.v1.UpdateWorkspaceArtifactStyleGuideResponse
+	(*v1.EvaluateWorkspaceArtifactStyleGuideResponse)(nil),         // 442: console.v1.EvaluateWorkspaceArtifactStyleGuideResponse
+	(*v1.UpsertWorkspaceIdentityProviderResponse)(nil),             // 443: console.v1.UpsertWorkspaceIdentityProviderResponse
+	(*v1.RemoveWorkspaceIdentityProviderResponse)(nil),             // 444: console.v1.RemoveWorkspaceIdentityProviderResponse
+	(*v1.UpsertWorkspaceIntegrationResponse)(nil),                  // 445: console.v1.UpsertWorkspaceIntegrationResponse
+	(*v1.RemoveWorkspaceIntegrationResponse)(nil),                  // 446: console.v1.RemoveWorkspaceIntegrationResponse
+	(*v1.ListWorkspaceSkillsResponse)(nil),                         // 447: console.v1.ListWorkspaceSkillsResponse
+	(*v1.BrowseDexSkillCatalogResponse)(nil),                       // 448: console.v1.BrowseDexSkillCatalogResponse
+	(*v1.InstallDexSkillCatalogEntryResponse)(nil),                 // 449: console.v1.InstallDexSkillCatalogEntryResponse
+	(*v1.CreateWorkspaceSkillResponse)(nil),                        // 450: console.v1.CreateWorkspaceSkillResponse
+	(*v1.UpdateWorkspaceSkillResponse)(nil),                        // 451: console.v1.UpdateWorkspaceSkillResponse
+	(*v1.DeleteWorkspaceSkillResponse)(nil),                        // 452: console.v1.DeleteWorkspaceSkillResponse
+	(*v1.ListScenarioFixturesResponse)(nil),                        // 453: console.v1.ListScenarioFixturesResponse
+	(*v1.PromoteScenarioFixtureResponse)(nil),                      // 454: console.v1.PromoteScenarioFixtureResponse
+	(*v1.CompareScenarioFixturesResponse)(nil),                     // 455: console.v1.CompareScenarioFixturesResponse
+	(*v1.CreateConnectorProfileResponse)(nil),                      // 456: console.v1.CreateConnectorProfileResponse
+	(*v1.ListConnectorProfilesResponse)(nil),                       // 457: console.v1.ListConnectorProfilesResponse
+	(*v1.UpdateConnectorProfileResponse)(nil),                      // 458: console.v1.UpdateConnectorProfileResponse
+	(*v1.DeleteConnectorProfileResponse)(nil),                      // 459: console.v1.DeleteConnectorProfileResponse
+	(*v1.ListConnectedCallsResponse)(nil),                          // 460: console.v1.ListConnectedCallsResponse
+	(*v1.StartMeetingCaptureResponse)(nil),                         // 461: console.v1.StartMeetingCaptureResponse
+	(*v1.GetMeetingCaptureResponse)(nil),                           // 462: console.v1.GetMeetingCaptureResponse
+	(*v1.ListMeetingCapturesResponse)(nil),                         // 463: console.v1.ListMeetingCapturesResponse
+	(*v1.StopMeetingCaptureResponse)(nil),                          // 464: console.v1.StopMeetingCaptureResponse
+	(*v1.ListCommitmentsResponse)(nil),                             // 465: console.v1.ListCommitmentsResponse
 }
 var file_deixic_v1_deixic_proto_depIdxs = []int32{
 	0,   // 0: deixic.v1.DeixicService.AssessComplianceSubject:input_type -> console.v1.AssessComplianceSubjectRequest
-	1,   // 1: deixic.v1.DeixicService.ListBusinessBlueprints:input_type -> console.v1.ListBusinessBlueprintsRequest
-	2,   // 2: deixic.v1.DeixicService.CloneBusinessBlueprint:input_type -> console.v1.CloneBusinessBlueprintRequest
-	3,   // 3: deixic.v1.DeixicService.GetBusinessProcessDefinition:input_type -> console.v1.GetBusinessProcessDefinitionRequest
-	4,   // 4: deixic.v1.DeixicService.ListBusinessProcessDefinitions:input_type -> console.v1.ListBusinessProcessDefinitionsRequest
-	5,   // 5: deixic.v1.DeixicService.DefineBusinessProcess:input_type -> console.v1.DefineBusinessProcessRequest
-	6,   // 6: deixic.v1.DeixicService.StartBusinessProcess:input_type -> console.v1.StartBusinessProcessRequest
-	7,   // 7: deixic.v1.DeixicService.GetBusinessProcess:input_type -> console.v1.GetBusinessProcessRequest
-	8,   // 8: deixic.v1.DeixicService.ListBusinessProcesses:input_type -> console.v1.ListBusinessProcessesRequest
-	9,   // 9: deixic.v1.DeixicService.TransitionBusinessProcess:input_type -> console.v1.TransitionBusinessProcessRequest
-	10,  // 10: deixic.v1.DeixicService.PrepareBusinessObjectAuthorityTransfer:input_type -> console.v1.PrepareBusinessObjectAuthorityTransferRequest
-	11,  // 11: deixic.v1.DeixicService.FinalizeBusinessObjectAuthorityTransfer:input_type -> console.v1.FinalizeBusinessObjectAuthorityTransferRequest
-	12,  // 12: deixic.v1.DeixicService.DefineBusinessObjectType:input_type -> console.v1.DefineBusinessObjectTypeRequest
-	13,  // 13: deixic.v1.DeixicService.GetBusinessObjectType:input_type -> console.v1.GetBusinessObjectTypeRequest
-	14,  // 14: deixic.v1.DeixicService.ListBusinessObjectTypes:input_type -> console.v1.ListBusinessObjectTypesRequest
-	15,  // 15: deixic.v1.DeixicService.CreateBusinessObject:input_type -> console.v1.CreateBusinessObjectRequest
-	16,  // 16: deixic.v1.DeixicService.GetBusinessObject:input_type -> console.v1.GetBusinessObjectRequest
-	17,  // 17: deixic.v1.DeixicService.ListBusinessObjects:input_type -> console.v1.ListBusinessObjectsRequest
-	18,  // 18: deixic.v1.DeixicService.UpdateBusinessObject:input_type -> console.v1.UpdateBusinessObjectRequest
-	19,  // 19: deixic.v1.DeixicService.DeleteBusinessObject:input_type -> console.v1.DeleteBusinessObjectRequest
-	20,  // 20: deixic.v1.DeixicService.ListBusinessObjectRevisions:input_type -> console.v1.ListBusinessObjectRevisionsRequest
-	21,  // 21: deixic.v1.DeixicService.BindBusinessObjectSource:input_type -> console.v1.BindBusinessObjectSourceRequest
-	22,  // 22: deixic.v1.DeixicService.AdmitBusinessObjectObservation:input_type -> console.v1.AdmitBusinessObjectObservationRequest
-	23,  // 23: deixic.v1.DeixicService.ListBusinessObjectRelationships:input_type -> console.v1.ListBusinessObjectRelationshipsRequest
-	24,  // 24: deixic.v1.DeixicService.CreateBusinessObjectRelationship:input_type -> console.v1.CreateBusinessObjectRelationshipRequest
-	25,  // 25: deixic.v1.DeixicService.DeleteBusinessObjectRelationship:input_type -> console.v1.DeleteBusinessObjectRelationshipRequest
-	26,  // 26: deixic.v1.DeixicService.CreateCaptureForm:input_type -> console.v1.CreateCaptureFormRequest
-	27,  // 27: deixic.v1.DeixicService.ListCaptureForms:input_type -> console.v1.ListCaptureFormsRequest
-	28,  // 28: deixic.v1.DeixicService.GetCaptureForm:input_type -> console.v1.GetCaptureFormRequest
-	29,  // 29: deixic.v1.DeixicService.UpdateCaptureForm:input_type -> console.v1.UpdateCaptureFormRequest
-	30,  // 30: deixic.v1.DeixicService.PublishCaptureForm:input_type -> console.v1.PublishCaptureFormRequest
-	31,  // 31: deixic.v1.DeixicService.RevokeCaptureFormPublication:input_type -> console.v1.RevokeCaptureFormPublicationRequest
-	32,  // 32: deixic.v1.DeixicService.CreateCaptureFormInvitation:input_type -> console.v1.CreateCaptureFormInvitationRequest
-	33,  // 33: deixic.v1.DeixicService.RevokeCaptureFormInvitation:input_type -> console.v1.RevokeCaptureFormInvitationRequest
-	34,  // 34: deixic.v1.DeixicService.GetInvitedCaptureForm:input_type -> console.v1.GetInvitedCaptureFormRequest
-	35,  // 35: deixic.v1.DeixicService.SubmitInvitedCaptureForm:input_type -> console.v1.SubmitInvitedCaptureFormRequest
-	36,  // 36: deixic.v1.DeixicService.GetPublishedCaptureForm:input_type -> console.v1.GetPublishedCaptureFormRequest
-	37,  // 37: deixic.v1.DeixicService.GetPublishedCaptureFormBrandingAsset:input_type -> console.v1.GetPublishedCaptureFormBrandingAssetRequest
-	38,  // 38: deixic.v1.DeixicService.SubmitPublishedCaptureForm:input_type -> console.v1.SubmitPublishedCaptureFormRequest
-	39,  // 39: deixic.v1.DeixicService.BeginPublishedCaptureFormUpload:input_type -> console.v1.BeginPublishedCaptureFormUploadRequest
-	40,  // 40: deixic.v1.DeixicService.CompletePublishedCaptureFormUpload:input_type -> console.v1.CompletePublishedCaptureFormUploadRequest
-	41,  // 41: deixic.v1.DeixicService.GetCaptureFormSubmission:input_type -> console.v1.GetCaptureFormSubmissionRequest
-	42,  // 42: deixic.v1.DeixicService.ListCaptureFormSubmissions:input_type -> console.v1.ListCaptureFormSubmissionsRequest
-	43,  // 43: deixic.v1.DeixicService.ReviewCaptureFormSubmission:input_type -> console.v1.ReviewCaptureFormSubmissionRequest
-	44,  // 44: deixic.v1.DeixicService.GetInferenceCreditAutoRefill:input_type -> console.v1.GetInferenceCreditAutoRefillRequest
-	45,  // 45: deixic.v1.DeixicService.UpdateInferenceCreditAutoRefill:input_type -> console.v1.UpdateInferenceCreditAutoRefillRequest
-	46,  // 46: deixic.v1.DeixicService.CompleteInferenceCreditAutoRefill:input_type -> console.v1.CompleteInferenceCreditAutoRefillRequest
-	47,  // 47: deixic.v1.DeixicService.ListInferenceCreditReceipts:input_type -> console.v1.ListInferenceCreditReceiptsRequest
-	48,  // 48: deixic.v1.DeixicService.GetInferenceCreditBalance:input_type -> console.v1.GetInferenceCreditBalanceRequest
-	49,  // 49: deixic.v1.DeixicService.CreateInferenceCreditCheckout:input_type -> console.v1.CreateInferenceCreditCheckoutRequest
-	50,  // 50: deixic.v1.DeixicService.FulfillInferenceCreditCheckout:input_type -> console.v1.FulfillInferenceCreditCheckoutRequest
-	51,  // 51: deixic.v1.DeixicService.GetOverview:input_type -> console.v1.GetOverviewRequest
-	52,  // 52: deixic.v1.DeixicService.ListAssets:input_type -> console.v1.ListAssetsRequest
-	53,  // 53: deixic.v1.DeixicService.GetAsset:input_type -> console.v1.GetAssetRequest
-	54,  // 54: deixic.v1.DeixicService.ListFindings:input_type -> console.v1.ListFindingsRequest
-	55,  // 55: deixic.v1.DeixicService.GetTraceDrilldown:input_type -> console.v1.GetTraceDrilldownRequest
-	56,  // 56: deixic.v1.DeixicService.GetOnboardingPlan:input_type -> console.v1.GetOnboardingPlanRequest
-	57,  // 57: deixic.v1.DeixicService.ListAuthorityPosture:input_type -> console.v1.ListAuthorityPostureRequest
-	58,  // 58: deixic.v1.DeixicService.ListAgentWorkforceRecords:input_type -> console.v1.ListAgentWorkforceRecordsRequest
-	59,  // 59: deixic.v1.DeixicService.SubmitAgentWorkforceEvidence:input_type -> console.v1.SubmitAgentWorkforceEvidenceRequest
-	60,  // 60: deixic.v1.DeixicService.ListIntegrationTiles:input_type -> console.v1.ListIntegrationTilesRequest
-	61,  // 61: deixic.v1.DeixicService.ListPinnedSources:input_type -> console.v1.ListPinnedSourcesRequest
-	62,  // 62: deixic.v1.DeixicService.ListOrbControlTargets:input_type -> console.v1.ListOrbControlTargetsRequest
-	63,  // 63: deixic.v1.DeixicService.GetOrbControlTarget:input_type -> console.v1.GetOrbControlTargetRequest
-	64,  // 64: deixic.v1.DeixicService.SubmitOrbControlAction:input_type -> console.v1.SubmitOrbControlActionRequest
-	65,  // 65: deixic.v1.DeixicService.SetPinnedSource:input_type -> console.v1.SetPinnedSourceRequest
-	66,  // 66: deixic.v1.DeixicService.UnpinSource:input_type -> console.v1.UnpinSourceRequest
-	67,  // 67: deixic.v1.DeixicService.ListActivity:input_type -> console.v1.ListActivityRequest
-	68,  // 68: deixic.v1.DeixicService.SearchStaffWorkspaceDirectory:input_type -> console.v1.SearchStaffWorkspaceDirectoryRequest
-	69,  // 69: deixic.v1.DeixicService.GetStaffWorkspaceContext:input_type -> console.v1.GetStaffWorkspaceContextRequest
-	70,  // 70: deixic.v1.DeixicService.GetStaffManagedInferenceFunding:input_type -> console.v1.GetStaffManagedInferenceFundingRequest
-	71,  // 71: deixic.v1.DeixicService.GrantStaffManagedInferenceCredits:input_type -> console.v1.GrantStaffManagedInferenceCreditsRequest
-	72,  // 72: deixic.v1.DeixicService.GetStaffManagedInferenceUsage:input_type -> console.v1.GetStaffManagedInferenceUsageRequest
-	73,  // 73: deixic.v1.DeixicService.GetStaffManagedInferenceBudget:input_type -> console.v1.GetStaffManagedInferenceBudgetRequest
-	74,  // 74: deixic.v1.DeixicService.SetStaffManagedInferenceBudget:input_type -> console.v1.SetStaffManagedInferenceBudgetRequest
-	75,  // 75: deixic.v1.DeixicService.GetStaffManagedInferenceReadiness:input_type -> console.v1.GetStaffManagedInferenceReadinessRequest
-	76,  // 76: deixic.v1.DeixicService.GetManagedInferenceReadiness:input_type -> console.v1.GetManagedInferenceReadinessRequest
-	77,  // 77: deixic.v1.DeixicService.ListManagedProviderAccessEvents:input_type -> console.v1.ListManagedProviderAccessEventsRequest
-	78,  // 78: deixic.v1.DeixicService.ListStaffManagedInferenceAdminEvents:input_type -> console.v1.ListStaffManagedInferenceAdminEventsRequest
-	79,  // 79: deixic.v1.DeixicService.ListStaffManagedExecutionGrantEvents:input_type -> console.v1.ListStaffManagedExecutionGrantEventsRequest
-	80,  // 80: deixic.v1.DeixicService.ListStaffManagedExecutionOutcomes:input_type -> console.v1.ListStaffManagedExecutionOutcomesRequest
-	81,  // 81: deixic.v1.DeixicService.ListManagedProviderAccessGrants:input_type -> console.v1.ListManagedProviderAccessGrantsRequest
-	82,  // 82: deixic.v1.DeixicService.UpsertManagedProviderAccessGrant:input_type -> console.v1.UpsertManagedProviderAccessGrantRequest
-	83,  // 83: deixic.v1.DeixicService.RevokeManagedProviderAccessGrant:input_type -> console.v1.RevokeManagedProviderAccessGrantRequest
-	84,  // 84: deixic.v1.DeixicService.GetStaffInferenceRoutingProfile:input_type -> console.v1.GetStaffInferenceRoutingProfileRequest
-	85,  // 85: deixic.v1.DeixicService.UpdateStaffInferenceRoutingProfile:input_type -> console.v1.UpdateStaffInferenceRoutingProfileRequest
-	86,  // 86: deixic.v1.DeixicService.ListCostUsage:input_type -> console.v1.ListCostUsageRequest
-	87,  // 87: deixic.v1.DeixicService.ListEvalResults:input_type -> console.v1.ListEvalResultsRequest
-	88,  // 88: deixic.v1.DeixicService.RecordProviderCostSnapshot:input_type -> console.v1.RecordProviderCostSnapshotRequest
-	89,  // 89: deixic.v1.DeixicService.GetDeixicBootSnapshot:input_type -> console.v1.GetConsoleBootSnapshotRequest
-	90,  // 90: deixic.v1.DeixicService.GetOperatorPreferences:input_type -> console.v1.GetOperatorPreferencesRequest
-	91,  // 91: deixic.v1.DeixicService.UpdateOperatorPreferences:input_type -> console.v1.UpdateOperatorPreferencesRequest
-	92,  // 92: deixic.v1.DeixicService.ListWorkspaceGuardrailRules:input_type -> console.v1.ListWorkspaceGuardrailRulesRequest
-	93,  // 93: deixic.v1.DeixicService.UpsertWorkspaceGuardrailRule:input_type -> console.v1.UpsertWorkspaceGuardrailRuleRequest
-	94,  // 94: deixic.v1.DeixicService.RemoveWorkspaceGuardrailRule:input_type -> console.v1.RemoveWorkspaceGuardrailRuleRequest
-	95,  // 95: deixic.v1.DeixicService.CreateDexMcpServer:input_type -> console.v1.CreateDexMcpServerRequest
-	96,  // 96: deixic.v1.DeixicService.ListDexMcpServers:input_type -> console.v1.ListDexMcpServersRequest
-	97,  // 97: deixic.v1.DeixicService.GetDexMcpServer:input_type -> console.v1.GetDexMcpServerRequest
-	98,  // 98: deixic.v1.DeixicService.DiscoverDexMcpServer:input_type -> console.v1.DiscoverDexMcpServerRequest
-	99,  // 99: deixic.v1.DeixicService.UpdateDexMcpServer:input_type -> console.v1.UpdateDexMcpServerRequest
-	100, // 100: deixic.v1.DeixicService.DeleteDexMcpServer:input_type -> console.v1.DeleteDexMcpServerRequest
-	101, // 101: deixic.v1.DeixicService.InitiateDexMcpOAuthProfile:input_type -> console.v1.InitiateDexMcpOAuthProfileRequest
-	102, // 102: deixic.v1.DeixicService.CompleteDexMcpOAuthProfile:input_type -> console.v1.CompleteDexMcpOAuthProfileRequest
-	103, // 103: deixic.v1.DeixicService.ListDexMcpOAuthProfiles:input_type -> console.v1.ListDexMcpOAuthProfilesRequest
-	104, // 104: deixic.v1.DeixicService.RevokeDexMcpOAuthProfile:input_type -> console.v1.RevokeDexMcpOAuthProfileRequest
-	105, // 105: deixic.v1.DeixicService.ReauthorizeDexMcpOAuthProfile:input_type -> console.v1.ReauthorizeDexMcpOAuthProfileRequest
-	106, // 106: deixic.v1.DeixicService.RegisterPrivateEndpoint:input_type -> console.v1.RegisterPrivateEndpointRequest
-	107, // 107: deixic.v1.DeixicService.VerifyPrivateEndpoint:input_type -> console.v1.VerifyPrivateEndpointRequest
-	108, // 108: deixic.v1.DeixicService.ListPrivateEndpoints:input_type -> console.v1.ListPrivateEndpointsRequest
-	109, // 109: deixic.v1.DeixicService.DeletePrivateEndpoint:input_type -> console.v1.DeletePrivateEndpointRequest
-	110, // 110: deixic.v1.DeixicService.AttachPrivateEndpointToProfile:input_type -> console.v1.AttachPrivateEndpointToProfileRequest
-	111, // 111: deixic.v1.DeixicService.ListGatewayEgressOrigins:input_type -> console.v1.ListGatewayEgressOriginsRequest
-	112, // 112: deixic.v1.DeixicService.ListOperatingChannels:input_type -> console.v1.ListOperatingChannelsRequest
-	113, // 113: deixic.v1.DeixicService.ListOperatingJobs:input_type -> console.v1.ListOperatingJobsRequest
-	114, // 114: deixic.v1.DeixicService.ArchiveOperatingThread:input_type -> console.v1.ArchiveOperatingThreadRequest
-	115, // 115: deixic.v1.DeixicService.ForkOperatingThread:input_type -> console.v1.ForkOperatingThreadRequest
-	116, // 116: deixic.v1.DeixicService.RenameOperatingThread:input_type -> console.v1.RenameOperatingThreadRequest
-	117, // 117: deixic.v1.DeixicService.GetOperatingThread:input_type -> console.v1.GetOperatingThreadRequest
-	118, // 118: deixic.v1.DeixicService.BootstrapThreadGateway:input_type -> console.v1.BootstrapThreadGatewayRequest
-	119, // 119: deixic.v1.DeixicService.PrewarmOperatingThread:input_type -> console.v1.PrewarmOperatingThreadRequest
-	120, // 120: deixic.v1.DeixicService.RespondOperatingThread:input_type -> console.v1.RespondOperatingThreadRequest
-	121, // 121: deixic.v1.DeixicService.InterruptOperatingThread:input_type -> console.v1.InterruptOperatingThreadRequest
-	122, // 122: deixic.v1.DeixicService.SetOperatingThreadController:input_type -> console.v1.SetOperatingThreadControllerRequest
-	123, // 123: deixic.v1.DeixicService.ListOperatingThreadEvents:input_type -> console.v1.ListOperatingThreadEventsRequest
-	124, // 124: deixic.v1.DeixicService.WatchOperatingThread:input_type -> console.v1.WatchOperatingThreadRequest
-	125, // 125: deixic.v1.DeixicService.SearchOperatingHistory:input_type -> console.v1.SearchOperatingHistoryRequest
-	126, // 126: deixic.v1.DeixicService.GetOperatingHistoryContext:input_type -> console.v1.GetOperatingHistoryContextRequest
-	127, // 127: deixic.v1.DeixicService.GetOperatingReceipt:input_type -> console.v1.GetOperatingReceiptRequest
-	128, // 128: deixic.v1.DeixicService.SubmitComputerMission:input_type -> console.v1.SubmitComputerMissionRequest
-	129, // 129: deixic.v1.DeixicService.GetComputerMission:input_type -> console.v1.GetComputerMissionRequest
-	130, // 130: deixic.v1.DeixicService.CancelComputerMission:input_type -> console.v1.CancelComputerMissionRequest
-	131, // 131: deixic.v1.DeixicService.ContinueComputerMission:input_type -> console.v1.ContinueComputerMissionRequest
-	132, // 132: deixic.v1.DeixicService.PauseComputerMission:input_type -> console.v1.PauseComputerMissionRequest
-	133, // 133: deixic.v1.DeixicService.ResumeComputerMission:input_type -> console.v1.ResumeComputerMissionRequest
-	134, // 134: deixic.v1.DeixicService.WakeComputerMission:input_type -> console.v1.WakeComputerMissionRequest
-	135, // 135: deixic.v1.DeixicService.GuideComputerMission:input_type -> console.v1.GuideComputerMissionRequest
-	136, // 136: deixic.v1.DeixicService.ListComputerMissionCanaryDefinitions:input_type -> console.v1.ListComputerMissionCanaryDefinitionsRequest
-	137, // 137: deixic.v1.DeixicService.StartComputerMissionCanaryRun:input_type -> console.v1.StartComputerMissionCanaryRunRequest
-	138, // 138: deixic.v1.DeixicService.GetComputerMissionCanaryRun:input_type -> console.v1.GetComputerMissionCanaryRunRequest
-	139, // 139: deixic.v1.DeixicService.ListComputerMissionCanaryRuns:input_type -> console.v1.ListComputerMissionCanaryRunsRequest
-	140, // 140: deixic.v1.DeixicService.GetComputerMissionCanaryEvidence:input_type -> console.v1.GetComputerMissionCanaryEvidenceRequest
-	141, // 141: deixic.v1.DeixicService.OperateComputerMissionCanaryRun:input_type -> console.v1.OperateComputerMissionCanaryRunRequest
-	142, // 142: deixic.v1.DeixicService.CreateMissionSchedule:input_type -> console.v1.CreateMissionScheduleRequest
-	143, // 143: deixic.v1.DeixicService.UpdateMissionSchedule:input_type -> console.v1.UpdateMissionScheduleRequest
-	144, // 144: deixic.v1.DeixicService.SetMissionScheduleEnabled:input_type -> console.v1.SetMissionScheduleEnabledRequest
-	145, // 145: deixic.v1.DeixicService.ListMissionSchedules:input_type -> console.v1.ListMissionSchedulesRequest
-	146, // 146: deixic.v1.DeixicService.CreateConnectorTrigger:input_type -> console.v1.CreateConnectorTriggerRequest
-	147, // 147: deixic.v1.DeixicService.UpdateConnectorTrigger:input_type -> console.v1.UpdateConnectorTriggerRequest
-	148, // 148: deixic.v1.DeixicService.ListConnectorTriggers:input_type -> console.v1.ListConnectorTriggersRequest
-	149, // 149: deixic.v1.DeixicService.DeleteConnectorTrigger:input_type -> console.v1.DeleteConnectorTriggerRequest
-	150, // 150: deixic.v1.DeixicService.SetConnectorTriggerEnabled:input_type -> console.v1.SetConnectorTriggerEnabledRequest
-	151, // 151: deixic.v1.DeixicService.ReserveComputerMissionApexSession:input_type -> console.v1.ReserveComputerMissionApexSessionRequest
-	152, // 152: deixic.v1.DeixicService.BindComputerMissionApexSessionReservation:input_type -> console.v1.BindComputerMissionApexSessionReservationRequest
-	153, // 153: deixic.v1.DeixicService.BindComputerMissionApexInstructionMetadata:input_type -> console.v1.BindComputerMissionApexInstructionMetadataRequest
-	154, // 154: deixic.v1.DeixicService.AuthorizeComputerMissionApexSessionAdoption:input_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionRequest
-	155, // 155: deixic.v1.DeixicService.ResolveOperatingReceiptAction:input_type -> console.v1.ResolveOperatingReceiptActionRequest
-	156, // 156: deixic.v1.DeixicService.SubmitOperatingMessage:input_type -> console.v1.SubmitOperatingMessageRequest
-	157, // 157: deixic.v1.DeixicService.SubmitOperatingCorrection:input_type -> console.v1.SubmitOperatingCorrectionRequest
-	158, // 158: deixic.v1.DeixicService.ListWorkspaceMemories:input_type -> console.v1.ListWorkspaceMemoriesRequest
-	159, // 159: deixic.v1.DeixicService.CorrectWorkspaceMemory:input_type -> console.v1.CorrectWorkspaceMemoryRequest
-	160, // 160: deixic.v1.DeixicService.ReviewWorkspaceMemory:input_type -> console.v1.ReviewWorkspaceMemoryRequest
-	161, // 161: deixic.v1.DeixicService.ForgetWorkspaceMemory:input_type -> console.v1.ForgetWorkspaceMemoryRequest
-	162, // 162: deixic.v1.DeixicService.SubmitOperatingFeedback:input_type -> console.v1.SubmitOperatingFeedbackRequest
-	163, // 163: deixic.v1.DeixicService.RecordOperatingHomepageSuggestionFeedback:input_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
-	164, // 164: deixic.v1.DeixicService.SubmitProductIssueReport:input_type -> console.v1.SubmitProductIssueReportRequest
-	165, // 165: deixic.v1.DeixicService.SubmitNativeProductIssueReport:input_type -> console.v1.SubmitNativeProductIssueReportRequest
-	166, // 166: deixic.v1.DeixicService.ListStaffProductIssueReports:input_type -> console.v1.ListStaffProductIssueReportsRequest
-	167, // 167: deixic.v1.DeixicService.EngageStaffProductIssueReport:input_type -> console.v1.EngageStaffProductIssueReportRequest
-	168, // 168: deixic.v1.DeixicService.ListStaffProductIssueRecoveries:input_type -> console.v1.ListStaffProductIssueRecoveriesRequest
-	169, // 169: deixic.v1.DeixicService.PrepareStaffProductIssueRecovery:input_type -> console.v1.PrepareStaffProductIssueRecoveryRequest
-	170, // 170: deixic.v1.DeixicService.ScanStaffProductIssueRecovery:input_type -> console.v1.ScanStaffProductIssueRecoveryRequest
-	171, // 171: deixic.v1.DeixicService.ReviewStaffProductIssueRecovery:input_type -> console.v1.ReviewStaffProductIssueRecoveryRequest
-	172, // 172: deixic.v1.DeixicService.ExecuteStaffProductIssueRecovery:input_type -> console.v1.ExecuteStaffProductIssueRecoveryRequest
-	173, // 173: deixic.v1.DeixicService.GetProductIssueRecovery:input_type -> console.v1.GetProductIssueRecoveryRequest
-	174, // 174: deixic.v1.DeixicService.ReplyProductIssueRecovery:input_type -> console.v1.ReplyProductIssueRecoveryRequest
-	175, // 175: deixic.v1.DeixicService.GetOperatingFeedback:input_type -> console.v1.GetOperatingFeedbackRequest
-	176, // 176: deixic.v1.DeixicService.ResolveOperatingFeedbackRemediation:input_type -> console.v1.ResolveOperatingFeedbackRemediationRequest
-	177, // 177: deixic.v1.DeixicService.ListCustomerIntelligenceFacts:input_type -> console.v1.ListCustomerIntelligenceFactsRequest
-	178, // 178: deixic.v1.DeixicService.GetCustomerIntelligenceFact:input_type -> console.v1.GetCustomerIntelligenceFactRequest
-	179, // 179: deixic.v1.DeixicService.ReviewCustomerIntelligenceFact:input_type -> console.v1.ReviewCustomerIntelligenceFactRequest
-	180, // 180: deixic.v1.DeixicService.ProposeCustomerIntelligenceFact:input_type -> console.v1.ProposeCustomerIntelligenceFactRequest
-	181, // 181: deixic.v1.DeixicService.RespondToCustomerFactConfirmation:input_type -> console.v1.RespondToCustomerFactConfirmationRequest
-	182, // 182: deixic.v1.DeixicService.AggregateCustomerIntelligencePatterns:input_type -> console.v1.AggregateCustomerIntelligencePatternsRequest
-	183, // 183: deixic.v1.DeixicService.CreateProspectingWatchProgram:input_type -> console.v1.CreateProspectingWatchProgramRequest
-	184, // 184: deixic.v1.DeixicService.GetProspectingWatchProgram:input_type -> console.v1.GetProspectingWatchProgramRequest
-	185, // 185: deixic.v1.DeixicService.ListProspectingWatchPrograms:input_type -> console.v1.ListProspectingWatchProgramsRequest
-	186, // 186: deixic.v1.DeixicService.UpdateProspectingWatchProgram:input_type -> console.v1.UpdateProspectingWatchProgramRequest
-	187, // 187: deixic.v1.DeixicService.CreateProspectingDraft:input_type -> console.v1.CreateProspectingDraftRequest
-	188, // 188: deixic.v1.DeixicService.ListProspectingDrafts:input_type -> console.v1.ListProspectingDraftsRequest
-	189, // 189: deixic.v1.DeixicService.ReviewProspectingDraft:input_type -> console.v1.ReviewProspectingDraftRequest
-	190, // 190: deixic.v1.DeixicService.ListOperatingCorrections:input_type -> console.v1.ListOperatingCorrectionsRequest
-	191, // 191: deixic.v1.DeixicService.ReviewOperatingCorrection:input_type -> console.v1.ReviewOperatingCorrectionRequest
-	192, // 192: deixic.v1.DeixicService.BeginOperatingAttachmentUpload:input_type -> console.v1.BeginOperatingAttachmentUploadRequest
-	193, // 193: deixic.v1.DeixicService.CompleteOperatingAttachmentUpload:input_type -> console.v1.CompleteOperatingAttachmentUploadRequest
-	194, // 194: deixic.v1.DeixicService.AcceptOperatingProjectSnapshot:input_type -> console.v1.AcceptOperatingProjectSnapshotRequest
-	195, // 195: deixic.v1.DeixicService.ImportOperatingProjectSnapshot:input_type -> console.v1.ImportOperatingProjectSnapshotRequest
-	196, // 196: deixic.v1.DeixicService.GetOperatingTaskEnvironment:input_type -> console.v1.GetOperatingTaskEnvironmentRequest
-	197, // 197: deixic.v1.DeixicService.GetOperatingProjectSnapshot:input_type -> console.v1.GetOperatingProjectSnapshotRequest
-	198, // 198: deixic.v1.DeixicService.ListOperatingAttachments:input_type -> console.v1.ListOperatingAttachmentsRequest
-	199, // 199: deixic.v1.DeixicService.GetPrivacySettings:input_type -> console.v1.GetPrivacySettingsRequest
-	200, // 200: deixic.v1.DeixicService.SetPrivacySettings:input_type -> console.v1.SetPrivacySettingsRequest
-	201, // 201: deixic.v1.DeixicService.GetWorkspaceSettings:input_type -> console.v1.GetWorkspaceSettingsRequest
-	202, // 202: deixic.v1.DeixicService.GetBillingSubscription:input_type -> console.v1.GetBillingSubscriptionRequest
-	203, // 203: deixic.v1.DeixicService.CreateBillingPortalSession:input_type -> console.v1.CreateBillingPortalSessionRequest
-	204, // 204: deixic.v1.DeixicService.CreateBillingCheckoutSession:input_type -> console.v1.CreateBillingCheckoutSessionRequest
-	205, // 205: deixic.v1.DeixicService.UpdateWorkspaceProfile:input_type -> console.v1.UpdateWorkspaceProfileRequest
-	206, // 206: deixic.v1.DeixicService.ArchiveWorkspace:input_type -> console.v1.ArchiveWorkspaceRequest
-	207, // 207: deixic.v1.DeixicService.UpdateWorkspacePolicy:input_type -> console.v1.UpdateWorkspacePolicyRequest
-	208, // 208: deixic.v1.DeixicService.UpdateWorkspaceDexPolicy:input_type -> console.v1.UpdateWorkspaceDexPolicyRequest
-	209, // 209: deixic.v1.DeixicService.UpdateWorkspaceArtifactStyleGuide:input_type -> console.v1.UpdateWorkspaceArtifactStyleGuideRequest
-	210, // 210: deixic.v1.DeixicService.EvaluateWorkspaceArtifactStyleGuide:input_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideRequest
-	211, // 211: deixic.v1.DeixicService.UpsertWorkspaceIdentityProvider:input_type -> console.v1.UpsertWorkspaceIdentityProviderRequest
-	212, // 212: deixic.v1.DeixicService.RemoveWorkspaceIdentityProvider:input_type -> console.v1.RemoveWorkspaceIdentityProviderRequest
-	213, // 213: deixic.v1.DeixicService.UpsertWorkspaceIntegration:input_type -> console.v1.UpsertWorkspaceIntegrationRequest
-	214, // 214: deixic.v1.DeixicService.RemoveWorkspaceIntegration:input_type -> console.v1.RemoveWorkspaceIntegrationRequest
-	215, // 215: deixic.v1.DeixicService.UpdateWorkspaceBilling:input_type -> console.v1.UpdateWorkspaceBillingRequest
-	216, // 216: deixic.v1.DeixicService.UpsertWorkspaceMember:input_type -> console.v1.UpsertWorkspaceMemberRequest
-	217, // 217: deixic.v1.DeixicService.RemoveWorkspaceMember:input_type -> console.v1.RemoveWorkspaceMemberRequest
-	218, // 218: deixic.v1.DeixicService.UpdateWorkspaceNotificationPreferences:input_type -> console.v1.UpdateWorkspaceNotificationPreferencesRequest
-	219, // 219: deixic.v1.DeixicService.EnableWorkspaceBreakGlass:input_type -> console.v1.EnableWorkspaceBreakGlassRequest
-	220, // 220: deixic.v1.DeixicService.DisableWorkspaceBreakGlass:input_type -> console.v1.DisableWorkspaceBreakGlassRequest
-	221, // 221: deixic.v1.DeixicService.ListWorkspaceSkills:input_type -> console.v1.ListWorkspaceSkillsRequest
-	222, // 222: deixic.v1.DeixicService.BrowseDexSkillCatalog:input_type -> console.v1.BrowseDexSkillCatalogRequest
-	223, // 223: deixic.v1.DeixicService.InstallDexSkillCatalogEntry:input_type -> console.v1.InstallDexSkillCatalogEntryRequest
-	224, // 224: deixic.v1.DeixicService.CreateWorkspaceSkill:input_type -> console.v1.CreateWorkspaceSkillRequest
-	225, // 225: deixic.v1.DeixicService.UpdateWorkspaceSkill:input_type -> console.v1.UpdateWorkspaceSkillRequest
-	226, // 226: deixic.v1.DeixicService.DeleteWorkspaceSkill:input_type -> console.v1.DeleteWorkspaceSkillRequest
-	227, // 227: deixic.v1.DeixicService.ListScenarioFixtures:input_type -> console.v1.ListScenarioFixturesRequest
-	228, // 228: deixic.v1.DeixicService.PromoteScenarioFixture:input_type -> console.v1.PromoteScenarioFixtureRequest
-	229, // 229: deixic.v1.DeixicService.CompareScenarioFixtures:input_type -> console.v1.CompareScenarioFixturesRequest
-	230, // 230: deixic.v1.DeixicService.CreateConnectorProfile:input_type -> console.v1.CreateConnectorProfileRequest
-	231, // 231: deixic.v1.DeixicService.ListConnectorProfiles:input_type -> console.v1.ListConnectorProfilesRequest
-	232, // 232: deixic.v1.DeixicService.UpdateConnectorProfile:input_type -> console.v1.UpdateConnectorProfileRequest
-	233, // 233: deixic.v1.DeixicService.DeleteConnectorProfile:input_type -> console.v1.DeleteConnectorProfileRequest
-	234, // 234: deixic.v1.DeixicService.ListConnectedCalls:input_type -> console.v1.ListConnectedCallsRequest
-	235, // 235: deixic.v1.DeixicService.StartMeetingCapture:input_type -> console.v1.StartMeetingCaptureRequest
-	236, // 236: deixic.v1.DeixicService.GetMeetingCapture:input_type -> console.v1.GetMeetingCaptureRequest
-	237, // 237: deixic.v1.DeixicService.ListMeetingCaptures:input_type -> console.v1.ListMeetingCapturesRequest
-	238, // 238: deixic.v1.DeixicService.StopMeetingCapture:input_type -> console.v1.StopMeetingCaptureRequest
-	239, // 239: deixic.v1.DeixicService.ListCommitments:input_type -> console.v1.ListCommitmentsRequest
-	240, // 240: deixic.v1.DeixicService.AssessComplianceSubject:output_type -> console.v1.AssessComplianceSubjectResponse
-	241, // 241: deixic.v1.DeixicService.ListBusinessBlueprints:output_type -> console.v1.ListBusinessBlueprintsResponse
-	242, // 242: deixic.v1.DeixicService.CloneBusinessBlueprint:output_type -> console.v1.CloneBusinessBlueprintResponse
-	243, // 243: deixic.v1.DeixicService.GetBusinessProcessDefinition:output_type -> console.v1.GetBusinessProcessDefinitionResponse
-	244, // 244: deixic.v1.DeixicService.ListBusinessProcessDefinitions:output_type -> console.v1.ListBusinessProcessDefinitionsResponse
-	245, // 245: deixic.v1.DeixicService.DefineBusinessProcess:output_type -> console.v1.DefineBusinessProcessResponse
-	246, // 246: deixic.v1.DeixicService.StartBusinessProcess:output_type -> console.v1.StartBusinessProcessResponse
-	247, // 247: deixic.v1.DeixicService.GetBusinessProcess:output_type -> console.v1.GetBusinessProcessResponse
-	248, // 248: deixic.v1.DeixicService.ListBusinessProcesses:output_type -> console.v1.ListBusinessProcessesResponse
-	249, // 249: deixic.v1.DeixicService.TransitionBusinessProcess:output_type -> console.v1.TransitionBusinessProcessResponse
-	250, // 250: deixic.v1.DeixicService.PrepareBusinessObjectAuthorityTransfer:output_type -> console.v1.PrepareBusinessObjectAuthorityTransferResponse
-	251, // 251: deixic.v1.DeixicService.FinalizeBusinessObjectAuthorityTransfer:output_type -> console.v1.FinalizeBusinessObjectAuthorityTransferResponse
-	252, // 252: deixic.v1.DeixicService.DefineBusinessObjectType:output_type -> console.v1.DefineBusinessObjectTypeResponse
-	253, // 253: deixic.v1.DeixicService.GetBusinessObjectType:output_type -> console.v1.GetBusinessObjectTypeResponse
-	254, // 254: deixic.v1.DeixicService.ListBusinessObjectTypes:output_type -> console.v1.ListBusinessObjectTypesResponse
-	255, // 255: deixic.v1.DeixicService.CreateBusinessObject:output_type -> console.v1.CreateBusinessObjectResponse
-	256, // 256: deixic.v1.DeixicService.GetBusinessObject:output_type -> console.v1.GetBusinessObjectResponse
-	257, // 257: deixic.v1.DeixicService.ListBusinessObjects:output_type -> console.v1.ListBusinessObjectsResponse
-	258, // 258: deixic.v1.DeixicService.UpdateBusinessObject:output_type -> console.v1.UpdateBusinessObjectResponse
-	259, // 259: deixic.v1.DeixicService.DeleteBusinessObject:output_type -> console.v1.DeleteBusinessObjectResponse
-	260, // 260: deixic.v1.DeixicService.ListBusinessObjectRevisions:output_type -> console.v1.ListBusinessObjectRevisionsResponse
-	261, // 261: deixic.v1.DeixicService.BindBusinessObjectSource:output_type -> console.v1.BindBusinessObjectSourceResponse
-	262, // 262: deixic.v1.DeixicService.AdmitBusinessObjectObservation:output_type -> console.v1.AdmitBusinessObjectObservationResponse
-	263, // 263: deixic.v1.DeixicService.ListBusinessObjectRelationships:output_type -> console.v1.ListBusinessObjectRelationshipsResponse
-	264, // 264: deixic.v1.DeixicService.CreateBusinessObjectRelationship:output_type -> console.v1.CreateBusinessObjectRelationshipResponse
-	265, // 265: deixic.v1.DeixicService.DeleteBusinessObjectRelationship:output_type -> console.v1.DeleteBusinessObjectRelationshipResponse
-	266, // 266: deixic.v1.DeixicService.CreateCaptureForm:output_type -> console.v1.CreateCaptureFormResponse
-	267, // 267: deixic.v1.DeixicService.ListCaptureForms:output_type -> console.v1.ListCaptureFormsResponse
-	268, // 268: deixic.v1.DeixicService.GetCaptureForm:output_type -> console.v1.GetCaptureFormResponse
-	269, // 269: deixic.v1.DeixicService.UpdateCaptureForm:output_type -> console.v1.UpdateCaptureFormResponse
-	270, // 270: deixic.v1.DeixicService.PublishCaptureForm:output_type -> console.v1.PublishCaptureFormResponse
-	271, // 271: deixic.v1.DeixicService.RevokeCaptureFormPublication:output_type -> console.v1.RevokeCaptureFormPublicationResponse
-	272, // 272: deixic.v1.DeixicService.CreateCaptureFormInvitation:output_type -> console.v1.CreateCaptureFormInvitationResponse
-	273, // 273: deixic.v1.DeixicService.RevokeCaptureFormInvitation:output_type -> console.v1.RevokeCaptureFormInvitationResponse
-	274, // 274: deixic.v1.DeixicService.GetInvitedCaptureForm:output_type -> console.v1.GetInvitedCaptureFormResponse
-	275, // 275: deixic.v1.DeixicService.SubmitInvitedCaptureForm:output_type -> console.v1.SubmitInvitedCaptureFormResponse
-	276, // 276: deixic.v1.DeixicService.GetPublishedCaptureForm:output_type -> console.v1.GetPublishedCaptureFormResponse
-	277, // 277: deixic.v1.DeixicService.GetPublishedCaptureFormBrandingAsset:output_type -> console.v1.GetPublishedCaptureFormBrandingAssetResponse
-	278, // 278: deixic.v1.DeixicService.SubmitPublishedCaptureForm:output_type -> console.v1.SubmitPublishedCaptureFormResponse
-	279, // 279: deixic.v1.DeixicService.BeginPublishedCaptureFormUpload:output_type -> console.v1.BeginPublishedCaptureFormUploadResponse
-	280, // 280: deixic.v1.DeixicService.CompletePublishedCaptureFormUpload:output_type -> console.v1.CompletePublishedCaptureFormUploadResponse
-	281, // 281: deixic.v1.DeixicService.GetCaptureFormSubmission:output_type -> console.v1.GetCaptureFormSubmissionResponse
-	282, // 282: deixic.v1.DeixicService.ListCaptureFormSubmissions:output_type -> console.v1.ListCaptureFormSubmissionsResponse
-	283, // 283: deixic.v1.DeixicService.ReviewCaptureFormSubmission:output_type -> console.v1.ReviewCaptureFormSubmissionResponse
-	284, // 284: deixic.v1.DeixicService.GetInferenceCreditAutoRefill:output_type -> console.v1.GetInferenceCreditAutoRefillResponse
-	285, // 285: deixic.v1.DeixicService.UpdateInferenceCreditAutoRefill:output_type -> console.v1.UpdateInferenceCreditAutoRefillResponse
-	286, // 286: deixic.v1.DeixicService.CompleteInferenceCreditAutoRefill:output_type -> console.v1.CompleteInferenceCreditAutoRefillResponse
-	287, // 287: deixic.v1.DeixicService.ListInferenceCreditReceipts:output_type -> console.v1.ListInferenceCreditReceiptsResponse
-	288, // 288: deixic.v1.DeixicService.GetInferenceCreditBalance:output_type -> console.v1.GetInferenceCreditBalanceResponse
-	289, // 289: deixic.v1.DeixicService.CreateInferenceCreditCheckout:output_type -> console.v1.CreateInferenceCreditCheckoutResponse
-	290, // 290: deixic.v1.DeixicService.FulfillInferenceCreditCheckout:output_type -> console.v1.FulfillInferenceCreditCheckoutResponse
-	291, // 291: deixic.v1.DeixicService.GetOverview:output_type -> console.v1.GetOverviewResponse
-	292, // 292: deixic.v1.DeixicService.ListAssets:output_type -> console.v1.ListAssetsResponse
-	293, // 293: deixic.v1.DeixicService.GetAsset:output_type -> console.v1.GetAssetResponse
-	294, // 294: deixic.v1.DeixicService.ListFindings:output_type -> console.v1.ListFindingsResponse
-	295, // 295: deixic.v1.DeixicService.GetTraceDrilldown:output_type -> console.v1.GetTraceDrilldownResponse
-	296, // 296: deixic.v1.DeixicService.GetOnboardingPlan:output_type -> console.v1.GetOnboardingPlanResponse
-	297, // 297: deixic.v1.DeixicService.ListAuthorityPosture:output_type -> console.v1.ListAuthorityPostureResponse
-	298, // 298: deixic.v1.DeixicService.ListAgentWorkforceRecords:output_type -> console.v1.ListAgentWorkforceRecordsResponse
-	299, // 299: deixic.v1.DeixicService.SubmitAgentWorkforceEvidence:output_type -> console.v1.SubmitAgentWorkforceEvidenceResponse
-	300, // 300: deixic.v1.DeixicService.ListIntegrationTiles:output_type -> console.v1.ListIntegrationTilesResponse
-	301, // 301: deixic.v1.DeixicService.ListPinnedSources:output_type -> console.v1.ListPinnedSourcesResponse
-	302, // 302: deixic.v1.DeixicService.ListOrbControlTargets:output_type -> console.v1.ListOrbControlTargetsResponse
-	303, // 303: deixic.v1.DeixicService.GetOrbControlTarget:output_type -> console.v1.GetOrbControlTargetResponse
-	304, // 304: deixic.v1.DeixicService.SubmitOrbControlAction:output_type -> console.v1.SubmitOrbControlActionResponse
-	305, // 305: deixic.v1.DeixicService.SetPinnedSource:output_type -> console.v1.SetPinnedSourceResponse
-	306, // 306: deixic.v1.DeixicService.UnpinSource:output_type -> console.v1.UnpinSourceResponse
-	307, // 307: deixic.v1.DeixicService.ListActivity:output_type -> console.v1.ListActivityResponse
-	308, // 308: deixic.v1.DeixicService.SearchStaffWorkspaceDirectory:output_type -> console.v1.SearchStaffWorkspaceDirectoryResponse
-	309, // 309: deixic.v1.DeixicService.GetStaffWorkspaceContext:output_type -> console.v1.GetStaffWorkspaceContextResponse
-	310, // 310: deixic.v1.DeixicService.GetStaffManagedInferenceFunding:output_type -> meter.v1.GetPrepaidCreditBalanceResponse
-	311, // 311: deixic.v1.DeixicService.GrantStaffManagedInferenceCredits:output_type -> meter.v1.GrantDevelopmentCreditsResponse
-	312, // 312: deixic.v1.DeixicService.GetStaffManagedInferenceUsage:output_type -> meter.v1.QueryUsageResponse
-	313, // 313: deixic.v1.DeixicService.GetStaffManagedInferenceBudget:output_type -> meter.v1.GetBudgetDashboardResponse
-	314, // 314: deixic.v1.DeixicService.SetStaffManagedInferenceBudget:output_type -> meter.v1.SetBudgetResponse
-	315, // 315: deixic.v1.DeixicService.GetStaffManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
-	315, // 316: deixic.v1.DeixicService.GetManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
-	316, // 317: deixic.v1.DeixicService.ListManagedProviderAccessEvents:output_type -> console.v1.ListManagedProviderAccessEventsResponse
-	317, // 318: deixic.v1.DeixicService.ListStaffManagedInferenceAdminEvents:output_type -> meter.v1.ListManagedInferenceAdminEventsResponse
-	318, // 319: deixic.v1.DeixicService.ListStaffManagedExecutionGrantEvents:output_type -> console.v1.ListStaffManagedExecutionGrantEventsResponse
-	319, // 320: deixic.v1.DeixicService.ListStaffManagedExecutionOutcomes:output_type -> console.v1.ListStaffManagedExecutionOutcomesResponse
-	320, // 321: deixic.v1.DeixicService.ListManagedProviderAccessGrants:output_type -> console.v1.ListManagedProviderAccessGrantsResponse
-	321, // 322: deixic.v1.DeixicService.UpsertManagedProviderAccessGrant:output_type -> console.v1.UpsertManagedProviderAccessGrantResponse
-	322, // 323: deixic.v1.DeixicService.RevokeManagedProviderAccessGrant:output_type -> console.v1.RevokeManagedProviderAccessGrantResponse
-	323, // 324: deixic.v1.DeixicService.GetStaffInferenceRoutingProfile:output_type -> console.v1.GetStaffInferenceRoutingProfileResponse
-	324, // 325: deixic.v1.DeixicService.UpdateStaffInferenceRoutingProfile:output_type -> console.v1.UpdateStaffInferenceRoutingProfileResponse
-	325, // 326: deixic.v1.DeixicService.ListCostUsage:output_type -> console.v1.ListCostUsageResponse
-	326, // 327: deixic.v1.DeixicService.ListEvalResults:output_type -> console.v1.ListEvalResultsResponse
-	327, // 328: deixic.v1.DeixicService.RecordProviderCostSnapshot:output_type -> console.v1.RecordProviderCostSnapshotResponse
-	328, // 329: deixic.v1.DeixicService.GetDeixicBootSnapshot:output_type -> console.v1.GetConsoleBootSnapshotResponse
-	329, // 330: deixic.v1.DeixicService.GetOperatorPreferences:output_type -> console.v1.GetOperatorPreferencesResponse
-	330, // 331: deixic.v1.DeixicService.UpdateOperatorPreferences:output_type -> console.v1.UpdateOperatorPreferencesResponse
-	331, // 332: deixic.v1.DeixicService.ListWorkspaceGuardrailRules:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
-	331, // 333: deixic.v1.DeixicService.UpsertWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
-	331, // 334: deixic.v1.DeixicService.RemoveWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
-	332, // 335: deixic.v1.DeixicService.CreateDexMcpServer:output_type -> console.v1.CreateDexMcpServerResponse
-	333, // 336: deixic.v1.DeixicService.ListDexMcpServers:output_type -> console.v1.ListDexMcpServersResponse
-	334, // 337: deixic.v1.DeixicService.GetDexMcpServer:output_type -> console.v1.GetDexMcpServerResponse
-	335, // 338: deixic.v1.DeixicService.DiscoverDexMcpServer:output_type -> console.v1.DiscoverDexMcpServerResponse
-	336, // 339: deixic.v1.DeixicService.UpdateDexMcpServer:output_type -> console.v1.UpdateDexMcpServerResponse
-	337, // 340: deixic.v1.DeixicService.DeleteDexMcpServer:output_type -> console.v1.DeleteDexMcpServerResponse
-	338, // 341: deixic.v1.DeixicService.InitiateDexMcpOAuthProfile:output_type -> console.v1.InitiateDexMcpOAuthProfileResponse
-	339, // 342: deixic.v1.DeixicService.CompleteDexMcpOAuthProfile:output_type -> console.v1.CompleteDexMcpOAuthProfileResponse
-	340, // 343: deixic.v1.DeixicService.ListDexMcpOAuthProfiles:output_type -> console.v1.ListDexMcpOAuthProfilesResponse
-	341, // 344: deixic.v1.DeixicService.RevokeDexMcpOAuthProfile:output_type -> console.v1.RevokeDexMcpOAuthProfileResponse
-	342, // 345: deixic.v1.DeixicService.ReauthorizeDexMcpOAuthProfile:output_type -> console.v1.ReauthorizeDexMcpOAuthProfileResponse
-	343, // 346: deixic.v1.DeixicService.RegisterPrivateEndpoint:output_type -> console.v1.RegisterPrivateEndpointResponse
-	344, // 347: deixic.v1.DeixicService.VerifyPrivateEndpoint:output_type -> console.v1.VerifyPrivateEndpointResponse
-	345, // 348: deixic.v1.DeixicService.ListPrivateEndpoints:output_type -> console.v1.ListPrivateEndpointsResponse
-	346, // 349: deixic.v1.DeixicService.DeletePrivateEndpoint:output_type -> console.v1.DeletePrivateEndpointResponse
-	347, // 350: deixic.v1.DeixicService.AttachPrivateEndpointToProfile:output_type -> console.v1.AttachPrivateEndpointToProfileResponse
-	348, // 351: deixic.v1.DeixicService.ListGatewayEgressOrigins:output_type -> console.v1.ListGatewayEgressOriginsResponse
-	349, // 352: deixic.v1.DeixicService.ListOperatingChannels:output_type -> console.v1.ListOperatingChannelsResponse
-	350, // 353: deixic.v1.DeixicService.ListOperatingJobs:output_type -> console.v1.ListOperatingJobsResponse
-	351, // 354: deixic.v1.DeixicService.ArchiveOperatingThread:output_type -> console.v1.ArchiveOperatingThreadResponse
-	352, // 355: deixic.v1.DeixicService.ForkOperatingThread:output_type -> console.v1.ForkOperatingThreadResponse
-	353, // 356: deixic.v1.DeixicService.RenameOperatingThread:output_type -> console.v1.RenameOperatingThreadResponse
-	354, // 357: deixic.v1.DeixicService.GetOperatingThread:output_type -> console.v1.GetOperatingThreadResponse
-	355, // 358: deixic.v1.DeixicService.BootstrapThreadGateway:output_type -> console.v1.BootstrapThreadGatewayResponse
-	356, // 359: deixic.v1.DeixicService.PrewarmOperatingThread:output_type -> console.v1.PrewarmOperatingThreadResponse
-	357, // 360: deixic.v1.DeixicService.RespondOperatingThread:output_type -> console.v1.RespondOperatingThreadResponse
-	358, // 361: deixic.v1.DeixicService.InterruptOperatingThread:output_type -> console.v1.InterruptOperatingThreadResponse
-	359, // 362: deixic.v1.DeixicService.SetOperatingThreadController:output_type -> console.v1.SetOperatingThreadControllerResponse
-	360, // 363: deixic.v1.DeixicService.ListOperatingThreadEvents:output_type -> console.v1.ListOperatingThreadEventsResponse
-	361, // 364: deixic.v1.DeixicService.WatchOperatingThread:output_type -> console.v1.WatchOperatingThreadResponse
-	362, // 365: deixic.v1.DeixicService.SearchOperatingHistory:output_type -> console.v1.SearchOperatingHistoryResponse
-	363, // 366: deixic.v1.DeixicService.GetOperatingHistoryContext:output_type -> console.v1.GetOperatingHistoryContextResponse
-	364, // 367: deixic.v1.DeixicService.GetOperatingReceipt:output_type -> console.v1.GetOperatingReceiptResponse
-	365, // 368: deixic.v1.DeixicService.SubmitComputerMission:output_type -> console.v1.SubmitComputerMissionResponse
-	366, // 369: deixic.v1.DeixicService.GetComputerMission:output_type -> console.v1.GetComputerMissionResponse
-	367, // 370: deixic.v1.DeixicService.CancelComputerMission:output_type -> console.v1.CancelComputerMissionResponse
-	368, // 371: deixic.v1.DeixicService.ContinueComputerMission:output_type -> console.v1.ContinueComputerMissionResponse
-	369, // 372: deixic.v1.DeixicService.PauseComputerMission:output_type -> console.v1.PauseComputerMissionResponse
-	370, // 373: deixic.v1.DeixicService.ResumeComputerMission:output_type -> console.v1.ResumeComputerMissionResponse
-	371, // 374: deixic.v1.DeixicService.WakeComputerMission:output_type -> console.v1.WakeComputerMissionResponse
-	372, // 375: deixic.v1.DeixicService.GuideComputerMission:output_type -> console.v1.GuideComputerMissionResponse
-	373, // 376: deixic.v1.DeixicService.ListComputerMissionCanaryDefinitions:output_type -> console.v1.ListComputerMissionCanaryDefinitionsResponse
-	374, // 377: deixic.v1.DeixicService.StartComputerMissionCanaryRun:output_type -> console.v1.StartComputerMissionCanaryRunResponse
-	375, // 378: deixic.v1.DeixicService.GetComputerMissionCanaryRun:output_type -> console.v1.GetComputerMissionCanaryRunResponse
-	376, // 379: deixic.v1.DeixicService.ListComputerMissionCanaryRuns:output_type -> console.v1.ListComputerMissionCanaryRunsResponse
-	377, // 380: deixic.v1.DeixicService.GetComputerMissionCanaryEvidence:output_type -> console.v1.GetComputerMissionCanaryEvidenceResponse
-	378, // 381: deixic.v1.DeixicService.OperateComputerMissionCanaryRun:output_type -> console.v1.OperateComputerMissionCanaryRunResponse
-	379, // 382: deixic.v1.DeixicService.CreateMissionSchedule:output_type -> console.v1.CreateMissionScheduleResponse
-	380, // 383: deixic.v1.DeixicService.UpdateMissionSchedule:output_type -> console.v1.UpdateMissionScheduleResponse
-	381, // 384: deixic.v1.DeixicService.SetMissionScheduleEnabled:output_type -> console.v1.SetMissionScheduleEnabledResponse
-	382, // 385: deixic.v1.DeixicService.ListMissionSchedules:output_type -> console.v1.ListMissionSchedulesResponse
-	383, // 386: deixic.v1.DeixicService.CreateConnectorTrigger:output_type -> console.v1.CreateConnectorTriggerResponse
-	384, // 387: deixic.v1.DeixicService.UpdateConnectorTrigger:output_type -> console.v1.UpdateConnectorTriggerResponse
-	385, // 388: deixic.v1.DeixicService.ListConnectorTriggers:output_type -> console.v1.ListConnectorTriggersResponse
-	386, // 389: deixic.v1.DeixicService.DeleteConnectorTrigger:output_type -> console.v1.DeleteConnectorTriggerResponse
-	387, // 390: deixic.v1.DeixicService.SetConnectorTriggerEnabled:output_type -> console.v1.SetConnectorTriggerEnabledResponse
-	388, // 391: deixic.v1.DeixicService.ReserveComputerMissionApexSession:output_type -> console.v1.ReserveComputerMissionApexSessionResponse
-	389, // 392: deixic.v1.DeixicService.BindComputerMissionApexSessionReservation:output_type -> console.v1.BindComputerMissionApexSessionReservationResponse
-	390, // 393: deixic.v1.DeixicService.BindComputerMissionApexInstructionMetadata:output_type -> console.v1.BindComputerMissionApexInstructionMetadataResponse
-	391, // 394: deixic.v1.DeixicService.AuthorizeComputerMissionApexSessionAdoption:output_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse
-	392, // 395: deixic.v1.DeixicService.ResolveOperatingReceiptAction:output_type -> console.v1.ResolveOperatingReceiptActionResponse
-	393, // 396: deixic.v1.DeixicService.SubmitOperatingMessage:output_type -> console.v1.SubmitOperatingMessageResponse
-	394, // 397: deixic.v1.DeixicService.SubmitOperatingCorrection:output_type -> console.v1.SubmitOperatingCorrectionResponse
-	395, // 398: deixic.v1.DeixicService.ListWorkspaceMemories:output_type -> console.v1.ListWorkspaceMemoriesResponse
-	396, // 399: deixic.v1.DeixicService.CorrectWorkspaceMemory:output_type -> console.v1.CorrectWorkspaceMemoryResponse
-	397, // 400: deixic.v1.DeixicService.ReviewWorkspaceMemory:output_type -> console.v1.ReviewWorkspaceMemoryResponse
-	398, // 401: deixic.v1.DeixicService.ForgetWorkspaceMemory:output_type -> console.v1.ForgetWorkspaceMemoryResponse
-	399, // 402: deixic.v1.DeixicService.SubmitOperatingFeedback:output_type -> console.v1.SubmitOperatingFeedbackResponse
-	400, // 403: deixic.v1.DeixicService.RecordOperatingHomepageSuggestionFeedback:output_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
-	401, // 404: deixic.v1.DeixicService.SubmitProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
-	401, // 405: deixic.v1.DeixicService.SubmitNativeProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
-	402, // 406: deixic.v1.DeixicService.ListStaffProductIssueReports:output_type -> console.v1.ListStaffProductIssueReportsResponse
-	403, // 407: deixic.v1.DeixicService.EngageStaffProductIssueReport:output_type -> console.v1.EngageStaffProductIssueReportResponse
-	404, // 408: deixic.v1.DeixicService.ListStaffProductIssueRecoveries:output_type -> console.v1.ListStaffProductIssueRecoveriesResponse
-	405, // 409: deixic.v1.DeixicService.PrepareStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	405, // 410: deixic.v1.DeixicService.ScanStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	405, // 411: deixic.v1.DeixicService.ReviewStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	405, // 412: deixic.v1.DeixicService.ExecuteStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	405, // 413: deixic.v1.DeixicService.GetProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	405, // 414: deixic.v1.DeixicService.ReplyProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
-	406, // 415: deixic.v1.DeixicService.GetOperatingFeedback:output_type -> console.v1.GetOperatingFeedbackResponse
-	407, // 416: deixic.v1.DeixicService.ResolveOperatingFeedbackRemediation:output_type -> console.v1.ResolveOperatingFeedbackRemediationResponse
-	408, // 417: deixic.v1.DeixicService.ListCustomerIntelligenceFacts:output_type -> console.v1.ListCustomerIntelligenceFactsResponse
-	409, // 418: deixic.v1.DeixicService.GetCustomerIntelligenceFact:output_type -> console.v1.GetCustomerIntelligenceFactResponse
-	410, // 419: deixic.v1.DeixicService.ReviewCustomerIntelligenceFact:output_type -> console.v1.ReviewCustomerIntelligenceFactResponse
-	411, // 420: deixic.v1.DeixicService.ProposeCustomerIntelligenceFact:output_type -> console.v1.ProposeCustomerIntelligenceFactResponse
-	412, // 421: deixic.v1.DeixicService.RespondToCustomerFactConfirmation:output_type -> console.v1.RespondToCustomerFactConfirmationResponse
-	413, // 422: deixic.v1.DeixicService.AggregateCustomerIntelligencePatterns:output_type -> console.v1.AggregateCustomerIntelligencePatternsResponse
-	414, // 423: deixic.v1.DeixicService.CreateProspectingWatchProgram:output_type -> console.v1.CreateProspectingWatchProgramResponse
-	415, // 424: deixic.v1.DeixicService.GetProspectingWatchProgram:output_type -> console.v1.GetProspectingWatchProgramResponse
-	416, // 425: deixic.v1.DeixicService.ListProspectingWatchPrograms:output_type -> console.v1.ListProspectingWatchProgramsResponse
-	417, // 426: deixic.v1.DeixicService.UpdateProspectingWatchProgram:output_type -> console.v1.UpdateProspectingWatchProgramResponse
-	418, // 427: deixic.v1.DeixicService.CreateProspectingDraft:output_type -> console.v1.CreateProspectingDraftResponse
-	419, // 428: deixic.v1.DeixicService.ListProspectingDrafts:output_type -> console.v1.ListProspectingDraftsResponse
-	420, // 429: deixic.v1.DeixicService.ReviewProspectingDraft:output_type -> console.v1.ReviewProspectingDraftResponse
-	421, // 430: deixic.v1.DeixicService.ListOperatingCorrections:output_type -> console.v1.ListOperatingCorrectionsResponse
-	422, // 431: deixic.v1.DeixicService.ReviewOperatingCorrection:output_type -> console.v1.ReviewOperatingCorrectionResponse
-	423, // 432: deixic.v1.DeixicService.BeginOperatingAttachmentUpload:output_type -> console.v1.BeginOperatingAttachmentUploadResponse
-	424, // 433: deixic.v1.DeixicService.CompleteOperatingAttachmentUpload:output_type -> console.v1.CompleteOperatingAttachmentUploadResponse
-	425, // 434: deixic.v1.DeixicService.AcceptOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
-	425, // 435: deixic.v1.DeixicService.ImportOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
-	426, // 436: deixic.v1.DeixicService.GetOperatingTaskEnvironment:output_type -> console.v1.GetOperatingTaskEnvironmentResponse
-	425, // 437: deixic.v1.DeixicService.GetOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
-	427, // 438: deixic.v1.DeixicService.ListOperatingAttachments:output_type -> console.v1.ListOperatingAttachmentsResponse
-	428, // 439: deixic.v1.DeixicService.GetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
-	428, // 440: deixic.v1.DeixicService.SetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
-	429, // 441: deixic.v1.DeixicService.GetWorkspaceSettings:output_type -> console.v1.GetWorkspaceSettingsResponse
-	430, // 442: deixic.v1.DeixicService.GetBillingSubscription:output_type -> console.v1.GetBillingSubscriptionResponse
-	431, // 443: deixic.v1.DeixicService.CreateBillingPortalSession:output_type -> console.v1.CreateBillingPortalSessionResponse
-	432, // 444: deixic.v1.DeixicService.CreateBillingCheckoutSession:output_type -> console.v1.CreateBillingCheckoutSessionResponse
-	433, // 445: deixic.v1.DeixicService.UpdateWorkspaceProfile:output_type -> console.v1.UpdateWorkspaceProfileResponse
-	434, // 446: deixic.v1.DeixicService.ArchiveWorkspace:output_type -> console.v1.ArchiveWorkspaceResponse
-	435, // 447: deixic.v1.DeixicService.UpdateWorkspacePolicy:output_type -> console.v1.UpdateWorkspacePolicyResponse
-	436, // 448: deixic.v1.DeixicService.UpdateWorkspaceDexPolicy:output_type -> console.v1.UpdateWorkspaceDexPolicyResponse
-	437, // 449: deixic.v1.DeixicService.UpdateWorkspaceArtifactStyleGuide:output_type -> console.v1.UpdateWorkspaceArtifactStyleGuideResponse
-	438, // 450: deixic.v1.DeixicService.EvaluateWorkspaceArtifactStyleGuide:output_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideResponse
-	439, // 451: deixic.v1.DeixicService.UpsertWorkspaceIdentityProvider:output_type -> console.v1.UpsertWorkspaceIdentityProviderResponse
-	440, // 452: deixic.v1.DeixicService.RemoveWorkspaceIdentityProvider:output_type -> console.v1.RemoveWorkspaceIdentityProviderResponse
-	441, // 453: deixic.v1.DeixicService.UpsertWorkspaceIntegration:output_type -> console.v1.UpsertWorkspaceIntegrationResponse
-	442, // 454: deixic.v1.DeixicService.RemoveWorkspaceIntegration:output_type -> console.v1.RemoveWorkspaceIntegrationResponse
-	429, // 455: deixic.v1.DeixicService.UpdateWorkspaceBilling:output_type -> console.v1.GetWorkspaceSettingsResponse
-	429, // 456: deixic.v1.DeixicService.UpsertWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
-	429, // 457: deixic.v1.DeixicService.RemoveWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
-	429, // 458: deixic.v1.DeixicService.UpdateWorkspaceNotificationPreferences:output_type -> console.v1.GetWorkspaceSettingsResponse
-	429, // 459: deixic.v1.DeixicService.EnableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
-	429, // 460: deixic.v1.DeixicService.DisableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
-	443, // 461: deixic.v1.DeixicService.ListWorkspaceSkills:output_type -> console.v1.ListWorkspaceSkillsResponse
-	444, // 462: deixic.v1.DeixicService.BrowseDexSkillCatalog:output_type -> console.v1.BrowseDexSkillCatalogResponse
-	445, // 463: deixic.v1.DeixicService.InstallDexSkillCatalogEntry:output_type -> console.v1.InstallDexSkillCatalogEntryResponse
-	446, // 464: deixic.v1.DeixicService.CreateWorkspaceSkill:output_type -> console.v1.CreateWorkspaceSkillResponse
-	447, // 465: deixic.v1.DeixicService.UpdateWorkspaceSkill:output_type -> console.v1.UpdateWorkspaceSkillResponse
-	448, // 466: deixic.v1.DeixicService.DeleteWorkspaceSkill:output_type -> console.v1.DeleteWorkspaceSkillResponse
-	449, // 467: deixic.v1.DeixicService.ListScenarioFixtures:output_type -> console.v1.ListScenarioFixturesResponse
-	450, // 468: deixic.v1.DeixicService.PromoteScenarioFixture:output_type -> console.v1.PromoteScenarioFixtureResponse
-	451, // 469: deixic.v1.DeixicService.CompareScenarioFixtures:output_type -> console.v1.CompareScenarioFixturesResponse
-	452, // 470: deixic.v1.DeixicService.CreateConnectorProfile:output_type -> console.v1.CreateConnectorProfileResponse
-	453, // 471: deixic.v1.DeixicService.ListConnectorProfiles:output_type -> console.v1.ListConnectorProfilesResponse
-	454, // 472: deixic.v1.DeixicService.UpdateConnectorProfile:output_type -> console.v1.UpdateConnectorProfileResponse
-	455, // 473: deixic.v1.DeixicService.DeleteConnectorProfile:output_type -> console.v1.DeleteConnectorProfileResponse
-	456, // 474: deixic.v1.DeixicService.ListConnectedCalls:output_type -> console.v1.ListConnectedCallsResponse
-	457, // 475: deixic.v1.DeixicService.StartMeetingCapture:output_type -> console.v1.StartMeetingCaptureResponse
-	458, // 476: deixic.v1.DeixicService.GetMeetingCapture:output_type -> console.v1.GetMeetingCaptureResponse
-	459, // 477: deixic.v1.DeixicService.ListMeetingCaptures:output_type -> console.v1.ListMeetingCapturesResponse
-	460, // 478: deixic.v1.DeixicService.StopMeetingCapture:output_type -> console.v1.StopMeetingCaptureResponse
-	461, // 479: deixic.v1.DeixicService.ListCommitments:output_type -> console.v1.ListCommitmentsResponse
-	240, // [240:480] is the sub-list for method output_type
-	0,   // [0:240] is the sub-list for method input_type
+	1,   // 1: deixic.v1.DeixicService.RecordComplianceAssessment:input_type -> console.v1.RecordComplianceAssessmentRequest
+	2,   // 2: deixic.v1.DeixicService.GetComplianceAssessment:input_type -> console.v1.GetComplianceAssessmentRequest
+	3,   // 3: deixic.v1.DeixicService.ListBusinessBlueprints:input_type -> console.v1.ListBusinessBlueprintsRequest
+	4,   // 4: deixic.v1.DeixicService.CloneBusinessBlueprint:input_type -> console.v1.CloneBusinessBlueprintRequest
+	5,   // 5: deixic.v1.DeixicService.GetBusinessProcessDefinition:input_type -> console.v1.GetBusinessProcessDefinitionRequest
+	6,   // 6: deixic.v1.DeixicService.ListBusinessProcessDefinitions:input_type -> console.v1.ListBusinessProcessDefinitionsRequest
+	7,   // 7: deixic.v1.DeixicService.DefineBusinessProcess:input_type -> console.v1.DefineBusinessProcessRequest
+	8,   // 8: deixic.v1.DeixicService.StartBusinessProcess:input_type -> console.v1.StartBusinessProcessRequest
+	9,   // 9: deixic.v1.DeixicService.GetBusinessProcess:input_type -> console.v1.GetBusinessProcessRequest
+	10,  // 10: deixic.v1.DeixicService.ListBusinessProcesses:input_type -> console.v1.ListBusinessProcessesRequest
+	11,  // 11: deixic.v1.DeixicService.TransitionBusinessProcess:input_type -> console.v1.TransitionBusinessProcessRequest
+	12,  // 12: deixic.v1.DeixicService.PrepareBusinessObjectAuthorityTransfer:input_type -> console.v1.PrepareBusinessObjectAuthorityTransferRequest
+	13,  // 13: deixic.v1.DeixicService.FinalizeBusinessObjectAuthorityTransfer:input_type -> console.v1.FinalizeBusinessObjectAuthorityTransferRequest
+	14,  // 14: deixic.v1.DeixicService.DefineBusinessObjectType:input_type -> console.v1.DefineBusinessObjectTypeRequest
+	15,  // 15: deixic.v1.DeixicService.GetBusinessObjectType:input_type -> console.v1.GetBusinessObjectTypeRequest
+	16,  // 16: deixic.v1.DeixicService.ListBusinessObjectTypes:input_type -> console.v1.ListBusinessObjectTypesRequest
+	17,  // 17: deixic.v1.DeixicService.CreateBusinessObject:input_type -> console.v1.CreateBusinessObjectRequest
+	18,  // 18: deixic.v1.DeixicService.GetBusinessObject:input_type -> console.v1.GetBusinessObjectRequest
+	19,  // 19: deixic.v1.DeixicService.ListBusinessObjects:input_type -> console.v1.ListBusinessObjectsRequest
+	20,  // 20: deixic.v1.DeixicService.UpdateBusinessObject:input_type -> console.v1.UpdateBusinessObjectRequest
+	21,  // 21: deixic.v1.DeixicService.DeleteBusinessObject:input_type -> console.v1.DeleteBusinessObjectRequest
+	22,  // 22: deixic.v1.DeixicService.ListBusinessObjectRevisions:input_type -> console.v1.ListBusinessObjectRevisionsRequest
+	23,  // 23: deixic.v1.DeixicService.BindBusinessObjectSource:input_type -> console.v1.BindBusinessObjectSourceRequest
+	24,  // 24: deixic.v1.DeixicService.AdmitBusinessObjectObservation:input_type -> console.v1.AdmitBusinessObjectObservationRequest
+	25,  // 25: deixic.v1.DeixicService.ListBusinessObjectRelationships:input_type -> console.v1.ListBusinessObjectRelationshipsRequest
+	26,  // 26: deixic.v1.DeixicService.CreateBusinessObjectRelationship:input_type -> console.v1.CreateBusinessObjectRelationshipRequest
+	27,  // 27: deixic.v1.DeixicService.DeleteBusinessObjectRelationship:input_type -> console.v1.DeleteBusinessObjectRelationshipRequest
+	28,  // 28: deixic.v1.DeixicService.CreateCaptureForm:input_type -> console.v1.CreateCaptureFormRequest
+	29,  // 29: deixic.v1.DeixicService.ListCaptureForms:input_type -> console.v1.ListCaptureFormsRequest
+	30,  // 30: deixic.v1.DeixicService.GetCaptureForm:input_type -> console.v1.GetCaptureFormRequest
+	31,  // 31: deixic.v1.DeixicService.UpdateCaptureForm:input_type -> console.v1.UpdateCaptureFormRequest
+	32,  // 32: deixic.v1.DeixicService.PublishCaptureForm:input_type -> console.v1.PublishCaptureFormRequest
+	33,  // 33: deixic.v1.DeixicService.RevokeCaptureFormPublication:input_type -> console.v1.RevokeCaptureFormPublicationRequest
+	34,  // 34: deixic.v1.DeixicService.CreateCaptureFormInvitation:input_type -> console.v1.CreateCaptureFormInvitationRequest
+	35,  // 35: deixic.v1.DeixicService.RevokeCaptureFormInvitation:input_type -> console.v1.RevokeCaptureFormInvitationRequest
+	36,  // 36: deixic.v1.DeixicService.GetInvitedCaptureForm:input_type -> console.v1.GetInvitedCaptureFormRequest
+	37,  // 37: deixic.v1.DeixicService.SubmitInvitedCaptureForm:input_type -> console.v1.SubmitInvitedCaptureFormRequest
+	38,  // 38: deixic.v1.DeixicService.GetPublishedCaptureForm:input_type -> console.v1.GetPublishedCaptureFormRequest
+	39,  // 39: deixic.v1.DeixicService.GetPublishedCaptureFormBrandingAsset:input_type -> console.v1.GetPublishedCaptureFormBrandingAssetRequest
+	40,  // 40: deixic.v1.DeixicService.SubmitPublishedCaptureForm:input_type -> console.v1.SubmitPublishedCaptureFormRequest
+	41,  // 41: deixic.v1.DeixicService.BeginPublishedCaptureFormUpload:input_type -> console.v1.BeginPublishedCaptureFormUploadRequest
+	42,  // 42: deixic.v1.DeixicService.CompletePublishedCaptureFormUpload:input_type -> console.v1.CompletePublishedCaptureFormUploadRequest
+	43,  // 43: deixic.v1.DeixicService.GetCaptureFormSubmission:input_type -> console.v1.GetCaptureFormSubmissionRequest
+	44,  // 44: deixic.v1.DeixicService.ListCaptureFormSubmissions:input_type -> console.v1.ListCaptureFormSubmissionsRequest
+	45,  // 45: deixic.v1.DeixicService.ReviewCaptureFormSubmission:input_type -> console.v1.ReviewCaptureFormSubmissionRequest
+	46,  // 46: deixic.v1.DeixicService.GetInferenceCreditAutoRefill:input_type -> console.v1.GetInferenceCreditAutoRefillRequest
+	47,  // 47: deixic.v1.DeixicService.UpdateInferenceCreditAutoRefill:input_type -> console.v1.UpdateInferenceCreditAutoRefillRequest
+	48,  // 48: deixic.v1.DeixicService.CompleteInferenceCreditAutoRefill:input_type -> console.v1.CompleteInferenceCreditAutoRefillRequest
+	49,  // 49: deixic.v1.DeixicService.ListInferenceCreditReceipts:input_type -> console.v1.ListInferenceCreditReceiptsRequest
+	50,  // 50: deixic.v1.DeixicService.GetInferenceCreditBalance:input_type -> console.v1.GetInferenceCreditBalanceRequest
+	51,  // 51: deixic.v1.DeixicService.CreateInferenceCreditCheckout:input_type -> console.v1.CreateInferenceCreditCheckoutRequest
+	52,  // 52: deixic.v1.DeixicService.FulfillInferenceCreditCheckout:input_type -> console.v1.FulfillInferenceCreditCheckoutRequest
+	53,  // 53: deixic.v1.DeixicService.GetOverview:input_type -> console.v1.GetOverviewRequest
+	54,  // 54: deixic.v1.DeixicService.ListAssets:input_type -> console.v1.ListAssetsRequest
+	55,  // 55: deixic.v1.DeixicService.GetAsset:input_type -> console.v1.GetAssetRequest
+	56,  // 56: deixic.v1.DeixicService.ListFindings:input_type -> console.v1.ListFindingsRequest
+	57,  // 57: deixic.v1.DeixicService.GetTraceDrilldown:input_type -> console.v1.GetTraceDrilldownRequest
+	58,  // 58: deixic.v1.DeixicService.GetOnboardingPlan:input_type -> console.v1.GetOnboardingPlanRequest
+	59,  // 59: deixic.v1.DeixicService.ListAuthorityPosture:input_type -> console.v1.ListAuthorityPostureRequest
+	60,  // 60: deixic.v1.DeixicService.ListAgentWorkforceRecords:input_type -> console.v1.ListAgentWorkforceRecordsRequest
+	61,  // 61: deixic.v1.DeixicService.SubmitAgentWorkforceEvidence:input_type -> console.v1.SubmitAgentWorkforceEvidenceRequest
+	62,  // 62: deixic.v1.DeixicService.ListIntegrationTiles:input_type -> console.v1.ListIntegrationTilesRequest
+	63,  // 63: deixic.v1.DeixicService.ListPinnedSources:input_type -> console.v1.ListPinnedSourcesRequest
+	64,  // 64: deixic.v1.DeixicService.ListOrbControlTargets:input_type -> console.v1.ListOrbControlTargetsRequest
+	65,  // 65: deixic.v1.DeixicService.GetOrbControlTarget:input_type -> console.v1.GetOrbControlTargetRequest
+	66,  // 66: deixic.v1.DeixicService.SubmitOrbControlAction:input_type -> console.v1.SubmitOrbControlActionRequest
+	67,  // 67: deixic.v1.DeixicService.SetPinnedSource:input_type -> console.v1.SetPinnedSourceRequest
+	68,  // 68: deixic.v1.DeixicService.UnpinSource:input_type -> console.v1.UnpinSourceRequest
+	69,  // 69: deixic.v1.DeixicService.ListActivity:input_type -> console.v1.ListActivityRequest
+	70,  // 70: deixic.v1.DeixicService.SearchStaffWorkspaceDirectory:input_type -> console.v1.SearchStaffWorkspaceDirectoryRequest
+	71,  // 71: deixic.v1.DeixicService.GetStaffWorkspaceContext:input_type -> console.v1.GetStaffWorkspaceContextRequest
+	72,  // 72: deixic.v1.DeixicService.GetStaffManagedInferenceFunding:input_type -> console.v1.GetStaffManagedInferenceFundingRequest
+	73,  // 73: deixic.v1.DeixicService.GrantStaffManagedInferenceCredits:input_type -> console.v1.GrantStaffManagedInferenceCreditsRequest
+	74,  // 74: deixic.v1.DeixicService.GetStaffManagedInferenceUsage:input_type -> console.v1.GetStaffManagedInferenceUsageRequest
+	75,  // 75: deixic.v1.DeixicService.GetStaffManagedInferenceBudget:input_type -> console.v1.GetStaffManagedInferenceBudgetRequest
+	76,  // 76: deixic.v1.DeixicService.SetStaffManagedInferenceBudget:input_type -> console.v1.SetStaffManagedInferenceBudgetRequest
+	77,  // 77: deixic.v1.DeixicService.GetStaffManagedInferenceReadiness:input_type -> console.v1.GetStaffManagedInferenceReadinessRequest
+	78,  // 78: deixic.v1.DeixicService.GetManagedInferenceReadiness:input_type -> console.v1.GetManagedInferenceReadinessRequest
+	79,  // 79: deixic.v1.DeixicService.ListManagedProviderAccessEvents:input_type -> console.v1.ListManagedProviderAccessEventsRequest
+	80,  // 80: deixic.v1.DeixicService.ListStaffManagedInferenceAdminEvents:input_type -> console.v1.ListStaffManagedInferenceAdminEventsRequest
+	81,  // 81: deixic.v1.DeixicService.ListStaffManagedExecutionGrantEvents:input_type -> console.v1.ListStaffManagedExecutionGrantEventsRequest
+	82,  // 82: deixic.v1.DeixicService.ListStaffManagedExecutionOutcomes:input_type -> console.v1.ListStaffManagedExecutionOutcomesRequest
+	83,  // 83: deixic.v1.DeixicService.ListManagedProviderAccessGrants:input_type -> console.v1.ListManagedProviderAccessGrantsRequest
+	84,  // 84: deixic.v1.DeixicService.UpsertManagedProviderAccessGrant:input_type -> console.v1.UpsertManagedProviderAccessGrantRequest
+	85,  // 85: deixic.v1.DeixicService.RevokeManagedProviderAccessGrant:input_type -> console.v1.RevokeManagedProviderAccessGrantRequest
+	86,  // 86: deixic.v1.DeixicService.GetStaffInferenceRoutingProfile:input_type -> console.v1.GetStaffInferenceRoutingProfileRequest
+	87,  // 87: deixic.v1.DeixicService.UpdateStaffInferenceRoutingProfile:input_type -> console.v1.UpdateStaffInferenceRoutingProfileRequest
+	88,  // 88: deixic.v1.DeixicService.ListCostUsage:input_type -> console.v1.ListCostUsageRequest
+	89,  // 89: deixic.v1.DeixicService.ListEvalResults:input_type -> console.v1.ListEvalResultsRequest
+	90,  // 90: deixic.v1.DeixicService.RecordProviderCostSnapshot:input_type -> console.v1.RecordProviderCostSnapshotRequest
+	91,  // 91: deixic.v1.DeixicService.GetDeixicBootSnapshot:input_type -> console.v1.GetConsoleBootSnapshotRequest
+	92,  // 92: deixic.v1.DeixicService.GetOperatorPreferences:input_type -> console.v1.GetOperatorPreferencesRequest
+	93,  // 93: deixic.v1.DeixicService.UpdateOperatorPreferences:input_type -> console.v1.UpdateOperatorPreferencesRequest
+	94,  // 94: deixic.v1.DeixicService.ListWorkspaceGuardrailRules:input_type -> console.v1.ListWorkspaceGuardrailRulesRequest
+	95,  // 95: deixic.v1.DeixicService.UpsertWorkspaceGuardrailRule:input_type -> console.v1.UpsertWorkspaceGuardrailRuleRequest
+	96,  // 96: deixic.v1.DeixicService.RemoveWorkspaceGuardrailRule:input_type -> console.v1.RemoveWorkspaceGuardrailRuleRequest
+	97,  // 97: deixic.v1.DeixicService.CreateDexMcpServer:input_type -> console.v1.CreateDexMcpServerRequest
+	98,  // 98: deixic.v1.DeixicService.ListDexMcpServers:input_type -> console.v1.ListDexMcpServersRequest
+	99,  // 99: deixic.v1.DeixicService.GetDexMcpServer:input_type -> console.v1.GetDexMcpServerRequest
+	100, // 100: deixic.v1.DeixicService.DiscoverDexMcpServer:input_type -> console.v1.DiscoverDexMcpServerRequest
+	101, // 101: deixic.v1.DeixicService.UpdateDexMcpServer:input_type -> console.v1.UpdateDexMcpServerRequest
+	102, // 102: deixic.v1.DeixicService.DeleteDexMcpServer:input_type -> console.v1.DeleteDexMcpServerRequest
+	103, // 103: deixic.v1.DeixicService.InitiateDexMcpOAuthProfile:input_type -> console.v1.InitiateDexMcpOAuthProfileRequest
+	104, // 104: deixic.v1.DeixicService.CompleteDexMcpOAuthProfile:input_type -> console.v1.CompleteDexMcpOAuthProfileRequest
+	105, // 105: deixic.v1.DeixicService.ListDexMcpOAuthProfiles:input_type -> console.v1.ListDexMcpOAuthProfilesRequest
+	106, // 106: deixic.v1.DeixicService.RevokeDexMcpOAuthProfile:input_type -> console.v1.RevokeDexMcpOAuthProfileRequest
+	107, // 107: deixic.v1.DeixicService.ReauthorizeDexMcpOAuthProfile:input_type -> console.v1.ReauthorizeDexMcpOAuthProfileRequest
+	108, // 108: deixic.v1.DeixicService.RegisterPrivateEndpoint:input_type -> console.v1.RegisterPrivateEndpointRequest
+	109, // 109: deixic.v1.DeixicService.VerifyPrivateEndpoint:input_type -> console.v1.VerifyPrivateEndpointRequest
+	110, // 110: deixic.v1.DeixicService.ListPrivateEndpoints:input_type -> console.v1.ListPrivateEndpointsRequest
+	111, // 111: deixic.v1.DeixicService.DeletePrivateEndpoint:input_type -> console.v1.DeletePrivateEndpointRequest
+	112, // 112: deixic.v1.DeixicService.AttachPrivateEndpointToProfile:input_type -> console.v1.AttachPrivateEndpointToProfileRequest
+	113, // 113: deixic.v1.DeixicService.ListGatewayEgressOrigins:input_type -> console.v1.ListGatewayEgressOriginsRequest
+	114, // 114: deixic.v1.DeixicService.ListOperatingChannels:input_type -> console.v1.ListOperatingChannelsRequest
+	115, // 115: deixic.v1.DeixicService.ListOperatingJobs:input_type -> console.v1.ListOperatingJobsRequest
+	116, // 116: deixic.v1.DeixicService.ArchiveOperatingThread:input_type -> console.v1.ArchiveOperatingThreadRequest
+	117, // 117: deixic.v1.DeixicService.ForkOperatingThread:input_type -> console.v1.ForkOperatingThreadRequest
+	118, // 118: deixic.v1.DeixicService.RenameOperatingThread:input_type -> console.v1.RenameOperatingThreadRequest
+	119, // 119: deixic.v1.DeixicService.GetOperatingThread:input_type -> console.v1.GetOperatingThreadRequest
+	120, // 120: deixic.v1.DeixicService.BootstrapThreadGateway:input_type -> console.v1.BootstrapThreadGatewayRequest
+	121, // 121: deixic.v1.DeixicService.PrewarmOperatingThread:input_type -> console.v1.PrewarmOperatingThreadRequest
+	122, // 122: deixic.v1.DeixicService.RespondOperatingThread:input_type -> console.v1.RespondOperatingThreadRequest
+	123, // 123: deixic.v1.DeixicService.InterruptOperatingThread:input_type -> console.v1.InterruptOperatingThreadRequest
+	124, // 124: deixic.v1.DeixicService.SetOperatingThreadController:input_type -> console.v1.SetOperatingThreadControllerRequest
+	125, // 125: deixic.v1.DeixicService.ListOperatingThreadEvents:input_type -> console.v1.ListOperatingThreadEventsRequest
+	126, // 126: deixic.v1.DeixicService.WatchOperatingThread:input_type -> console.v1.WatchOperatingThreadRequest
+	127, // 127: deixic.v1.DeixicService.SearchOperatingHistory:input_type -> console.v1.SearchOperatingHistoryRequest
+	128, // 128: deixic.v1.DeixicService.GetOperatingHistoryContext:input_type -> console.v1.GetOperatingHistoryContextRequest
+	129, // 129: deixic.v1.DeixicService.GetOperatingReceipt:input_type -> console.v1.GetOperatingReceiptRequest
+	130, // 130: deixic.v1.DeixicService.SubmitComputerMission:input_type -> console.v1.SubmitComputerMissionRequest
+	131, // 131: deixic.v1.DeixicService.GetComputerMission:input_type -> console.v1.GetComputerMissionRequest
+	132, // 132: deixic.v1.DeixicService.CancelComputerMission:input_type -> console.v1.CancelComputerMissionRequest
+	133, // 133: deixic.v1.DeixicService.ContinueComputerMission:input_type -> console.v1.ContinueComputerMissionRequest
+	134, // 134: deixic.v1.DeixicService.PauseComputerMission:input_type -> console.v1.PauseComputerMissionRequest
+	135, // 135: deixic.v1.DeixicService.ResumeComputerMission:input_type -> console.v1.ResumeComputerMissionRequest
+	136, // 136: deixic.v1.DeixicService.WakeComputerMission:input_type -> console.v1.WakeComputerMissionRequest
+	137, // 137: deixic.v1.DeixicService.GuideComputerMission:input_type -> console.v1.GuideComputerMissionRequest
+	138, // 138: deixic.v1.DeixicService.ListComputerMissionCanaryDefinitions:input_type -> console.v1.ListComputerMissionCanaryDefinitionsRequest
+	139, // 139: deixic.v1.DeixicService.StartComputerMissionCanaryRun:input_type -> console.v1.StartComputerMissionCanaryRunRequest
+	140, // 140: deixic.v1.DeixicService.GetComputerMissionCanaryRun:input_type -> console.v1.GetComputerMissionCanaryRunRequest
+	141, // 141: deixic.v1.DeixicService.ListComputerMissionCanaryRuns:input_type -> console.v1.ListComputerMissionCanaryRunsRequest
+	142, // 142: deixic.v1.DeixicService.GetComputerMissionCanaryEvidence:input_type -> console.v1.GetComputerMissionCanaryEvidenceRequest
+	143, // 143: deixic.v1.DeixicService.OperateComputerMissionCanaryRun:input_type -> console.v1.OperateComputerMissionCanaryRunRequest
+	144, // 144: deixic.v1.DeixicService.CreateMissionSchedule:input_type -> console.v1.CreateMissionScheduleRequest
+	145, // 145: deixic.v1.DeixicService.UpdateMissionSchedule:input_type -> console.v1.UpdateMissionScheduleRequest
+	146, // 146: deixic.v1.DeixicService.SetMissionScheduleEnabled:input_type -> console.v1.SetMissionScheduleEnabledRequest
+	147, // 147: deixic.v1.DeixicService.ListMissionSchedules:input_type -> console.v1.ListMissionSchedulesRequest
+	148, // 148: deixic.v1.DeixicService.CreateConnectorTrigger:input_type -> console.v1.CreateConnectorTriggerRequest
+	149, // 149: deixic.v1.DeixicService.UpdateConnectorTrigger:input_type -> console.v1.UpdateConnectorTriggerRequest
+	150, // 150: deixic.v1.DeixicService.ListConnectorTriggers:input_type -> console.v1.ListConnectorTriggersRequest
+	151, // 151: deixic.v1.DeixicService.DeleteConnectorTrigger:input_type -> console.v1.DeleteConnectorTriggerRequest
+	152, // 152: deixic.v1.DeixicService.SetConnectorTriggerEnabled:input_type -> console.v1.SetConnectorTriggerEnabledRequest
+	153, // 153: deixic.v1.DeixicService.ReserveComputerMissionApexSession:input_type -> console.v1.ReserveComputerMissionApexSessionRequest
+	154, // 154: deixic.v1.DeixicService.BindComputerMissionApexSessionReservation:input_type -> console.v1.BindComputerMissionApexSessionReservationRequest
+	155, // 155: deixic.v1.DeixicService.BindComputerMissionApexInstructionMetadata:input_type -> console.v1.BindComputerMissionApexInstructionMetadataRequest
+	156, // 156: deixic.v1.DeixicService.AuthorizeComputerMissionApexSessionAdoption:input_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionRequest
+	157, // 157: deixic.v1.DeixicService.ResolveOperatingReceiptAction:input_type -> console.v1.ResolveOperatingReceiptActionRequest
+	158, // 158: deixic.v1.DeixicService.SubmitOperatingMessage:input_type -> console.v1.SubmitOperatingMessageRequest
+	159, // 159: deixic.v1.DeixicService.SubmitOperatingCorrection:input_type -> console.v1.SubmitOperatingCorrectionRequest
+	160, // 160: deixic.v1.DeixicService.ListWorkspaceMemories:input_type -> console.v1.ListWorkspaceMemoriesRequest
+	161, // 161: deixic.v1.DeixicService.CorrectWorkspaceMemory:input_type -> console.v1.CorrectWorkspaceMemoryRequest
+	162, // 162: deixic.v1.DeixicService.ReviewWorkspaceMemory:input_type -> console.v1.ReviewWorkspaceMemoryRequest
+	163, // 163: deixic.v1.DeixicService.ForgetWorkspaceMemory:input_type -> console.v1.ForgetWorkspaceMemoryRequest
+	164, // 164: deixic.v1.DeixicService.SubmitOperatingFeedback:input_type -> console.v1.SubmitOperatingFeedbackRequest
+	165, // 165: deixic.v1.DeixicService.RecordOperatingHomepageSuggestionFeedback:input_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackRequest
+	166, // 166: deixic.v1.DeixicService.SubmitProductIssueReport:input_type -> console.v1.SubmitProductIssueReportRequest
+	167, // 167: deixic.v1.DeixicService.SubmitNativeProductIssueReport:input_type -> console.v1.SubmitNativeProductIssueReportRequest
+	168, // 168: deixic.v1.DeixicService.ListStaffProductIssueReports:input_type -> console.v1.ListStaffProductIssueReportsRequest
+	169, // 169: deixic.v1.DeixicService.EngageStaffProductIssueReport:input_type -> console.v1.EngageStaffProductIssueReportRequest
+	170, // 170: deixic.v1.DeixicService.ListStaffProductIssueRecoveries:input_type -> console.v1.ListStaffProductIssueRecoveriesRequest
+	171, // 171: deixic.v1.DeixicService.PrepareStaffProductIssueRecovery:input_type -> console.v1.PrepareStaffProductIssueRecoveryRequest
+	172, // 172: deixic.v1.DeixicService.ScanStaffProductIssueRecovery:input_type -> console.v1.ScanStaffProductIssueRecoveryRequest
+	173, // 173: deixic.v1.DeixicService.ReviewStaffProductIssueRecovery:input_type -> console.v1.ReviewStaffProductIssueRecoveryRequest
+	174, // 174: deixic.v1.DeixicService.ExecuteStaffProductIssueRecovery:input_type -> console.v1.ExecuteStaffProductIssueRecoveryRequest
+	175, // 175: deixic.v1.DeixicService.GetProductIssueRecovery:input_type -> console.v1.GetProductIssueRecoveryRequest
+	176, // 176: deixic.v1.DeixicService.ReplyProductIssueRecovery:input_type -> console.v1.ReplyProductIssueRecoveryRequest
+	177, // 177: deixic.v1.DeixicService.GetOperatingFeedback:input_type -> console.v1.GetOperatingFeedbackRequest
+	178, // 178: deixic.v1.DeixicService.ResolveOperatingFeedbackRemediation:input_type -> console.v1.ResolveOperatingFeedbackRemediationRequest
+	179, // 179: deixic.v1.DeixicService.ListCustomerIntelligenceFacts:input_type -> console.v1.ListCustomerIntelligenceFactsRequest
+	180, // 180: deixic.v1.DeixicService.GetCustomerIntelligenceFact:input_type -> console.v1.GetCustomerIntelligenceFactRequest
+	181, // 181: deixic.v1.DeixicService.ReviewCustomerIntelligenceFact:input_type -> console.v1.ReviewCustomerIntelligenceFactRequest
+	182, // 182: deixic.v1.DeixicService.ProposeCustomerIntelligenceFact:input_type -> console.v1.ProposeCustomerIntelligenceFactRequest
+	183, // 183: deixic.v1.DeixicService.RespondToCustomerFactConfirmation:input_type -> console.v1.RespondToCustomerFactConfirmationRequest
+	184, // 184: deixic.v1.DeixicService.AggregateCustomerIntelligencePatterns:input_type -> console.v1.AggregateCustomerIntelligencePatternsRequest
+	185, // 185: deixic.v1.DeixicService.CreateProspectingWatchProgram:input_type -> console.v1.CreateProspectingWatchProgramRequest
+	186, // 186: deixic.v1.DeixicService.GetProspectingWatchProgram:input_type -> console.v1.GetProspectingWatchProgramRequest
+	187, // 187: deixic.v1.DeixicService.ListProspectingWatchPrograms:input_type -> console.v1.ListProspectingWatchProgramsRequest
+	188, // 188: deixic.v1.DeixicService.UpdateProspectingWatchProgram:input_type -> console.v1.UpdateProspectingWatchProgramRequest
+	189, // 189: deixic.v1.DeixicService.CreateProspectingDraft:input_type -> console.v1.CreateProspectingDraftRequest
+	190, // 190: deixic.v1.DeixicService.ListProspectingDrafts:input_type -> console.v1.ListProspectingDraftsRequest
+	191, // 191: deixic.v1.DeixicService.ReviewProspectingDraft:input_type -> console.v1.ReviewProspectingDraftRequest
+	192, // 192: deixic.v1.DeixicService.ListOperatingCorrections:input_type -> console.v1.ListOperatingCorrectionsRequest
+	193, // 193: deixic.v1.DeixicService.ReviewOperatingCorrection:input_type -> console.v1.ReviewOperatingCorrectionRequest
+	194, // 194: deixic.v1.DeixicService.BeginOperatingAttachmentUpload:input_type -> console.v1.BeginOperatingAttachmentUploadRequest
+	195, // 195: deixic.v1.DeixicService.CompleteOperatingAttachmentUpload:input_type -> console.v1.CompleteOperatingAttachmentUploadRequest
+	196, // 196: deixic.v1.DeixicService.AcceptOperatingProjectSnapshot:input_type -> console.v1.AcceptOperatingProjectSnapshotRequest
+	197, // 197: deixic.v1.DeixicService.ImportOperatingProjectSnapshot:input_type -> console.v1.ImportOperatingProjectSnapshotRequest
+	198, // 198: deixic.v1.DeixicService.GetOperatingTaskEnvironment:input_type -> console.v1.GetOperatingTaskEnvironmentRequest
+	199, // 199: deixic.v1.DeixicService.GetOperatingProjectSnapshot:input_type -> console.v1.GetOperatingProjectSnapshotRequest
+	200, // 200: deixic.v1.DeixicService.ListOperatingAttachments:input_type -> console.v1.ListOperatingAttachmentsRequest
+	201, // 201: deixic.v1.DeixicService.GetPrivacySettings:input_type -> console.v1.GetPrivacySettingsRequest
+	202, // 202: deixic.v1.DeixicService.SetPrivacySettings:input_type -> console.v1.SetPrivacySettingsRequest
+	203, // 203: deixic.v1.DeixicService.GetWorkspaceSettings:input_type -> console.v1.GetWorkspaceSettingsRequest
+	204, // 204: deixic.v1.DeixicService.GetBillingSubscription:input_type -> console.v1.GetBillingSubscriptionRequest
+	205, // 205: deixic.v1.DeixicService.CreateBillingPortalSession:input_type -> console.v1.CreateBillingPortalSessionRequest
+	206, // 206: deixic.v1.DeixicService.CreateBillingCheckoutSession:input_type -> console.v1.CreateBillingCheckoutSessionRequest
+	207, // 207: deixic.v1.DeixicService.UpdateWorkspaceProfile:input_type -> console.v1.UpdateWorkspaceProfileRequest
+	208, // 208: deixic.v1.DeixicService.ArchiveWorkspace:input_type -> console.v1.ArchiveWorkspaceRequest
+	209, // 209: deixic.v1.DeixicService.UpdateWorkspacePolicy:input_type -> console.v1.UpdateWorkspacePolicyRequest
+	210, // 210: deixic.v1.DeixicService.UpdateWorkspaceDexPolicy:input_type -> console.v1.UpdateWorkspaceDexPolicyRequest
+	211, // 211: deixic.v1.DeixicService.UpdateWorkspaceArtifactStyleGuide:input_type -> console.v1.UpdateWorkspaceArtifactStyleGuideRequest
+	212, // 212: deixic.v1.DeixicService.EvaluateWorkspaceArtifactStyleGuide:input_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideRequest
+	213, // 213: deixic.v1.DeixicService.UpsertWorkspaceIdentityProvider:input_type -> console.v1.UpsertWorkspaceIdentityProviderRequest
+	214, // 214: deixic.v1.DeixicService.RemoveWorkspaceIdentityProvider:input_type -> console.v1.RemoveWorkspaceIdentityProviderRequest
+	215, // 215: deixic.v1.DeixicService.UpsertWorkspaceIntegration:input_type -> console.v1.UpsertWorkspaceIntegrationRequest
+	216, // 216: deixic.v1.DeixicService.RemoveWorkspaceIntegration:input_type -> console.v1.RemoveWorkspaceIntegrationRequest
+	217, // 217: deixic.v1.DeixicService.UpdateWorkspaceBilling:input_type -> console.v1.UpdateWorkspaceBillingRequest
+	218, // 218: deixic.v1.DeixicService.UpsertWorkspaceMember:input_type -> console.v1.UpsertWorkspaceMemberRequest
+	219, // 219: deixic.v1.DeixicService.RemoveWorkspaceMember:input_type -> console.v1.RemoveWorkspaceMemberRequest
+	220, // 220: deixic.v1.DeixicService.UpdateWorkspaceNotificationPreferences:input_type -> console.v1.UpdateWorkspaceNotificationPreferencesRequest
+	221, // 221: deixic.v1.DeixicService.EnableWorkspaceBreakGlass:input_type -> console.v1.EnableWorkspaceBreakGlassRequest
+	222, // 222: deixic.v1.DeixicService.DisableWorkspaceBreakGlass:input_type -> console.v1.DisableWorkspaceBreakGlassRequest
+	223, // 223: deixic.v1.DeixicService.ListWorkspaceSkills:input_type -> console.v1.ListWorkspaceSkillsRequest
+	224, // 224: deixic.v1.DeixicService.BrowseDexSkillCatalog:input_type -> console.v1.BrowseDexSkillCatalogRequest
+	225, // 225: deixic.v1.DeixicService.InstallDexSkillCatalogEntry:input_type -> console.v1.InstallDexSkillCatalogEntryRequest
+	226, // 226: deixic.v1.DeixicService.CreateWorkspaceSkill:input_type -> console.v1.CreateWorkspaceSkillRequest
+	227, // 227: deixic.v1.DeixicService.UpdateWorkspaceSkill:input_type -> console.v1.UpdateWorkspaceSkillRequest
+	228, // 228: deixic.v1.DeixicService.DeleteWorkspaceSkill:input_type -> console.v1.DeleteWorkspaceSkillRequest
+	229, // 229: deixic.v1.DeixicService.ListScenarioFixtures:input_type -> console.v1.ListScenarioFixturesRequest
+	230, // 230: deixic.v1.DeixicService.PromoteScenarioFixture:input_type -> console.v1.PromoteScenarioFixtureRequest
+	231, // 231: deixic.v1.DeixicService.CompareScenarioFixtures:input_type -> console.v1.CompareScenarioFixturesRequest
+	232, // 232: deixic.v1.DeixicService.CreateConnectorProfile:input_type -> console.v1.CreateConnectorProfileRequest
+	233, // 233: deixic.v1.DeixicService.ListConnectorProfiles:input_type -> console.v1.ListConnectorProfilesRequest
+	234, // 234: deixic.v1.DeixicService.UpdateConnectorProfile:input_type -> console.v1.UpdateConnectorProfileRequest
+	235, // 235: deixic.v1.DeixicService.DeleteConnectorProfile:input_type -> console.v1.DeleteConnectorProfileRequest
+	236, // 236: deixic.v1.DeixicService.ListConnectedCalls:input_type -> console.v1.ListConnectedCallsRequest
+	237, // 237: deixic.v1.DeixicService.StartMeetingCapture:input_type -> console.v1.StartMeetingCaptureRequest
+	238, // 238: deixic.v1.DeixicService.GetMeetingCapture:input_type -> console.v1.GetMeetingCaptureRequest
+	239, // 239: deixic.v1.DeixicService.ListMeetingCaptures:input_type -> console.v1.ListMeetingCapturesRequest
+	240, // 240: deixic.v1.DeixicService.StopMeetingCapture:input_type -> console.v1.StopMeetingCaptureRequest
+	241, // 241: deixic.v1.DeixicService.ListCommitments:input_type -> console.v1.ListCommitmentsRequest
+	242, // 242: deixic.v1.DeixicService.AssessComplianceSubject:output_type -> console.v1.AssessComplianceSubjectResponse
+	243, // 243: deixic.v1.DeixicService.RecordComplianceAssessment:output_type -> console.v1.RecordComplianceAssessmentResponse
+	244, // 244: deixic.v1.DeixicService.GetComplianceAssessment:output_type -> console.v1.GetComplianceAssessmentResponse
+	245, // 245: deixic.v1.DeixicService.ListBusinessBlueprints:output_type -> console.v1.ListBusinessBlueprintsResponse
+	246, // 246: deixic.v1.DeixicService.CloneBusinessBlueprint:output_type -> console.v1.CloneBusinessBlueprintResponse
+	247, // 247: deixic.v1.DeixicService.GetBusinessProcessDefinition:output_type -> console.v1.GetBusinessProcessDefinitionResponse
+	248, // 248: deixic.v1.DeixicService.ListBusinessProcessDefinitions:output_type -> console.v1.ListBusinessProcessDefinitionsResponse
+	249, // 249: deixic.v1.DeixicService.DefineBusinessProcess:output_type -> console.v1.DefineBusinessProcessResponse
+	250, // 250: deixic.v1.DeixicService.StartBusinessProcess:output_type -> console.v1.StartBusinessProcessResponse
+	251, // 251: deixic.v1.DeixicService.GetBusinessProcess:output_type -> console.v1.GetBusinessProcessResponse
+	252, // 252: deixic.v1.DeixicService.ListBusinessProcesses:output_type -> console.v1.ListBusinessProcessesResponse
+	253, // 253: deixic.v1.DeixicService.TransitionBusinessProcess:output_type -> console.v1.TransitionBusinessProcessResponse
+	254, // 254: deixic.v1.DeixicService.PrepareBusinessObjectAuthorityTransfer:output_type -> console.v1.PrepareBusinessObjectAuthorityTransferResponse
+	255, // 255: deixic.v1.DeixicService.FinalizeBusinessObjectAuthorityTransfer:output_type -> console.v1.FinalizeBusinessObjectAuthorityTransferResponse
+	256, // 256: deixic.v1.DeixicService.DefineBusinessObjectType:output_type -> console.v1.DefineBusinessObjectTypeResponse
+	257, // 257: deixic.v1.DeixicService.GetBusinessObjectType:output_type -> console.v1.GetBusinessObjectTypeResponse
+	258, // 258: deixic.v1.DeixicService.ListBusinessObjectTypes:output_type -> console.v1.ListBusinessObjectTypesResponse
+	259, // 259: deixic.v1.DeixicService.CreateBusinessObject:output_type -> console.v1.CreateBusinessObjectResponse
+	260, // 260: deixic.v1.DeixicService.GetBusinessObject:output_type -> console.v1.GetBusinessObjectResponse
+	261, // 261: deixic.v1.DeixicService.ListBusinessObjects:output_type -> console.v1.ListBusinessObjectsResponse
+	262, // 262: deixic.v1.DeixicService.UpdateBusinessObject:output_type -> console.v1.UpdateBusinessObjectResponse
+	263, // 263: deixic.v1.DeixicService.DeleteBusinessObject:output_type -> console.v1.DeleteBusinessObjectResponse
+	264, // 264: deixic.v1.DeixicService.ListBusinessObjectRevisions:output_type -> console.v1.ListBusinessObjectRevisionsResponse
+	265, // 265: deixic.v1.DeixicService.BindBusinessObjectSource:output_type -> console.v1.BindBusinessObjectSourceResponse
+	266, // 266: deixic.v1.DeixicService.AdmitBusinessObjectObservation:output_type -> console.v1.AdmitBusinessObjectObservationResponse
+	267, // 267: deixic.v1.DeixicService.ListBusinessObjectRelationships:output_type -> console.v1.ListBusinessObjectRelationshipsResponse
+	268, // 268: deixic.v1.DeixicService.CreateBusinessObjectRelationship:output_type -> console.v1.CreateBusinessObjectRelationshipResponse
+	269, // 269: deixic.v1.DeixicService.DeleteBusinessObjectRelationship:output_type -> console.v1.DeleteBusinessObjectRelationshipResponse
+	270, // 270: deixic.v1.DeixicService.CreateCaptureForm:output_type -> console.v1.CreateCaptureFormResponse
+	271, // 271: deixic.v1.DeixicService.ListCaptureForms:output_type -> console.v1.ListCaptureFormsResponse
+	272, // 272: deixic.v1.DeixicService.GetCaptureForm:output_type -> console.v1.GetCaptureFormResponse
+	273, // 273: deixic.v1.DeixicService.UpdateCaptureForm:output_type -> console.v1.UpdateCaptureFormResponse
+	274, // 274: deixic.v1.DeixicService.PublishCaptureForm:output_type -> console.v1.PublishCaptureFormResponse
+	275, // 275: deixic.v1.DeixicService.RevokeCaptureFormPublication:output_type -> console.v1.RevokeCaptureFormPublicationResponse
+	276, // 276: deixic.v1.DeixicService.CreateCaptureFormInvitation:output_type -> console.v1.CreateCaptureFormInvitationResponse
+	277, // 277: deixic.v1.DeixicService.RevokeCaptureFormInvitation:output_type -> console.v1.RevokeCaptureFormInvitationResponse
+	278, // 278: deixic.v1.DeixicService.GetInvitedCaptureForm:output_type -> console.v1.GetInvitedCaptureFormResponse
+	279, // 279: deixic.v1.DeixicService.SubmitInvitedCaptureForm:output_type -> console.v1.SubmitInvitedCaptureFormResponse
+	280, // 280: deixic.v1.DeixicService.GetPublishedCaptureForm:output_type -> console.v1.GetPublishedCaptureFormResponse
+	281, // 281: deixic.v1.DeixicService.GetPublishedCaptureFormBrandingAsset:output_type -> console.v1.GetPublishedCaptureFormBrandingAssetResponse
+	282, // 282: deixic.v1.DeixicService.SubmitPublishedCaptureForm:output_type -> console.v1.SubmitPublishedCaptureFormResponse
+	283, // 283: deixic.v1.DeixicService.BeginPublishedCaptureFormUpload:output_type -> console.v1.BeginPublishedCaptureFormUploadResponse
+	284, // 284: deixic.v1.DeixicService.CompletePublishedCaptureFormUpload:output_type -> console.v1.CompletePublishedCaptureFormUploadResponse
+	285, // 285: deixic.v1.DeixicService.GetCaptureFormSubmission:output_type -> console.v1.GetCaptureFormSubmissionResponse
+	286, // 286: deixic.v1.DeixicService.ListCaptureFormSubmissions:output_type -> console.v1.ListCaptureFormSubmissionsResponse
+	287, // 287: deixic.v1.DeixicService.ReviewCaptureFormSubmission:output_type -> console.v1.ReviewCaptureFormSubmissionResponse
+	288, // 288: deixic.v1.DeixicService.GetInferenceCreditAutoRefill:output_type -> console.v1.GetInferenceCreditAutoRefillResponse
+	289, // 289: deixic.v1.DeixicService.UpdateInferenceCreditAutoRefill:output_type -> console.v1.UpdateInferenceCreditAutoRefillResponse
+	290, // 290: deixic.v1.DeixicService.CompleteInferenceCreditAutoRefill:output_type -> console.v1.CompleteInferenceCreditAutoRefillResponse
+	291, // 291: deixic.v1.DeixicService.ListInferenceCreditReceipts:output_type -> console.v1.ListInferenceCreditReceiptsResponse
+	292, // 292: deixic.v1.DeixicService.GetInferenceCreditBalance:output_type -> console.v1.GetInferenceCreditBalanceResponse
+	293, // 293: deixic.v1.DeixicService.CreateInferenceCreditCheckout:output_type -> console.v1.CreateInferenceCreditCheckoutResponse
+	294, // 294: deixic.v1.DeixicService.FulfillInferenceCreditCheckout:output_type -> console.v1.FulfillInferenceCreditCheckoutResponse
+	295, // 295: deixic.v1.DeixicService.GetOverview:output_type -> console.v1.GetOverviewResponse
+	296, // 296: deixic.v1.DeixicService.ListAssets:output_type -> console.v1.ListAssetsResponse
+	297, // 297: deixic.v1.DeixicService.GetAsset:output_type -> console.v1.GetAssetResponse
+	298, // 298: deixic.v1.DeixicService.ListFindings:output_type -> console.v1.ListFindingsResponse
+	299, // 299: deixic.v1.DeixicService.GetTraceDrilldown:output_type -> console.v1.GetTraceDrilldownResponse
+	300, // 300: deixic.v1.DeixicService.GetOnboardingPlan:output_type -> console.v1.GetOnboardingPlanResponse
+	301, // 301: deixic.v1.DeixicService.ListAuthorityPosture:output_type -> console.v1.ListAuthorityPostureResponse
+	302, // 302: deixic.v1.DeixicService.ListAgentWorkforceRecords:output_type -> console.v1.ListAgentWorkforceRecordsResponse
+	303, // 303: deixic.v1.DeixicService.SubmitAgentWorkforceEvidence:output_type -> console.v1.SubmitAgentWorkforceEvidenceResponse
+	304, // 304: deixic.v1.DeixicService.ListIntegrationTiles:output_type -> console.v1.ListIntegrationTilesResponse
+	305, // 305: deixic.v1.DeixicService.ListPinnedSources:output_type -> console.v1.ListPinnedSourcesResponse
+	306, // 306: deixic.v1.DeixicService.ListOrbControlTargets:output_type -> console.v1.ListOrbControlTargetsResponse
+	307, // 307: deixic.v1.DeixicService.GetOrbControlTarget:output_type -> console.v1.GetOrbControlTargetResponse
+	308, // 308: deixic.v1.DeixicService.SubmitOrbControlAction:output_type -> console.v1.SubmitOrbControlActionResponse
+	309, // 309: deixic.v1.DeixicService.SetPinnedSource:output_type -> console.v1.SetPinnedSourceResponse
+	310, // 310: deixic.v1.DeixicService.UnpinSource:output_type -> console.v1.UnpinSourceResponse
+	311, // 311: deixic.v1.DeixicService.ListActivity:output_type -> console.v1.ListActivityResponse
+	312, // 312: deixic.v1.DeixicService.SearchStaffWorkspaceDirectory:output_type -> console.v1.SearchStaffWorkspaceDirectoryResponse
+	313, // 313: deixic.v1.DeixicService.GetStaffWorkspaceContext:output_type -> console.v1.GetStaffWorkspaceContextResponse
+	314, // 314: deixic.v1.DeixicService.GetStaffManagedInferenceFunding:output_type -> meter.v1.GetPrepaidCreditBalanceResponse
+	315, // 315: deixic.v1.DeixicService.GrantStaffManagedInferenceCredits:output_type -> meter.v1.GrantDevelopmentCreditsResponse
+	316, // 316: deixic.v1.DeixicService.GetStaffManagedInferenceUsage:output_type -> meter.v1.QueryUsageResponse
+	317, // 317: deixic.v1.DeixicService.GetStaffManagedInferenceBudget:output_type -> meter.v1.GetBudgetDashboardResponse
+	318, // 318: deixic.v1.DeixicService.SetStaffManagedInferenceBudget:output_type -> meter.v1.SetBudgetResponse
+	319, // 319: deixic.v1.DeixicService.GetStaffManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
+	319, // 320: deixic.v1.DeixicService.GetManagedInferenceReadiness:output_type -> console.v1.GetManagedInferenceReadinessResponse
+	320, // 321: deixic.v1.DeixicService.ListManagedProviderAccessEvents:output_type -> console.v1.ListManagedProviderAccessEventsResponse
+	321, // 322: deixic.v1.DeixicService.ListStaffManagedInferenceAdminEvents:output_type -> meter.v1.ListManagedInferenceAdminEventsResponse
+	322, // 323: deixic.v1.DeixicService.ListStaffManagedExecutionGrantEvents:output_type -> console.v1.ListStaffManagedExecutionGrantEventsResponse
+	323, // 324: deixic.v1.DeixicService.ListStaffManagedExecutionOutcomes:output_type -> console.v1.ListStaffManagedExecutionOutcomesResponse
+	324, // 325: deixic.v1.DeixicService.ListManagedProviderAccessGrants:output_type -> console.v1.ListManagedProviderAccessGrantsResponse
+	325, // 326: deixic.v1.DeixicService.UpsertManagedProviderAccessGrant:output_type -> console.v1.UpsertManagedProviderAccessGrantResponse
+	326, // 327: deixic.v1.DeixicService.RevokeManagedProviderAccessGrant:output_type -> console.v1.RevokeManagedProviderAccessGrantResponse
+	327, // 328: deixic.v1.DeixicService.GetStaffInferenceRoutingProfile:output_type -> console.v1.GetStaffInferenceRoutingProfileResponse
+	328, // 329: deixic.v1.DeixicService.UpdateStaffInferenceRoutingProfile:output_type -> console.v1.UpdateStaffInferenceRoutingProfileResponse
+	329, // 330: deixic.v1.DeixicService.ListCostUsage:output_type -> console.v1.ListCostUsageResponse
+	330, // 331: deixic.v1.DeixicService.ListEvalResults:output_type -> console.v1.ListEvalResultsResponse
+	331, // 332: deixic.v1.DeixicService.RecordProviderCostSnapshot:output_type -> console.v1.RecordProviderCostSnapshotResponse
+	332, // 333: deixic.v1.DeixicService.GetDeixicBootSnapshot:output_type -> console.v1.GetConsoleBootSnapshotResponse
+	333, // 334: deixic.v1.DeixicService.GetOperatorPreferences:output_type -> console.v1.GetOperatorPreferencesResponse
+	334, // 335: deixic.v1.DeixicService.UpdateOperatorPreferences:output_type -> console.v1.UpdateOperatorPreferencesResponse
+	335, // 336: deixic.v1.DeixicService.ListWorkspaceGuardrailRules:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
+	335, // 337: deixic.v1.DeixicService.UpsertWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
+	335, // 338: deixic.v1.DeixicService.RemoveWorkspaceGuardrailRule:output_type -> console.v1.ListWorkspaceGuardrailRulesResponse
+	336, // 339: deixic.v1.DeixicService.CreateDexMcpServer:output_type -> console.v1.CreateDexMcpServerResponse
+	337, // 340: deixic.v1.DeixicService.ListDexMcpServers:output_type -> console.v1.ListDexMcpServersResponse
+	338, // 341: deixic.v1.DeixicService.GetDexMcpServer:output_type -> console.v1.GetDexMcpServerResponse
+	339, // 342: deixic.v1.DeixicService.DiscoverDexMcpServer:output_type -> console.v1.DiscoverDexMcpServerResponse
+	340, // 343: deixic.v1.DeixicService.UpdateDexMcpServer:output_type -> console.v1.UpdateDexMcpServerResponse
+	341, // 344: deixic.v1.DeixicService.DeleteDexMcpServer:output_type -> console.v1.DeleteDexMcpServerResponse
+	342, // 345: deixic.v1.DeixicService.InitiateDexMcpOAuthProfile:output_type -> console.v1.InitiateDexMcpOAuthProfileResponse
+	343, // 346: deixic.v1.DeixicService.CompleteDexMcpOAuthProfile:output_type -> console.v1.CompleteDexMcpOAuthProfileResponse
+	344, // 347: deixic.v1.DeixicService.ListDexMcpOAuthProfiles:output_type -> console.v1.ListDexMcpOAuthProfilesResponse
+	345, // 348: deixic.v1.DeixicService.RevokeDexMcpOAuthProfile:output_type -> console.v1.RevokeDexMcpOAuthProfileResponse
+	346, // 349: deixic.v1.DeixicService.ReauthorizeDexMcpOAuthProfile:output_type -> console.v1.ReauthorizeDexMcpOAuthProfileResponse
+	347, // 350: deixic.v1.DeixicService.RegisterPrivateEndpoint:output_type -> console.v1.RegisterPrivateEndpointResponse
+	348, // 351: deixic.v1.DeixicService.VerifyPrivateEndpoint:output_type -> console.v1.VerifyPrivateEndpointResponse
+	349, // 352: deixic.v1.DeixicService.ListPrivateEndpoints:output_type -> console.v1.ListPrivateEndpointsResponse
+	350, // 353: deixic.v1.DeixicService.DeletePrivateEndpoint:output_type -> console.v1.DeletePrivateEndpointResponse
+	351, // 354: deixic.v1.DeixicService.AttachPrivateEndpointToProfile:output_type -> console.v1.AttachPrivateEndpointToProfileResponse
+	352, // 355: deixic.v1.DeixicService.ListGatewayEgressOrigins:output_type -> console.v1.ListGatewayEgressOriginsResponse
+	353, // 356: deixic.v1.DeixicService.ListOperatingChannels:output_type -> console.v1.ListOperatingChannelsResponse
+	354, // 357: deixic.v1.DeixicService.ListOperatingJobs:output_type -> console.v1.ListOperatingJobsResponse
+	355, // 358: deixic.v1.DeixicService.ArchiveOperatingThread:output_type -> console.v1.ArchiveOperatingThreadResponse
+	356, // 359: deixic.v1.DeixicService.ForkOperatingThread:output_type -> console.v1.ForkOperatingThreadResponse
+	357, // 360: deixic.v1.DeixicService.RenameOperatingThread:output_type -> console.v1.RenameOperatingThreadResponse
+	358, // 361: deixic.v1.DeixicService.GetOperatingThread:output_type -> console.v1.GetOperatingThreadResponse
+	359, // 362: deixic.v1.DeixicService.BootstrapThreadGateway:output_type -> console.v1.BootstrapThreadGatewayResponse
+	360, // 363: deixic.v1.DeixicService.PrewarmOperatingThread:output_type -> console.v1.PrewarmOperatingThreadResponse
+	361, // 364: deixic.v1.DeixicService.RespondOperatingThread:output_type -> console.v1.RespondOperatingThreadResponse
+	362, // 365: deixic.v1.DeixicService.InterruptOperatingThread:output_type -> console.v1.InterruptOperatingThreadResponse
+	363, // 366: deixic.v1.DeixicService.SetOperatingThreadController:output_type -> console.v1.SetOperatingThreadControllerResponse
+	364, // 367: deixic.v1.DeixicService.ListOperatingThreadEvents:output_type -> console.v1.ListOperatingThreadEventsResponse
+	365, // 368: deixic.v1.DeixicService.WatchOperatingThread:output_type -> console.v1.WatchOperatingThreadResponse
+	366, // 369: deixic.v1.DeixicService.SearchOperatingHistory:output_type -> console.v1.SearchOperatingHistoryResponse
+	367, // 370: deixic.v1.DeixicService.GetOperatingHistoryContext:output_type -> console.v1.GetOperatingHistoryContextResponse
+	368, // 371: deixic.v1.DeixicService.GetOperatingReceipt:output_type -> console.v1.GetOperatingReceiptResponse
+	369, // 372: deixic.v1.DeixicService.SubmitComputerMission:output_type -> console.v1.SubmitComputerMissionResponse
+	370, // 373: deixic.v1.DeixicService.GetComputerMission:output_type -> console.v1.GetComputerMissionResponse
+	371, // 374: deixic.v1.DeixicService.CancelComputerMission:output_type -> console.v1.CancelComputerMissionResponse
+	372, // 375: deixic.v1.DeixicService.ContinueComputerMission:output_type -> console.v1.ContinueComputerMissionResponse
+	373, // 376: deixic.v1.DeixicService.PauseComputerMission:output_type -> console.v1.PauseComputerMissionResponse
+	374, // 377: deixic.v1.DeixicService.ResumeComputerMission:output_type -> console.v1.ResumeComputerMissionResponse
+	375, // 378: deixic.v1.DeixicService.WakeComputerMission:output_type -> console.v1.WakeComputerMissionResponse
+	376, // 379: deixic.v1.DeixicService.GuideComputerMission:output_type -> console.v1.GuideComputerMissionResponse
+	377, // 380: deixic.v1.DeixicService.ListComputerMissionCanaryDefinitions:output_type -> console.v1.ListComputerMissionCanaryDefinitionsResponse
+	378, // 381: deixic.v1.DeixicService.StartComputerMissionCanaryRun:output_type -> console.v1.StartComputerMissionCanaryRunResponse
+	379, // 382: deixic.v1.DeixicService.GetComputerMissionCanaryRun:output_type -> console.v1.GetComputerMissionCanaryRunResponse
+	380, // 383: deixic.v1.DeixicService.ListComputerMissionCanaryRuns:output_type -> console.v1.ListComputerMissionCanaryRunsResponse
+	381, // 384: deixic.v1.DeixicService.GetComputerMissionCanaryEvidence:output_type -> console.v1.GetComputerMissionCanaryEvidenceResponse
+	382, // 385: deixic.v1.DeixicService.OperateComputerMissionCanaryRun:output_type -> console.v1.OperateComputerMissionCanaryRunResponse
+	383, // 386: deixic.v1.DeixicService.CreateMissionSchedule:output_type -> console.v1.CreateMissionScheduleResponse
+	384, // 387: deixic.v1.DeixicService.UpdateMissionSchedule:output_type -> console.v1.UpdateMissionScheduleResponse
+	385, // 388: deixic.v1.DeixicService.SetMissionScheduleEnabled:output_type -> console.v1.SetMissionScheduleEnabledResponse
+	386, // 389: deixic.v1.DeixicService.ListMissionSchedules:output_type -> console.v1.ListMissionSchedulesResponse
+	387, // 390: deixic.v1.DeixicService.CreateConnectorTrigger:output_type -> console.v1.CreateConnectorTriggerResponse
+	388, // 391: deixic.v1.DeixicService.UpdateConnectorTrigger:output_type -> console.v1.UpdateConnectorTriggerResponse
+	389, // 392: deixic.v1.DeixicService.ListConnectorTriggers:output_type -> console.v1.ListConnectorTriggersResponse
+	390, // 393: deixic.v1.DeixicService.DeleteConnectorTrigger:output_type -> console.v1.DeleteConnectorTriggerResponse
+	391, // 394: deixic.v1.DeixicService.SetConnectorTriggerEnabled:output_type -> console.v1.SetConnectorTriggerEnabledResponse
+	392, // 395: deixic.v1.DeixicService.ReserveComputerMissionApexSession:output_type -> console.v1.ReserveComputerMissionApexSessionResponse
+	393, // 396: deixic.v1.DeixicService.BindComputerMissionApexSessionReservation:output_type -> console.v1.BindComputerMissionApexSessionReservationResponse
+	394, // 397: deixic.v1.DeixicService.BindComputerMissionApexInstructionMetadata:output_type -> console.v1.BindComputerMissionApexInstructionMetadataResponse
+	395, // 398: deixic.v1.DeixicService.AuthorizeComputerMissionApexSessionAdoption:output_type -> console.v1.AuthorizeComputerMissionApexSessionAdoptionResponse
+	396, // 399: deixic.v1.DeixicService.ResolveOperatingReceiptAction:output_type -> console.v1.ResolveOperatingReceiptActionResponse
+	397, // 400: deixic.v1.DeixicService.SubmitOperatingMessage:output_type -> console.v1.SubmitOperatingMessageResponse
+	398, // 401: deixic.v1.DeixicService.SubmitOperatingCorrection:output_type -> console.v1.SubmitOperatingCorrectionResponse
+	399, // 402: deixic.v1.DeixicService.ListWorkspaceMemories:output_type -> console.v1.ListWorkspaceMemoriesResponse
+	400, // 403: deixic.v1.DeixicService.CorrectWorkspaceMemory:output_type -> console.v1.CorrectWorkspaceMemoryResponse
+	401, // 404: deixic.v1.DeixicService.ReviewWorkspaceMemory:output_type -> console.v1.ReviewWorkspaceMemoryResponse
+	402, // 405: deixic.v1.DeixicService.ForgetWorkspaceMemory:output_type -> console.v1.ForgetWorkspaceMemoryResponse
+	403, // 406: deixic.v1.DeixicService.SubmitOperatingFeedback:output_type -> console.v1.SubmitOperatingFeedbackResponse
+	404, // 407: deixic.v1.DeixicService.RecordOperatingHomepageSuggestionFeedback:output_type -> console.v1.RecordOperatingHomepageSuggestionFeedbackResponse
+	405, // 408: deixic.v1.DeixicService.SubmitProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
+	405, // 409: deixic.v1.DeixicService.SubmitNativeProductIssueReport:output_type -> console.v1.SubmitProductIssueReportResponse
+	406, // 410: deixic.v1.DeixicService.ListStaffProductIssueReports:output_type -> console.v1.ListStaffProductIssueReportsResponse
+	407, // 411: deixic.v1.DeixicService.EngageStaffProductIssueReport:output_type -> console.v1.EngageStaffProductIssueReportResponse
+	408, // 412: deixic.v1.DeixicService.ListStaffProductIssueRecoveries:output_type -> console.v1.ListStaffProductIssueRecoveriesResponse
+	409, // 413: deixic.v1.DeixicService.PrepareStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	409, // 414: deixic.v1.DeixicService.ScanStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	409, // 415: deixic.v1.DeixicService.ReviewStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	409, // 416: deixic.v1.DeixicService.ExecuteStaffProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	409, // 417: deixic.v1.DeixicService.GetProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	409, // 418: deixic.v1.DeixicService.ReplyProductIssueRecovery:output_type -> console.v1.ProductIssueRecoveryResponse
+	410, // 419: deixic.v1.DeixicService.GetOperatingFeedback:output_type -> console.v1.GetOperatingFeedbackResponse
+	411, // 420: deixic.v1.DeixicService.ResolveOperatingFeedbackRemediation:output_type -> console.v1.ResolveOperatingFeedbackRemediationResponse
+	412, // 421: deixic.v1.DeixicService.ListCustomerIntelligenceFacts:output_type -> console.v1.ListCustomerIntelligenceFactsResponse
+	413, // 422: deixic.v1.DeixicService.GetCustomerIntelligenceFact:output_type -> console.v1.GetCustomerIntelligenceFactResponse
+	414, // 423: deixic.v1.DeixicService.ReviewCustomerIntelligenceFact:output_type -> console.v1.ReviewCustomerIntelligenceFactResponse
+	415, // 424: deixic.v1.DeixicService.ProposeCustomerIntelligenceFact:output_type -> console.v1.ProposeCustomerIntelligenceFactResponse
+	416, // 425: deixic.v1.DeixicService.RespondToCustomerFactConfirmation:output_type -> console.v1.RespondToCustomerFactConfirmationResponse
+	417, // 426: deixic.v1.DeixicService.AggregateCustomerIntelligencePatterns:output_type -> console.v1.AggregateCustomerIntelligencePatternsResponse
+	418, // 427: deixic.v1.DeixicService.CreateProspectingWatchProgram:output_type -> console.v1.CreateProspectingWatchProgramResponse
+	419, // 428: deixic.v1.DeixicService.GetProspectingWatchProgram:output_type -> console.v1.GetProspectingWatchProgramResponse
+	420, // 429: deixic.v1.DeixicService.ListProspectingWatchPrograms:output_type -> console.v1.ListProspectingWatchProgramsResponse
+	421, // 430: deixic.v1.DeixicService.UpdateProspectingWatchProgram:output_type -> console.v1.UpdateProspectingWatchProgramResponse
+	422, // 431: deixic.v1.DeixicService.CreateProspectingDraft:output_type -> console.v1.CreateProspectingDraftResponse
+	423, // 432: deixic.v1.DeixicService.ListProspectingDrafts:output_type -> console.v1.ListProspectingDraftsResponse
+	424, // 433: deixic.v1.DeixicService.ReviewProspectingDraft:output_type -> console.v1.ReviewProspectingDraftResponse
+	425, // 434: deixic.v1.DeixicService.ListOperatingCorrections:output_type -> console.v1.ListOperatingCorrectionsResponse
+	426, // 435: deixic.v1.DeixicService.ReviewOperatingCorrection:output_type -> console.v1.ReviewOperatingCorrectionResponse
+	427, // 436: deixic.v1.DeixicService.BeginOperatingAttachmentUpload:output_type -> console.v1.BeginOperatingAttachmentUploadResponse
+	428, // 437: deixic.v1.DeixicService.CompleteOperatingAttachmentUpload:output_type -> console.v1.CompleteOperatingAttachmentUploadResponse
+	429, // 438: deixic.v1.DeixicService.AcceptOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
+	429, // 439: deixic.v1.DeixicService.ImportOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
+	430, // 440: deixic.v1.DeixicService.GetOperatingTaskEnvironment:output_type -> console.v1.GetOperatingTaskEnvironmentResponse
+	429, // 441: deixic.v1.DeixicService.GetOperatingProjectSnapshot:output_type -> console.v1.AcceptOperatingProjectSnapshotResponse
+	431, // 442: deixic.v1.DeixicService.ListOperatingAttachments:output_type -> console.v1.ListOperatingAttachmentsResponse
+	432, // 443: deixic.v1.DeixicService.GetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
+	432, // 444: deixic.v1.DeixicService.SetPrivacySettings:output_type -> console.v1.GetPrivacySettingsResponse
+	433, // 445: deixic.v1.DeixicService.GetWorkspaceSettings:output_type -> console.v1.GetWorkspaceSettingsResponse
+	434, // 446: deixic.v1.DeixicService.GetBillingSubscription:output_type -> console.v1.GetBillingSubscriptionResponse
+	435, // 447: deixic.v1.DeixicService.CreateBillingPortalSession:output_type -> console.v1.CreateBillingPortalSessionResponse
+	436, // 448: deixic.v1.DeixicService.CreateBillingCheckoutSession:output_type -> console.v1.CreateBillingCheckoutSessionResponse
+	437, // 449: deixic.v1.DeixicService.UpdateWorkspaceProfile:output_type -> console.v1.UpdateWorkspaceProfileResponse
+	438, // 450: deixic.v1.DeixicService.ArchiveWorkspace:output_type -> console.v1.ArchiveWorkspaceResponse
+	439, // 451: deixic.v1.DeixicService.UpdateWorkspacePolicy:output_type -> console.v1.UpdateWorkspacePolicyResponse
+	440, // 452: deixic.v1.DeixicService.UpdateWorkspaceDexPolicy:output_type -> console.v1.UpdateWorkspaceDexPolicyResponse
+	441, // 453: deixic.v1.DeixicService.UpdateWorkspaceArtifactStyleGuide:output_type -> console.v1.UpdateWorkspaceArtifactStyleGuideResponse
+	442, // 454: deixic.v1.DeixicService.EvaluateWorkspaceArtifactStyleGuide:output_type -> console.v1.EvaluateWorkspaceArtifactStyleGuideResponse
+	443, // 455: deixic.v1.DeixicService.UpsertWorkspaceIdentityProvider:output_type -> console.v1.UpsertWorkspaceIdentityProviderResponse
+	444, // 456: deixic.v1.DeixicService.RemoveWorkspaceIdentityProvider:output_type -> console.v1.RemoveWorkspaceIdentityProviderResponse
+	445, // 457: deixic.v1.DeixicService.UpsertWorkspaceIntegration:output_type -> console.v1.UpsertWorkspaceIntegrationResponse
+	446, // 458: deixic.v1.DeixicService.RemoveWorkspaceIntegration:output_type -> console.v1.RemoveWorkspaceIntegrationResponse
+	433, // 459: deixic.v1.DeixicService.UpdateWorkspaceBilling:output_type -> console.v1.GetWorkspaceSettingsResponse
+	433, // 460: deixic.v1.DeixicService.UpsertWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
+	433, // 461: deixic.v1.DeixicService.RemoveWorkspaceMember:output_type -> console.v1.GetWorkspaceSettingsResponse
+	433, // 462: deixic.v1.DeixicService.UpdateWorkspaceNotificationPreferences:output_type -> console.v1.GetWorkspaceSettingsResponse
+	433, // 463: deixic.v1.DeixicService.EnableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
+	433, // 464: deixic.v1.DeixicService.DisableWorkspaceBreakGlass:output_type -> console.v1.GetWorkspaceSettingsResponse
+	447, // 465: deixic.v1.DeixicService.ListWorkspaceSkills:output_type -> console.v1.ListWorkspaceSkillsResponse
+	448, // 466: deixic.v1.DeixicService.BrowseDexSkillCatalog:output_type -> console.v1.BrowseDexSkillCatalogResponse
+	449, // 467: deixic.v1.DeixicService.InstallDexSkillCatalogEntry:output_type -> console.v1.InstallDexSkillCatalogEntryResponse
+	450, // 468: deixic.v1.DeixicService.CreateWorkspaceSkill:output_type -> console.v1.CreateWorkspaceSkillResponse
+	451, // 469: deixic.v1.DeixicService.UpdateWorkspaceSkill:output_type -> console.v1.UpdateWorkspaceSkillResponse
+	452, // 470: deixic.v1.DeixicService.DeleteWorkspaceSkill:output_type -> console.v1.DeleteWorkspaceSkillResponse
+	453, // 471: deixic.v1.DeixicService.ListScenarioFixtures:output_type -> console.v1.ListScenarioFixturesResponse
+	454, // 472: deixic.v1.DeixicService.PromoteScenarioFixture:output_type -> console.v1.PromoteScenarioFixtureResponse
+	455, // 473: deixic.v1.DeixicService.CompareScenarioFixtures:output_type -> console.v1.CompareScenarioFixturesResponse
+	456, // 474: deixic.v1.DeixicService.CreateConnectorProfile:output_type -> console.v1.CreateConnectorProfileResponse
+	457, // 475: deixic.v1.DeixicService.ListConnectorProfiles:output_type -> console.v1.ListConnectorProfilesResponse
+	458, // 476: deixic.v1.DeixicService.UpdateConnectorProfile:output_type -> console.v1.UpdateConnectorProfileResponse
+	459, // 477: deixic.v1.DeixicService.DeleteConnectorProfile:output_type -> console.v1.DeleteConnectorProfileResponse
+	460, // 478: deixic.v1.DeixicService.ListConnectedCalls:output_type -> console.v1.ListConnectedCallsResponse
+	461, // 479: deixic.v1.DeixicService.StartMeetingCapture:output_type -> console.v1.StartMeetingCaptureResponse
+	462, // 480: deixic.v1.DeixicService.GetMeetingCapture:output_type -> console.v1.GetMeetingCaptureResponse
+	463, // 481: deixic.v1.DeixicService.ListMeetingCaptures:output_type -> console.v1.ListMeetingCapturesResponse
+	464, // 482: deixic.v1.DeixicService.StopMeetingCapture:output_type -> console.v1.StopMeetingCaptureResponse
+	465, // 483: deixic.v1.DeixicService.ListCommitments:output_type -> console.v1.ListCommitmentsResponse
+	242, // [242:484] is the sub-list for method output_type
+	0,   // [0:242] is the sub-list for method input_type
 	0,   // [0:0] is the sub-list for extension type_name
 	0,   // [0:0] is the sub-list for extension extendee
 	0,   // [0:0] is the sub-list for field type_name
