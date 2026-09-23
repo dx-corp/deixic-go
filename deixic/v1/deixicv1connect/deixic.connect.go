@@ -217,6 +217,15 @@ const (
 	// DeixicServiceListAgentWorkforceRecordsProcedure is the fully-qualified name of the
 	// DeixicService's ListAgentWorkforceRecords RPC.
 	DeixicServiceListAgentWorkforceRecordsProcedure = "/deixic.v1.DeixicService/ListAgentWorkforceRecords"
+	// DeixicServiceGetAgentProductProcedure is the fully-qualified name of the DeixicService's
+	// GetAgentProduct RPC.
+	DeixicServiceGetAgentProductProcedure = "/deixic.v1.DeixicService/GetAgentProduct"
+	// DeixicServiceCloneAgentProductProcedure is the fully-qualified name of the DeixicService's
+	// CloneAgentProduct RPC.
+	DeixicServiceCloneAgentProductProcedure = "/deixic.v1.DeixicService/CloneAgentProduct"
+	// DeixicServiceUpdateAgentProductProcedure is the fully-qualified name of the DeixicService's
+	// UpdateAgentProduct RPC.
+	DeixicServiceUpdateAgentProductProcedure = "/deixic.v1.DeixicService/UpdateAgentProduct"
 	// DeixicServiceSubmitAgentWorkforceEvidenceProcedure is the fully-qualified name of the
 	// DeixicService's SubmitAgentWorkforceEvidence RPC.
 	DeixicServiceSubmitAgentWorkforceEvidenceProcedure = "/deixic.v1.DeixicService/SubmitAgentWorkforceEvidence"
@@ -884,6 +893,12 @@ type DeixicServiceClient interface {
 	ListAuthorityPosture(context.Context, *connect.Request[v1.ListAuthorityPostureRequest]) (*connect.Response[v1.ListAuthorityPostureResponse], error)
 	// Uses the canonical console.v1.ConsoleService.ListAgentWorkforceRecords message contract.
 	ListAgentWorkforceRecords(context.Context, *connect.Request[v1.ListAgentWorkforceRecordsRequest]) (*connect.Response[v1.ListAgentWorkforceRecordsResponse], error)
+	// Reads the registered agent product object from its versioned and connector owners.
+	GetAgentProduct(context.Context, *connect.Request[v1.GetAgentProductRequest]) (*connect.Response[v1.GetAgentProductResponse], error)
+	// Clones safe agent behavior through the registry owner for the current workspace.
+	CloneAgentProduct(context.Context, *connect.Request[v1.CloneAgentProductRequest]) (*connect.Response[v1.CloneAgentProductResponse], error)
+	// Writes editable agent behavior through the registry's immutable versioned owner.
+	UpdateAgentProduct(context.Context, *connect.Request[v1.UpdateAgentProductRequest]) (*connect.Response[v1.UpdateAgentProductResponse], error)
 	// Uses the canonical console.v1.ConsoleService.SubmitAgentWorkforceEvidence message contract.
 	SubmitAgentWorkforceEvidence(context.Context, *connect.Request[v1.SubmitAgentWorkforceEvidenceRequest]) (*connect.Response[v1.SubmitAgentWorkforceEvidenceResponse], error)
 	// Uses the canonical console.v1.ConsoleService.ListIntegrationTiles message contract.
@@ -1632,6 +1647,24 @@ func NewDeixicServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			httpClient,
 			baseURL+DeixicServiceListAgentWorkforceRecordsProcedure,
 			connect.WithSchema(deixicServiceMethods.ByName("ListAgentWorkforceRecords")),
+			connect.WithClientOptions(opts...),
+		),
+		getAgentProduct: connect.NewClient[v1.GetAgentProductRequest, v1.GetAgentProductResponse](
+			httpClient,
+			baseURL+DeixicServiceGetAgentProductProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("GetAgentProduct")),
+			connect.WithClientOptions(opts...),
+		),
+		cloneAgentProduct: connect.NewClient[v1.CloneAgentProductRequest, v1.CloneAgentProductResponse](
+			httpClient,
+			baseURL+DeixicServiceCloneAgentProductProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("CloneAgentProduct")),
+			connect.WithClientOptions(opts...),
+		),
+		updateAgentProduct: connect.NewClient[v1.UpdateAgentProductRequest, v1.UpdateAgentProductResponse](
+			httpClient,
+			baseURL+DeixicServiceUpdateAgentProductProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("UpdateAgentProduct")),
 			connect.WithClientOptions(opts...),
 		),
 		submitAgentWorkforceEvidence: connect.NewClient[v1.SubmitAgentWorkforceEvidenceRequest, v1.SubmitAgentWorkforceEvidenceResponse](
@@ -2786,6 +2819,9 @@ type deixicServiceClient struct {
 	getOnboardingPlan                           *connect.Client[v1.GetOnboardingPlanRequest, v1.GetOnboardingPlanResponse]
 	listAuthorityPosture                        *connect.Client[v1.ListAuthorityPostureRequest, v1.ListAuthorityPostureResponse]
 	listAgentWorkforceRecords                   *connect.Client[v1.ListAgentWorkforceRecordsRequest, v1.ListAgentWorkforceRecordsResponse]
+	getAgentProduct                             *connect.Client[v1.GetAgentProductRequest, v1.GetAgentProductResponse]
+	cloneAgentProduct                           *connect.Client[v1.CloneAgentProductRequest, v1.CloneAgentProductResponse]
+	updateAgentProduct                          *connect.Client[v1.UpdateAgentProductRequest, v1.UpdateAgentProductResponse]
 	submitAgentWorkforceEvidence                *connect.Client[v1.SubmitAgentWorkforceEvidenceRequest, v1.SubmitAgentWorkforceEvidenceResponse]
 	listIntegrationTiles                        *connect.Client[v1.ListIntegrationTilesRequest, v1.ListIntegrationTilesResponse]
 	listPinnedSources                           *connect.Client[v1.ListPinnedSourcesRequest, v1.ListPinnedSourcesResponse]
@@ -3277,6 +3313,21 @@ func (c *deixicServiceClient) ListAuthorityPosture(ctx context.Context, req *con
 // ListAgentWorkforceRecords calls deixic.v1.DeixicService.ListAgentWorkforceRecords.
 func (c *deixicServiceClient) ListAgentWorkforceRecords(ctx context.Context, req *connect.Request[v1.ListAgentWorkforceRecordsRequest]) (*connect.Response[v1.ListAgentWorkforceRecordsResponse], error) {
 	return c.listAgentWorkforceRecords.CallUnary(ctx, req)
+}
+
+// GetAgentProduct calls deixic.v1.DeixicService.GetAgentProduct.
+func (c *deixicServiceClient) GetAgentProduct(ctx context.Context, req *connect.Request[v1.GetAgentProductRequest]) (*connect.Response[v1.GetAgentProductResponse], error) {
+	return c.getAgentProduct.CallUnary(ctx, req)
+}
+
+// CloneAgentProduct calls deixic.v1.DeixicService.CloneAgentProduct.
+func (c *deixicServiceClient) CloneAgentProduct(ctx context.Context, req *connect.Request[v1.CloneAgentProductRequest]) (*connect.Response[v1.CloneAgentProductResponse], error) {
+	return c.cloneAgentProduct.CallUnary(ctx, req)
+}
+
+// UpdateAgentProduct calls deixic.v1.DeixicService.UpdateAgentProduct.
+func (c *deixicServiceClient) UpdateAgentProduct(ctx context.Context, req *connect.Request[v1.UpdateAgentProductRequest]) (*connect.Response[v1.UpdateAgentProductResponse], error) {
+	return c.updateAgentProduct.CallUnary(ctx, req)
 }
 
 // SubmitAgentWorkforceEvidence calls deixic.v1.DeixicService.SubmitAgentWorkforceEvidence.
@@ -4325,6 +4376,12 @@ type DeixicServiceHandler interface {
 	ListAuthorityPosture(context.Context, *connect.Request[v1.ListAuthorityPostureRequest]) (*connect.Response[v1.ListAuthorityPostureResponse], error)
 	// Uses the canonical console.v1.ConsoleService.ListAgentWorkforceRecords message contract.
 	ListAgentWorkforceRecords(context.Context, *connect.Request[v1.ListAgentWorkforceRecordsRequest]) (*connect.Response[v1.ListAgentWorkforceRecordsResponse], error)
+	// Reads the registered agent product object from its versioned and connector owners.
+	GetAgentProduct(context.Context, *connect.Request[v1.GetAgentProductRequest]) (*connect.Response[v1.GetAgentProductResponse], error)
+	// Clones safe agent behavior through the registry owner for the current workspace.
+	CloneAgentProduct(context.Context, *connect.Request[v1.CloneAgentProductRequest]) (*connect.Response[v1.CloneAgentProductResponse], error)
+	// Writes editable agent behavior through the registry's immutable versioned owner.
+	UpdateAgentProduct(context.Context, *connect.Request[v1.UpdateAgentProductRequest]) (*connect.Response[v1.UpdateAgentProductResponse], error)
 	// Uses the canonical console.v1.ConsoleService.SubmitAgentWorkforceEvidence message contract.
 	SubmitAgentWorkforceEvidence(context.Context, *connect.Request[v1.SubmitAgentWorkforceEvidenceRequest]) (*connect.Response[v1.SubmitAgentWorkforceEvidenceResponse], error)
 	// Uses the canonical console.v1.ConsoleService.ListIntegrationTiles message contract.
@@ -5069,6 +5126,24 @@ func NewDeixicServiceHandler(svc DeixicServiceHandler, opts ...connect.HandlerOp
 		DeixicServiceListAgentWorkforceRecordsProcedure,
 		svc.ListAgentWorkforceRecords,
 		connect.WithSchema(deixicServiceMethods.ByName("ListAgentWorkforceRecords")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicServiceGetAgentProductHandler := connect.NewUnaryHandler(
+		DeixicServiceGetAgentProductProcedure,
+		svc.GetAgentProduct,
+		connect.WithSchema(deixicServiceMethods.ByName("GetAgentProduct")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicServiceCloneAgentProductHandler := connect.NewUnaryHandler(
+		DeixicServiceCloneAgentProductProcedure,
+		svc.CloneAgentProduct,
+		connect.WithSchema(deixicServiceMethods.ByName("CloneAgentProduct")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicServiceUpdateAgentProductHandler := connect.NewUnaryHandler(
+		DeixicServiceUpdateAgentProductProcedure,
+		svc.UpdateAgentProduct,
+		connect.WithSchema(deixicServiceMethods.ByName("UpdateAgentProduct")),
 		connect.WithHandlerOptions(opts...),
 	)
 	deixicServiceSubmitAgentWorkforceEvidenceHandler := connect.NewUnaryHandler(
@@ -6281,6 +6356,12 @@ func NewDeixicServiceHandler(svc DeixicServiceHandler, opts ...connect.HandlerOp
 			deixicServiceListAuthorityPostureHandler.ServeHTTP(w, r)
 		case DeixicServiceListAgentWorkforceRecordsProcedure:
 			deixicServiceListAgentWorkforceRecordsHandler.ServeHTTP(w, r)
+		case DeixicServiceGetAgentProductProcedure:
+			deixicServiceGetAgentProductHandler.ServeHTTP(w, r)
+		case DeixicServiceCloneAgentProductProcedure:
+			deixicServiceCloneAgentProductHandler.ServeHTTP(w, r)
+		case DeixicServiceUpdateAgentProductProcedure:
+			deixicServiceUpdateAgentProductHandler.ServeHTTP(w, r)
 		case DeixicServiceSubmitAgentWorkforceEvidenceProcedure:
 			deixicServiceSubmitAgentWorkforceEvidenceHandler.ServeHTTP(w, r)
 		case DeixicServiceListIntegrationTilesProcedure:
@@ -6894,6 +6975,18 @@ func (UnimplementedDeixicServiceHandler) ListAuthorityPosture(context.Context, *
 
 func (UnimplementedDeixicServiceHandler) ListAgentWorkforceRecords(context.Context, *connect.Request[v1.ListAgentWorkforceRecordsRequest]) (*connect.Response[v1.ListAgentWorkforceRecordsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.ListAgentWorkforceRecords is not implemented"))
+}
+
+func (UnimplementedDeixicServiceHandler) GetAgentProduct(context.Context, *connect.Request[v1.GetAgentProductRequest]) (*connect.Response[v1.GetAgentProductResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.GetAgentProduct is not implemented"))
+}
+
+func (UnimplementedDeixicServiceHandler) CloneAgentProduct(context.Context, *connect.Request[v1.CloneAgentProductRequest]) (*connect.Response[v1.CloneAgentProductResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.CloneAgentProduct is not implemented"))
+}
+
+func (UnimplementedDeixicServiceHandler) UpdateAgentProduct(context.Context, *connect.Request[v1.UpdateAgentProductRequest]) (*connect.Response[v1.UpdateAgentProductResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.UpdateAgentProduct is not implemented"))
 }
 
 func (UnimplementedDeixicServiceHandler) SubmitAgentWorkforceEvidence(context.Context, *connect.Request[v1.SubmitAgentWorkforceEvidenceRequest]) (*connect.Response[v1.SubmitAgentWorkforceEvidenceResponse], error) {

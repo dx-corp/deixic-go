@@ -1401,8 +1401,10 @@ type AgentConfig struct {
 	EntityTypeScopeEnums    []v1.EntityType         `protobuf:"varint,14,rep,packed,name=entity_type_scope_enums,json=entityTypeScopeEnums,proto3,enum=common.v1.EntityType" json:"entity_type_scope_enums,omitempty"`
 	NotificationChannelEnum v1.DeliveryChannel      `protobuf:"varint,15,opt,name=notification_channel_enum,json=notificationChannelEnum,proto3,enum=common.v1.DeliveryChannel" json:"notification_channel_enum,omitempty"`
 	TeammateProfile         *DigitalTeammateProfile `protobuf:"bytes,16,opt,name=teammate_profile,json=teammateProfile,proto3" json:"teammate_profile,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	// Portable provider needs. Connection IDs remain workspace-local bindings.
+	ConnectorRequirements []*ConnectorRequirement `protobuf:"bytes,17,rep,name=connector_requirements,json=connectorRequirements,proto3" json:"connector_requirements,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *AgentConfig) Reset() {
@@ -1547,6 +1549,81 @@ func (x *AgentConfig) GetTeammateProfile() *DigitalTeammateProfile {
 	return nil
 }
 
+func (x *AgentConfig) GetConnectorRequirements() []*ConnectorRequirement {
+	if x != nil {
+		return x.ConnectorRequirements
+	}
+	return nil
+}
+
+type ConnectorRequirement struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	ProviderId           string                 `protobuf:"bytes,1,opt,name=provider_id,json=providerId,proto3" json:"provider_id,omitempty"`
+	RequiredCapabilities []string               `protobuf:"bytes,2,rep,name=required_capabilities,json=requiredCapabilities,proto3" json:"required_capabilities,omitempty"`
+	OptionalCapabilities []string               `protobuf:"bytes,3,rep,name=optional_capabilities,json=optionalCapabilities,proto3" json:"optional_capabilities,omitempty"`
+	Required             bool                   `protobuf:"varint,4,opt,name=required,proto3" json:"required,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *ConnectorRequirement) Reset() {
+	*x = ConnectorRequirement{}
+	mi := &file_agents_v1_agents_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ConnectorRequirement) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ConnectorRequirement) ProtoMessage() {}
+
+func (x *ConnectorRequirement) ProtoReflect() protoreflect.Message {
+	mi := &file_agents_v1_agents_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ConnectorRequirement.ProtoReflect.Descriptor instead.
+func (*ConnectorRequirement) Descriptor() ([]byte, []int) {
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ConnectorRequirement) GetProviderId() string {
+	if x != nil {
+		return x.ProviderId
+	}
+	return ""
+}
+
+func (x *ConnectorRequirement) GetRequiredCapabilities() []string {
+	if x != nil {
+		return x.RequiredCapabilities
+	}
+	return nil
+}
+
+func (x *ConnectorRequirement) GetOptionalCapabilities() []string {
+	if x != nil {
+		return x.OptionalCapabilities
+	}
+	return nil
+}
+
+func (x *ConnectorRequirement) GetRequired() bool {
+	if x != nil {
+		return x.Required
+	}
+	return false
+}
+
 // DigitalTeammateProfile is the versioned contract for how an AgentConfig acts
 // as a durable teammate across objectives, workflows, tools, memory, evals, and
 // Slack or other delivery surfaces.
@@ -1583,7 +1660,7 @@ type DigitalTeammateProfile struct {
 
 func (x *DigitalTeammateProfile) Reset() {
 	*x = DigitalTeammateProfile{}
-	mi := &file_agents_v1_agents_proto_msgTypes[5]
+	mi := &file_agents_v1_agents_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1595,7 +1672,7 @@ func (x *DigitalTeammateProfile) String() string {
 func (*DigitalTeammateProfile) ProtoMessage() {}
 
 func (x *DigitalTeammateProfile) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[5]
+	mi := &file_agents_v1_agents_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1608,7 +1685,7 @@ func (x *DigitalTeammateProfile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DigitalTeammateProfile.ProtoReflect.Descriptor instead.
 func (*DigitalTeammateProfile) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{5}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *DigitalTeammateProfile) GetId() string {
@@ -1807,7 +1884,7 @@ type TeammateChannelManifest struct {
 
 func (x *TeammateChannelManifest) Reset() {
 	*x = TeammateChannelManifest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[6]
+	mi := &file_agents_v1_agents_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1819,7 +1896,7 @@ func (x *TeammateChannelManifest) String() string {
 func (*TeammateChannelManifest) ProtoMessage() {}
 
 func (x *TeammateChannelManifest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[6]
+	mi := &file_agents_v1_agents_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1832,7 +1909,7 @@ func (x *TeammateChannelManifest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeammateChannelManifest.ProtoReflect.Descriptor instead.
 func (*TeammateChannelManifest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{6}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *TeammateChannelManifest) GetKind() TeammateChannelKind {
@@ -1916,7 +1993,7 @@ type TeammateResponsibility struct {
 
 func (x *TeammateResponsibility) Reset() {
 	*x = TeammateResponsibility{}
-	mi := &file_agents_v1_agents_proto_msgTypes[7]
+	mi := &file_agents_v1_agents_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1928,7 +2005,7 @@ func (x *TeammateResponsibility) String() string {
 func (*TeammateResponsibility) ProtoMessage() {}
 
 func (x *TeammateResponsibility) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[7]
+	mi := &file_agents_v1_agents_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1941,7 +2018,7 @@ func (x *TeammateResponsibility) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeammateResponsibility.ProtoReflect.Descriptor instead.
 func (*TeammateResponsibility) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{7}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *TeammateResponsibility) GetId() string {
@@ -2015,7 +2092,7 @@ type CommitmentPolicy struct {
 
 func (x *CommitmentPolicy) Reset() {
 	*x = CommitmentPolicy{}
-	mi := &file_agents_v1_agents_proto_msgTypes[8]
+	mi := &file_agents_v1_agents_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2027,7 +2104,7 @@ func (x *CommitmentPolicy) String() string {
 func (*CommitmentPolicy) ProtoMessage() {}
 
 func (x *CommitmentPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[8]
+	mi := &file_agents_v1_agents_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2040,7 +2117,7 @@ func (x *CommitmentPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CommitmentPolicy.ProtoReflect.Descriptor instead.
 func (*CommitmentPolicy) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{8}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *CommitmentPolicy) GetAllowedKinds() []CommitmentKind {
@@ -2092,7 +2169,7 @@ type CommitmentTemplate struct {
 
 func (x *CommitmentTemplate) Reset() {
 	*x = CommitmentTemplate{}
-	mi := &file_agents_v1_agents_proto_msgTypes[9]
+	mi := &file_agents_v1_agents_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2104,7 +2181,7 @@ func (x *CommitmentTemplate) String() string {
 func (*CommitmentTemplate) ProtoMessage() {}
 
 func (x *CommitmentTemplate) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[9]
+	mi := &file_agents_v1_agents_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2117,7 +2194,7 @@ func (x *CommitmentTemplate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CommitmentTemplate.ProtoReflect.Descriptor instead.
 func (*CommitmentTemplate) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{9}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *CommitmentTemplate) GetKind() CommitmentKind {
@@ -2168,7 +2245,7 @@ type InitiativePolicy struct {
 
 func (x *InitiativePolicy) Reset() {
 	*x = InitiativePolicy{}
-	mi := &file_agents_v1_agents_proto_msgTypes[10]
+	mi := &file_agents_v1_agents_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2180,7 +2257,7 @@ func (x *InitiativePolicy) String() string {
 func (*InitiativePolicy) ProtoMessage() {}
 
 func (x *InitiativePolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[10]
+	mi := &file_agents_v1_agents_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2193,7 +2270,7 @@ func (x *InitiativePolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InitiativePolicy.ProtoReflect.Descriptor instead.
 func (*InitiativePolicy) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{10}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *InitiativePolicy) GetTriggers() []*InitiativeTrigger {
@@ -2231,7 +2308,7 @@ type InitiativeTrigger struct {
 
 func (x *InitiativeTrigger) Reset() {
 	*x = InitiativeTrigger{}
-	mi := &file_agents_v1_agents_proto_msgTypes[11]
+	mi := &file_agents_v1_agents_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2243,7 +2320,7 @@ func (x *InitiativeTrigger) String() string {
 func (*InitiativeTrigger) ProtoMessage() {}
 
 func (x *InitiativeTrigger) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[11]
+	mi := &file_agents_v1_agents_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2256,7 +2333,7 @@ func (x *InitiativeTrigger) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InitiativeTrigger.ProtoReflect.Descriptor instead.
 func (*InitiativeTrigger) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{11}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *InitiativeTrigger) GetKind() InitiativeTriggerKind {
@@ -2307,7 +2384,7 @@ type AutonomyPolicy struct {
 
 func (x *AutonomyPolicy) Reset() {
 	*x = AutonomyPolicy{}
-	mi := &file_agents_v1_agents_proto_msgTypes[12]
+	mi := &file_agents_v1_agents_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2319,7 +2396,7 @@ func (x *AutonomyPolicy) String() string {
 func (*AutonomyPolicy) ProtoMessage() {}
 
 func (x *AutonomyPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[12]
+	mi := &file_agents_v1_agents_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2332,7 +2409,7 @@ func (x *AutonomyPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AutonomyPolicy.ProtoReflect.Descriptor instead.
 func (*AutonomyPolicy) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{12}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *AutonomyPolicy) GetRules() []*AutonomyRule {
@@ -2372,7 +2449,7 @@ type AutonomyRule struct {
 
 func (x *AutonomyRule) Reset() {
 	*x = AutonomyRule{}
-	mi := &file_agents_v1_agents_proto_msgTypes[13]
+	mi := &file_agents_v1_agents_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2384,7 +2461,7 @@ func (x *AutonomyRule) String() string {
 func (*AutonomyRule) ProtoMessage() {}
 
 func (x *AutonomyRule) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[13]
+	mi := &file_agents_v1_agents_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2397,7 +2474,7 @@ func (x *AutonomyRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AutonomyRule.ProtoReflect.Descriptor instead.
 func (*AutonomyRule) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{13}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *AutonomyRule) GetActionType() string {
@@ -2466,7 +2543,7 @@ type MemoryPolicy struct {
 
 func (x *MemoryPolicy) Reset() {
 	*x = MemoryPolicy{}
-	mi := &file_agents_v1_agents_proto_msgTypes[14]
+	mi := &file_agents_v1_agents_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2478,7 +2555,7 @@ func (x *MemoryPolicy) String() string {
 func (*MemoryPolicy) ProtoMessage() {}
 
 func (x *MemoryPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[14]
+	mi := &file_agents_v1_agents_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2491,7 +2568,7 @@ func (x *MemoryPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MemoryPolicy.ProtoReflect.Descriptor instead.
 func (*MemoryPolicy) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{14}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *MemoryPolicy) GetAllowedScopeRefs() []string {
@@ -2567,7 +2644,7 @@ type PresencePolicy struct {
 
 func (x *PresencePolicy) Reset() {
 	*x = PresencePolicy{}
-	mi := &file_agents_v1_agents_proto_msgTypes[15]
+	mi := &file_agents_v1_agents_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2579,7 +2656,7 @@ func (x *PresencePolicy) String() string {
 func (*PresencePolicy) ProtoMessage() {}
 
 func (x *PresencePolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[15]
+	mi := &file_agents_v1_agents_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2592,7 +2669,7 @@ func (x *PresencePolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PresencePolicy.ProtoReflect.Descriptor instead.
 func (*PresencePolicy) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{15}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *PresencePolicy) GetPrimaryChannel() v1.DeliveryChannel {
@@ -2657,7 +2734,7 @@ type OutputPolicy struct {
 
 func (x *OutputPolicy) Reset() {
 	*x = OutputPolicy{}
-	mi := &file_agents_v1_agents_proto_msgTypes[16]
+	mi := &file_agents_v1_agents_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2669,7 +2746,7 @@ func (x *OutputPolicy) String() string {
 func (*OutputPolicy) ProtoMessage() {}
 
 func (x *OutputPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[16]
+	mi := &file_agents_v1_agents_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2682,7 +2759,7 @@ func (x *OutputPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OutputPolicy.ProtoReflect.Descriptor instead.
 func (*OutputPolicy) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{16}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *OutputPolicy) GetRequiredArtifactKinds() []string {
@@ -2725,7 +2802,7 @@ type EvalPolicy struct {
 
 func (x *EvalPolicy) Reset() {
 	*x = EvalPolicy{}
-	mi := &file_agents_v1_agents_proto_msgTypes[17]
+	mi := &file_agents_v1_agents_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2737,7 +2814,7 @@ func (x *EvalPolicy) String() string {
 func (*EvalPolicy) ProtoMessage() {}
 
 func (x *EvalPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[17]
+	mi := &file_agents_v1_agents_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2750,7 +2827,7 @@ func (x *EvalPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EvalPolicy.ProtoReflect.Descriptor instead.
 func (*EvalPolicy) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{17}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *EvalPolicy) GetBindings() []*EvalBinding {
@@ -2787,7 +2864,7 @@ type EvalBinding struct {
 
 func (x *EvalBinding) Reset() {
 	*x = EvalBinding{}
-	mi := &file_agents_v1_agents_proto_msgTypes[18]
+	mi := &file_agents_v1_agents_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2799,7 +2876,7 @@ func (x *EvalBinding) String() string {
 func (*EvalBinding) ProtoMessage() {}
 
 func (x *EvalBinding) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[18]
+	mi := &file_agents_v1_agents_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2812,7 +2889,7 @@ func (x *EvalBinding) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EvalBinding.ProtoReflect.Descriptor instead.
 func (*EvalBinding) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{18}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *EvalBinding) GetSuiteName() string {
@@ -2857,7 +2934,7 @@ type EscalationPolicy struct {
 
 func (x *EscalationPolicy) Reset() {
 	*x = EscalationPolicy{}
-	mi := &file_agents_v1_agents_proto_msgTypes[19]
+	mi := &file_agents_v1_agents_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2869,7 +2946,7 @@ func (x *EscalationPolicy) String() string {
 func (*EscalationPolicy) ProtoMessage() {}
 
 func (x *EscalationPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[19]
+	mi := &file_agents_v1_agents_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2882,7 +2959,7 @@ func (x *EscalationPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EscalationPolicy.ProtoReflect.Descriptor instead.
 func (*EscalationPolicy) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{19}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *EscalationPolicy) GetApproverUserIds() []string {
@@ -2969,7 +3046,7 @@ type DelegationRecord struct {
 
 func (x *DelegationRecord) Reset() {
 	*x = DelegationRecord{}
-	mi := &file_agents_v1_agents_proto_msgTypes[20]
+	mi := &file_agents_v1_agents_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2981,7 +3058,7 @@ func (x *DelegationRecord) String() string {
 func (*DelegationRecord) ProtoMessage() {}
 
 func (x *DelegationRecord) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[20]
+	mi := &file_agents_v1_agents_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2994,7 +3071,7 @@ func (x *DelegationRecord) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DelegationRecord.ProtoReflect.Descriptor instead.
 func (*DelegationRecord) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{20}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *DelegationRecord) GetId() string {
@@ -3204,7 +3281,7 @@ type RegisterRequest struct {
 
 func (x *RegisterRequest) Reset() {
 	*x = RegisterRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[21]
+	mi := &file_agents_v1_agents_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3216,7 +3293,7 @@ func (x *RegisterRequest) String() string {
 func (*RegisterRequest) ProtoMessage() {}
 
 func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[21]
+	mi := &file_agents_v1_agents_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3229,7 +3306,7 @@ func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
 func (*RegisterRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{21}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *RegisterRequest) GetWorkspaceId() string {
@@ -3311,7 +3388,7 @@ type RegisterResponse struct {
 
 func (x *RegisterResponse) Reset() {
 	*x = RegisterResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[22]
+	mi := &file_agents_v1_agents_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3323,7 +3400,7 @@ func (x *RegisterResponse) String() string {
 func (*RegisterResponse) ProtoMessage() {}
 
 func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[22]
+	mi := &file_agents_v1_agents_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3336,7 +3413,7 @@ func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterResponse.ProtoReflect.Descriptor instead.
 func (*RegisterResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{22}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *RegisterResponse) GetAgent() *Agent {
@@ -3355,7 +3432,7 @@ type GetRequest struct {
 
 func (x *GetRequest) Reset() {
 	*x = GetRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[23]
+	mi := &file_agents_v1_agents_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3367,7 +3444,7 @@ func (x *GetRequest) String() string {
 func (*GetRequest) ProtoMessage() {}
 
 func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[23]
+	mi := &file_agents_v1_agents_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3380,7 +3457,7 @@ func (x *GetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
 func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{23}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *GetRequest) GetId() string {
@@ -3399,7 +3476,7 @@ type GetResponse struct {
 
 func (x *GetResponse) Reset() {
 	*x = GetResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[24]
+	mi := &file_agents_v1_agents_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3411,7 +3488,7 @@ func (x *GetResponse) String() string {
 func (*GetResponse) ProtoMessage() {}
 
 func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[24]
+	mi := &file_agents_v1_agents_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3424,7 +3501,7 @@ func (x *GetResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
 func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{24}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *GetResponse) GetAgent() *Agent {
@@ -3458,7 +3535,7 @@ type ListRequest struct {
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[25]
+	mi := &file_agents_v1_agents_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3470,7 +3547,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[25]
+	mi := &file_agents_v1_agents_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3483,7 +3560,7 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{25}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *ListRequest) GetWorkspaceId() string {
@@ -3581,7 +3658,7 @@ type ListResponse struct {
 
 func (x *ListResponse) Reset() {
 	*x = ListResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[26]
+	mi := &file_agents_v1_agents_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3593,7 +3670,7 @@ func (x *ListResponse) String() string {
 func (*ListResponse) ProtoMessage() {}
 
 func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[26]
+	mi := &file_agents_v1_agents_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3606,7 +3683,7 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
 func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{26}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *ListResponse) GetAgents() []*Agent {
@@ -3656,7 +3733,7 @@ type AgentDiscoveryEvidence struct {
 
 func (x *AgentDiscoveryEvidence) Reset() {
 	*x = AgentDiscoveryEvidence{}
-	mi := &file_agents_v1_agents_proto_msgTypes[27]
+	mi := &file_agents_v1_agents_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3668,7 +3745,7 @@ func (x *AgentDiscoveryEvidence) String() string {
 func (*AgentDiscoveryEvidence) ProtoMessage() {}
 
 func (x *AgentDiscoveryEvidence) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[27]
+	mi := &file_agents_v1_agents_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3681,7 +3758,7 @@ func (x *AgentDiscoveryEvidence) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentDiscoveryEvidence.ProtoReflect.Descriptor instead.
 func (*AgentDiscoveryEvidence) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{27}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *AgentDiscoveryEvidence) GetSchema() string {
@@ -3806,7 +3883,7 @@ type AgentDiscoveryExclusion struct {
 
 func (x *AgentDiscoveryExclusion) Reset() {
 	*x = AgentDiscoveryExclusion{}
-	mi := &file_agents_v1_agents_proto_msgTypes[28]
+	mi := &file_agents_v1_agents_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3818,7 +3895,7 @@ func (x *AgentDiscoveryExclusion) String() string {
 func (*AgentDiscoveryExclusion) ProtoMessage() {}
 
 func (x *AgentDiscoveryExclusion) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[28]
+	mi := &file_agents_v1_agents_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3831,7 +3908,7 @@ func (x *AgentDiscoveryExclusion) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentDiscoveryExclusion.ProtoReflect.Descriptor instead.
 func (*AgentDiscoveryExclusion) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{28}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *AgentDiscoveryExclusion) GetReason() string {
@@ -3898,7 +3975,7 @@ type UpdateRequest struct {
 
 func (x *UpdateRequest) Reset() {
 	*x = UpdateRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[29]
+	mi := &file_agents_v1_agents_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3910,7 +3987,7 @@ func (x *UpdateRequest) String() string {
 func (*UpdateRequest) ProtoMessage() {}
 
 func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[29]
+	mi := &file_agents_v1_agents_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3923,7 +4000,7 @@ func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{29}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *UpdateRequest) GetId() string {
@@ -3984,7 +4061,7 @@ type UpdateResponse struct {
 
 func (x *UpdateResponse) Reset() {
 	*x = UpdateResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[30]
+	mi := &file_agents_v1_agents_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3996,7 +4073,7 @@ func (x *UpdateResponse) String() string {
 func (*UpdateResponse) ProtoMessage() {}
 
 func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[30]
+	mi := &file_agents_v1_agents_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4009,7 +4086,7 @@ func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{30}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *UpdateResponse) GetAgent() *Agent {
@@ -4029,7 +4106,7 @@ type DeregisterRequest struct {
 
 func (x *DeregisterRequest) Reset() {
 	*x = DeregisterRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[31]
+	mi := &file_agents_v1_agents_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4041,7 +4118,7 @@ func (x *DeregisterRequest) String() string {
 func (*DeregisterRequest) ProtoMessage() {}
 
 func (x *DeregisterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[31]
+	mi := &file_agents_v1_agents_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4054,7 +4131,7 @@ func (x *DeregisterRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeregisterRequest.ProtoReflect.Descriptor instead.
 func (*DeregisterRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{31}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *DeregisterRequest) GetId() string {
@@ -4079,7 +4156,7 @@ type DeregisterResponse struct {
 
 func (x *DeregisterResponse) Reset() {
 	*x = DeregisterResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[32]
+	mi := &file_agents_v1_agents_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4091,7 +4168,7 @@ func (x *DeregisterResponse) String() string {
 func (*DeregisterResponse) ProtoMessage() {}
 
 func (x *DeregisterResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[32]
+	mi := &file_agents_v1_agents_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4104,7 +4181,7 @@ func (x *DeregisterResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeregisterResponse.ProtoReflect.Descriptor instead.
 func (*DeregisterResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{32}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{33}
 }
 
 type PushConfigRequest struct {
@@ -4123,13 +4200,14 @@ type PushConfigRequest struct {
 	EntityTypeScopeEnums    []v1.EntityType         `protobuf:"varint,12,rep,packed,name=entity_type_scope_enums,json=entityTypeScopeEnums,proto3,enum=common.v1.EntityType" json:"entity_type_scope_enums,omitempty"`
 	NotificationChannelEnum v1.DeliveryChannel      `protobuf:"varint,13,opt,name=notification_channel_enum,json=notificationChannelEnum,proto3,enum=common.v1.DeliveryChannel" json:"notification_channel_enum,omitempty"`
 	TeammateProfile         *DigitalTeammateProfile `protobuf:"bytes,14,opt,name=teammate_profile,json=teammateProfile,proto3" json:"teammate_profile,omitempty"`
+	ConnectorRequirements   []*ConnectorRequirement `protobuf:"bytes,15,rep,name=connector_requirements,json=connectorRequirements,proto3" json:"connector_requirements,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
 
 func (x *PushConfigRequest) Reset() {
 	*x = PushConfigRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[33]
+	mi := &file_agents_v1_agents_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4141,7 +4219,7 @@ func (x *PushConfigRequest) String() string {
 func (*PushConfigRequest) ProtoMessage() {}
 
 func (x *PushConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[33]
+	mi := &file_agents_v1_agents_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4154,7 +4232,7 @@ func (x *PushConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PushConfigRequest.ProtoReflect.Descriptor instead.
 func (*PushConfigRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{33}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *PushConfigRequest) GetAgentId() string {
@@ -4255,6 +4333,13 @@ func (x *PushConfigRequest) GetTeammateProfile() *DigitalTeammateProfile {
 	return nil
 }
 
+func (x *PushConfigRequest) GetConnectorRequirements() []*ConnectorRequirement {
+	if x != nil {
+		return x.ConnectorRequirements
+	}
+	return nil
+}
+
 type PushConfigResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Config        *AgentConfig           `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
@@ -4265,7 +4350,7 @@ type PushConfigResponse struct {
 
 func (x *PushConfigResponse) Reset() {
 	*x = PushConfigResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[34]
+	mi := &file_agents_v1_agents_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4277,7 +4362,7 @@ func (x *PushConfigResponse) String() string {
 func (*PushConfigResponse) ProtoMessage() {}
 
 func (x *PushConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[34]
+	mi := &file_agents_v1_agents_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4290,7 +4375,7 @@ func (x *PushConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PushConfigResponse.ProtoReflect.Descriptor instead.
 func (*PushConfigResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{34}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *PushConfigResponse) GetConfig() *AgentConfig {
@@ -4317,7 +4402,7 @@ type GetConfigRequest struct {
 
 func (x *GetConfigRequest) Reset() {
 	*x = GetConfigRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[35]
+	mi := &file_agents_v1_agents_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4329,7 +4414,7 @@ func (x *GetConfigRequest) String() string {
 func (*GetConfigRequest) ProtoMessage() {}
 
 func (x *GetConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[35]
+	mi := &file_agents_v1_agents_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4342,7 +4427,7 @@ func (x *GetConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetConfigRequest.ProtoReflect.Descriptor instead.
 func (*GetConfigRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{35}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *GetConfigRequest) GetAgentId() string {
@@ -4368,7 +4453,7 @@ type GetConfigResponse struct {
 
 func (x *GetConfigResponse) Reset() {
 	*x = GetConfigResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[36]
+	mi := &file_agents_v1_agents_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4380,7 +4465,7 @@ func (x *GetConfigResponse) String() string {
 func (*GetConfigResponse) ProtoMessage() {}
 
 func (x *GetConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[36]
+	mi := &file_agents_v1_agents_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4393,7 +4478,7 @@ func (x *GetConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetConfigResponse.ProtoReflect.Descriptor instead.
 func (*GetConfigResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{36}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *GetConfigResponse) GetConfig() *AgentConfig {
@@ -4414,7 +4499,7 @@ type ListConfigsRequest struct {
 
 func (x *ListConfigsRequest) Reset() {
 	*x = ListConfigsRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[37]
+	mi := &file_agents_v1_agents_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4426,7 +4511,7 @@ func (x *ListConfigsRequest) String() string {
 func (*ListConfigsRequest) ProtoMessage() {}
 
 func (x *ListConfigsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[37]
+	mi := &file_agents_v1_agents_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4439,7 +4524,7 @@ func (x *ListConfigsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConfigsRequest.ProtoReflect.Descriptor instead.
 func (*ListConfigsRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{37}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *ListConfigsRequest) GetAgentId() string {
@@ -4474,7 +4559,7 @@ type ListConfigsResponse struct {
 
 func (x *ListConfigsResponse) Reset() {
 	*x = ListConfigsResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[38]
+	mi := &file_agents_v1_agents_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4486,7 +4571,7 @@ func (x *ListConfigsResponse) String() string {
 func (*ListConfigsResponse) ProtoMessage() {}
 
 func (x *ListConfigsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[38]
+	mi := &file_agents_v1_agents_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4499,7 +4584,7 @@ func (x *ListConfigsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConfigsResponse.ProtoReflect.Descriptor instead.
 func (*ListConfigsResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{38}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *ListConfigsResponse) GetConfigs() []*AgentConfig {
@@ -4535,7 +4620,7 @@ type RollbackConfigRequest struct {
 
 func (x *RollbackConfigRequest) Reset() {
 	*x = RollbackConfigRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[39]
+	mi := &file_agents_v1_agents_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4547,7 +4632,7 @@ func (x *RollbackConfigRequest) String() string {
 func (*RollbackConfigRequest) ProtoMessage() {}
 
 func (x *RollbackConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[39]
+	mi := &file_agents_v1_agents_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4560,7 +4645,7 @@ func (x *RollbackConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RollbackConfigRequest.ProtoReflect.Descriptor instead.
 func (*RollbackConfigRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{39}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *RollbackConfigRequest) GetAgentId() string {
@@ -4601,7 +4686,7 @@ type RollbackConfigResponse struct {
 
 func (x *RollbackConfigResponse) Reset() {
 	*x = RollbackConfigResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[40]
+	mi := &file_agents_v1_agents_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4613,7 +4698,7 @@ func (x *RollbackConfigResponse) String() string {
 func (*RollbackConfigResponse) ProtoMessage() {}
 
 func (x *RollbackConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[40]
+	mi := &file_agents_v1_agents_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4626,7 +4711,7 @@ func (x *RollbackConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RollbackConfigResponse.ProtoReflect.Descriptor instead.
 func (*RollbackConfigResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{40}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *RollbackConfigResponse) GetConfig() *AgentConfig {
@@ -4662,7 +4747,7 @@ type DelegateRequest struct {
 
 func (x *DelegateRequest) Reset() {
 	*x = DelegateRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[41]
+	mi := &file_agents_v1_agents_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4674,7 +4759,7 @@ func (x *DelegateRequest) String() string {
 func (*DelegateRequest) ProtoMessage() {}
 
 func (x *DelegateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[41]
+	mi := &file_agents_v1_agents_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4687,7 +4772,7 @@ func (x *DelegateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DelegateRequest.ProtoReflect.Descriptor instead.
 func (*DelegateRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{41}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *DelegateRequest) GetFromAgentId() string {
@@ -4762,7 +4847,7 @@ type DelegateResponse struct {
 
 func (x *DelegateResponse) Reset() {
 	*x = DelegateResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[42]
+	mi := &file_agents_v1_agents_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4774,7 +4859,7 @@ func (x *DelegateResponse) String() string {
 func (*DelegateResponse) ProtoMessage() {}
 
 func (x *DelegateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[42]
+	mi := &file_agents_v1_agents_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4787,7 +4872,7 @@ func (x *DelegateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DelegateResponse.ProtoReflect.Descriptor instead.
 func (*DelegateResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{42}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *DelegateResponse) GetDelegation() *DelegationRecord {
@@ -4809,7 +4894,7 @@ type ResolveDelegationRequest struct {
 
 func (x *ResolveDelegationRequest) Reset() {
 	*x = ResolveDelegationRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[43]
+	mi := &file_agents_v1_agents_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4821,7 +4906,7 @@ func (x *ResolveDelegationRequest) String() string {
 func (*ResolveDelegationRequest) ProtoMessage() {}
 
 func (x *ResolveDelegationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[43]
+	mi := &file_agents_v1_agents_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4834,7 +4919,7 @@ func (x *ResolveDelegationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResolveDelegationRequest.ProtoReflect.Descriptor instead.
 func (*ResolveDelegationRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{43}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *ResolveDelegationRequest) GetDelegationId() string {
@@ -4874,7 +4959,7 @@ type ResolveDelegationResponse struct {
 
 func (x *ResolveDelegationResponse) Reset() {
 	*x = ResolveDelegationResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[44]
+	mi := &file_agents_v1_agents_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4886,7 +4971,7 @@ func (x *ResolveDelegationResponse) String() string {
 func (*ResolveDelegationResponse) ProtoMessage() {}
 
 func (x *ResolveDelegationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[44]
+	mi := &file_agents_v1_agents_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4899,7 +4984,7 @@ func (x *ResolveDelegationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResolveDelegationResponse.ProtoReflect.Descriptor instead.
 func (*ResolveDelegationResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{44}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *ResolveDelegationResponse) GetDelegation() *DelegationRecord {
@@ -4918,7 +5003,7 @@ type RenewDelegationLeaseRequest struct {
 
 func (x *RenewDelegationLeaseRequest) Reset() {
 	*x = RenewDelegationLeaseRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[45]
+	mi := &file_agents_v1_agents_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4930,7 +5015,7 @@ func (x *RenewDelegationLeaseRequest) String() string {
 func (*RenewDelegationLeaseRequest) ProtoMessage() {}
 
 func (x *RenewDelegationLeaseRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[45]
+	mi := &file_agents_v1_agents_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4943,7 +5028,7 @@ func (x *RenewDelegationLeaseRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RenewDelegationLeaseRequest.ProtoReflect.Descriptor instead.
 func (*RenewDelegationLeaseRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{45}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *RenewDelegationLeaseRequest) GetDelegationId() string {
@@ -4962,7 +5047,7 @@ type RenewDelegationLeaseResponse struct {
 
 func (x *RenewDelegationLeaseResponse) Reset() {
 	*x = RenewDelegationLeaseResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[46]
+	mi := &file_agents_v1_agents_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4974,7 +5059,7 @@ func (x *RenewDelegationLeaseResponse) String() string {
 func (*RenewDelegationLeaseResponse) ProtoMessage() {}
 
 func (x *RenewDelegationLeaseResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[46]
+	mi := &file_agents_v1_agents_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4987,7 +5072,7 @@ func (x *RenewDelegationLeaseResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RenewDelegationLeaseResponse.ProtoReflect.Descriptor instead.
 func (*RenewDelegationLeaseResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{46}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *RenewDelegationLeaseResponse) GetDelegation() *DelegationRecord {
@@ -5018,7 +5103,7 @@ type ControlA2ADelegationTaskRequest struct {
 
 func (x *ControlA2ADelegationTaskRequest) Reset() {
 	*x = ControlA2ADelegationTaskRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[47]
+	mi := &file_agents_v1_agents_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5030,7 +5115,7 @@ func (x *ControlA2ADelegationTaskRequest) String() string {
 func (*ControlA2ADelegationTaskRequest) ProtoMessage() {}
 
 func (x *ControlA2ADelegationTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[47]
+	mi := &file_agents_v1_agents_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5043,7 +5128,7 @@ func (x *ControlA2ADelegationTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ControlA2ADelegationTaskRequest.ProtoReflect.Descriptor instead.
 func (*ControlA2ADelegationTaskRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{47}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *ControlA2ADelegationTaskRequest) GetDelegationId() string {
@@ -5138,7 +5223,7 @@ type A2ADelegationTaskControlResult struct {
 
 func (x *A2ADelegationTaskControlResult) Reset() {
 	*x = A2ADelegationTaskControlResult{}
-	mi := &file_agents_v1_agents_proto_msgTypes[48]
+	mi := &file_agents_v1_agents_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5150,7 +5235,7 @@ func (x *A2ADelegationTaskControlResult) String() string {
 func (*A2ADelegationTaskControlResult) ProtoMessage() {}
 
 func (x *A2ADelegationTaskControlResult) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[48]
+	mi := &file_agents_v1_agents_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5163,7 +5248,7 @@ func (x *A2ADelegationTaskControlResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use A2ADelegationTaskControlResult.ProtoReflect.Descriptor instead.
 func (*A2ADelegationTaskControlResult) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{48}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *A2ADelegationTaskControlResult) GetTaskId() string {
@@ -5274,7 +5359,7 @@ type ControlA2ADelegationTaskResponse struct {
 
 func (x *ControlA2ADelegationTaskResponse) Reset() {
 	*x = ControlA2ADelegationTaskResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[49]
+	mi := &file_agents_v1_agents_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5286,7 +5371,7 @@ func (x *ControlA2ADelegationTaskResponse) String() string {
 func (*ControlA2ADelegationTaskResponse) ProtoMessage() {}
 
 func (x *ControlA2ADelegationTaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[49]
+	mi := &file_agents_v1_agents_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5299,7 +5384,7 @@ func (x *ControlA2ADelegationTaskResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ControlA2ADelegationTaskResponse.ProtoReflect.Descriptor instead.
 func (*ControlA2ADelegationTaskResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{49}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *ControlA2ADelegationTaskResponse) GetDelegation() *DelegationRecord {
@@ -5325,7 +5410,7 @@ type GetDelegationRequest struct {
 
 func (x *GetDelegationRequest) Reset() {
 	*x = GetDelegationRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[50]
+	mi := &file_agents_v1_agents_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5337,7 +5422,7 @@ func (x *GetDelegationRequest) String() string {
 func (*GetDelegationRequest) ProtoMessage() {}
 
 func (x *GetDelegationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[50]
+	mi := &file_agents_v1_agents_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5350,7 +5435,7 @@ func (x *GetDelegationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDelegationRequest.ProtoReflect.Descriptor instead.
 func (*GetDelegationRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{50}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *GetDelegationRequest) GetId() string {
@@ -5369,7 +5454,7 @@ type GetDelegationResponse struct {
 
 func (x *GetDelegationResponse) Reset() {
 	*x = GetDelegationResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[51]
+	mi := &file_agents_v1_agents_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5381,7 +5466,7 @@ func (x *GetDelegationResponse) String() string {
 func (*GetDelegationResponse) ProtoMessage() {}
 
 func (x *GetDelegationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[51]
+	mi := &file_agents_v1_agents_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5394,7 +5479,7 @@ func (x *GetDelegationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDelegationResponse.ProtoReflect.Descriptor instead.
 func (*GetDelegationResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{51}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *GetDelegationResponse) GetDelegation() *DelegationRecord {
@@ -5433,7 +5518,7 @@ type ListDelegationsRequest struct {
 
 func (x *ListDelegationsRequest) Reset() {
 	*x = ListDelegationsRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[52]
+	mi := &file_agents_v1_agents_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5445,7 +5530,7 @@ func (x *ListDelegationsRequest) String() string {
 func (*ListDelegationsRequest) ProtoMessage() {}
 
 func (x *ListDelegationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[52]
+	mi := &file_agents_v1_agents_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5458,7 +5543,7 @@ func (x *ListDelegationsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListDelegationsRequest.ProtoReflect.Descriptor instead.
 func (*ListDelegationsRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{52}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *ListDelegationsRequest) GetWorkspaceId() string {
@@ -5569,7 +5654,7 @@ type ListDelegationsResponse struct {
 
 func (x *ListDelegationsResponse) Reset() {
 	*x = ListDelegationsResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[53]
+	mi := &file_agents_v1_agents_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5581,7 +5666,7 @@ func (x *ListDelegationsResponse) String() string {
 func (*ListDelegationsResponse) ProtoMessage() {}
 
 func (x *ListDelegationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[53]
+	mi := &file_agents_v1_agents_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5594,7 +5679,7 @@ func (x *ListDelegationsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListDelegationsResponse.ProtoReflect.Descriptor instead.
 func (*ListDelegationsResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{53}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *ListDelegationsResponse) GetDelegations() []*DelegationRecord {
@@ -5629,7 +5714,7 @@ type GetA2ADelegationGraphRequest struct {
 
 func (x *GetA2ADelegationGraphRequest) Reset() {
 	*x = GetA2ADelegationGraphRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[54]
+	mi := &file_agents_v1_agents_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5641,7 +5726,7 @@ func (x *GetA2ADelegationGraphRequest) String() string {
 func (*GetA2ADelegationGraphRequest) ProtoMessage() {}
 
 func (x *GetA2ADelegationGraphRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[54]
+	mi := &file_agents_v1_agents_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5654,7 +5739,7 @@ func (x *GetA2ADelegationGraphRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetA2ADelegationGraphRequest.ProtoReflect.Descriptor instead.
 func (*GetA2ADelegationGraphRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{54}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *GetA2ADelegationGraphRequest) GetWorkspaceId() string {
@@ -5704,7 +5789,7 @@ type A2ADelegationGraphNode struct {
 
 func (x *A2ADelegationGraphNode) Reset() {
 	*x = A2ADelegationGraphNode{}
-	mi := &file_agents_v1_agents_proto_msgTypes[55]
+	mi := &file_agents_v1_agents_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5716,7 +5801,7 @@ func (x *A2ADelegationGraphNode) String() string {
 func (*A2ADelegationGraphNode) ProtoMessage() {}
 
 func (x *A2ADelegationGraphNode) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[55]
+	mi := &file_agents_v1_agents_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5729,7 +5814,7 @@ func (x *A2ADelegationGraphNode) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use A2ADelegationGraphNode.ProtoReflect.Descriptor instead.
 func (*A2ADelegationGraphNode) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{55}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *A2ADelegationGraphNode) GetDelegation() *DelegationRecord {
@@ -5770,7 +5855,7 @@ type A2ADelegationGraphEdge struct {
 
 func (x *A2ADelegationGraphEdge) Reset() {
 	*x = A2ADelegationGraphEdge{}
-	mi := &file_agents_v1_agents_proto_msgTypes[56]
+	mi := &file_agents_v1_agents_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5782,7 +5867,7 @@ func (x *A2ADelegationGraphEdge) String() string {
 func (*A2ADelegationGraphEdge) ProtoMessage() {}
 
 func (x *A2ADelegationGraphEdge) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[56]
+	mi := &file_agents_v1_agents_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5795,7 +5880,7 @@ func (x *A2ADelegationGraphEdge) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use A2ADelegationGraphEdge.ProtoReflect.Descriptor instead.
 func (*A2ADelegationGraphEdge) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{56}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *A2ADelegationGraphEdge) GetParentDelegationId() string {
@@ -5826,7 +5911,7 @@ type GetA2ADelegationGraphResponse struct {
 
 func (x *GetA2ADelegationGraphResponse) Reset() {
 	*x = GetA2ADelegationGraphResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[57]
+	mi := &file_agents_v1_agents_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5838,7 +5923,7 @@ func (x *GetA2ADelegationGraphResponse) String() string {
 func (*GetA2ADelegationGraphResponse) ProtoMessage() {}
 
 func (x *GetA2ADelegationGraphResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[57]
+	mi := &file_agents_v1_agents_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5851,7 +5936,7 @@ func (x *GetA2ADelegationGraphResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetA2ADelegationGraphResponse.ProtoReflect.Descriptor instead.
 func (*GetA2ADelegationGraphResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{57}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *GetA2ADelegationGraphResponse) GetRootDelegationId() string {
@@ -5912,7 +5997,7 @@ type HeartbeatRequest struct {
 
 func (x *HeartbeatRequest) Reset() {
 	*x = HeartbeatRequest{}
-	mi := &file_agents_v1_agents_proto_msgTypes[58]
+	mi := &file_agents_v1_agents_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5924,7 +6009,7 @@ func (x *HeartbeatRequest) String() string {
 func (*HeartbeatRequest) ProtoMessage() {}
 
 func (x *HeartbeatRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[58]
+	mi := &file_agents_v1_agents_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5937,7 +6022,7 @@ func (x *HeartbeatRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HeartbeatRequest.ProtoReflect.Descriptor instead.
 func (*HeartbeatRequest) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{58}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *HeartbeatRequest) GetAgentId() string {
@@ -5991,7 +6076,7 @@ type HeartbeatResponse struct {
 
 func (x *HeartbeatResponse) Reset() {
 	*x = HeartbeatResponse{}
-	mi := &file_agents_v1_agents_proto_msgTypes[59]
+	mi := &file_agents_v1_agents_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6003,7 +6088,7 @@ func (x *HeartbeatResponse) String() string {
 func (*HeartbeatResponse) ProtoMessage() {}
 
 func (x *HeartbeatResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agents_v1_agents_proto_msgTypes[59]
+	mi := &file_agents_v1_agents_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6016,7 +6101,7 @@ func (x *HeartbeatResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HeartbeatResponse.ProtoReflect.Descriptor instead.
 func (*HeartbeatResponse) Descriptor() ([]byte, []int) {
-	return file_agents_v1_agents_proto_rawDescGZIP(), []int{59}
+	return file_agents_v1_agents_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *HeartbeatResponse) GetNextHeartbeatBy() *timestamppb.Timestamp {
@@ -6098,7 +6183,7 @@ const file_agents_v1_agents_proto_rawDesc = "" +
 	"attributes\x1a=\n" +
 	"\x0fAttributesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x85\b\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xdd\b\n" +
 	"\vAgentConfig\x12\x18\n" +
 	"\aversion\x18\x01 \x01(\x05R\aversion\x12\x19\n" +
 	"\bagent_id\x18\x02 \x01(\tR\aagentId\x12\x1b\n" +
@@ -6119,13 +6204,20 @@ const file_agents_v1_agents_proto_rawDesc = "" +
 	"created_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12L\n" +
 	"\x17entity_type_scope_enums\x18\x0e \x03(\x0e2\x15.common.v1.EntityTypeR\x14entityTypeScopeEnums\x12V\n" +
 	"\x19notification_channel_enum\x18\x0f \x01(\x0e2\x1a.common.v1.DeliveryChannelR\x17notificationChannelEnum\x12L\n" +
-	"\x10teammate_profile\x18\x10 \x01(\v2!.agents.v1.DigitalTeammateProfileR\x0fteammateProfile\x1aA\n" +
+	"\x10teammate_profile\x18\x10 \x01(\v2!.agents.v1.DigitalTeammateProfileR\x0fteammateProfile\x12V\n" +
+	"\x16connector_requirements\x18\x11 \x03(\v2\x1f.agents.v1.ConnectorRequirementR\x15connectorRequirements\x1aA\n" +
 	"\x13PromptBindingsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\x1aC\n" +
 	"\x15ModelPreferencesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x94\v\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xc6\x01\n" +
+	"\x14ConnectorRequirement\x12(\n" +
+	"\vprovider_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\n" +
+	"providerId\x123\n" +
+	"\x15required_capabilities\x18\x02 \x03(\tR\x14requiredCapabilities\x123\n" +
+	"\x15optional_capabilities\x18\x03 \x03(\tR\x14optionalCapabilities\x12\x1a\n" +
+	"\brequired\x18\x04 \x01(\bR\brequired\"\x94\v\n" +
 	"\x16DigitalTeammateProfile\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
 	"\aversion\x18\x02 \x01(\x05R\aversion\x12!\n" +
@@ -6389,7 +6481,7 @@ const file_agents_v1_agents_proto_rawDesc = "" +
 	"\x11DeregisterRequest\x12\x17\n" +
 	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\x12\x16\n" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\"\x14\n" +
-	"\x12DeregisterResponse\"\xcb\a\n" +
+	"\x12DeregisterResponse\"\xa3\b\n" +
 	"\x11PushConfigRequest\x12\"\n" +
 	"\bagent_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\aagentId\x12\x1b\n" +
 	"\tskill_ids\x18\x02 \x03(\tR\bskillIds\x12Y\n" +
@@ -6407,7 +6499,8 @@ const file_agents_v1_agents_proto_rawDesc = "" +
 	"\x06author\x18\v \x01(\tR\x06author\x12L\n" +
 	"\x17entity_type_scope_enums\x18\f \x03(\x0e2\x15.common.v1.EntityTypeR\x14entityTypeScopeEnums\x12V\n" +
 	"\x19notification_channel_enum\x18\r \x01(\x0e2\x1a.common.v1.DeliveryChannelR\x17notificationChannelEnum\x12L\n" +
-	"\x10teammate_profile\x18\x0e \x01(\v2!.agents.v1.DigitalTeammateProfileR\x0fteammateProfile\x1aA\n" +
+	"\x10teammate_profile\x18\x0e \x01(\v2!.agents.v1.DigitalTeammateProfileR\x0fteammateProfile\x12V\n" +
+	"\x16connector_requirements\x18\x0f \x03(\v2\x1f.agents.v1.ConnectorRequirementR\x15connectorRequirements\x1aA\n" +
 	"\x13PromptBindingsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\x1aC\n" +
@@ -6716,7 +6809,7 @@ func file_agents_v1_agents_proto_rawDescGZIP() []byte {
 }
 
 var file_agents_v1_agents_proto_enumTypes = make([]protoimpl.EnumInfo, 12)
-var file_agents_v1_agents_proto_msgTypes = make([]protoimpl.MessageInfo, 68)
+var file_agents_v1_agents_proto_msgTypes = make([]protoimpl.MessageInfo, 69)
 var file_agents_v1_agents_proto_goTypes = []any{
 	(AgentStatus)(0),                         // 0: agents.v1.AgentStatus
 	(DelegationStatus)(0),                    // 1: agents.v1.DelegationStatus
@@ -6735,222 +6828,225 @@ var file_agents_v1_agents_proto_goTypes = []any{
 	(*AgentA2APeerProjection)(nil),           // 14: agents.v1.AgentA2APeerProjection
 	(*AgentA2ASkill)(nil),                    // 15: agents.v1.AgentA2ASkill
 	(*AgentConfig)(nil),                      // 16: agents.v1.AgentConfig
-	(*DigitalTeammateProfile)(nil),           // 17: agents.v1.DigitalTeammateProfile
-	(*TeammateChannelManifest)(nil),          // 18: agents.v1.TeammateChannelManifest
-	(*TeammateResponsibility)(nil),           // 19: agents.v1.TeammateResponsibility
-	(*CommitmentPolicy)(nil),                 // 20: agents.v1.CommitmentPolicy
-	(*CommitmentTemplate)(nil),               // 21: agents.v1.CommitmentTemplate
-	(*InitiativePolicy)(nil),                 // 22: agents.v1.InitiativePolicy
-	(*InitiativeTrigger)(nil),                // 23: agents.v1.InitiativeTrigger
-	(*AutonomyPolicy)(nil),                   // 24: agents.v1.AutonomyPolicy
-	(*AutonomyRule)(nil),                     // 25: agents.v1.AutonomyRule
-	(*MemoryPolicy)(nil),                     // 26: agents.v1.MemoryPolicy
-	(*PresencePolicy)(nil),                   // 27: agents.v1.PresencePolicy
-	(*OutputPolicy)(nil),                     // 28: agents.v1.OutputPolicy
-	(*EvalPolicy)(nil),                       // 29: agents.v1.EvalPolicy
-	(*EvalBinding)(nil),                      // 30: agents.v1.EvalBinding
-	(*EscalationPolicy)(nil),                 // 31: agents.v1.EscalationPolicy
-	(*DelegationRecord)(nil),                 // 32: agents.v1.DelegationRecord
-	(*RegisterRequest)(nil),                  // 33: agents.v1.RegisterRequest
-	(*RegisterResponse)(nil),                 // 34: agents.v1.RegisterResponse
-	(*GetRequest)(nil),                       // 35: agents.v1.GetRequest
-	(*GetResponse)(nil),                      // 36: agents.v1.GetResponse
-	(*ListRequest)(nil),                      // 37: agents.v1.ListRequest
-	(*ListResponse)(nil),                     // 38: agents.v1.ListResponse
-	(*AgentDiscoveryEvidence)(nil),           // 39: agents.v1.AgentDiscoveryEvidence
-	(*AgentDiscoveryExclusion)(nil),          // 40: agents.v1.AgentDiscoveryExclusion
-	(*UpdateRequest)(nil),                    // 41: agents.v1.UpdateRequest
-	(*UpdateResponse)(nil),                   // 42: agents.v1.UpdateResponse
-	(*DeregisterRequest)(nil),                // 43: agents.v1.DeregisterRequest
-	(*DeregisterResponse)(nil),               // 44: agents.v1.DeregisterResponse
-	(*PushConfigRequest)(nil),                // 45: agents.v1.PushConfigRequest
-	(*PushConfigResponse)(nil),               // 46: agents.v1.PushConfigResponse
-	(*GetConfigRequest)(nil),                 // 47: agents.v1.GetConfigRequest
-	(*GetConfigResponse)(nil),                // 48: agents.v1.GetConfigResponse
-	(*ListConfigsRequest)(nil),               // 49: agents.v1.ListConfigsRequest
-	(*ListConfigsResponse)(nil),              // 50: agents.v1.ListConfigsResponse
-	(*RollbackConfigRequest)(nil),            // 51: agents.v1.RollbackConfigRequest
-	(*RollbackConfigResponse)(nil),           // 52: agents.v1.RollbackConfigResponse
-	(*DelegateRequest)(nil),                  // 53: agents.v1.DelegateRequest
-	(*DelegateResponse)(nil),                 // 54: agents.v1.DelegateResponse
-	(*ResolveDelegationRequest)(nil),         // 55: agents.v1.ResolveDelegationRequest
-	(*ResolveDelegationResponse)(nil),        // 56: agents.v1.ResolveDelegationResponse
-	(*RenewDelegationLeaseRequest)(nil),      // 57: agents.v1.RenewDelegationLeaseRequest
-	(*RenewDelegationLeaseResponse)(nil),     // 58: agents.v1.RenewDelegationLeaseResponse
-	(*ControlA2ADelegationTaskRequest)(nil),  // 59: agents.v1.ControlA2ADelegationTaskRequest
-	(*A2ADelegationTaskControlResult)(nil),   // 60: agents.v1.A2ADelegationTaskControlResult
-	(*ControlA2ADelegationTaskResponse)(nil), // 61: agents.v1.ControlA2ADelegationTaskResponse
-	(*GetDelegationRequest)(nil),             // 62: agents.v1.GetDelegationRequest
-	(*GetDelegationResponse)(nil),            // 63: agents.v1.GetDelegationResponse
-	(*ListDelegationsRequest)(nil),           // 64: agents.v1.ListDelegationsRequest
-	(*ListDelegationsResponse)(nil),          // 65: agents.v1.ListDelegationsResponse
-	(*GetA2ADelegationGraphRequest)(nil),     // 66: agents.v1.GetA2ADelegationGraphRequest
-	(*A2ADelegationGraphNode)(nil),           // 67: agents.v1.A2ADelegationGraphNode
-	(*A2ADelegationGraphEdge)(nil),           // 68: agents.v1.A2ADelegationGraphEdge
-	(*GetA2ADelegationGraphResponse)(nil),    // 69: agents.v1.GetA2ADelegationGraphResponse
-	(*HeartbeatRequest)(nil),                 // 70: agents.v1.HeartbeatRequest
-	(*HeartbeatResponse)(nil),                // 71: agents.v1.HeartbeatResponse
-	nil,                                      // 72: agents.v1.AgentA2APeerProjection.AttributesEntry
-	nil,                                      // 73: agents.v1.AgentA2ASkill.AttributesEntry
-	nil,                                      // 74: agents.v1.AgentConfig.PromptBindingsEntry
-	nil,                                      // 75: agents.v1.AgentConfig.ModelPreferencesEntry
-	nil,                                      // 76: agents.v1.DigitalTeammateProfile.LabelsEntry
-	nil,                                      // 77: agents.v1.TeammateChannelManifest.AttributesEntry
-	nil,                                      // 78: agents.v1.PushConfigRequest.PromptBindingsEntry
-	nil,                                      // 79: agents.v1.PushConfigRequest.ModelPreferencesEntry
-	(*timestamppb.Timestamp)(nil),            // 80: google.protobuf.Timestamp
-	(v1.Surface)(0),                          // 81: common.v1.Surface
-	(*structpb.Struct)(nil),                  // 82: google.protobuf.Struct
-	(v1.EntityType)(0),                       // 83: common.v1.EntityType
-	(v1.DeliveryChannel)(0),                  // 84: common.v1.DeliveryChannel
-	(v1.RiskLevel)(0),                        // 85: common.v1.RiskLevel
+	(*ConnectorRequirement)(nil),             // 17: agents.v1.ConnectorRequirement
+	(*DigitalTeammateProfile)(nil),           // 18: agents.v1.DigitalTeammateProfile
+	(*TeammateChannelManifest)(nil),          // 19: agents.v1.TeammateChannelManifest
+	(*TeammateResponsibility)(nil),           // 20: agents.v1.TeammateResponsibility
+	(*CommitmentPolicy)(nil),                 // 21: agents.v1.CommitmentPolicy
+	(*CommitmentTemplate)(nil),               // 22: agents.v1.CommitmentTemplate
+	(*InitiativePolicy)(nil),                 // 23: agents.v1.InitiativePolicy
+	(*InitiativeTrigger)(nil),                // 24: agents.v1.InitiativeTrigger
+	(*AutonomyPolicy)(nil),                   // 25: agents.v1.AutonomyPolicy
+	(*AutonomyRule)(nil),                     // 26: agents.v1.AutonomyRule
+	(*MemoryPolicy)(nil),                     // 27: agents.v1.MemoryPolicy
+	(*PresencePolicy)(nil),                   // 28: agents.v1.PresencePolicy
+	(*OutputPolicy)(nil),                     // 29: agents.v1.OutputPolicy
+	(*EvalPolicy)(nil),                       // 30: agents.v1.EvalPolicy
+	(*EvalBinding)(nil),                      // 31: agents.v1.EvalBinding
+	(*EscalationPolicy)(nil),                 // 32: agents.v1.EscalationPolicy
+	(*DelegationRecord)(nil),                 // 33: agents.v1.DelegationRecord
+	(*RegisterRequest)(nil),                  // 34: agents.v1.RegisterRequest
+	(*RegisterResponse)(nil),                 // 35: agents.v1.RegisterResponse
+	(*GetRequest)(nil),                       // 36: agents.v1.GetRequest
+	(*GetResponse)(nil),                      // 37: agents.v1.GetResponse
+	(*ListRequest)(nil),                      // 38: agents.v1.ListRequest
+	(*ListResponse)(nil),                     // 39: agents.v1.ListResponse
+	(*AgentDiscoveryEvidence)(nil),           // 40: agents.v1.AgentDiscoveryEvidence
+	(*AgentDiscoveryExclusion)(nil),          // 41: agents.v1.AgentDiscoveryExclusion
+	(*UpdateRequest)(nil),                    // 42: agents.v1.UpdateRequest
+	(*UpdateResponse)(nil),                   // 43: agents.v1.UpdateResponse
+	(*DeregisterRequest)(nil),                // 44: agents.v1.DeregisterRequest
+	(*DeregisterResponse)(nil),               // 45: agents.v1.DeregisterResponse
+	(*PushConfigRequest)(nil),                // 46: agents.v1.PushConfigRequest
+	(*PushConfigResponse)(nil),               // 47: agents.v1.PushConfigResponse
+	(*GetConfigRequest)(nil),                 // 48: agents.v1.GetConfigRequest
+	(*GetConfigResponse)(nil),                // 49: agents.v1.GetConfigResponse
+	(*ListConfigsRequest)(nil),               // 50: agents.v1.ListConfigsRequest
+	(*ListConfigsResponse)(nil),              // 51: agents.v1.ListConfigsResponse
+	(*RollbackConfigRequest)(nil),            // 52: agents.v1.RollbackConfigRequest
+	(*RollbackConfigResponse)(nil),           // 53: agents.v1.RollbackConfigResponse
+	(*DelegateRequest)(nil),                  // 54: agents.v1.DelegateRequest
+	(*DelegateResponse)(nil),                 // 55: agents.v1.DelegateResponse
+	(*ResolveDelegationRequest)(nil),         // 56: agents.v1.ResolveDelegationRequest
+	(*ResolveDelegationResponse)(nil),        // 57: agents.v1.ResolveDelegationResponse
+	(*RenewDelegationLeaseRequest)(nil),      // 58: agents.v1.RenewDelegationLeaseRequest
+	(*RenewDelegationLeaseResponse)(nil),     // 59: agents.v1.RenewDelegationLeaseResponse
+	(*ControlA2ADelegationTaskRequest)(nil),  // 60: agents.v1.ControlA2ADelegationTaskRequest
+	(*A2ADelegationTaskControlResult)(nil),   // 61: agents.v1.A2ADelegationTaskControlResult
+	(*ControlA2ADelegationTaskResponse)(nil), // 62: agents.v1.ControlA2ADelegationTaskResponse
+	(*GetDelegationRequest)(nil),             // 63: agents.v1.GetDelegationRequest
+	(*GetDelegationResponse)(nil),            // 64: agents.v1.GetDelegationResponse
+	(*ListDelegationsRequest)(nil),           // 65: agents.v1.ListDelegationsRequest
+	(*ListDelegationsResponse)(nil),          // 66: agents.v1.ListDelegationsResponse
+	(*GetA2ADelegationGraphRequest)(nil),     // 67: agents.v1.GetA2ADelegationGraphRequest
+	(*A2ADelegationGraphNode)(nil),           // 68: agents.v1.A2ADelegationGraphNode
+	(*A2ADelegationGraphEdge)(nil),           // 69: agents.v1.A2ADelegationGraphEdge
+	(*GetA2ADelegationGraphResponse)(nil),    // 70: agents.v1.GetA2ADelegationGraphResponse
+	(*HeartbeatRequest)(nil),                 // 71: agents.v1.HeartbeatRequest
+	(*HeartbeatResponse)(nil),                // 72: agents.v1.HeartbeatResponse
+	nil,                                      // 73: agents.v1.AgentA2APeerProjection.AttributesEntry
+	nil,                                      // 74: agents.v1.AgentA2ASkill.AttributesEntry
+	nil,                                      // 75: agents.v1.AgentConfig.PromptBindingsEntry
+	nil,                                      // 76: agents.v1.AgentConfig.ModelPreferencesEntry
+	nil,                                      // 77: agents.v1.DigitalTeammateProfile.LabelsEntry
+	nil,                                      // 78: agents.v1.TeammateChannelManifest.AttributesEntry
+	nil,                                      // 79: agents.v1.PushConfigRequest.PromptBindingsEntry
+	nil,                                      // 80: agents.v1.PushConfigRequest.ModelPreferencesEntry
+	(*timestamppb.Timestamp)(nil),            // 81: google.protobuf.Timestamp
+	(v1.Surface)(0),                          // 82: common.v1.Surface
+	(*structpb.Struct)(nil),                  // 83: google.protobuf.Struct
+	(v1.EntityType)(0),                       // 84: common.v1.EntityType
+	(v1.DeliveryChannel)(0),                  // 85: common.v1.DeliveryChannel
+	(v1.RiskLevel)(0),                        // 86: common.v1.RiskLevel
 }
 var file_agents_v1_agents_proto_depIdxs = []int32{
 	0,   // 0: agents.v1.Agent.status:type_name -> agents.v1.AgentStatus
-	80,  // 1: agents.v1.Agent.last_heartbeat_at:type_name -> google.protobuf.Timestamp
-	80,  // 2: agents.v1.Agent.created_at:type_name -> google.protobuf.Timestamp
-	80,  // 3: agents.v1.Agent.updated_at:type_name -> google.protobuf.Timestamp
-	81,  // 4: agents.v1.Agent.surface_types:type_name -> common.v1.Surface
+	81,  // 1: agents.v1.Agent.last_heartbeat_at:type_name -> google.protobuf.Timestamp
+	81,  // 2: agents.v1.Agent.created_at:type_name -> google.protobuf.Timestamp
+	81,  // 3: agents.v1.Agent.updated_at:type_name -> google.protobuf.Timestamp
+	82,  // 4: agents.v1.Agent.surface_types:type_name -> common.v1.Surface
 	14,  // 5: agents.v1.Agent.a2a:type_name -> agents.v1.AgentA2APeerProjection
 	13,  // 6: agents.v1.Agent.capacity:type_name -> agents.v1.AgentCapacity
 	15,  // 7: agents.v1.AgentA2APeerProjection.skills:type_name -> agents.v1.AgentA2ASkill
-	80,  // 8: agents.v1.AgentA2APeerProjection.agent_card_observed_at:type_name -> google.protobuf.Timestamp
-	72,  // 9: agents.v1.AgentA2APeerProjection.attributes:type_name -> agents.v1.AgentA2APeerProjection.AttributesEntry
-	73,  // 10: agents.v1.AgentA2ASkill.attributes:type_name -> agents.v1.AgentA2ASkill.AttributesEntry
-	74,  // 11: agents.v1.AgentConfig.prompt_bindings:type_name -> agents.v1.AgentConfig.PromptBindingsEntry
-	75,  // 12: agents.v1.AgentConfig.model_preferences:type_name -> agents.v1.AgentConfig.ModelPreferencesEntry
-	82,  // 13: agents.v1.AgentConfig.parameters:type_name -> google.protobuf.Struct
-	80,  // 14: agents.v1.AgentConfig.created_at:type_name -> google.protobuf.Timestamp
-	83,  // 15: agents.v1.AgentConfig.entity_type_scope_enums:type_name -> common.v1.EntityType
-	84,  // 16: agents.v1.AgentConfig.notification_channel_enum:type_name -> common.v1.DeliveryChannel
-	17,  // 17: agents.v1.AgentConfig.teammate_profile:type_name -> agents.v1.DigitalTeammateProfile
-	81,  // 18: agents.v1.DigitalTeammateProfile.surface_types:type_name -> common.v1.Surface
-	3,   // 19: agents.v1.DigitalTeammateProfile.lifecycle:type_name -> agents.v1.TeammateLifecycle
-	19,  // 20: agents.v1.DigitalTeammateProfile.responsibilities:type_name -> agents.v1.TeammateResponsibility
-	20,  // 21: agents.v1.DigitalTeammateProfile.commitment_policy:type_name -> agents.v1.CommitmentPolicy
-	22,  // 22: agents.v1.DigitalTeammateProfile.initiative_policy:type_name -> agents.v1.InitiativePolicy
-	24,  // 23: agents.v1.DigitalTeammateProfile.autonomy_policy:type_name -> agents.v1.AutonomyPolicy
-	26,  // 24: agents.v1.DigitalTeammateProfile.memory_policy:type_name -> agents.v1.MemoryPolicy
-	27,  // 25: agents.v1.DigitalTeammateProfile.presence_policy:type_name -> agents.v1.PresencePolicy
-	28,  // 26: agents.v1.DigitalTeammateProfile.output_policy:type_name -> agents.v1.OutputPolicy
-	29,  // 27: agents.v1.DigitalTeammateProfile.eval_policy:type_name -> agents.v1.EvalPolicy
-	31,  // 28: agents.v1.DigitalTeammateProfile.escalation_policy:type_name -> agents.v1.EscalationPolicy
-	76,  // 29: agents.v1.DigitalTeammateProfile.labels:type_name -> agents.v1.DigitalTeammateProfile.LabelsEntry
-	82,  // 30: agents.v1.DigitalTeammateProfile.parameters:type_name -> google.protobuf.Struct
-	80,  // 31: agents.v1.DigitalTeammateProfile.created_at:type_name -> google.protobuf.Timestamp
-	80,  // 32: agents.v1.DigitalTeammateProfile.updated_at:type_name -> google.protobuf.Timestamp
-	18,  // 33: agents.v1.DigitalTeammateProfile.channel_manifests:type_name -> agents.v1.TeammateChannelManifest
-	8,   // 34: agents.v1.TeammateChannelManifest.kind:type_name -> agents.v1.TeammateChannelKind
-	84,  // 35: agents.v1.TeammateChannelManifest.delivery_channel:type_name -> common.v1.DeliveryChannel
-	81,  // 36: agents.v1.TeammateChannelManifest.platform_surface:type_name -> common.v1.Surface
-	9,   // 37: agents.v1.TeammateChannelManifest.capabilities:type_name -> agents.v1.TeammateChannelCapability
-	10,  // 38: agents.v1.TeammateChannelManifest.inbound_events:type_name -> agents.v1.TeammateChannelEventKind
-	11,  // 39: agents.v1.TeammateChannelManifest.runtime_events:type_name -> agents.v1.TeammateRuntimeRenderEventKind
-	77,  // 40: agents.v1.TeammateChannelManifest.attributes:type_name -> agents.v1.TeammateChannelManifest.AttributesEntry
-	83,  // 41: agents.v1.TeammateResponsibility.owned_entity_types:type_name -> common.v1.EntityType
-	4,   // 42: agents.v1.CommitmentPolicy.allowed_kinds:type_name -> agents.v1.CommitmentKind
-	21,  // 43: agents.v1.CommitmentPolicy.templates:type_name -> agents.v1.CommitmentTemplate
-	4,   // 44: agents.v1.CommitmentTemplate.kind:type_name -> agents.v1.CommitmentKind
-	23,  // 45: agents.v1.InitiativePolicy.triggers:type_name -> agents.v1.InitiativeTrigger
-	5,   // 46: agents.v1.InitiativeTrigger.kind:type_name -> agents.v1.InitiativeTriggerKind
-	25,  // 47: agents.v1.AutonomyPolicy.rules:type_name -> agents.v1.AutonomyRule
-	6,   // 48: agents.v1.AutonomyPolicy.default_authority:type_name -> agents.v1.AutonomyAuthority
-	85,  // 49: agents.v1.AutonomyPolicy.max_risk_without_approval:type_name -> common.v1.RiskLevel
-	85,  // 50: agents.v1.AutonomyRule.max_risk:type_name -> common.v1.RiskLevel
-	6,   // 51: agents.v1.AutonomyRule.authority:type_name -> agents.v1.AutonomyAuthority
-	84,  // 52: agents.v1.PresencePolicy.primary_channel:type_name -> common.v1.DeliveryChannel
-	7,   // 53: agents.v1.PresencePolicy.visible_events:type_name -> agents.v1.PresenceEvent
-	30,  // 54: agents.v1.EvalPolicy.bindings:type_name -> agents.v1.EvalBinding
-	84,  // 55: agents.v1.EscalationPolicy.fallback_channel:type_name -> common.v1.DeliveryChannel
-	1,   // 56: agents.v1.DelegationRecord.status:type_name -> agents.v1.DelegationStatus
-	80,  // 57: agents.v1.DelegationRecord.created_at:type_name -> google.protobuf.Timestamp
-	80,  // 58: agents.v1.DelegationRecord.resolved_at:type_name -> google.protobuf.Timestamp
-	80,  // 59: agents.v1.DelegationRecord.a2a_dispatched_at:type_name -> google.protobuf.Timestamp
-	80,  // 60: agents.v1.DelegationRecord.a2a_lease_renewed_at:type_name -> google.protobuf.Timestamp
-	82,  // 61: agents.v1.DelegationRecord.a2a_resume_wait_contracts:type_name -> google.protobuf.Struct
-	81,  // 62: agents.v1.RegisterRequest.surface_types:type_name -> common.v1.Surface
-	14,  // 63: agents.v1.RegisterRequest.a2a:type_name -> agents.v1.AgentA2APeerProjection
-	12,  // 64: agents.v1.RegisterResponse.agent:type_name -> agents.v1.Agent
-	12,  // 65: agents.v1.GetResponse.agent:type_name -> agents.v1.Agent
-	0,   // 66: agents.v1.ListRequest.status:type_name -> agents.v1.AgentStatus
-	81,  // 67: agents.v1.ListRequest.surface_type:type_name -> common.v1.Surface
-	12,  // 68: agents.v1.ListResponse.agents:type_name -> agents.v1.Agent
-	39,  // 69: agents.v1.ListResponse.discovery_evidence:type_name -> agents.v1.AgentDiscoveryEvidence
-	40,  // 70: agents.v1.AgentDiscoveryEvidence.exclusions:type_name -> agents.v1.AgentDiscoveryExclusion
-	81,  // 71: agents.v1.UpdateRequest.surface_types:type_name -> common.v1.Surface
-	14,  // 72: agents.v1.UpdateRequest.a2a:type_name -> agents.v1.AgentA2APeerProjection
-	12,  // 73: agents.v1.UpdateResponse.agent:type_name -> agents.v1.Agent
-	78,  // 74: agents.v1.PushConfigRequest.prompt_bindings:type_name -> agents.v1.PushConfigRequest.PromptBindingsEntry
-	79,  // 75: agents.v1.PushConfigRequest.model_preferences:type_name -> agents.v1.PushConfigRequest.ModelPreferencesEntry
-	82,  // 76: agents.v1.PushConfigRequest.parameters:type_name -> google.protobuf.Struct
-	83,  // 77: agents.v1.PushConfigRequest.entity_type_scope_enums:type_name -> common.v1.EntityType
-	84,  // 78: agents.v1.PushConfigRequest.notification_channel_enum:type_name -> common.v1.DeliveryChannel
-	17,  // 79: agents.v1.PushConfigRequest.teammate_profile:type_name -> agents.v1.DigitalTeammateProfile
-	16,  // 80: agents.v1.PushConfigResponse.config:type_name -> agents.v1.AgentConfig
-	12,  // 81: agents.v1.PushConfigResponse.agent:type_name -> agents.v1.Agent
-	16,  // 82: agents.v1.GetConfigResponse.config:type_name -> agents.v1.AgentConfig
-	16,  // 83: agents.v1.ListConfigsResponse.configs:type_name -> agents.v1.AgentConfig
-	16,  // 84: agents.v1.RollbackConfigResponse.config:type_name -> agents.v1.AgentConfig
-	12,  // 85: agents.v1.RollbackConfigResponse.agent:type_name -> agents.v1.Agent
-	32,  // 86: agents.v1.DelegateResponse.delegation:type_name -> agents.v1.DelegationRecord
-	1,   // 87: agents.v1.ResolveDelegationRequest.status:type_name -> agents.v1.DelegationStatus
-	32,  // 88: agents.v1.ResolveDelegationResponse.delegation:type_name -> agents.v1.DelegationRecord
-	32,  // 89: agents.v1.RenewDelegationLeaseResponse.delegation:type_name -> agents.v1.DelegationRecord
-	2,   // 90: agents.v1.ControlA2ADelegationTaskRequest.mode:type_name -> agents.v1.A2ADelegationTaskControlMode
-	82,  // 91: agents.v1.ControlA2ADelegationTaskRequest.payload:type_name -> google.protobuf.Struct
-	82,  // 92: agents.v1.ControlA2ADelegationTaskRequest.metadata:type_name -> google.protobuf.Struct
-	80,  // 93: agents.v1.A2ADelegationTaskControlResult.observed_at:type_name -> google.protobuf.Timestamp
-	32,  // 94: agents.v1.ControlA2ADelegationTaskResponse.delegation:type_name -> agents.v1.DelegationRecord
-	60,  // 95: agents.v1.ControlA2ADelegationTaskResponse.remote_task:type_name -> agents.v1.A2ADelegationTaskControlResult
-	32,  // 96: agents.v1.GetDelegationResponse.delegation:type_name -> agents.v1.DelegationRecord
-	1,   // 97: agents.v1.ListDelegationsRequest.status:type_name -> agents.v1.DelegationStatus
-	32,  // 98: agents.v1.ListDelegationsResponse.delegations:type_name -> agents.v1.DelegationRecord
-	32,  // 99: agents.v1.A2ADelegationGraphNode.delegation:type_name -> agents.v1.DelegationRecord
-	67,  // 100: agents.v1.GetA2ADelegationGraphResponse.nodes:type_name -> agents.v1.A2ADelegationGraphNode
-	68,  // 101: agents.v1.GetA2ADelegationGraphResponse.edges:type_name -> agents.v1.A2ADelegationGraphEdge
-	0,   // 102: agents.v1.HeartbeatRequest.status:type_name -> agents.v1.AgentStatus
-	81,  // 103: agents.v1.HeartbeatRequest.surface_type:type_name -> common.v1.Surface
-	14,  // 104: agents.v1.HeartbeatRequest.a2a:type_name -> agents.v1.AgentA2APeerProjection
-	80,  // 105: agents.v1.HeartbeatResponse.next_heartbeat_by:type_name -> google.protobuf.Timestamp
-	33,  // 106: agents.v1.AgentService.Register:input_type -> agents.v1.RegisterRequest
-	35,  // 107: agents.v1.AgentService.Get:input_type -> agents.v1.GetRequest
-	37,  // 108: agents.v1.AgentService.List:input_type -> agents.v1.ListRequest
-	41,  // 109: agents.v1.AgentService.Update:input_type -> agents.v1.UpdateRequest
-	43,  // 110: agents.v1.AgentService.Deregister:input_type -> agents.v1.DeregisterRequest
-	45,  // 111: agents.v1.AgentService.PushConfig:input_type -> agents.v1.PushConfigRequest
-	47,  // 112: agents.v1.AgentService.GetConfig:input_type -> agents.v1.GetConfigRequest
-	49,  // 113: agents.v1.AgentService.ListConfigs:input_type -> agents.v1.ListConfigsRequest
-	51,  // 114: agents.v1.AgentService.RollbackConfig:input_type -> agents.v1.RollbackConfigRequest
-	53,  // 115: agents.v1.AgentService.Delegate:input_type -> agents.v1.DelegateRequest
-	55,  // 116: agents.v1.AgentService.ResolveDelegation:input_type -> agents.v1.ResolveDelegationRequest
-	57,  // 117: agents.v1.AgentService.RenewDelegationLease:input_type -> agents.v1.RenewDelegationLeaseRequest
-	59,  // 118: agents.v1.AgentService.ControlA2ADelegationTask:input_type -> agents.v1.ControlA2ADelegationTaskRequest
-	62,  // 119: agents.v1.AgentService.GetDelegation:input_type -> agents.v1.GetDelegationRequest
-	64,  // 120: agents.v1.AgentService.ListDelegations:input_type -> agents.v1.ListDelegationsRequest
-	66,  // 121: agents.v1.AgentService.GetA2ADelegationGraph:input_type -> agents.v1.GetA2ADelegationGraphRequest
-	70,  // 122: agents.v1.AgentService.Heartbeat:input_type -> agents.v1.HeartbeatRequest
-	34,  // 123: agents.v1.AgentService.Register:output_type -> agents.v1.RegisterResponse
-	36,  // 124: agents.v1.AgentService.Get:output_type -> agents.v1.GetResponse
-	38,  // 125: agents.v1.AgentService.List:output_type -> agents.v1.ListResponse
-	42,  // 126: agents.v1.AgentService.Update:output_type -> agents.v1.UpdateResponse
-	44,  // 127: agents.v1.AgentService.Deregister:output_type -> agents.v1.DeregisterResponse
-	46,  // 128: agents.v1.AgentService.PushConfig:output_type -> agents.v1.PushConfigResponse
-	48,  // 129: agents.v1.AgentService.GetConfig:output_type -> agents.v1.GetConfigResponse
-	50,  // 130: agents.v1.AgentService.ListConfigs:output_type -> agents.v1.ListConfigsResponse
-	52,  // 131: agents.v1.AgentService.RollbackConfig:output_type -> agents.v1.RollbackConfigResponse
-	54,  // 132: agents.v1.AgentService.Delegate:output_type -> agents.v1.DelegateResponse
-	56,  // 133: agents.v1.AgentService.ResolveDelegation:output_type -> agents.v1.ResolveDelegationResponse
-	58,  // 134: agents.v1.AgentService.RenewDelegationLease:output_type -> agents.v1.RenewDelegationLeaseResponse
-	61,  // 135: agents.v1.AgentService.ControlA2ADelegationTask:output_type -> agents.v1.ControlA2ADelegationTaskResponse
-	63,  // 136: agents.v1.AgentService.GetDelegation:output_type -> agents.v1.GetDelegationResponse
-	65,  // 137: agents.v1.AgentService.ListDelegations:output_type -> agents.v1.ListDelegationsResponse
-	69,  // 138: agents.v1.AgentService.GetA2ADelegationGraph:output_type -> agents.v1.GetA2ADelegationGraphResponse
-	71,  // 139: agents.v1.AgentService.Heartbeat:output_type -> agents.v1.HeartbeatResponse
-	123, // [123:140] is the sub-list for method output_type
-	106, // [106:123] is the sub-list for method input_type
-	106, // [106:106] is the sub-list for extension type_name
-	106, // [106:106] is the sub-list for extension extendee
-	0,   // [0:106] is the sub-list for field type_name
+	81,  // 8: agents.v1.AgentA2APeerProjection.agent_card_observed_at:type_name -> google.protobuf.Timestamp
+	73,  // 9: agents.v1.AgentA2APeerProjection.attributes:type_name -> agents.v1.AgentA2APeerProjection.AttributesEntry
+	74,  // 10: agents.v1.AgentA2ASkill.attributes:type_name -> agents.v1.AgentA2ASkill.AttributesEntry
+	75,  // 11: agents.v1.AgentConfig.prompt_bindings:type_name -> agents.v1.AgentConfig.PromptBindingsEntry
+	76,  // 12: agents.v1.AgentConfig.model_preferences:type_name -> agents.v1.AgentConfig.ModelPreferencesEntry
+	83,  // 13: agents.v1.AgentConfig.parameters:type_name -> google.protobuf.Struct
+	81,  // 14: agents.v1.AgentConfig.created_at:type_name -> google.protobuf.Timestamp
+	84,  // 15: agents.v1.AgentConfig.entity_type_scope_enums:type_name -> common.v1.EntityType
+	85,  // 16: agents.v1.AgentConfig.notification_channel_enum:type_name -> common.v1.DeliveryChannel
+	18,  // 17: agents.v1.AgentConfig.teammate_profile:type_name -> agents.v1.DigitalTeammateProfile
+	17,  // 18: agents.v1.AgentConfig.connector_requirements:type_name -> agents.v1.ConnectorRequirement
+	82,  // 19: agents.v1.DigitalTeammateProfile.surface_types:type_name -> common.v1.Surface
+	3,   // 20: agents.v1.DigitalTeammateProfile.lifecycle:type_name -> agents.v1.TeammateLifecycle
+	20,  // 21: agents.v1.DigitalTeammateProfile.responsibilities:type_name -> agents.v1.TeammateResponsibility
+	21,  // 22: agents.v1.DigitalTeammateProfile.commitment_policy:type_name -> agents.v1.CommitmentPolicy
+	23,  // 23: agents.v1.DigitalTeammateProfile.initiative_policy:type_name -> agents.v1.InitiativePolicy
+	25,  // 24: agents.v1.DigitalTeammateProfile.autonomy_policy:type_name -> agents.v1.AutonomyPolicy
+	27,  // 25: agents.v1.DigitalTeammateProfile.memory_policy:type_name -> agents.v1.MemoryPolicy
+	28,  // 26: agents.v1.DigitalTeammateProfile.presence_policy:type_name -> agents.v1.PresencePolicy
+	29,  // 27: agents.v1.DigitalTeammateProfile.output_policy:type_name -> agents.v1.OutputPolicy
+	30,  // 28: agents.v1.DigitalTeammateProfile.eval_policy:type_name -> agents.v1.EvalPolicy
+	32,  // 29: agents.v1.DigitalTeammateProfile.escalation_policy:type_name -> agents.v1.EscalationPolicy
+	77,  // 30: agents.v1.DigitalTeammateProfile.labels:type_name -> agents.v1.DigitalTeammateProfile.LabelsEntry
+	83,  // 31: agents.v1.DigitalTeammateProfile.parameters:type_name -> google.protobuf.Struct
+	81,  // 32: agents.v1.DigitalTeammateProfile.created_at:type_name -> google.protobuf.Timestamp
+	81,  // 33: agents.v1.DigitalTeammateProfile.updated_at:type_name -> google.protobuf.Timestamp
+	19,  // 34: agents.v1.DigitalTeammateProfile.channel_manifests:type_name -> agents.v1.TeammateChannelManifest
+	8,   // 35: agents.v1.TeammateChannelManifest.kind:type_name -> agents.v1.TeammateChannelKind
+	85,  // 36: agents.v1.TeammateChannelManifest.delivery_channel:type_name -> common.v1.DeliveryChannel
+	82,  // 37: agents.v1.TeammateChannelManifest.platform_surface:type_name -> common.v1.Surface
+	9,   // 38: agents.v1.TeammateChannelManifest.capabilities:type_name -> agents.v1.TeammateChannelCapability
+	10,  // 39: agents.v1.TeammateChannelManifest.inbound_events:type_name -> agents.v1.TeammateChannelEventKind
+	11,  // 40: agents.v1.TeammateChannelManifest.runtime_events:type_name -> agents.v1.TeammateRuntimeRenderEventKind
+	78,  // 41: agents.v1.TeammateChannelManifest.attributes:type_name -> agents.v1.TeammateChannelManifest.AttributesEntry
+	84,  // 42: agents.v1.TeammateResponsibility.owned_entity_types:type_name -> common.v1.EntityType
+	4,   // 43: agents.v1.CommitmentPolicy.allowed_kinds:type_name -> agents.v1.CommitmentKind
+	22,  // 44: agents.v1.CommitmentPolicy.templates:type_name -> agents.v1.CommitmentTemplate
+	4,   // 45: agents.v1.CommitmentTemplate.kind:type_name -> agents.v1.CommitmentKind
+	24,  // 46: agents.v1.InitiativePolicy.triggers:type_name -> agents.v1.InitiativeTrigger
+	5,   // 47: agents.v1.InitiativeTrigger.kind:type_name -> agents.v1.InitiativeTriggerKind
+	26,  // 48: agents.v1.AutonomyPolicy.rules:type_name -> agents.v1.AutonomyRule
+	6,   // 49: agents.v1.AutonomyPolicy.default_authority:type_name -> agents.v1.AutonomyAuthority
+	86,  // 50: agents.v1.AutonomyPolicy.max_risk_without_approval:type_name -> common.v1.RiskLevel
+	86,  // 51: agents.v1.AutonomyRule.max_risk:type_name -> common.v1.RiskLevel
+	6,   // 52: agents.v1.AutonomyRule.authority:type_name -> agents.v1.AutonomyAuthority
+	85,  // 53: agents.v1.PresencePolicy.primary_channel:type_name -> common.v1.DeliveryChannel
+	7,   // 54: agents.v1.PresencePolicy.visible_events:type_name -> agents.v1.PresenceEvent
+	31,  // 55: agents.v1.EvalPolicy.bindings:type_name -> agents.v1.EvalBinding
+	85,  // 56: agents.v1.EscalationPolicy.fallback_channel:type_name -> common.v1.DeliveryChannel
+	1,   // 57: agents.v1.DelegationRecord.status:type_name -> agents.v1.DelegationStatus
+	81,  // 58: agents.v1.DelegationRecord.created_at:type_name -> google.protobuf.Timestamp
+	81,  // 59: agents.v1.DelegationRecord.resolved_at:type_name -> google.protobuf.Timestamp
+	81,  // 60: agents.v1.DelegationRecord.a2a_dispatched_at:type_name -> google.protobuf.Timestamp
+	81,  // 61: agents.v1.DelegationRecord.a2a_lease_renewed_at:type_name -> google.protobuf.Timestamp
+	83,  // 62: agents.v1.DelegationRecord.a2a_resume_wait_contracts:type_name -> google.protobuf.Struct
+	82,  // 63: agents.v1.RegisterRequest.surface_types:type_name -> common.v1.Surface
+	14,  // 64: agents.v1.RegisterRequest.a2a:type_name -> agents.v1.AgentA2APeerProjection
+	12,  // 65: agents.v1.RegisterResponse.agent:type_name -> agents.v1.Agent
+	12,  // 66: agents.v1.GetResponse.agent:type_name -> agents.v1.Agent
+	0,   // 67: agents.v1.ListRequest.status:type_name -> agents.v1.AgentStatus
+	82,  // 68: agents.v1.ListRequest.surface_type:type_name -> common.v1.Surface
+	12,  // 69: agents.v1.ListResponse.agents:type_name -> agents.v1.Agent
+	40,  // 70: agents.v1.ListResponse.discovery_evidence:type_name -> agents.v1.AgentDiscoveryEvidence
+	41,  // 71: agents.v1.AgentDiscoveryEvidence.exclusions:type_name -> agents.v1.AgentDiscoveryExclusion
+	82,  // 72: agents.v1.UpdateRequest.surface_types:type_name -> common.v1.Surface
+	14,  // 73: agents.v1.UpdateRequest.a2a:type_name -> agents.v1.AgentA2APeerProjection
+	12,  // 74: agents.v1.UpdateResponse.agent:type_name -> agents.v1.Agent
+	79,  // 75: agents.v1.PushConfigRequest.prompt_bindings:type_name -> agents.v1.PushConfigRequest.PromptBindingsEntry
+	80,  // 76: agents.v1.PushConfigRequest.model_preferences:type_name -> agents.v1.PushConfigRequest.ModelPreferencesEntry
+	83,  // 77: agents.v1.PushConfigRequest.parameters:type_name -> google.protobuf.Struct
+	84,  // 78: agents.v1.PushConfigRequest.entity_type_scope_enums:type_name -> common.v1.EntityType
+	85,  // 79: agents.v1.PushConfigRequest.notification_channel_enum:type_name -> common.v1.DeliveryChannel
+	18,  // 80: agents.v1.PushConfigRequest.teammate_profile:type_name -> agents.v1.DigitalTeammateProfile
+	17,  // 81: agents.v1.PushConfigRequest.connector_requirements:type_name -> agents.v1.ConnectorRequirement
+	16,  // 82: agents.v1.PushConfigResponse.config:type_name -> agents.v1.AgentConfig
+	12,  // 83: agents.v1.PushConfigResponse.agent:type_name -> agents.v1.Agent
+	16,  // 84: agents.v1.GetConfigResponse.config:type_name -> agents.v1.AgentConfig
+	16,  // 85: agents.v1.ListConfigsResponse.configs:type_name -> agents.v1.AgentConfig
+	16,  // 86: agents.v1.RollbackConfigResponse.config:type_name -> agents.v1.AgentConfig
+	12,  // 87: agents.v1.RollbackConfigResponse.agent:type_name -> agents.v1.Agent
+	33,  // 88: agents.v1.DelegateResponse.delegation:type_name -> agents.v1.DelegationRecord
+	1,   // 89: agents.v1.ResolveDelegationRequest.status:type_name -> agents.v1.DelegationStatus
+	33,  // 90: agents.v1.ResolveDelegationResponse.delegation:type_name -> agents.v1.DelegationRecord
+	33,  // 91: agents.v1.RenewDelegationLeaseResponse.delegation:type_name -> agents.v1.DelegationRecord
+	2,   // 92: agents.v1.ControlA2ADelegationTaskRequest.mode:type_name -> agents.v1.A2ADelegationTaskControlMode
+	83,  // 93: agents.v1.ControlA2ADelegationTaskRequest.payload:type_name -> google.protobuf.Struct
+	83,  // 94: agents.v1.ControlA2ADelegationTaskRequest.metadata:type_name -> google.protobuf.Struct
+	81,  // 95: agents.v1.A2ADelegationTaskControlResult.observed_at:type_name -> google.protobuf.Timestamp
+	33,  // 96: agents.v1.ControlA2ADelegationTaskResponse.delegation:type_name -> agents.v1.DelegationRecord
+	61,  // 97: agents.v1.ControlA2ADelegationTaskResponse.remote_task:type_name -> agents.v1.A2ADelegationTaskControlResult
+	33,  // 98: agents.v1.GetDelegationResponse.delegation:type_name -> agents.v1.DelegationRecord
+	1,   // 99: agents.v1.ListDelegationsRequest.status:type_name -> agents.v1.DelegationStatus
+	33,  // 100: agents.v1.ListDelegationsResponse.delegations:type_name -> agents.v1.DelegationRecord
+	33,  // 101: agents.v1.A2ADelegationGraphNode.delegation:type_name -> agents.v1.DelegationRecord
+	68,  // 102: agents.v1.GetA2ADelegationGraphResponse.nodes:type_name -> agents.v1.A2ADelegationGraphNode
+	69,  // 103: agents.v1.GetA2ADelegationGraphResponse.edges:type_name -> agents.v1.A2ADelegationGraphEdge
+	0,   // 104: agents.v1.HeartbeatRequest.status:type_name -> agents.v1.AgentStatus
+	82,  // 105: agents.v1.HeartbeatRequest.surface_type:type_name -> common.v1.Surface
+	14,  // 106: agents.v1.HeartbeatRequest.a2a:type_name -> agents.v1.AgentA2APeerProjection
+	81,  // 107: agents.v1.HeartbeatResponse.next_heartbeat_by:type_name -> google.protobuf.Timestamp
+	34,  // 108: agents.v1.AgentService.Register:input_type -> agents.v1.RegisterRequest
+	36,  // 109: agents.v1.AgentService.Get:input_type -> agents.v1.GetRequest
+	38,  // 110: agents.v1.AgentService.List:input_type -> agents.v1.ListRequest
+	42,  // 111: agents.v1.AgentService.Update:input_type -> agents.v1.UpdateRequest
+	44,  // 112: agents.v1.AgentService.Deregister:input_type -> agents.v1.DeregisterRequest
+	46,  // 113: agents.v1.AgentService.PushConfig:input_type -> agents.v1.PushConfigRequest
+	48,  // 114: agents.v1.AgentService.GetConfig:input_type -> agents.v1.GetConfigRequest
+	50,  // 115: agents.v1.AgentService.ListConfigs:input_type -> agents.v1.ListConfigsRequest
+	52,  // 116: agents.v1.AgentService.RollbackConfig:input_type -> agents.v1.RollbackConfigRequest
+	54,  // 117: agents.v1.AgentService.Delegate:input_type -> agents.v1.DelegateRequest
+	56,  // 118: agents.v1.AgentService.ResolveDelegation:input_type -> agents.v1.ResolveDelegationRequest
+	58,  // 119: agents.v1.AgentService.RenewDelegationLease:input_type -> agents.v1.RenewDelegationLeaseRequest
+	60,  // 120: agents.v1.AgentService.ControlA2ADelegationTask:input_type -> agents.v1.ControlA2ADelegationTaskRequest
+	63,  // 121: agents.v1.AgentService.GetDelegation:input_type -> agents.v1.GetDelegationRequest
+	65,  // 122: agents.v1.AgentService.ListDelegations:input_type -> agents.v1.ListDelegationsRequest
+	67,  // 123: agents.v1.AgentService.GetA2ADelegationGraph:input_type -> agents.v1.GetA2ADelegationGraphRequest
+	71,  // 124: agents.v1.AgentService.Heartbeat:input_type -> agents.v1.HeartbeatRequest
+	35,  // 125: agents.v1.AgentService.Register:output_type -> agents.v1.RegisterResponse
+	37,  // 126: agents.v1.AgentService.Get:output_type -> agents.v1.GetResponse
+	39,  // 127: agents.v1.AgentService.List:output_type -> agents.v1.ListResponse
+	43,  // 128: agents.v1.AgentService.Update:output_type -> agents.v1.UpdateResponse
+	45,  // 129: agents.v1.AgentService.Deregister:output_type -> agents.v1.DeregisterResponse
+	47,  // 130: agents.v1.AgentService.PushConfig:output_type -> agents.v1.PushConfigResponse
+	49,  // 131: agents.v1.AgentService.GetConfig:output_type -> agents.v1.GetConfigResponse
+	51,  // 132: agents.v1.AgentService.ListConfigs:output_type -> agents.v1.ListConfigsResponse
+	53,  // 133: agents.v1.AgentService.RollbackConfig:output_type -> agents.v1.RollbackConfigResponse
+	55,  // 134: agents.v1.AgentService.Delegate:output_type -> agents.v1.DelegateResponse
+	57,  // 135: agents.v1.AgentService.ResolveDelegation:output_type -> agents.v1.ResolveDelegationResponse
+	59,  // 136: agents.v1.AgentService.RenewDelegationLease:output_type -> agents.v1.RenewDelegationLeaseResponse
+	62,  // 137: agents.v1.AgentService.ControlA2ADelegationTask:output_type -> agents.v1.ControlA2ADelegationTaskResponse
+	64,  // 138: agents.v1.AgentService.GetDelegation:output_type -> agents.v1.GetDelegationResponse
+	66,  // 139: agents.v1.AgentService.ListDelegations:output_type -> agents.v1.ListDelegationsResponse
+	70,  // 140: agents.v1.AgentService.GetA2ADelegationGraph:output_type -> agents.v1.GetA2ADelegationGraphResponse
+	72,  // 141: agents.v1.AgentService.Heartbeat:output_type -> agents.v1.HeartbeatResponse
+	125, // [125:142] is the sub-list for method output_type
+	108, // [108:125] is the sub-list for method input_type
+	108, // [108:108] is the sub-list for extension type_name
+	108, // [108:108] is the sub-list for extension extendee
+	0,   // [0:108] is the sub-list for field type_name
 }
 
 func init() { file_agents_v1_agents_proto_init() }
@@ -6964,7 +7060,7 @@ func file_agents_v1_agents_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_agents_v1_agents_proto_rawDesc), len(file_agents_v1_agents_proto_rawDesc)),
 			NumEnums:      12,
-			NumMessages:   68,
+			NumMessages:   69,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
