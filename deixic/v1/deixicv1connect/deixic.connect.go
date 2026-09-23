@@ -35,6 +35,9 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// DeixicServiceAssessComplianceSubjectProcedure is the fully-qualified name of the DeixicService's
+	// AssessComplianceSubject RPC.
+	DeixicServiceAssessComplianceSubjectProcedure = "/deixic.v1.DeixicService/AssessComplianceSubject"
 	// DeixicServiceListBusinessBlueprintsProcedure is the fully-qualified name of the DeixicService's
 	// ListBusinessBlueprints RPC.
 	DeixicServiceListBusinessBlueprintsProcedure = "/deixic.v1.DeixicService/ListBusinessBlueprints"
@@ -755,6 +758,8 @@ const (
 
 // DeixicServiceClient is a client for the deixic.v1.DeixicService service.
 type DeixicServiceClient interface {
+	// Evaluates a versioned compliance profile against owner-fetched, tenant-scoped facts.
+	AssessComplianceSubject(context.Context, *connect.Request[v1.AssessComplianceSubjectRequest]) (*connect.Response[v1.AssessComplianceSubjectResponse], error)
 	// Lists built-in native business blueprints available to every authorized tenant.
 	ListBusinessBlueprints(context.Context, *connect.Request[v1.ListBusinessBlueprintsRequest]) (*connect.Response[v1.ListBusinessBlueprintsResponse], error)
 	// Clones a pinned built-in blueprint into editable tenant-owned definitions and a draft form.
@@ -1255,6 +1260,12 @@ func NewDeixicServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 	baseURL = strings.TrimRight(baseURL, "/")
 	deixicServiceMethods := v12.File_deixic_v1_deixic_proto.Services().ByName("DeixicService").Methods()
 	return &deixicServiceClient{
+		assessComplianceSubject: connect.NewClient[v1.AssessComplianceSubjectRequest, v1.AssessComplianceSubjectResponse](
+			httpClient,
+			baseURL+DeixicServiceAssessComplianceSubjectProcedure,
+			connect.WithSchema(deixicServiceMethods.ByName("AssessComplianceSubject")),
+			connect.WithClientOptions(opts...),
+		),
 		listBusinessBlueprints: connect.NewClient[v1.ListBusinessBlueprintsRequest, v1.ListBusinessBlueprintsResponse](
 			httpClient,
 			baseURL+DeixicServiceListBusinessBlueprintsProcedure,
@@ -2694,6 +2705,7 @@ func NewDeixicServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 
 // deixicServiceClient implements DeixicServiceClient.
 type deixicServiceClient struct {
+	assessComplianceSubject                     *connect.Client[v1.AssessComplianceSubjectRequest, v1.AssessComplianceSubjectResponse]
 	listBusinessBlueprints                      *connect.Client[v1.ListBusinessBlueprintsRequest, v1.ListBusinessBlueprintsResponse]
 	cloneBusinessBlueprint                      *connect.Client[v1.CloneBusinessBlueprintRequest, v1.CloneBusinessBlueprintResponse]
 	getBusinessProcessDefinition                *connect.Client[v1.GetBusinessProcessDefinitionRequest, v1.GetBusinessProcessDefinitionResponse]
@@ -2933,6 +2945,11 @@ type deixicServiceClient struct {
 	listMeetingCaptures                         *connect.Client[v1.ListMeetingCapturesRequest, v1.ListMeetingCapturesResponse]
 	stopMeetingCapture                          *connect.Client[v1.StopMeetingCaptureRequest, v1.StopMeetingCaptureResponse]
 	listCommitments                             *connect.Client[v1.ListCommitmentsRequest, v1.ListCommitmentsResponse]
+}
+
+// AssessComplianceSubject calls deixic.v1.DeixicService.AssessComplianceSubject.
+func (c *deixicServiceClient) AssessComplianceSubject(ctx context.Context, req *connect.Request[v1.AssessComplianceSubjectRequest]) (*connect.Response[v1.AssessComplianceSubjectResponse], error) {
+	return c.assessComplianceSubject.CallUnary(ctx, req)
 }
 
 // ListBusinessBlueprints calls deixic.v1.DeixicService.ListBusinessBlueprints.
@@ -4156,6 +4173,8 @@ func (c *deixicServiceClient) ListCommitments(ctx context.Context, req *connect.
 
 // DeixicServiceHandler is an implementation of the deixic.v1.DeixicService service.
 type DeixicServiceHandler interface {
+	// Evaluates a versioned compliance profile against owner-fetched, tenant-scoped facts.
+	AssessComplianceSubject(context.Context, *connect.Request[v1.AssessComplianceSubjectRequest]) (*connect.Response[v1.AssessComplianceSubjectResponse], error)
 	// Lists built-in native business blueprints available to every authorized tenant.
 	ListBusinessBlueprints(context.Context, *connect.Request[v1.ListBusinessBlueprintsRequest]) (*connect.Response[v1.ListBusinessBlueprintsResponse], error)
 	// Clones a pinned built-in blueprint into editable tenant-owned definitions and a draft form.
@@ -4652,6 +4671,12 @@ type DeixicServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewDeixicServiceHandler(svc DeixicServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	deixicServiceMethods := v12.File_deixic_v1_deixic_proto.Services().ByName("DeixicService").Methods()
+	deixicServiceAssessComplianceSubjectHandler := connect.NewUnaryHandler(
+		DeixicServiceAssessComplianceSubjectProcedure,
+		svc.AssessComplianceSubject,
+		connect.WithSchema(deixicServiceMethods.ByName("AssessComplianceSubject")),
+		connect.WithHandlerOptions(opts...),
+	)
 	deixicServiceListBusinessBlueprintsHandler := connect.NewUnaryHandler(
 		DeixicServiceListBusinessBlueprintsProcedure,
 		svc.ListBusinessBlueprints,
@@ -6088,6 +6113,8 @@ func NewDeixicServiceHandler(svc DeixicServiceHandler, opts ...connect.HandlerOp
 	)
 	return "/deixic.v1.DeixicService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case DeixicServiceAssessComplianceSubjectProcedure:
+			deixicServiceAssessComplianceSubjectHandler.ServeHTTP(w, r)
 		case DeixicServiceListBusinessBlueprintsProcedure:
 			deixicServiceListBusinessBlueprintsHandler.ServeHTTP(w, r)
 		case DeixicServiceCloneBusinessBlueprintProcedure:
@@ -6574,6 +6601,10 @@ func NewDeixicServiceHandler(svc DeixicServiceHandler, opts ...connect.HandlerOp
 
 // UnimplementedDeixicServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedDeixicServiceHandler struct{}
+
+func (UnimplementedDeixicServiceHandler) AssessComplianceSubject(context.Context, *connect.Request[v1.AssessComplianceSubjectRequest]) (*connect.Response[v1.AssessComplianceSubjectResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.AssessComplianceSubject is not implemented"))
+}
 
 func (UnimplementedDeixicServiceHandler) ListBusinessBlueprints(context.Context, *connect.Request[v1.ListBusinessBlueprintsRequest]) (*connect.Response[v1.ListBusinessBlueprintsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixic.v1.DeixicService.ListBusinessBlueprints is not implemented"))
