@@ -426,6 +426,110 @@ func (ResourceKind) EnumDescriptor() ([]byte, []int) {
 	return file_platform_v1_platform_proto_rawDescGZIP(), []int{5}
 }
 
+type WorkRemediationClassification int32
+
+const (
+	WorkRemediationClassification_WORK_REMEDIATION_CLASSIFICATION_UNSPECIFIED         WorkRemediationClassification = 0
+	WorkRemediationClassification_WORK_REMEDIATION_CLASSIFICATION_AUTO_EXECUTABLE     WorkRemediationClassification = 1
+	WorkRemediationClassification_WORK_REMEDIATION_CLASSIFICATION_APPROVAL_EXECUTABLE WorkRemediationClassification = 2
+	WorkRemediationClassification_WORK_REMEDIATION_CLASSIFICATION_MANUAL_WORK         WorkRemediationClassification = 3
+	WorkRemediationClassification_WORK_REMEDIATION_CLASSIFICATION_BLOCKED             WorkRemediationClassification = 4
+)
+
+// Enum value maps for WorkRemediationClassification.
+var (
+	WorkRemediationClassification_name = map[int32]string{
+		0: "WORK_REMEDIATION_CLASSIFICATION_UNSPECIFIED",
+		1: "WORK_REMEDIATION_CLASSIFICATION_AUTO_EXECUTABLE",
+		2: "WORK_REMEDIATION_CLASSIFICATION_APPROVAL_EXECUTABLE",
+		3: "WORK_REMEDIATION_CLASSIFICATION_MANUAL_WORK",
+		4: "WORK_REMEDIATION_CLASSIFICATION_BLOCKED",
+	}
+	WorkRemediationClassification_value = map[string]int32{
+		"WORK_REMEDIATION_CLASSIFICATION_UNSPECIFIED":         0,
+		"WORK_REMEDIATION_CLASSIFICATION_AUTO_EXECUTABLE":     1,
+		"WORK_REMEDIATION_CLASSIFICATION_APPROVAL_EXECUTABLE": 2,
+		"WORK_REMEDIATION_CLASSIFICATION_MANUAL_WORK":         3,
+		"WORK_REMEDIATION_CLASSIFICATION_BLOCKED":             4,
+	}
+)
+
+func (x WorkRemediationClassification) Enum() *WorkRemediationClassification {
+	p := new(WorkRemediationClassification)
+	*p = x
+	return p
+}
+
+func (x WorkRemediationClassification) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (WorkRemediationClassification) Descriptor() protoreflect.EnumDescriptor {
+	return file_platform_v1_platform_proto_enumTypes[6].Descriptor()
+}
+
+func (WorkRemediationClassification) Type() protoreflect.EnumType {
+	return &file_platform_v1_platform_proto_enumTypes[6]
+}
+
+func (x WorkRemediationClassification) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use WorkRemediationClassification.Descriptor instead.
+func (WorkRemediationClassification) EnumDescriptor() ([]byte, []int) {
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{6}
+}
+
+type WorkRemediationEvidenceIndependence int32
+
+const (
+	WorkRemediationEvidenceIndependence_WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_UNSPECIFIED             WorkRemediationEvidenceIndependence = 0
+	WorkRemediationEvidenceIndependence_WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_ACTION_OUTPUT           WorkRemediationEvidenceIndependence = 1
+	WorkRemediationEvidenceIndependence_WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_INDEPENDENT_OBSERVATION WorkRemediationEvidenceIndependence = 2
+)
+
+// Enum value maps for WorkRemediationEvidenceIndependence.
+var (
+	WorkRemediationEvidenceIndependence_name = map[int32]string{
+		0: "WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_UNSPECIFIED",
+		1: "WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_ACTION_OUTPUT",
+		2: "WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_INDEPENDENT_OBSERVATION",
+	}
+	WorkRemediationEvidenceIndependence_value = map[string]int32{
+		"WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_UNSPECIFIED":             0,
+		"WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_ACTION_OUTPUT":           1,
+		"WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_INDEPENDENT_OBSERVATION": 2,
+	}
+)
+
+func (x WorkRemediationEvidenceIndependence) Enum() *WorkRemediationEvidenceIndependence {
+	p := new(WorkRemediationEvidenceIndependence)
+	*p = x
+	return p
+}
+
+func (x WorkRemediationEvidenceIndependence) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (WorkRemediationEvidenceIndependence) Descriptor() protoreflect.EnumDescriptor {
+	return file_platform_v1_platform_proto_enumTypes[7].Descriptor()
+}
+
+func (WorkRemediationEvidenceIndependence) Type() protoreflect.EnumType {
+	return &file_platform_v1_platform_proto_enumTypes[7]
+}
+
+func (x WorkRemediationEvidenceIndependence) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use WorkRemediationEvidenceIndependence.Descriptor instead.
+func (WorkRemediationEvidenceIndependence) EnumDescriptor() ([]byte, []int) {
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{7}
+}
+
 // RecordKind identifies an authoritative operational record without copying
 // that record into a read model. The enclosing request supplies exact tenant
 // authority; the kind selects the owner resolver for record_id.
@@ -495,11 +599,11 @@ func (x RecordKind) String() string {
 }
 
 func (RecordKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[6].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[8].Descriptor()
 }
 
 func (RecordKind) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[6]
+	return &file_platform_v1_platform_proto_enumTypes[8]
 }
 
 func (x RecordKind) Number() protoreflect.EnumNumber {
@@ -508,7 +612,7 @@ func (x RecordKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RecordKind.Descriptor instead.
 func (RecordKind) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{6}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{8}
 }
 
 type RiskTier int32
@@ -550,11 +654,11 @@ func (x RiskTier) String() string {
 }
 
 func (RiskTier) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[7].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[9].Descriptor()
 }
 
 func (RiskTier) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[7]
+	return &file_platform_v1_platform_proto_enumTypes[9]
 }
 
 func (x RiskTier) Number() protoreflect.EnumNumber {
@@ -563,7 +667,7 @@ func (x RiskTier) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RiskTier.Descriptor instead.
 func (RiskTier) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{7}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{9}
 }
 
 type ApprovalState int32
@@ -608,11 +712,11 @@ func (x ApprovalState) String() string {
 }
 
 func (ApprovalState) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[8].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[10].Descriptor()
 }
 
 func (ApprovalState) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[8]
+	return &file_platform_v1_platform_proto_enumTypes[10]
 }
 
 func (x ApprovalState) Number() protoreflect.EnumNumber {
@@ -621,7 +725,7 @@ func (x ApprovalState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ApprovalState.Descriptor instead.
 func (ApprovalState) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{8}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{10}
 }
 
 type ActionExecutionState int32
@@ -672,11 +776,11 @@ func (x ActionExecutionState) String() string {
 }
 
 func (ActionExecutionState) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[9].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[11].Descriptor()
 }
 
 func (ActionExecutionState) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[9]
+	return &file_platform_v1_platform_proto_enumTypes[11]
 }
 
 func (x ActionExecutionState) Number() protoreflect.EnumNumber {
@@ -685,7 +789,7 @@ func (x ActionExecutionState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ActionExecutionState.Descriptor instead.
 func (ActionExecutionState) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{9}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{11}
 }
 
 type ArtifactKind int32
@@ -742,11 +846,11 @@ func (x ArtifactKind) String() string {
 }
 
 func (ArtifactKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[10].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[12].Descriptor()
 }
 
 func (ArtifactKind) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[10]
+	return &file_platform_v1_platform_proto_enumTypes[12]
 }
 
 func (x ArtifactKind) Number() protoreflect.EnumNumber {
@@ -755,7 +859,7 @@ func (x ArtifactKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ArtifactKind.Descriptor instead.
 func (ArtifactKind) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{10}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{12}
 }
 
 type ArtifactState int32
@@ -797,11 +901,11 @@ func (x ArtifactState) String() string {
 }
 
 func (ArtifactState) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[11].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[13].Descriptor()
 }
 
 func (ArtifactState) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[11]
+	return &file_platform_v1_platform_proto_enumTypes[13]
 }
 
 func (x ArtifactState) Number() protoreflect.EnumNumber {
@@ -810,7 +914,7 @@ func (x ArtifactState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ArtifactState.Descriptor instead.
 func (ArtifactState) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{11}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{13}
 }
 
 type EvidenceKind int32
@@ -861,11 +965,11 @@ func (x EvidenceKind) String() string {
 }
 
 func (EvidenceKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[12].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[14].Descriptor()
 }
 
 func (EvidenceKind) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[12]
+	return &file_platform_v1_platform_proto_enumTypes[14]
 }
 
 func (x EvidenceKind) Number() protoreflect.EnumNumber {
@@ -874,7 +978,7 @@ func (x EvidenceKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use EvidenceKind.Descriptor instead.
 func (EvidenceKind) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{12}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{14}
 }
 
 type RecommendationKind int32
@@ -916,11 +1020,11 @@ func (x RecommendationKind) String() string {
 }
 
 func (RecommendationKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[13].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[15].Descriptor()
 }
 
 func (RecommendationKind) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[13]
+	return &file_platform_v1_platform_proto_enumTypes[15]
 }
 
 func (x RecommendationKind) Number() protoreflect.EnumNumber {
@@ -929,7 +1033,7 @@ func (x RecommendationKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RecommendationKind.Descriptor instead.
 func (RecommendationKind) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{13}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{15}
 }
 
 type RecommendationState int32
@@ -968,11 +1072,11 @@ func (x RecommendationState) String() string {
 }
 
 func (RecommendationState) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[14].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[16].Descriptor()
 }
 
 func (RecommendationState) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[14]
+	return &file_platform_v1_platform_proto_enumTypes[16]
 }
 
 func (x RecommendationState) Number() protoreflect.EnumNumber {
@@ -981,7 +1085,7 @@ func (x RecommendationState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RecommendationState.Descriptor instead.
 func (RecommendationState) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{14}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{16}
 }
 
 type OutboxStatus int32
@@ -1020,11 +1124,11 @@ func (x OutboxStatus) String() string {
 }
 
 func (OutboxStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[15].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[17].Descriptor()
 }
 
 func (OutboxStatus) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[15]
+	return &file_platform_v1_platform_proto_enumTypes[17]
 }
 
 func (x OutboxStatus) Number() protoreflect.EnumNumber {
@@ -1033,7 +1137,7 @@ func (x OutboxStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OutboxStatus.Descriptor instead.
 func (OutboxStatus) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{15}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{17}
 }
 
 type UsageMetricKind int32
@@ -1087,11 +1191,11 @@ func (x UsageMetricKind) String() string {
 }
 
 func (UsageMetricKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[16].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[18].Descriptor()
 }
 
 func (UsageMetricKind) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[16]
+	return &file_platform_v1_platform_proto_enumTypes[18]
 }
 
 func (x UsageMetricKind) Number() protoreflect.EnumNumber {
@@ -1100,7 +1204,7 @@ func (x UsageMetricKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use UsageMetricKind.Descriptor instead.
 func (UsageMetricKind) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{16}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{18}
 }
 
 type AttributionSubjectKind int32
@@ -1160,11 +1264,11 @@ func (x AttributionSubjectKind) String() string {
 }
 
 func (AttributionSubjectKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[17].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[19].Descriptor()
 }
 
 func (AttributionSubjectKind) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[17]
+	return &file_platform_v1_platform_proto_enumTypes[19]
 }
 
 func (x AttributionSubjectKind) Number() protoreflect.EnumNumber {
@@ -1173,7 +1277,7 @@ func (x AttributionSubjectKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AttributionSubjectKind.Descriptor instead.
 func (AttributionSubjectKind) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{17}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{19}
 }
 
 type CapabilityStatus int32
@@ -1209,11 +1313,11 @@ func (x CapabilityStatus) String() string {
 }
 
 func (CapabilityStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_platform_v1_platform_proto_enumTypes[18].Descriptor()
+	return file_platform_v1_platform_proto_enumTypes[20].Descriptor()
 }
 
 func (CapabilityStatus) Type() protoreflect.EnumType {
-	return &file_platform_v1_platform_proto_enumTypes[18]
+	return &file_platform_v1_platform_proto_enumTypes[20]
 }
 
 func (x CapabilityStatus) Number() protoreflect.EnumNumber {
@@ -1222,7 +1326,7 @@ func (x CapabilityStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CapabilityStatus.Descriptor instead.
 func (CapabilityStatus) EnumDescriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{18}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{20}
 }
 
 type TenantScope struct {
@@ -2000,8 +2104,10 @@ type NewWorkItem struct {
 	ParentWorkId   string                 `protobuf:"bytes,3,opt,name=parent_work_id,json=parentWorkId,proto3" json:"parent_work_id,omitempty"`
 	Metadata       *structpb.Struct       `protobuf:"bytes,4,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	EvalAssignment *EvalAssignment        `protobuf:"bytes,5,opt,name=eval_assignment,json=evalAssignment,proto3" json:"eval_assignment,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Immutable, versioned remediation plan owned by this Work item.
+	RemediationPlan *WorkRemediationPlan `protobuf:"bytes,6,opt,name=remediation_plan,json=remediationPlan,proto3" json:"remediation_plan,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *NewWorkItem) Reset() {
@@ -2069,20 +2175,28 @@ func (x *NewWorkItem) GetEvalAssignment() *EvalAssignment {
 	return nil
 }
 
+func (x *NewWorkItem) GetRemediationPlan() *WorkRemediationPlan {
+	if x != nil {
+		return x.RemediationPlan
+	}
+	return nil
+}
+
 type WorkItem struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	WorkId         string                 `protobuf:"bytes,1,opt,name=work_id,json=workId,proto3" json:"work_id,omitempty"`
-	Scope          *TenantScope           `protobuf:"bytes,2,opt,name=scope,proto3" json:"scope,omitempty"`
-	Kind           WorkKind               `protobuf:"varint,3,opt,name=kind,proto3,enum=platform.v1.WorkKind" json:"kind,omitempty"`
-	State          WorkState              `protobuf:"varint,4,opt,name=state,proto3,enum=platform.v1.WorkState" json:"state,omitempty"`
-	Title          string                 `protobuf:"bytes,5,opt,name=title,proto3" json:"title,omitempty"`
-	ParentWorkId   string                 `protobuf:"bytes,6,opt,name=parent_work_id,json=parentWorkId,proto3" json:"parent_work_id,omitempty"`
-	CreatedBy      *Principal             `protobuf:"bytes,7,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
-	LineageId      string                 `protobuf:"bytes,8,opt,name=lineage_id,json=lineageId,proto3" json:"lineage_id,omitempty"`
-	Metadata       *structpb.Struct       `protobuf:"bytes,9,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	EvalAssignment *EvalAssignment        `protobuf:"bytes,10,opt,name=eval_assignment,json=evalAssignment,proto3" json:"eval_assignment,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	WorkId          string                 `protobuf:"bytes,1,opt,name=work_id,json=workId,proto3" json:"work_id,omitempty"`
+	Scope           *TenantScope           `protobuf:"bytes,2,opt,name=scope,proto3" json:"scope,omitempty"`
+	Kind            WorkKind               `protobuf:"varint,3,opt,name=kind,proto3,enum=platform.v1.WorkKind" json:"kind,omitempty"`
+	State           WorkState              `protobuf:"varint,4,opt,name=state,proto3,enum=platform.v1.WorkState" json:"state,omitempty"`
+	Title           string                 `protobuf:"bytes,5,opt,name=title,proto3" json:"title,omitempty"`
+	ParentWorkId    string                 `protobuf:"bytes,6,opt,name=parent_work_id,json=parentWorkId,proto3" json:"parent_work_id,omitempty"`
+	CreatedBy       *Principal             `protobuf:"bytes,7,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
+	LineageId       string                 `protobuf:"bytes,8,opt,name=lineage_id,json=lineageId,proto3" json:"lineage_id,omitempty"`
+	Metadata        *structpb.Struct       `protobuf:"bytes,9,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	EvalAssignment  *EvalAssignment        `protobuf:"bytes,10,opt,name=eval_assignment,json=evalAssignment,proto3" json:"eval_assignment,omitempty"`
+	RemediationPlan *WorkRemediationPlan   `protobuf:"bytes,11,opt,name=remediation_plan,json=remediationPlan,proto3" json:"remediation_plan,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *WorkItem) Reset() {
@@ -2185,6 +2299,13 @@ func (x *WorkItem) GetEvalAssignment() *EvalAssignment {
 	return nil
 }
 
+func (x *WorkItem) GetRemediationPlan() *WorkRemediationPlan {
+	if x != nil {
+		return x.RemediationPlan
+	}
+	return nil
+}
+
 // ResourceRef is the canonical structured pointer for durable Platform
 // content. It is intentionally not a URI: callers carry organization and
 // workspace authority in the surrounding request, while a resolver owned by
@@ -2261,6 +2382,421 @@ func (x *ResourceRef) GetVersion() int32 {
 	return 0
 }
 
+// Exact external identity; the enclosing Work scope remains tenant authority.
+type WorkRemediationResource struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	ProviderId       string                 `protobuf:"bytes,1,opt,name=provider_id,json=providerId,proto3" json:"provider_id,omitempty"`
+	ConnectionId     string                 `protobuf:"bytes,2,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty"`
+	StableResourceId string                 `protobuf:"bytes,3,opt,name=stable_resource_id,json=stableResourceId,proto3" json:"stable_resource_id,omitempty"`
+	ResourceKind     string                 `protobuf:"bytes,4,opt,name=resource_kind,json=resourceKind,proto3" json:"resource_kind,omitempty"`
+	PlatformResource *ResourceRef           `protobuf:"bytes,5,opt,name=platform_resource,json=platformResource,proto3" json:"platform_resource,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *WorkRemediationResource) Reset() {
+	*x = WorkRemediationResource{}
+	mi := &file_platform_v1_platform_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WorkRemediationResource) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WorkRemediationResource) ProtoMessage() {}
+
+func (x *WorkRemediationResource) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_v1_platform_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WorkRemediationResource.ProtoReflect.Descriptor instead.
+func (*WorkRemediationResource) Descriptor() ([]byte, []int) {
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *WorkRemediationResource) GetProviderId() string {
+	if x != nil {
+		return x.ProviderId
+	}
+	return ""
+}
+
+func (x *WorkRemediationResource) GetConnectionId() string {
+	if x != nil {
+		return x.ConnectionId
+	}
+	return ""
+}
+
+func (x *WorkRemediationResource) GetStableResourceId() string {
+	if x != nil {
+		return x.StableResourceId
+	}
+	return ""
+}
+
+func (x *WorkRemediationResource) GetResourceKind() string {
+	if x != nil {
+		return x.ResourceKind
+	}
+	return ""
+}
+
+func (x *WorkRemediationResource) GetPlatformResource() *ResourceRef {
+	if x != nil {
+		return x.PlatformResource
+	}
+	return nil
+}
+
+type WorkRemediationAction struct {
+	state            protoimpl.MessageState   `protogen:"open.v1"`
+	ActionId         string                   `protobuf:"bytes,1,opt,name=action_id,json=actionId,proto3" json:"action_id,omitempty"`
+	CatalogDigest    string                   `protobuf:"bytes,2,opt,name=catalog_digest,json=catalogDigest,proto3" json:"catalog_digest,omitempty"`
+	InputDigest      string                   `protobuf:"bytes,3,opt,name=input_digest,json=inputDigest,proto3" json:"input_digest,omitempty"`
+	Target           *WorkRemediationResource `protobuf:"bytes,4,opt,name=target,proto3" json:"target,omitempty"`
+	RiskTier         RiskTier                 `protobuf:"varint,5,opt,name=risk_tier,json=riskTier,proto3,enum=platform.v1.RiskTier" json:"risk_tier,omitempty"`
+	ApprovalRequired bool                     `protobuf:"varint,6,opt,name=approval_required,json=approvalRequired,proto3" json:"approval_required,omitempty"`
+	RequiredScopes   []string                 `protobuf:"bytes,7,rep,name=required_scopes,json=requiredScopes,proto3" json:"required_scopes,omitempty"`
+	IdempotencyKey   string                   `protobuf:"bytes,8,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
+	PostconditionIds []string                 `protobuf:"bytes,9,rep,name=postcondition_ids,json=postconditionIds,proto3" json:"postcondition_ids,omitempty"`
+	// Immutable ArtifactVersion containing schema-validated provider arguments.
+	// input_digest binds its exact bytes; secrets remain references.
+	InputArtifactRef *ResourceRef `protobuf:"bytes,10,opt,name=input_artifact_ref,json=inputArtifactRef,proto3" json:"input_artifact_ref,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *WorkRemediationAction) Reset() {
+	*x = WorkRemediationAction{}
+	mi := &file_platform_v1_platform_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WorkRemediationAction) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WorkRemediationAction) ProtoMessage() {}
+
+func (x *WorkRemediationAction) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_v1_platform_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WorkRemediationAction.ProtoReflect.Descriptor instead.
+func (*WorkRemediationAction) Descriptor() ([]byte, []int) {
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *WorkRemediationAction) GetActionId() string {
+	if x != nil {
+		return x.ActionId
+	}
+	return ""
+}
+
+func (x *WorkRemediationAction) GetCatalogDigest() string {
+	if x != nil {
+		return x.CatalogDigest
+	}
+	return ""
+}
+
+func (x *WorkRemediationAction) GetInputDigest() string {
+	if x != nil {
+		return x.InputDigest
+	}
+	return ""
+}
+
+func (x *WorkRemediationAction) GetTarget() *WorkRemediationResource {
+	if x != nil {
+		return x.Target
+	}
+	return nil
+}
+
+func (x *WorkRemediationAction) GetRiskTier() RiskTier {
+	if x != nil {
+		return x.RiskTier
+	}
+	return RiskTier_RISK_TIER_UNSPECIFIED
+}
+
+func (x *WorkRemediationAction) GetApprovalRequired() bool {
+	if x != nil {
+		return x.ApprovalRequired
+	}
+	return false
+}
+
+func (x *WorkRemediationAction) GetRequiredScopes() []string {
+	if x != nil {
+		return x.RequiredScopes
+	}
+	return nil
+}
+
+func (x *WorkRemediationAction) GetIdempotencyKey() string {
+	if x != nil {
+		return x.IdempotencyKey
+	}
+	return ""
+}
+
+func (x *WorkRemediationAction) GetPostconditionIds() []string {
+	if x != nil {
+		return x.PostconditionIds
+	}
+	return nil
+}
+
+func (x *WorkRemediationAction) GetInputArtifactRef() *ResourceRef {
+	if x != nil {
+		return x.InputArtifactRef
+	}
+	return nil
+}
+
+type WorkRemediationPostcondition struct {
+	state                protoimpl.MessageState              `protogen:"open.v1"`
+	PostconditionId      string                              `protobuf:"bytes,1,opt,name=postcondition_id,json=postconditionId,proto3" json:"postcondition_id,omitempty"`
+	Target               *WorkRemediationResource            `protobuf:"bytes,2,opt,name=target,proto3" json:"target,omitempty"`
+	ObserverActionId     string                              `protobuf:"bytes,3,opt,name=observer_action_id,json=observerActionId,proto3" json:"observer_action_id,omitempty"`
+	ExpectedStateDigest  string                              `protobuf:"bytes,4,opt,name=expected_state_digest,json=expectedStateDigest,proto3" json:"expected_state_digest,omitempty"`
+	MaxAgeSeconds        uint32                              `protobuf:"varint,5,opt,name=max_age_seconds,json=maxAgeSeconds,proto3" json:"max_age_seconds,omitempty"`
+	RequiredIndependence WorkRemediationEvidenceIndependence `protobuf:"varint,6,opt,name=required_independence,json=requiredIndependence,proto3,enum=platform.v1.WorkRemediationEvidenceIndependence" json:"required_independence,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *WorkRemediationPostcondition) Reset() {
+	*x = WorkRemediationPostcondition{}
+	mi := &file_platform_v1_platform_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WorkRemediationPostcondition) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WorkRemediationPostcondition) ProtoMessage() {}
+
+func (x *WorkRemediationPostcondition) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_v1_platform_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WorkRemediationPostcondition.ProtoReflect.Descriptor instead.
+func (*WorkRemediationPostcondition) Descriptor() ([]byte, []int) {
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *WorkRemediationPostcondition) GetPostconditionId() string {
+	if x != nil {
+		return x.PostconditionId
+	}
+	return ""
+}
+
+func (x *WorkRemediationPostcondition) GetTarget() *WorkRemediationResource {
+	if x != nil {
+		return x.Target
+	}
+	return nil
+}
+
+func (x *WorkRemediationPostcondition) GetObserverActionId() string {
+	if x != nil {
+		return x.ObserverActionId
+	}
+	return ""
+}
+
+func (x *WorkRemediationPostcondition) GetExpectedStateDigest() string {
+	if x != nil {
+		return x.ExpectedStateDigest
+	}
+	return ""
+}
+
+func (x *WorkRemediationPostcondition) GetMaxAgeSeconds() uint32 {
+	if x != nil {
+		return x.MaxAgeSeconds
+	}
+	return 0
+}
+
+func (x *WorkRemediationPostcondition) GetRequiredIndependence() WorkRemediationEvidenceIndependence {
+	if x != nil {
+		return x.RequiredIndependence
+	}
+	return WorkRemediationEvidenceIndependence_WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_UNSPECIFIED
+}
+
+// A typed extension of Platform Work, not a separate execution or approval
+// owner. plan_digest excludes itself and binds every immutable field below.
+type WorkRemediationPlan struct {
+	state             protoimpl.MessageState          `protogen:"open.v1"`
+	SchemaVersion     uint32                          `protobuf:"varint,1,opt,name=schema_version,json=schemaVersion,proto3" json:"schema_version,omitempty"`
+	PlanDigest        string                          `protobuf:"bytes,2,opt,name=plan_digest,json=planDigest,proto3" json:"plan_digest,omitempty"`
+	Scope             *TenantScope                    `protobuf:"bytes,3,opt,name=scope,proto3" json:"scope,omitempty"`
+	SourceFindingId   string                          `protobuf:"bytes,4,opt,name=source_finding_id,json=sourceFindingId,proto3" json:"source_finding_id,omitempty"`
+	SourceEvidence    []*RecordRef                    `protobuf:"bytes,5,rep,name=source_evidence,json=sourceEvidence,proto3" json:"source_evidence,omitempty"`
+	AffectedResources []*WorkRemediationResource      `protobuf:"bytes,6,rep,name=affected_resources,json=affectedResources,proto3" json:"affected_resources,omitempty"`
+	Postconditions    []*WorkRemediationPostcondition `protobuf:"bytes,7,rep,name=postconditions,proto3" json:"postconditions,omitempty"`
+	Actions           []*WorkRemediationAction        `protobuf:"bytes,8,rep,name=actions,proto3" json:"actions,omitempty"`
+	Classification    WorkRemediationClassification   `protobuf:"varint,9,opt,name=classification,proto3,enum=platform.v1.WorkRemediationClassification" json:"classification,omitempty"`
+	LineageId         string                          `protobuf:"bytes,10,opt,name=lineage_id,json=lineageId,proto3" json:"lineage_id,omitempty"`
+	IdempotencyKey    string                          `protobuf:"bytes,11,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
+	// Manual and blocked Work retain an explicit reason rather than inventing
+	// an executable connector action.
+	NonExecutableReason string `protobuf:"bytes,12,opt,name=non_executable_reason,json=nonExecutableReason,proto3" json:"non_executable_reason,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *WorkRemediationPlan) Reset() {
+	*x = WorkRemediationPlan{}
+	mi := &file_platform_v1_platform_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WorkRemediationPlan) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WorkRemediationPlan) ProtoMessage() {}
+
+func (x *WorkRemediationPlan) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_v1_platform_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WorkRemediationPlan.ProtoReflect.Descriptor instead.
+func (*WorkRemediationPlan) Descriptor() ([]byte, []int) {
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *WorkRemediationPlan) GetSchemaVersion() uint32 {
+	if x != nil {
+		return x.SchemaVersion
+	}
+	return 0
+}
+
+func (x *WorkRemediationPlan) GetPlanDigest() string {
+	if x != nil {
+		return x.PlanDigest
+	}
+	return ""
+}
+
+func (x *WorkRemediationPlan) GetScope() *TenantScope {
+	if x != nil {
+		return x.Scope
+	}
+	return nil
+}
+
+func (x *WorkRemediationPlan) GetSourceFindingId() string {
+	if x != nil {
+		return x.SourceFindingId
+	}
+	return ""
+}
+
+func (x *WorkRemediationPlan) GetSourceEvidence() []*RecordRef {
+	if x != nil {
+		return x.SourceEvidence
+	}
+	return nil
+}
+
+func (x *WorkRemediationPlan) GetAffectedResources() []*WorkRemediationResource {
+	if x != nil {
+		return x.AffectedResources
+	}
+	return nil
+}
+
+func (x *WorkRemediationPlan) GetPostconditions() []*WorkRemediationPostcondition {
+	if x != nil {
+		return x.Postconditions
+	}
+	return nil
+}
+
+func (x *WorkRemediationPlan) GetActions() []*WorkRemediationAction {
+	if x != nil {
+		return x.Actions
+	}
+	return nil
+}
+
+func (x *WorkRemediationPlan) GetClassification() WorkRemediationClassification {
+	if x != nil {
+		return x.Classification
+	}
+	return WorkRemediationClassification_WORK_REMEDIATION_CLASSIFICATION_UNSPECIFIED
+}
+
+func (x *WorkRemediationPlan) GetLineageId() string {
+	if x != nil {
+		return x.LineageId
+	}
+	return ""
+}
+
+func (x *WorkRemediationPlan) GetIdempotencyKey() string {
+	if x != nil {
+		return x.IdempotencyKey
+	}
+	return ""
+}
+
+func (x *WorkRemediationPlan) GetNonExecutableReason() string {
+	if x != nil {
+		return x.NonExecutableReason
+	}
+	return ""
+}
+
 // RecordRef is the canonical, content-free pointer used by customer read
 // models to join independently owned operational records. It is correlation,
 // never authority: consumers must resolve it through the owning service under
@@ -2277,7 +2813,7 @@ type RecordRef struct {
 
 func (x *RecordRef) Reset() {
 	*x = RecordRef{}
-	mi := &file_platform_v1_platform_proto_msgTypes[13]
+	mi := &file_platform_v1_platform_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2289,7 +2825,7 @@ func (x *RecordRef) String() string {
 func (*RecordRef) ProtoMessage() {}
 
 func (x *RecordRef) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[13]
+	mi := &file_platform_v1_platform_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2302,7 +2838,7 @@ func (x *RecordRef) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecordRef.ProtoReflect.Descriptor instead.
 func (*RecordRef) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{13}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *RecordRef) GetKind() RecordKind {
@@ -2348,7 +2884,7 @@ type ActionIntent struct {
 
 func (x *ActionIntent) Reset() {
 	*x = ActionIntent{}
-	mi := &file_platform_v1_platform_proto_msgTypes[14]
+	mi := &file_platform_v1_platform_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2360,7 +2896,7 @@ func (x *ActionIntent) String() string {
 func (*ActionIntent) ProtoMessage() {}
 
 func (x *ActionIntent) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[14]
+	mi := &file_platform_v1_platform_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2373,7 +2909,7 @@ func (x *ActionIntent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActionIntent.ProtoReflect.Descriptor instead.
 func (*ActionIntent) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{14}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ActionIntent) GetActionIntentId() string {
@@ -2489,7 +3025,7 @@ type NewArtifactVersion struct {
 
 func (x *NewArtifactVersion) Reset() {
 	*x = NewArtifactVersion{}
-	mi := &file_platform_v1_platform_proto_msgTypes[15]
+	mi := &file_platform_v1_platform_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2501,7 +3037,7 @@ func (x *NewArtifactVersion) String() string {
 func (*NewArtifactVersion) ProtoMessage() {}
 
 func (x *NewArtifactVersion) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[15]
+	mi := &file_platform_v1_platform_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2514,7 +3050,7 @@ func (x *NewArtifactVersion) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewArtifactVersion.ProtoReflect.Descriptor instead.
 func (*NewArtifactVersion) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{15}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *NewArtifactVersion) GetArtifactId() string {
@@ -2581,7 +3117,7 @@ type Artifact struct {
 
 func (x *Artifact) Reset() {
 	*x = Artifact{}
-	mi := &file_platform_v1_platform_proto_msgTypes[16]
+	mi := &file_platform_v1_platform_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2593,7 +3129,7 @@ func (x *Artifact) String() string {
 func (*Artifact) ProtoMessage() {}
 
 func (x *Artifact) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[16]
+	mi := &file_platform_v1_platform_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2606,7 +3142,7 @@ func (x *Artifact) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Artifact.ProtoReflect.Descriptor instead.
 func (*Artifact) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{16}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *Artifact) GetArtifactId() string {
@@ -2675,7 +3211,7 @@ type ArtifactVersion struct {
 
 func (x *ArtifactVersion) Reset() {
 	*x = ArtifactVersion{}
-	mi := &file_platform_v1_platform_proto_msgTypes[17]
+	mi := &file_platform_v1_platform_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2687,7 +3223,7 @@ func (x *ArtifactVersion) String() string {
 func (*ArtifactVersion) ProtoMessage() {}
 
 func (x *ArtifactVersion) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[17]
+	mi := &file_platform_v1_platform_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2700,7 +3236,7 @@ func (x *ArtifactVersion) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ArtifactVersion.ProtoReflect.Descriptor instead.
 func (*ArtifactVersion) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{17}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ArtifactVersion) GetArtifactVersionId() string {
@@ -2780,7 +3316,7 @@ type EvidenceRecord struct {
 
 func (x *EvidenceRecord) Reset() {
 	*x = EvidenceRecord{}
-	mi := &file_platform_v1_platform_proto_msgTypes[18]
+	mi := &file_platform_v1_platform_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2792,7 +3328,7 @@ func (x *EvidenceRecord) String() string {
 func (*EvidenceRecord) ProtoMessage() {}
 
 func (x *EvidenceRecord) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[18]
+	mi := &file_platform_v1_platform_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2805,7 +3341,7 @@ func (x *EvidenceRecord) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EvidenceRecord.ProtoReflect.Descriptor instead.
 func (*EvidenceRecord) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{18}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *EvidenceRecord) GetEvidenceId() string {
@@ -2870,7 +3406,7 @@ type Score struct {
 
 func (x *Score) Reset() {
 	*x = Score{}
-	mi := &file_platform_v1_platform_proto_msgTypes[19]
+	mi := &file_platform_v1_platform_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2882,7 +3418,7 @@ func (x *Score) String() string {
 func (*Score) ProtoMessage() {}
 
 func (x *Score) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[19]
+	mi := &file_platform_v1_platform_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2895,7 +3431,7 @@ func (x *Score) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Score.ProtoReflect.Descriptor instead.
 func (*Score) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{19}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *Score) GetScoreId() string {
@@ -3002,7 +3538,7 @@ type Recommendation struct {
 
 func (x *Recommendation) Reset() {
 	*x = Recommendation{}
-	mi := &file_platform_v1_platform_proto_msgTypes[20]
+	mi := &file_platform_v1_platform_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3014,7 +3550,7 @@ func (x *Recommendation) String() string {
 func (*Recommendation) ProtoMessage() {}
 
 func (x *Recommendation) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[20]
+	mi := &file_platform_v1_platform_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3027,7 +3563,7 @@ func (x *Recommendation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Recommendation.ProtoReflect.Descriptor instead.
 func (*Recommendation) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{20}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *Recommendation) GetRecommendationId() string {
@@ -3130,7 +3666,7 @@ type DomainEvent struct {
 
 func (x *DomainEvent) Reset() {
 	*x = DomainEvent{}
-	mi := &file_platform_v1_platform_proto_msgTypes[21]
+	mi := &file_platform_v1_platform_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3142,7 +3678,7 @@ func (x *DomainEvent) String() string {
 func (*DomainEvent) ProtoMessage() {}
 
 func (x *DomainEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[21]
+	mi := &file_platform_v1_platform_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3155,7 +3691,7 @@ func (x *DomainEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DomainEvent.ProtoReflect.Descriptor instead.
 func (*DomainEvent) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{21}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *DomainEvent) GetEventId() string {
@@ -3228,7 +3764,7 @@ type OutboxMessage struct {
 
 func (x *OutboxMessage) Reset() {
 	*x = OutboxMessage{}
-	mi := &file_platform_v1_platform_proto_msgTypes[22]
+	mi := &file_platform_v1_platform_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3240,7 +3776,7 @@ func (x *OutboxMessage) String() string {
 func (*OutboxMessage) ProtoMessage() {}
 
 func (x *OutboxMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[22]
+	mi := &file_platform_v1_platform_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3253,7 +3789,7 @@ func (x *OutboxMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OutboxMessage.ProtoReflect.Descriptor instead.
 func (*OutboxMessage) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{22}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *OutboxMessage) GetOutboxMessageId() string {
@@ -3310,7 +3846,7 @@ type OperationReceipt struct {
 
 func (x *OperationReceipt) Reset() {
 	*x = OperationReceipt{}
-	mi := &file_platform_v1_platform_proto_msgTypes[23]
+	mi := &file_platform_v1_platform_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3322,7 +3858,7 @@ func (x *OperationReceipt) String() string {
 func (*OperationReceipt) ProtoMessage() {}
 
 func (x *OperationReceipt) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[23]
+	mi := &file_platform_v1_platform_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3335,7 +3871,7 @@ func (x *OperationReceipt) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OperationReceipt.ProtoReflect.Descriptor instead.
 func (*OperationReceipt) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{23}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *OperationReceipt) GetOperationRecord() *OperationRecord {
@@ -3391,7 +3927,7 @@ type UsageLedgerEntry struct {
 
 func (x *UsageLedgerEntry) Reset() {
 	*x = UsageLedgerEntry{}
-	mi := &file_platform_v1_platform_proto_msgTypes[24]
+	mi := &file_platform_v1_platform_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3403,7 +3939,7 @@ func (x *UsageLedgerEntry) String() string {
 func (*UsageLedgerEntry) ProtoMessage() {}
 
 func (x *UsageLedgerEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[24]
+	mi := &file_platform_v1_platform_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3416,7 +3952,7 @@ func (x *UsageLedgerEntry) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UsageLedgerEntry.ProtoReflect.Descriptor instead.
 func (*UsageLedgerEntry) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{24}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *UsageLedgerEntry) GetUsageEntryId() string {
@@ -3558,7 +4094,7 @@ type SpendLedgerEntry struct {
 
 func (x *SpendLedgerEntry) Reset() {
 	*x = SpendLedgerEntry{}
-	mi := &file_platform_v1_platform_proto_msgTypes[25]
+	mi := &file_platform_v1_platform_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3570,7 +4106,7 @@ func (x *SpendLedgerEntry) String() string {
 func (*SpendLedgerEntry) ProtoMessage() {}
 
 func (x *SpendLedgerEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[25]
+	mi := &file_platform_v1_platform_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3583,7 +4119,7 @@ func (x *SpendLedgerEntry) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpendLedgerEntry.ProtoReflect.Descriptor instead.
 func (*SpendLedgerEntry) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{25}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *SpendLedgerEntry) GetSpendEntryId() string {
@@ -3689,7 +4225,7 @@ type AttributionEdge struct {
 
 func (x *AttributionEdge) Reset() {
 	*x = AttributionEdge{}
-	mi := &file_platform_v1_platform_proto_msgTypes[26]
+	mi := &file_platform_v1_platform_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3701,7 +4237,7 @@ func (x *AttributionEdge) String() string {
 func (*AttributionEdge) ProtoMessage() {}
 
 func (x *AttributionEdge) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[26]
+	mi := &file_platform_v1_platform_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3714,7 +4250,7 @@ func (x *AttributionEdge) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AttributionEdge.ProtoReflect.Descriptor instead.
 func (*AttributionEdge) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{26}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *AttributionEdge) GetAttributionEdgeId() string {
@@ -3803,7 +4339,7 @@ type GetBootstrapRequest struct {
 
 func (x *GetBootstrapRequest) Reset() {
 	*x = GetBootstrapRequest{}
-	mi := &file_platform_v1_platform_proto_msgTypes[27]
+	mi := &file_platform_v1_platform_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3815,7 +4351,7 @@ func (x *GetBootstrapRequest) String() string {
 func (*GetBootstrapRequest) ProtoMessage() {}
 
 func (x *GetBootstrapRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[27]
+	mi := &file_platform_v1_platform_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3828,7 +4364,7 @@ func (x *GetBootstrapRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBootstrapRequest.ProtoReflect.Descriptor instead.
 func (*GetBootstrapRequest) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{27}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *GetBootstrapRequest) GetScope() *TenantScope {
@@ -3848,7 +4384,7 @@ type GetBootstrapResponse struct {
 
 func (x *GetBootstrapResponse) Reset() {
 	*x = GetBootstrapResponse{}
-	mi := &file_platform_v1_platform_proto_msgTypes[28]
+	mi := &file_platform_v1_platform_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3860,7 +4396,7 @@ func (x *GetBootstrapResponse) String() string {
 func (*GetBootstrapResponse) ProtoMessage() {}
 
 func (x *GetBootstrapResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[28]
+	mi := &file_platform_v1_platform_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3873,7 +4409,7 @@ func (x *GetBootstrapResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBootstrapResponse.ProtoReflect.Descriptor instead.
 func (*GetBootstrapResponse) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{28}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *GetBootstrapResponse) GetScope() *TenantScope {
@@ -3902,7 +4438,7 @@ type PlatformCapability struct {
 
 func (x *PlatformCapability) Reset() {
 	*x = PlatformCapability{}
-	mi := &file_platform_v1_platform_proto_msgTypes[29]
+	mi := &file_platform_v1_platform_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3914,7 +4450,7 @@ func (x *PlatformCapability) String() string {
 func (*PlatformCapability) ProtoMessage() {}
 
 func (x *PlatformCapability) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[29]
+	mi := &file_platform_v1_platform_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3927,7 +4463,7 @@ func (x *PlatformCapability) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PlatformCapability.ProtoReflect.Descriptor instead.
 func (*PlatformCapability) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{29}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *PlatformCapability) GetName() string {
@@ -3969,7 +4505,7 @@ type PlatformCapabilityFeature struct {
 
 func (x *PlatformCapabilityFeature) Reset() {
 	*x = PlatformCapabilityFeature{}
-	mi := &file_platform_v1_platform_proto_msgTypes[30]
+	mi := &file_platform_v1_platform_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3981,7 +4517,7 @@ func (x *PlatformCapabilityFeature) String() string {
 func (*PlatformCapabilityFeature) ProtoMessage() {}
 
 func (x *PlatformCapabilityFeature) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[30]
+	mi := &file_platform_v1_platform_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3994,7 +4530,7 @@ func (x *PlatformCapabilityFeature) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PlatformCapabilityFeature.ProtoReflect.Descriptor instead.
 func (*PlatformCapabilityFeature) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{30}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *PlatformCapabilityFeature) GetOperation() string {
@@ -4028,7 +4564,7 @@ type CreateWorkRequest struct {
 
 func (x *CreateWorkRequest) Reset() {
 	*x = CreateWorkRequest{}
-	mi := &file_platform_v1_platform_proto_msgTypes[31]
+	mi := &file_platform_v1_platform_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4040,7 +4576,7 @@ func (x *CreateWorkRequest) String() string {
 func (*CreateWorkRequest) ProtoMessage() {}
 
 func (x *CreateWorkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[31]
+	mi := &file_platform_v1_platform_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4053,7 +4589,7 @@ func (x *CreateWorkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateWorkRequest.ProtoReflect.Descriptor instead.
 func (*CreateWorkRequest) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{31}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *CreateWorkRequest) GetContext() *OperationContext {
@@ -4080,7 +4616,7 @@ type CreateWorkResponse struct {
 
 func (x *CreateWorkResponse) Reset() {
 	*x = CreateWorkResponse{}
-	mi := &file_platform_v1_platform_proto_msgTypes[32]
+	mi := &file_platform_v1_platform_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4092,7 +4628,7 @@ func (x *CreateWorkResponse) String() string {
 func (*CreateWorkResponse) ProtoMessage() {}
 
 func (x *CreateWorkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[32]
+	mi := &file_platform_v1_platform_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4105,7 +4641,7 @@ func (x *CreateWorkResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateWorkResponse.ProtoReflect.Descriptor instead.
 func (*CreateWorkResponse) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{32}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *CreateWorkResponse) GetWork() *WorkItem {
@@ -4136,7 +4672,7 @@ type ProposeActionRequest struct {
 
 func (x *ProposeActionRequest) Reset() {
 	*x = ProposeActionRequest{}
-	mi := &file_platform_v1_platform_proto_msgTypes[33]
+	mi := &file_platform_v1_platform_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4148,7 +4684,7 @@ func (x *ProposeActionRequest) String() string {
 func (*ProposeActionRequest) ProtoMessage() {}
 
 func (x *ProposeActionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[33]
+	mi := &file_platform_v1_platform_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4161,7 +4697,7 @@ func (x *ProposeActionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProposeActionRequest.ProtoReflect.Descriptor instead.
 func (*ProposeActionRequest) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{33}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *ProposeActionRequest) GetContext() *OperationContext {
@@ -4216,7 +4752,7 @@ type ProposeActionResponse struct {
 
 func (x *ProposeActionResponse) Reset() {
 	*x = ProposeActionResponse{}
-	mi := &file_platform_v1_platform_proto_msgTypes[34]
+	mi := &file_platform_v1_platform_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4228,7 +4764,7 @@ func (x *ProposeActionResponse) String() string {
 func (*ProposeActionResponse) ProtoMessage() {}
 
 func (x *ProposeActionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[34]
+	mi := &file_platform_v1_platform_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4241,7 +4777,7 @@ func (x *ProposeActionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProposeActionResponse.ProtoReflect.Descriptor instead.
 func (*ProposeActionResponse) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{34}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *ProposeActionResponse) GetActionIntent() *ActionIntent {
@@ -4268,7 +4804,7 @@ type CreateArtifactRequest struct {
 
 func (x *CreateArtifactRequest) Reset() {
 	*x = CreateArtifactRequest{}
-	mi := &file_platform_v1_platform_proto_msgTypes[35]
+	mi := &file_platform_v1_platform_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4280,7 +4816,7 @@ func (x *CreateArtifactRequest) String() string {
 func (*CreateArtifactRequest) ProtoMessage() {}
 
 func (x *CreateArtifactRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[35]
+	mi := &file_platform_v1_platform_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4293,7 +4829,7 @@ func (x *CreateArtifactRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateArtifactRequest.ProtoReflect.Descriptor instead.
 func (*CreateArtifactRequest) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{35}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *CreateArtifactRequest) GetContext() *OperationContext {
@@ -4321,7 +4857,7 @@ type CreateArtifactResponse struct {
 
 func (x *CreateArtifactResponse) Reset() {
 	*x = CreateArtifactResponse{}
-	mi := &file_platform_v1_platform_proto_msgTypes[36]
+	mi := &file_platform_v1_platform_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4333,7 +4869,7 @@ func (x *CreateArtifactResponse) String() string {
 func (*CreateArtifactResponse) ProtoMessage() {}
 
 func (x *CreateArtifactResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[36]
+	mi := &file_platform_v1_platform_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4346,7 +4882,7 @@ func (x *CreateArtifactResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateArtifactResponse.ProtoReflect.Descriptor instead.
 func (*CreateArtifactResponse) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{36}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *CreateArtifactResponse) GetArtifact() *Artifact {
@@ -4382,7 +4918,7 @@ type RecordEvidenceRequest struct {
 
 func (x *RecordEvidenceRequest) Reset() {
 	*x = RecordEvidenceRequest{}
-	mi := &file_platform_v1_platform_proto_msgTypes[37]
+	mi := &file_platform_v1_platform_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4394,7 +4930,7 @@ func (x *RecordEvidenceRequest) String() string {
 func (*RecordEvidenceRequest) ProtoMessage() {}
 
 func (x *RecordEvidenceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[37]
+	mi := &file_platform_v1_platform_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4407,7 +4943,7 @@ func (x *RecordEvidenceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecordEvidenceRequest.ProtoReflect.Descriptor instead.
 func (*RecordEvidenceRequest) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{37}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *RecordEvidenceRequest) GetContext() *OperationContext {
@@ -4448,7 +4984,7 @@ type RecordEvidenceResponse struct {
 
 func (x *RecordEvidenceResponse) Reset() {
 	*x = RecordEvidenceResponse{}
-	mi := &file_platform_v1_platform_proto_msgTypes[38]
+	mi := &file_platform_v1_platform_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4460,7 +4996,7 @@ func (x *RecordEvidenceResponse) String() string {
 func (*RecordEvidenceResponse) ProtoMessage() {}
 
 func (x *RecordEvidenceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[38]
+	mi := &file_platform_v1_platform_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4473,7 +5009,7 @@ func (x *RecordEvidenceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecordEvidenceResponse.ProtoReflect.Descriptor instead.
 func (*RecordEvidenceResponse) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{38}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *RecordEvidenceResponse) GetEvidence() *EvidenceRecord {
@@ -4506,7 +5042,7 @@ type RecordScoreRequest struct {
 
 func (x *RecordScoreRequest) Reset() {
 	*x = RecordScoreRequest{}
-	mi := &file_platform_v1_platform_proto_msgTypes[39]
+	mi := &file_platform_v1_platform_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4518,7 +5054,7 @@ func (x *RecordScoreRequest) String() string {
 func (*RecordScoreRequest) ProtoMessage() {}
 
 func (x *RecordScoreRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[39]
+	mi := &file_platform_v1_platform_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4531,7 +5067,7 @@ func (x *RecordScoreRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecordScoreRequest.ProtoReflect.Descriptor instead.
 func (*RecordScoreRequest) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{39}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *RecordScoreRequest) GetContext() *OperationContext {
@@ -4601,7 +5137,7 @@ type RecordScoreResponse struct {
 
 func (x *RecordScoreResponse) Reset() {
 	*x = RecordScoreResponse{}
-	mi := &file_platform_v1_platform_proto_msgTypes[40]
+	mi := &file_platform_v1_platform_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4613,7 +5149,7 @@ func (x *RecordScoreResponse) String() string {
 func (*RecordScoreResponse) ProtoMessage() {}
 
 func (x *RecordScoreResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[40]
+	mi := &file_platform_v1_platform_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4626,7 +5162,7 @@ func (x *RecordScoreResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecordScoreResponse.ProtoReflect.Descriptor instead.
 func (*RecordScoreResponse) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{40}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *RecordScoreResponse) GetScore() *Score {
@@ -4668,7 +5204,7 @@ type ApplyRecommendationRequest struct {
 
 func (x *ApplyRecommendationRequest) Reset() {
 	*x = ApplyRecommendationRequest{}
-	mi := &file_platform_v1_platform_proto_msgTypes[41]
+	mi := &file_platform_v1_platform_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4680,7 +5216,7 @@ func (x *ApplyRecommendationRequest) String() string {
 func (*ApplyRecommendationRequest) ProtoMessage() {}
 
 func (x *ApplyRecommendationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[41]
+	mi := &file_platform_v1_platform_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4693,7 +5229,7 @@ func (x *ApplyRecommendationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApplyRecommendationRequest.ProtoReflect.Descriptor instead.
 func (*ApplyRecommendationRequest) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{41}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *ApplyRecommendationRequest) GetContext() *OperationContext {
@@ -4777,7 +5313,7 @@ type ApplyRecommendationResponse struct {
 
 func (x *ApplyRecommendationResponse) Reset() {
 	*x = ApplyRecommendationResponse{}
-	mi := &file_platform_v1_platform_proto_msgTypes[42]
+	mi := &file_platform_v1_platform_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4789,7 +5325,7 @@ func (x *ApplyRecommendationResponse) String() string {
 func (*ApplyRecommendationResponse) ProtoMessage() {}
 
 func (x *ApplyRecommendationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_v1_platform_proto_msgTypes[42]
+	mi := &file_platform_v1_platform_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4802,7 +5338,7 @@ func (x *ApplyRecommendationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApplyRecommendationResponse.ProtoReflect.Descriptor instead.
 func (*ApplyRecommendationResponse) Descriptor() ([]byte, []int) {
-	return file_platform_v1_platform_proto_rawDescGZIP(), []int{42}
+	return file_platform_v1_platform_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *ApplyRecommendationResponse) GetRecommendation() *Recommendation {
@@ -4906,13 +5442,14 @@ const file_platform_v1_platform_proto_rawDesc = "" +
 	"\fcandidate_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vcandidateId\x12\x1f\n" +
 	"\vbaseline_id\x18\x03 \x01(\tR\n" +
 	"baselineId\x12#\n" +
-	"\rassignment_id\x18\x04 \x01(\tR\fassignmentId\"\x82\x02\n" +
+	"\rassignment_id\x18\x04 \x01(\tR\fassignmentId\"\xcf\x02\n" +
 	"\vNewWorkItem\x123\n" +
 	"\x04kind\x18\x01 \x01(\x0e2\x15.platform.v1.WorkKindB\b\xbaH\x05\x82\x01\x02\x10\x01R\x04kind\x12\x1d\n" +
 	"\x05title\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05title\x12$\n" +
 	"\x0eparent_work_id\x18\x03 \x01(\tR\fparentWorkId\x123\n" +
 	"\bmetadata\x18\x04 \x01(\v2\x17.google.protobuf.StructR\bmetadata\x12D\n" +
-	"\x0feval_assignment\x18\x05 \x01(\v2\x1b.platform.v1.EvalAssignmentR\x0eevalAssignment\"\xf8\x03\n" +
+	"\x0feval_assignment\x18\x05 \x01(\v2\x1b.platform.v1.EvalAssignmentR\x0eevalAssignment\x12K\n" +
+	"\x10remediation_plan\x18\x06 \x01(\v2 .platform.v1.WorkRemediationPlanR\x0fremediationPlan\"\xc5\x04\n" +
 	"\bWorkItem\x12 \n" +
 	"\awork_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x06workId\x126\n" +
 	"\x05scope\x18\x02 \x01(\v2\x18.platform.v1.TenantScopeB\x06\xbaH\x03\xc8\x01\x01R\x05scope\x123\n" +
@@ -4926,14 +5463,60 @@ const file_platform_v1_platform_proto_rawDesc = "" +
 	"lineage_id\x18\b \x01(\tB\a\xbaH\x04r\x02\x10\x01R\tlineageId\x123\n" +
 	"\bmetadata\x18\t \x01(\v2\x17.google.protobuf.StructR\bmetadata\x12D\n" +
 	"\x0feval_assignment\x18\n" +
-	" \x01(\v2\x1b.platform.v1.EvalAssignmentR\x0eevalAssignment\"\xb2\x01\n" +
+	" \x01(\v2\x1b.platform.v1.EvalAssignmentR\x0eevalAssignment\x12K\n" +
+	"\x10remediation_plan\x18\v \x01(\v2 .platform.v1.WorkRemediationPlanR\x0fremediationPlan\"\xb2\x01\n" +
 	"\vResourceRef\x12(\n" +
 	"\vresource_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\n" +
 	"resourceId\x127\n" +
 	"\x04kind\x18\x02 \x01(\x0e2\x19.platform.v1.ResourceKindB\b\xbaH\x05\x82\x01\x02\x10\x01R\x04kind\x12\x1d\n" +
 	"\n" +
 	"version_id\x18\x03 \x01(\tR\tversionId\x12!\n" +
-	"\aversion\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\aversion\"\x86\x01\n" +
+	"\aversion\x18\x04 \x01(\x05B\a\xbaH\x04\x1a\x02(\x00R\aversion\"\x9d\x02\n" +
+	"\x17WorkRemediationResource\x12(\n" +
+	"\vprovider_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\n" +
+	"providerId\x12,\n" +
+	"\rconnection_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\fconnectionId\x125\n" +
+	"\x12stable_resource_id\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x10stableResourceId\x12,\n" +
+	"\rresource_kind\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\fresourceKind\x12E\n" +
+	"\x11platform_resource\x18\x05 \x01(\v2\x18.platform.v1.ResourceRefR\x10platformResource\"\xa4\x04\n" +
+	"\x15WorkRemediationAction\x12$\n" +
+	"\taction_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bactionId\x12.\n" +
+	"\x0ecatalog_digest\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\rcatalogDigest\x12*\n" +
+	"\finput_digest\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vinputDigest\x12D\n" +
+	"\x06target\x18\x04 \x01(\v2$.platform.v1.WorkRemediationResourceB\x06\xbaH\x03\xc8\x01\x01R\x06target\x12>\n" +
+	"\trisk_tier\x18\x05 \x01(\x0e2\x15.platform.v1.RiskTierB\n" +
+	"\xbaH\a\x82\x01\x04\x10\x01 \x00R\briskTier\x12+\n" +
+	"\x11approval_required\x18\x06 \x01(\bR\x10approvalRequired\x12'\n" +
+	"\x0frequired_scopes\x18\a \x03(\tR\x0erequiredScopes\x120\n" +
+	"\x0fidempotency_key\x18\b \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0eidempotencyKey\x12+\n" +
+	"\x11postcondition_ids\x18\t \x03(\tR\x10postconditionIds\x12N\n" +
+	"\x12input_artifact_ref\x18\n" +
+	" \x01(\v2\x18.platform.v1.ResourceRefB\x06\xbaH\x03\xc8\x01\x01R\x10inputArtifactRef\"\xb0\x03\n" +
+	"\x1cWorkRemediationPostcondition\x122\n" +
+	"\x10postcondition_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0fpostconditionId\x12D\n" +
+	"\x06target\x18\x02 \x01(\v2$.platform.v1.WorkRemediationResourceB\x06\xbaH\x03\xc8\x01\x01R\x06target\x125\n" +
+	"\x12observer_action_id\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x10observerActionId\x12;\n" +
+	"\x15expected_state_digest\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x13expectedStateDigest\x12/\n" +
+	"\x0fmax_age_seconds\x18\x05 \x01(\rB\a\xbaH\x04*\x02 \x00R\rmaxAgeSeconds\x12q\n" +
+	"\x15required_independence\x18\x06 \x01(\x0e20.platform.v1.WorkRemediationEvidenceIndependenceB\n" +
+	"\xbaH\a\x82\x01\x04\x10\x01 \x00R\x14requiredIndependence\"\xf1\x05\n" +
+	"\x13WorkRemediationPlan\x12.\n" +
+	"\x0eschema_version\x18\x01 \x01(\rB\a\xbaH\x04*\x02 \x00R\rschemaVersion\x12(\n" +
+	"\vplan_digest\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\n" +
+	"planDigest\x126\n" +
+	"\x05scope\x18\x03 \x01(\v2\x18.platform.v1.TenantScopeB\x06\xbaH\x03\xc8\x01\x01R\x05scope\x123\n" +
+	"\x11source_finding_id\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0fsourceFindingId\x12?\n" +
+	"\x0fsource_evidence\x18\x05 \x03(\v2\x16.platform.v1.RecordRefR\x0esourceEvidence\x12S\n" +
+	"\x12affected_resources\x18\x06 \x03(\v2$.platform.v1.WorkRemediationResourceR\x11affectedResources\x12Q\n" +
+	"\x0epostconditions\x18\a \x03(\v2).platform.v1.WorkRemediationPostconditionR\x0epostconditions\x12<\n" +
+	"\aactions\x18\b \x03(\v2\".platform.v1.WorkRemediationActionR\aactions\x12^\n" +
+	"\x0eclassification\x18\t \x01(\x0e2*.platform.v1.WorkRemediationClassificationB\n" +
+	"\xbaH\a\x82\x01\x04\x10\x01 \x00R\x0eclassification\x12&\n" +
+	"\n" +
+	"lineage_id\x18\n" +
+	" \x01(\tB\a\xbaH\x04r\x02\x10\x01R\tlineageId\x120\n" +
+	"\x0fidempotency_key\x18\v \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0eidempotencyKey\x122\n" +
+	"\x15non_executable_reason\x18\f \x01(\tR\x13nonExecutableReason\"\x86\x01\n" +
 	"\tRecordRef\x127\n" +
 	"\x04kind\x18\x01 \x01(\x0e2\x17.platform.v1.RecordKindB\n" +
 	"\xbaH\a\x82\x01\x04\x10\x01 \x00R\x04kind\x12$\n" +
@@ -5256,7 +5839,17 @@ const file_platform_v1_platform_proto_rawDesc = "" +
 	"\x12\x1a\n" +
 	"\x16RESOURCE_KIND_ARTIFACT\x10\v\x12\"\n" +
 	"\x1eRESOURCE_KIND_ARTIFACT_VERSION\x10\f\x12!\n" +
-	"\x1dRESOURCE_KIND_GENERATED_ASSET\x10\r*\x8c\x03\n" +
+	"\x1dRESOURCE_KIND_GENERATED_ASSET\x10\r*\x9c\x02\n" +
+	"\x1dWorkRemediationClassification\x12/\n" +
+	"+WORK_REMEDIATION_CLASSIFICATION_UNSPECIFIED\x10\x00\x123\n" +
+	"/WORK_REMEDIATION_CLASSIFICATION_AUTO_EXECUTABLE\x10\x01\x127\n" +
+	"3WORK_REMEDIATION_CLASSIFICATION_APPROVAL_EXECUTABLE\x10\x02\x12/\n" +
+	"+WORK_REMEDIATION_CLASSIFICATION_MANUAL_WORK\x10\x03\x12+\n" +
+	"'WORK_REMEDIATION_CLASSIFICATION_BLOCKED\x10\x04*\xdb\x01\n" +
+	"#WorkRemediationEvidenceIndependence\x126\n" +
+	"2WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_UNSPECIFIED\x10\x00\x128\n" +
+	"4WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_ACTION_OUTPUT\x10\x01\x12B\n" +
+	">WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_INDEPENDENT_OBSERVATION\x10\x02*\x8c\x03\n" +
 	"\n" +
 	"RecordKind\x12\x1b\n" +
 	"\x17RECORD_KIND_UNSPECIFIED\x10\x00\x12\x13\n" +
@@ -5387,214 +5980,234 @@ func file_platform_v1_platform_proto_rawDescGZIP() []byte {
 	return file_platform_v1_platform_proto_rawDescData
 }
 
-var file_platform_v1_platform_proto_enumTypes = make([]protoimpl.EnumInfo, 19)
-var file_platform_v1_platform_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
+var file_platform_v1_platform_proto_enumTypes = make([]protoimpl.EnumInfo, 21)
+var file_platform_v1_platform_proto_msgTypes = make([]protoimpl.MessageInfo, 47)
 var file_platform_v1_platform_proto_goTypes = []any{
-	(PrincipalKind)(0),                  // 0: platform.v1.PrincipalKind
-	(PolicyKind)(0),                     // 1: platform.v1.PolicyKind
-	(AuthorityDecisionKind)(0),          // 2: platform.v1.AuthorityDecisionKind
-	(WorkKind)(0),                       // 3: platform.v1.WorkKind
-	(WorkState)(0),                      // 4: platform.v1.WorkState
-	(ResourceKind)(0),                   // 5: platform.v1.ResourceKind
-	(RecordKind)(0),                     // 6: platform.v1.RecordKind
-	(RiskTier)(0),                       // 7: platform.v1.RiskTier
-	(ApprovalState)(0),                  // 8: platform.v1.ApprovalState
-	(ActionExecutionState)(0),           // 9: platform.v1.ActionExecutionState
-	(ArtifactKind)(0),                   // 10: platform.v1.ArtifactKind
-	(ArtifactState)(0),                  // 11: platform.v1.ArtifactState
-	(EvidenceKind)(0),                   // 12: platform.v1.EvidenceKind
-	(RecommendationKind)(0),             // 13: platform.v1.RecommendationKind
-	(RecommendationState)(0),            // 14: platform.v1.RecommendationState
-	(OutboxStatus)(0),                   // 15: platform.v1.OutboxStatus
-	(UsageMetricKind)(0),                // 16: platform.v1.UsageMetricKind
-	(AttributionSubjectKind)(0),         // 17: platform.v1.AttributionSubjectKind
-	(CapabilityStatus)(0),               // 18: platform.v1.CapabilityStatus
-	(*TenantScope)(nil),                 // 19: platform.v1.TenantScope
-	(*Principal)(nil),                   // 20: platform.v1.Principal
-	(*Actor)(nil),                       // 21: platform.v1.Actor
-	(*PolicyRef)(nil),                   // 22: platform.v1.PolicyRef
-	(*Policy)(nil),                      // 23: platform.v1.Policy
-	(*PolicyVersion)(nil),               // 24: platform.v1.PolicyVersion
-	(*AuthorityDecision)(nil),           // 25: platform.v1.AuthorityDecision
-	(*OperationContext)(nil),            // 26: platform.v1.OperationContext
-	(*OperationRecord)(nil),             // 27: platform.v1.OperationRecord
-	(*EvalAssignment)(nil),              // 28: platform.v1.EvalAssignment
-	(*NewWorkItem)(nil),                 // 29: platform.v1.NewWorkItem
-	(*WorkItem)(nil),                    // 30: platform.v1.WorkItem
-	(*ResourceRef)(nil),                 // 31: platform.v1.ResourceRef
-	(*RecordRef)(nil),                   // 32: platform.v1.RecordRef
-	(*ActionIntent)(nil),                // 33: platform.v1.ActionIntent
-	(*NewArtifactVersion)(nil),          // 34: platform.v1.NewArtifactVersion
-	(*Artifact)(nil),                    // 35: platform.v1.Artifact
-	(*ArtifactVersion)(nil),             // 36: platform.v1.ArtifactVersion
-	(*EvidenceRecord)(nil),              // 37: platform.v1.EvidenceRecord
-	(*Score)(nil),                       // 38: platform.v1.Score
-	(*Recommendation)(nil),              // 39: platform.v1.Recommendation
-	(*DomainEvent)(nil),                 // 40: platform.v1.DomainEvent
-	(*OutboxMessage)(nil),               // 41: platform.v1.OutboxMessage
-	(*OperationReceipt)(nil),            // 42: platform.v1.OperationReceipt
-	(*UsageLedgerEntry)(nil),            // 43: platform.v1.UsageLedgerEntry
-	(*SpendLedgerEntry)(nil),            // 44: platform.v1.SpendLedgerEntry
-	(*AttributionEdge)(nil),             // 45: platform.v1.AttributionEdge
-	(*GetBootstrapRequest)(nil),         // 46: platform.v1.GetBootstrapRequest
-	(*GetBootstrapResponse)(nil),        // 47: platform.v1.GetBootstrapResponse
-	(*PlatformCapability)(nil),          // 48: platform.v1.PlatformCapability
-	(*PlatformCapabilityFeature)(nil),   // 49: platform.v1.PlatformCapabilityFeature
-	(*CreateWorkRequest)(nil),           // 50: platform.v1.CreateWorkRequest
-	(*CreateWorkResponse)(nil),          // 51: platform.v1.CreateWorkResponse
-	(*ProposeActionRequest)(nil),        // 52: platform.v1.ProposeActionRequest
-	(*ProposeActionResponse)(nil),       // 53: platform.v1.ProposeActionResponse
-	(*CreateArtifactRequest)(nil),       // 54: platform.v1.CreateArtifactRequest
-	(*CreateArtifactResponse)(nil),      // 55: platform.v1.CreateArtifactResponse
-	(*RecordEvidenceRequest)(nil),       // 56: platform.v1.RecordEvidenceRequest
-	(*RecordEvidenceResponse)(nil),      // 57: platform.v1.RecordEvidenceResponse
-	(*RecordScoreRequest)(nil),          // 58: platform.v1.RecordScoreRequest
-	(*RecordScoreResponse)(nil),         // 59: platform.v1.RecordScoreResponse
-	(*ApplyRecommendationRequest)(nil),  // 60: platform.v1.ApplyRecommendationRequest
-	(*ApplyRecommendationResponse)(nil), // 61: platform.v1.ApplyRecommendationResponse
-	(*timestamppb.Timestamp)(nil),       // 62: google.protobuf.Timestamp
-	(*structpb.Struct)(nil),             // 63: google.protobuf.Struct
+	(PrincipalKind)(0),                       // 0: platform.v1.PrincipalKind
+	(PolicyKind)(0),                          // 1: platform.v1.PolicyKind
+	(AuthorityDecisionKind)(0),               // 2: platform.v1.AuthorityDecisionKind
+	(WorkKind)(0),                            // 3: platform.v1.WorkKind
+	(WorkState)(0),                           // 4: platform.v1.WorkState
+	(ResourceKind)(0),                        // 5: platform.v1.ResourceKind
+	(WorkRemediationClassification)(0),       // 6: platform.v1.WorkRemediationClassification
+	(WorkRemediationEvidenceIndependence)(0), // 7: platform.v1.WorkRemediationEvidenceIndependence
+	(RecordKind)(0),                          // 8: platform.v1.RecordKind
+	(RiskTier)(0),                            // 9: platform.v1.RiskTier
+	(ApprovalState)(0),                       // 10: platform.v1.ApprovalState
+	(ActionExecutionState)(0),                // 11: platform.v1.ActionExecutionState
+	(ArtifactKind)(0),                        // 12: platform.v1.ArtifactKind
+	(ArtifactState)(0),                       // 13: platform.v1.ArtifactState
+	(EvidenceKind)(0),                        // 14: platform.v1.EvidenceKind
+	(RecommendationKind)(0),                  // 15: platform.v1.RecommendationKind
+	(RecommendationState)(0),                 // 16: platform.v1.RecommendationState
+	(OutboxStatus)(0),                        // 17: platform.v1.OutboxStatus
+	(UsageMetricKind)(0),                     // 18: platform.v1.UsageMetricKind
+	(AttributionSubjectKind)(0),              // 19: platform.v1.AttributionSubjectKind
+	(CapabilityStatus)(0),                    // 20: platform.v1.CapabilityStatus
+	(*TenantScope)(nil),                      // 21: platform.v1.TenantScope
+	(*Principal)(nil),                        // 22: platform.v1.Principal
+	(*Actor)(nil),                            // 23: platform.v1.Actor
+	(*PolicyRef)(nil),                        // 24: platform.v1.PolicyRef
+	(*Policy)(nil),                           // 25: platform.v1.Policy
+	(*PolicyVersion)(nil),                    // 26: platform.v1.PolicyVersion
+	(*AuthorityDecision)(nil),                // 27: platform.v1.AuthorityDecision
+	(*OperationContext)(nil),                 // 28: platform.v1.OperationContext
+	(*OperationRecord)(nil),                  // 29: platform.v1.OperationRecord
+	(*EvalAssignment)(nil),                   // 30: platform.v1.EvalAssignment
+	(*NewWorkItem)(nil),                      // 31: platform.v1.NewWorkItem
+	(*WorkItem)(nil),                         // 32: platform.v1.WorkItem
+	(*ResourceRef)(nil),                      // 33: platform.v1.ResourceRef
+	(*WorkRemediationResource)(nil),          // 34: platform.v1.WorkRemediationResource
+	(*WorkRemediationAction)(nil),            // 35: platform.v1.WorkRemediationAction
+	(*WorkRemediationPostcondition)(nil),     // 36: platform.v1.WorkRemediationPostcondition
+	(*WorkRemediationPlan)(nil),              // 37: platform.v1.WorkRemediationPlan
+	(*RecordRef)(nil),                        // 38: platform.v1.RecordRef
+	(*ActionIntent)(nil),                     // 39: platform.v1.ActionIntent
+	(*NewArtifactVersion)(nil),               // 40: platform.v1.NewArtifactVersion
+	(*Artifact)(nil),                         // 41: platform.v1.Artifact
+	(*ArtifactVersion)(nil),                  // 42: platform.v1.ArtifactVersion
+	(*EvidenceRecord)(nil),                   // 43: platform.v1.EvidenceRecord
+	(*Score)(nil),                            // 44: platform.v1.Score
+	(*Recommendation)(nil),                   // 45: platform.v1.Recommendation
+	(*DomainEvent)(nil),                      // 46: platform.v1.DomainEvent
+	(*OutboxMessage)(nil),                    // 47: platform.v1.OutboxMessage
+	(*OperationReceipt)(nil),                 // 48: platform.v1.OperationReceipt
+	(*UsageLedgerEntry)(nil),                 // 49: platform.v1.UsageLedgerEntry
+	(*SpendLedgerEntry)(nil),                 // 50: platform.v1.SpendLedgerEntry
+	(*AttributionEdge)(nil),                  // 51: platform.v1.AttributionEdge
+	(*GetBootstrapRequest)(nil),              // 52: platform.v1.GetBootstrapRequest
+	(*GetBootstrapResponse)(nil),             // 53: platform.v1.GetBootstrapResponse
+	(*PlatformCapability)(nil),               // 54: platform.v1.PlatformCapability
+	(*PlatformCapabilityFeature)(nil),        // 55: platform.v1.PlatformCapabilityFeature
+	(*CreateWorkRequest)(nil),                // 56: platform.v1.CreateWorkRequest
+	(*CreateWorkResponse)(nil),               // 57: platform.v1.CreateWorkResponse
+	(*ProposeActionRequest)(nil),             // 58: platform.v1.ProposeActionRequest
+	(*ProposeActionResponse)(nil),            // 59: platform.v1.ProposeActionResponse
+	(*CreateArtifactRequest)(nil),            // 60: platform.v1.CreateArtifactRequest
+	(*CreateArtifactResponse)(nil),           // 61: platform.v1.CreateArtifactResponse
+	(*RecordEvidenceRequest)(nil),            // 62: platform.v1.RecordEvidenceRequest
+	(*RecordEvidenceResponse)(nil),           // 63: platform.v1.RecordEvidenceResponse
+	(*RecordScoreRequest)(nil),               // 64: platform.v1.RecordScoreRequest
+	(*RecordScoreResponse)(nil),              // 65: platform.v1.RecordScoreResponse
+	(*ApplyRecommendationRequest)(nil),       // 66: platform.v1.ApplyRecommendationRequest
+	(*ApplyRecommendationResponse)(nil),      // 67: platform.v1.ApplyRecommendationResponse
+	(*timestamppb.Timestamp)(nil),            // 68: google.protobuf.Timestamp
+	(*structpb.Struct)(nil),                  // 69: google.protobuf.Struct
 }
 var file_platform_v1_platform_proto_depIdxs = []int32{
 	0,   // 0: platform.v1.Principal.kind:type_name -> platform.v1.PrincipalKind
-	20,  // 1: platform.v1.Actor.principal:type_name -> platform.v1.Principal
-	19,  // 2: platform.v1.Policy.scope:type_name -> platform.v1.TenantScope
+	22,  // 1: platform.v1.Actor.principal:type_name -> platform.v1.Principal
+	21,  // 2: platform.v1.Policy.scope:type_name -> platform.v1.TenantScope
 	1,   // 3: platform.v1.Policy.kind:type_name -> platform.v1.PolicyKind
-	20,  // 4: platform.v1.PolicyVersion.created_by:type_name -> platform.v1.Principal
+	22,  // 4: platform.v1.PolicyVersion.created_by:type_name -> platform.v1.Principal
 	2,   // 5: platform.v1.AuthorityDecision.kind:type_name -> platform.v1.AuthorityDecisionKind
-	22,  // 6: platform.v1.AuthorityDecision.policy_refs:type_name -> platform.v1.PolicyRef
-	62,  // 7: platform.v1.AuthorityDecision.evaluated_at:type_name -> google.protobuf.Timestamp
-	19,  // 8: platform.v1.OperationContext.scope:type_name -> platform.v1.TenantScope
-	21,  // 9: platform.v1.OperationContext.actor:type_name -> platform.v1.Actor
-	25,  // 10: platform.v1.OperationContext.authority:type_name -> platform.v1.AuthorityDecision
-	62,  // 11: platform.v1.OperationContext.now:type_name -> google.protobuf.Timestamp
-	63,  // 12: platform.v1.OperationContext.evidence:type_name -> google.protobuf.Struct
-	19,  // 13: platform.v1.OperationRecord.scope:type_name -> platform.v1.TenantScope
-	21,  // 14: platform.v1.OperationRecord.actor:type_name -> platform.v1.Actor
-	25,  // 15: platform.v1.OperationRecord.authority:type_name -> platform.v1.AuthorityDecision
-	62,  // 16: platform.v1.OperationRecord.recorded_at:type_name -> google.protobuf.Timestamp
+	24,  // 6: platform.v1.AuthorityDecision.policy_refs:type_name -> platform.v1.PolicyRef
+	68,  // 7: platform.v1.AuthorityDecision.evaluated_at:type_name -> google.protobuf.Timestamp
+	21,  // 8: platform.v1.OperationContext.scope:type_name -> platform.v1.TenantScope
+	23,  // 9: platform.v1.OperationContext.actor:type_name -> platform.v1.Actor
+	27,  // 10: platform.v1.OperationContext.authority:type_name -> platform.v1.AuthorityDecision
+	68,  // 11: platform.v1.OperationContext.now:type_name -> google.protobuf.Timestamp
+	69,  // 12: platform.v1.OperationContext.evidence:type_name -> google.protobuf.Struct
+	21,  // 13: platform.v1.OperationRecord.scope:type_name -> platform.v1.TenantScope
+	23,  // 14: platform.v1.OperationRecord.actor:type_name -> platform.v1.Actor
+	27,  // 15: platform.v1.OperationRecord.authority:type_name -> platform.v1.AuthorityDecision
+	68,  // 16: platform.v1.OperationRecord.recorded_at:type_name -> google.protobuf.Timestamp
 	3,   // 17: platform.v1.NewWorkItem.kind:type_name -> platform.v1.WorkKind
-	63,  // 18: platform.v1.NewWorkItem.metadata:type_name -> google.protobuf.Struct
-	28,  // 19: platform.v1.NewWorkItem.eval_assignment:type_name -> platform.v1.EvalAssignment
-	19,  // 20: platform.v1.WorkItem.scope:type_name -> platform.v1.TenantScope
-	3,   // 21: platform.v1.WorkItem.kind:type_name -> platform.v1.WorkKind
-	4,   // 22: platform.v1.WorkItem.state:type_name -> platform.v1.WorkState
-	20,  // 23: platform.v1.WorkItem.created_by:type_name -> platform.v1.Principal
-	63,  // 24: platform.v1.WorkItem.metadata:type_name -> google.protobuf.Struct
-	28,  // 25: platform.v1.WorkItem.eval_assignment:type_name -> platform.v1.EvalAssignment
-	5,   // 26: platform.v1.ResourceRef.kind:type_name -> platform.v1.ResourceKind
-	6,   // 27: platform.v1.RecordRef.kind:type_name -> platform.v1.RecordKind
-	19,  // 28: platform.v1.ActionIntent.scope:type_name -> platform.v1.TenantScope
-	20,  // 29: platform.v1.ActionIntent.proposed_by:type_name -> platform.v1.Principal
-	31,  // 30: platform.v1.ActionIntent.target_resource:type_name -> platform.v1.ResourceRef
-	7,   // 31: platform.v1.ActionIntent.risk_tier:type_name -> platform.v1.RiskTier
-	25,  // 32: platform.v1.ActionIntent.authority_decision:type_name -> platform.v1.AuthorityDecision
-	8,   // 33: platform.v1.ActionIntent.approval_state:type_name -> platform.v1.ApprovalState
-	9,   // 34: platform.v1.ActionIntent.execution_state:type_name -> platform.v1.ActionExecutionState
-	63,  // 35: platform.v1.ActionIntent.evidence:type_name -> google.protobuf.Struct
-	63,  // 36: platform.v1.ActionIntent.result:type_name -> google.protobuf.Struct
-	28,  // 37: platform.v1.ActionIntent.eval_assignment:type_name -> platform.v1.EvalAssignment
-	10,  // 38: platform.v1.NewArtifactVersion.kind:type_name -> platform.v1.ArtifactKind
-	63,  // 39: platform.v1.NewArtifactVersion.metadata:type_name -> google.protobuf.Struct
-	31,  // 40: platform.v1.NewArtifactVersion.resource_ref:type_name -> platform.v1.ResourceRef
-	19,  // 41: platform.v1.Artifact.scope:type_name -> platform.v1.TenantScope
-	10,  // 42: platform.v1.Artifact.kind:type_name -> platform.v1.ArtifactKind
-	11,  // 43: platform.v1.Artifact.state:type_name -> platform.v1.ArtifactState
-	31,  // 44: platform.v1.Artifact.resource_ref:type_name -> platform.v1.ResourceRef
-	20,  // 45: platform.v1.ArtifactVersion.created_by:type_name -> platform.v1.Principal
-	63,  // 46: platform.v1.ArtifactVersion.metadata:type_name -> google.protobuf.Struct
-	31,  // 47: platform.v1.ArtifactVersion.resource_ref:type_name -> platform.v1.ResourceRef
-	19,  // 48: platform.v1.EvidenceRecord.scope:type_name -> platform.v1.TenantScope
-	12,  // 49: platform.v1.EvidenceRecord.kind:type_name -> platform.v1.EvidenceKind
-	63,  // 50: platform.v1.EvidenceRecord.payload:type_name -> google.protobuf.Struct
-	19,  // 51: platform.v1.Score.scope:type_name -> platform.v1.TenantScope
-	28,  // 52: platform.v1.Score.eval_assignment:type_name -> platform.v1.EvalAssignment
-	62,  // 53: platform.v1.Score.scored_at:type_name -> google.protobuf.Timestamp
-	63,  // 54: platform.v1.Score.payload:type_name -> google.protobuf.Struct
-	19,  // 55: platform.v1.Recommendation.scope:type_name -> platform.v1.TenantScope
-	13,  // 56: platform.v1.Recommendation.kind:type_name -> platform.v1.RecommendationKind
-	14,  // 57: platform.v1.Recommendation.state:type_name -> platform.v1.RecommendationState
-	28,  // 58: platform.v1.Recommendation.eval_assignment:type_name -> platform.v1.EvalAssignment
-	63,  // 59: platform.v1.Recommendation.rationale:type_name -> google.protobuf.Struct
-	63,  // 60: platform.v1.Recommendation.result:type_name -> google.protobuf.Struct
-	19,  // 61: platform.v1.DomainEvent.scope:type_name -> platform.v1.TenantScope
-	63,  // 62: platform.v1.DomainEvent.payload:type_name -> google.protobuf.Struct
-	15,  // 63: platform.v1.OutboxMessage.status:type_name -> platform.v1.OutboxStatus
-	27,  // 64: platform.v1.OperationReceipt.operation_record:type_name -> platform.v1.OperationRecord
-	40,  // 65: platform.v1.OperationReceipt.domain_event:type_name -> platform.v1.DomainEvent
-	41,  // 66: platform.v1.OperationReceipt.outbox_message:type_name -> platform.v1.OutboxMessage
-	19,  // 67: platform.v1.UsageLedgerEntry.scope:type_name -> platform.v1.TenantScope
-	20,  // 68: platform.v1.UsageLedgerEntry.principal:type_name -> platform.v1.Principal
-	31,  // 69: platform.v1.UsageLedgerEntry.resource:type_name -> platform.v1.ResourceRef
-	16,  // 70: platform.v1.UsageLedgerEntry.metric_kind:type_name -> platform.v1.UsageMetricKind
-	62,  // 71: platform.v1.UsageLedgerEntry.observed_at:type_name -> google.protobuf.Timestamp
-	63,  // 72: platform.v1.UsageLedgerEntry.metadata:type_name -> google.protobuf.Struct
-	19,  // 73: platform.v1.SpendLedgerEntry.scope:type_name -> platform.v1.TenantScope
-	22,  // 74: platform.v1.SpendLedgerEntry.pricing_policy_ref:type_name -> platform.v1.PolicyRef
-	62,  // 75: platform.v1.SpendLedgerEntry.incurred_at:type_name -> google.protobuf.Timestamp
-	63,  // 76: platform.v1.SpendLedgerEntry.metadata:type_name -> google.protobuf.Struct
-	19,  // 77: platform.v1.AttributionEdge.scope:type_name -> platform.v1.TenantScope
-	17,  // 78: platform.v1.AttributionEdge.source_kind:type_name -> platform.v1.AttributionSubjectKind
-	17,  // 79: platform.v1.AttributionEdge.target_kind:type_name -> platform.v1.AttributionSubjectKind
-	19,  // 80: platform.v1.GetBootstrapRequest.scope:type_name -> platform.v1.TenantScope
-	19,  // 81: platform.v1.GetBootstrapResponse.scope:type_name -> platform.v1.TenantScope
-	48,  // 82: platform.v1.GetBootstrapResponse.capabilities:type_name -> platform.v1.PlatformCapability
-	18,  // 83: platform.v1.PlatformCapability.status:type_name -> platform.v1.CapabilityStatus
-	49,  // 84: platform.v1.PlatformCapability.features:type_name -> platform.v1.PlatformCapabilityFeature
-	26,  // 85: platform.v1.CreateWorkRequest.context:type_name -> platform.v1.OperationContext
-	29,  // 86: platform.v1.CreateWorkRequest.work:type_name -> platform.v1.NewWorkItem
-	30,  // 87: platform.v1.CreateWorkResponse.work:type_name -> platform.v1.WorkItem
-	42,  // 88: platform.v1.CreateWorkResponse.receipt:type_name -> platform.v1.OperationReceipt
-	26,  // 89: platform.v1.ProposeActionRequest.context:type_name -> platform.v1.OperationContext
-	31,  // 90: platform.v1.ProposeActionRequest.target_resource:type_name -> platform.v1.ResourceRef
-	7,   // 91: platform.v1.ProposeActionRequest.risk_tier:type_name -> platform.v1.RiskTier
-	63,  // 92: platform.v1.ProposeActionRequest.evidence:type_name -> google.protobuf.Struct
-	33,  // 93: platform.v1.ProposeActionResponse.action_intent:type_name -> platform.v1.ActionIntent
-	42,  // 94: platform.v1.ProposeActionResponse.receipt:type_name -> platform.v1.OperationReceipt
-	26,  // 95: platform.v1.CreateArtifactRequest.context:type_name -> platform.v1.OperationContext
-	34,  // 96: platform.v1.CreateArtifactRequest.artifact:type_name -> platform.v1.NewArtifactVersion
-	35,  // 97: platform.v1.CreateArtifactResponse.artifact:type_name -> platform.v1.Artifact
-	36,  // 98: platform.v1.CreateArtifactResponse.version:type_name -> platform.v1.ArtifactVersion
-	42,  // 99: platform.v1.CreateArtifactResponse.receipt:type_name -> platform.v1.OperationReceipt
-	26,  // 100: platform.v1.RecordEvidenceRequest.context:type_name -> platform.v1.OperationContext
-	12,  // 101: platform.v1.RecordEvidenceRequest.kind:type_name -> platform.v1.EvidenceKind
-	63,  // 102: platform.v1.RecordEvidenceRequest.payload:type_name -> google.protobuf.Struct
-	37,  // 103: platform.v1.RecordEvidenceResponse.evidence:type_name -> platform.v1.EvidenceRecord
-	42,  // 104: platform.v1.RecordEvidenceResponse.receipt:type_name -> platform.v1.OperationReceipt
-	26,  // 105: platform.v1.RecordScoreRequest.context:type_name -> platform.v1.OperationContext
-	28,  // 106: platform.v1.RecordScoreRequest.eval_assignment:type_name -> platform.v1.EvalAssignment
-	63,  // 107: platform.v1.RecordScoreRequest.payload:type_name -> google.protobuf.Struct
-	38,  // 108: platform.v1.RecordScoreResponse.score:type_name -> platform.v1.Score
-	37,  // 109: platform.v1.RecordScoreResponse.evidence:type_name -> platform.v1.EvidenceRecord
-	42,  // 110: platform.v1.RecordScoreResponse.receipt:type_name -> platform.v1.OperationReceipt
-	26,  // 111: platform.v1.ApplyRecommendationRequest.context:type_name -> platform.v1.OperationContext
-	13,  // 112: platform.v1.ApplyRecommendationRequest.kind:type_name -> platform.v1.RecommendationKind
-	7,   // 113: platform.v1.ApplyRecommendationRequest.risk_tier:type_name -> platform.v1.RiskTier
-	31,  // 114: platform.v1.ApplyRecommendationRequest.target_resource:type_name -> platform.v1.ResourceRef
-	28,  // 115: platform.v1.ApplyRecommendationRequest.eval_assignment:type_name -> platform.v1.EvalAssignment
-	63,  // 116: platform.v1.ApplyRecommendationRequest.rationale:type_name -> google.protobuf.Struct
-	39,  // 117: platform.v1.ApplyRecommendationResponse.recommendation:type_name -> platform.v1.Recommendation
-	33,  // 118: platform.v1.ApplyRecommendationResponse.action_intent:type_name -> platform.v1.ActionIntent
-	42,  // 119: platform.v1.ApplyRecommendationResponse.receipt:type_name -> platform.v1.OperationReceipt
-	46,  // 120: platform.v1.PlatformService.GetBootstrap:input_type -> platform.v1.GetBootstrapRequest
-	50,  // 121: platform.v1.PlatformService.CreateWork:input_type -> platform.v1.CreateWorkRequest
-	52,  // 122: platform.v1.PlatformService.ProposeAction:input_type -> platform.v1.ProposeActionRequest
-	54,  // 123: platform.v1.PlatformService.CreateArtifact:input_type -> platform.v1.CreateArtifactRequest
-	56,  // 124: platform.v1.PlatformService.RecordEvidence:input_type -> platform.v1.RecordEvidenceRequest
-	58,  // 125: platform.v1.PlatformService.RecordScore:input_type -> platform.v1.RecordScoreRequest
-	60,  // 126: platform.v1.PlatformService.ApplyRecommendation:input_type -> platform.v1.ApplyRecommendationRequest
-	47,  // 127: platform.v1.PlatformService.GetBootstrap:output_type -> platform.v1.GetBootstrapResponse
-	51,  // 128: platform.v1.PlatformService.CreateWork:output_type -> platform.v1.CreateWorkResponse
-	53,  // 129: platform.v1.PlatformService.ProposeAction:output_type -> platform.v1.ProposeActionResponse
-	55,  // 130: platform.v1.PlatformService.CreateArtifact:output_type -> platform.v1.CreateArtifactResponse
-	57,  // 131: platform.v1.PlatformService.RecordEvidence:output_type -> platform.v1.RecordEvidenceResponse
-	59,  // 132: platform.v1.PlatformService.RecordScore:output_type -> platform.v1.RecordScoreResponse
-	61,  // 133: platform.v1.PlatformService.ApplyRecommendation:output_type -> platform.v1.ApplyRecommendationResponse
-	127, // [127:134] is the sub-list for method output_type
-	120, // [120:127] is the sub-list for method input_type
-	120, // [120:120] is the sub-list for extension type_name
-	120, // [120:120] is the sub-list for extension extendee
-	0,   // [0:120] is the sub-list for field type_name
+	69,  // 18: platform.v1.NewWorkItem.metadata:type_name -> google.protobuf.Struct
+	30,  // 19: platform.v1.NewWorkItem.eval_assignment:type_name -> platform.v1.EvalAssignment
+	37,  // 20: platform.v1.NewWorkItem.remediation_plan:type_name -> platform.v1.WorkRemediationPlan
+	21,  // 21: platform.v1.WorkItem.scope:type_name -> platform.v1.TenantScope
+	3,   // 22: platform.v1.WorkItem.kind:type_name -> platform.v1.WorkKind
+	4,   // 23: platform.v1.WorkItem.state:type_name -> platform.v1.WorkState
+	22,  // 24: platform.v1.WorkItem.created_by:type_name -> platform.v1.Principal
+	69,  // 25: platform.v1.WorkItem.metadata:type_name -> google.protobuf.Struct
+	30,  // 26: platform.v1.WorkItem.eval_assignment:type_name -> platform.v1.EvalAssignment
+	37,  // 27: platform.v1.WorkItem.remediation_plan:type_name -> platform.v1.WorkRemediationPlan
+	5,   // 28: platform.v1.ResourceRef.kind:type_name -> platform.v1.ResourceKind
+	33,  // 29: platform.v1.WorkRemediationResource.platform_resource:type_name -> platform.v1.ResourceRef
+	34,  // 30: platform.v1.WorkRemediationAction.target:type_name -> platform.v1.WorkRemediationResource
+	9,   // 31: platform.v1.WorkRemediationAction.risk_tier:type_name -> platform.v1.RiskTier
+	33,  // 32: platform.v1.WorkRemediationAction.input_artifact_ref:type_name -> platform.v1.ResourceRef
+	34,  // 33: platform.v1.WorkRemediationPostcondition.target:type_name -> platform.v1.WorkRemediationResource
+	7,   // 34: platform.v1.WorkRemediationPostcondition.required_independence:type_name -> platform.v1.WorkRemediationEvidenceIndependence
+	21,  // 35: platform.v1.WorkRemediationPlan.scope:type_name -> platform.v1.TenantScope
+	38,  // 36: platform.v1.WorkRemediationPlan.source_evidence:type_name -> platform.v1.RecordRef
+	34,  // 37: platform.v1.WorkRemediationPlan.affected_resources:type_name -> platform.v1.WorkRemediationResource
+	36,  // 38: platform.v1.WorkRemediationPlan.postconditions:type_name -> platform.v1.WorkRemediationPostcondition
+	35,  // 39: platform.v1.WorkRemediationPlan.actions:type_name -> platform.v1.WorkRemediationAction
+	6,   // 40: platform.v1.WorkRemediationPlan.classification:type_name -> platform.v1.WorkRemediationClassification
+	8,   // 41: platform.v1.RecordRef.kind:type_name -> platform.v1.RecordKind
+	21,  // 42: platform.v1.ActionIntent.scope:type_name -> platform.v1.TenantScope
+	22,  // 43: platform.v1.ActionIntent.proposed_by:type_name -> platform.v1.Principal
+	33,  // 44: platform.v1.ActionIntent.target_resource:type_name -> platform.v1.ResourceRef
+	9,   // 45: platform.v1.ActionIntent.risk_tier:type_name -> platform.v1.RiskTier
+	27,  // 46: platform.v1.ActionIntent.authority_decision:type_name -> platform.v1.AuthorityDecision
+	10,  // 47: platform.v1.ActionIntent.approval_state:type_name -> platform.v1.ApprovalState
+	11,  // 48: platform.v1.ActionIntent.execution_state:type_name -> platform.v1.ActionExecutionState
+	69,  // 49: platform.v1.ActionIntent.evidence:type_name -> google.protobuf.Struct
+	69,  // 50: platform.v1.ActionIntent.result:type_name -> google.protobuf.Struct
+	30,  // 51: platform.v1.ActionIntent.eval_assignment:type_name -> platform.v1.EvalAssignment
+	12,  // 52: platform.v1.NewArtifactVersion.kind:type_name -> platform.v1.ArtifactKind
+	69,  // 53: platform.v1.NewArtifactVersion.metadata:type_name -> google.protobuf.Struct
+	33,  // 54: platform.v1.NewArtifactVersion.resource_ref:type_name -> platform.v1.ResourceRef
+	21,  // 55: platform.v1.Artifact.scope:type_name -> platform.v1.TenantScope
+	12,  // 56: platform.v1.Artifact.kind:type_name -> platform.v1.ArtifactKind
+	13,  // 57: platform.v1.Artifact.state:type_name -> platform.v1.ArtifactState
+	33,  // 58: platform.v1.Artifact.resource_ref:type_name -> platform.v1.ResourceRef
+	22,  // 59: platform.v1.ArtifactVersion.created_by:type_name -> platform.v1.Principal
+	69,  // 60: platform.v1.ArtifactVersion.metadata:type_name -> google.protobuf.Struct
+	33,  // 61: platform.v1.ArtifactVersion.resource_ref:type_name -> platform.v1.ResourceRef
+	21,  // 62: platform.v1.EvidenceRecord.scope:type_name -> platform.v1.TenantScope
+	14,  // 63: platform.v1.EvidenceRecord.kind:type_name -> platform.v1.EvidenceKind
+	69,  // 64: platform.v1.EvidenceRecord.payload:type_name -> google.protobuf.Struct
+	21,  // 65: platform.v1.Score.scope:type_name -> platform.v1.TenantScope
+	30,  // 66: platform.v1.Score.eval_assignment:type_name -> platform.v1.EvalAssignment
+	68,  // 67: platform.v1.Score.scored_at:type_name -> google.protobuf.Timestamp
+	69,  // 68: platform.v1.Score.payload:type_name -> google.protobuf.Struct
+	21,  // 69: platform.v1.Recommendation.scope:type_name -> platform.v1.TenantScope
+	15,  // 70: platform.v1.Recommendation.kind:type_name -> platform.v1.RecommendationKind
+	16,  // 71: platform.v1.Recommendation.state:type_name -> platform.v1.RecommendationState
+	30,  // 72: platform.v1.Recommendation.eval_assignment:type_name -> platform.v1.EvalAssignment
+	69,  // 73: platform.v1.Recommendation.rationale:type_name -> google.protobuf.Struct
+	69,  // 74: platform.v1.Recommendation.result:type_name -> google.protobuf.Struct
+	21,  // 75: platform.v1.DomainEvent.scope:type_name -> platform.v1.TenantScope
+	69,  // 76: platform.v1.DomainEvent.payload:type_name -> google.protobuf.Struct
+	17,  // 77: platform.v1.OutboxMessage.status:type_name -> platform.v1.OutboxStatus
+	29,  // 78: platform.v1.OperationReceipt.operation_record:type_name -> platform.v1.OperationRecord
+	46,  // 79: platform.v1.OperationReceipt.domain_event:type_name -> platform.v1.DomainEvent
+	47,  // 80: platform.v1.OperationReceipt.outbox_message:type_name -> platform.v1.OutboxMessage
+	21,  // 81: platform.v1.UsageLedgerEntry.scope:type_name -> platform.v1.TenantScope
+	22,  // 82: platform.v1.UsageLedgerEntry.principal:type_name -> platform.v1.Principal
+	33,  // 83: platform.v1.UsageLedgerEntry.resource:type_name -> platform.v1.ResourceRef
+	18,  // 84: platform.v1.UsageLedgerEntry.metric_kind:type_name -> platform.v1.UsageMetricKind
+	68,  // 85: platform.v1.UsageLedgerEntry.observed_at:type_name -> google.protobuf.Timestamp
+	69,  // 86: platform.v1.UsageLedgerEntry.metadata:type_name -> google.protobuf.Struct
+	21,  // 87: platform.v1.SpendLedgerEntry.scope:type_name -> platform.v1.TenantScope
+	24,  // 88: platform.v1.SpendLedgerEntry.pricing_policy_ref:type_name -> platform.v1.PolicyRef
+	68,  // 89: platform.v1.SpendLedgerEntry.incurred_at:type_name -> google.protobuf.Timestamp
+	69,  // 90: platform.v1.SpendLedgerEntry.metadata:type_name -> google.protobuf.Struct
+	21,  // 91: platform.v1.AttributionEdge.scope:type_name -> platform.v1.TenantScope
+	19,  // 92: platform.v1.AttributionEdge.source_kind:type_name -> platform.v1.AttributionSubjectKind
+	19,  // 93: platform.v1.AttributionEdge.target_kind:type_name -> platform.v1.AttributionSubjectKind
+	21,  // 94: platform.v1.GetBootstrapRequest.scope:type_name -> platform.v1.TenantScope
+	21,  // 95: platform.v1.GetBootstrapResponse.scope:type_name -> platform.v1.TenantScope
+	54,  // 96: platform.v1.GetBootstrapResponse.capabilities:type_name -> platform.v1.PlatformCapability
+	20,  // 97: platform.v1.PlatformCapability.status:type_name -> platform.v1.CapabilityStatus
+	55,  // 98: platform.v1.PlatformCapability.features:type_name -> platform.v1.PlatformCapabilityFeature
+	28,  // 99: platform.v1.CreateWorkRequest.context:type_name -> platform.v1.OperationContext
+	31,  // 100: platform.v1.CreateWorkRequest.work:type_name -> platform.v1.NewWorkItem
+	32,  // 101: platform.v1.CreateWorkResponse.work:type_name -> platform.v1.WorkItem
+	48,  // 102: platform.v1.CreateWorkResponse.receipt:type_name -> platform.v1.OperationReceipt
+	28,  // 103: platform.v1.ProposeActionRequest.context:type_name -> platform.v1.OperationContext
+	33,  // 104: platform.v1.ProposeActionRequest.target_resource:type_name -> platform.v1.ResourceRef
+	9,   // 105: platform.v1.ProposeActionRequest.risk_tier:type_name -> platform.v1.RiskTier
+	69,  // 106: platform.v1.ProposeActionRequest.evidence:type_name -> google.protobuf.Struct
+	39,  // 107: platform.v1.ProposeActionResponse.action_intent:type_name -> platform.v1.ActionIntent
+	48,  // 108: platform.v1.ProposeActionResponse.receipt:type_name -> platform.v1.OperationReceipt
+	28,  // 109: platform.v1.CreateArtifactRequest.context:type_name -> platform.v1.OperationContext
+	40,  // 110: platform.v1.CreateArtifactRequest.artifact:type_name -> platform.v1.NewArtifactVersion
+	41,  // 111: platform.v1.CreateArtifactResponse.artifact:type_name -> platform.v1.Artifact
+	42,  // 112: platform.v1.CreateArtifactResponse.version:type_name -> platform.v1.ArtifactVersion
+	48,  // 113: platform.v1.CreateArtifactResponse.receipt:type_name -> platform.v1.OperationReceipt
+	28,  // 114: platform.v1.RecordEvidenceRequest.context:type_name -> platform.v1.OperationContext
+	14,  // 115: platform.v1.RecordEvidenceRequest.kind:type_name -> platform.v1.EvidenceKind
+	69,  // 116: platform.v1.RecordEvidenceRequest.payload:type_name -> google.protobuf.Struct
+	43,  // 117: platform.v1.RecordEvidenceResponse.evidence:type_name -> platform.v1.EvidenceRecord
+	48,  // 118: platform.v1.RecordEvidenceResponse.receipt:type_name -> platform.v1.OperationReceipt
+	28,  // 119: platform.v1.RecordScoreRequest.context:type_name -> platform.v1.OperationContext
+	30,  // 120: platform.v1.RecordScoreRequest.eval_assignment:type_name -> platform.v1.EvalAssignment
+	69,  // 121: platform.v1.RecordScoreRequest.payload:type_name -> google.protobuf.Struct
+	44,  // 122: platform.v1.RecordScoreResponse.score:type_name -> platform.v1.Score
+	43,  // 123: platform.v1.RecordScoreResponse.evidence:type_name -> platform.v1.EvidenceRecord
+	48,  // 124: platform.v1.RecordScoreResponse.receipt:type_name -> platform.v1.OperationReceipt
+	28,  // 125: platform.v1.ApplyRecommendationRequest.context:type_name -> platform.v1.OperationContext
+	15,  // 126: platform.v1.ApplyRecommendationRequest.kind:type_name -> platform.v1.RecommendationKind
+	9,   // 127: platform.v1.ApplyRecommendationRequest.risk_tier:type_name -> platform.v1.RiskTier
+	33,  // 128: platform.v1.ApplyRecommendationRequest.target_resource:type_name -> platform.v1.ResourceRef
+	30,  // 129: platform.v1.ApplyRecommendationRequest.eval_assignment:type_name -> platform.v1.EvalAssignment
+	69,  // 130: platform.v1.ApplyRecommendationRequest.rationale:type_name -> google.protobuf.Struct
+	45,  // 131: platform.v1.ApplyRecommendationResponse.recommendation:type_name -> platform.v1.Recommendation
+	39,  // 132: platform.v1.ApplyRecommendationResponse.action_intent:type_name -> platform.v1.ActionIntent
+	48,  // 133: platform.v1.ApplyRecommendationResponse.receipt:type_name -> platform.v1.OperationReceipt
+	52,  // 134: platform.v1.PlatformService.GetBootstrap:input_type -> platform.v1.GetBootstrapRequest
+	56,  // 135: platform.v1.PlatformService.CreateWork:input_type -> platform.v1.CreateWorkRequest
+	58,  // 136: platform.v1.PlatformService.ProposeAction:input_type -> platform.v1.ProposeActionRequest
+	60,  // 137: platform.v1.PlatformService.CreateArtifact:input_type -> platform.v1.CreateArtifactRequest
+	62,  // 138: platform.v1.PlatformService.RecordEvidence:input_type -> platform.v1.RecordEvidenceRequest
+	64,  // 139: platform.v1.PlatformService.RecordScore:input_type -> platform.v1.RecordScoreRequest
+	66,  // 140: platform.v1.PlatformService.ApplyRecommendation:input_type -> platform.v1.ApplyRecommendationRequest
+	53,  // 141: platform.v1.PlatformService.GetBootstrap:output_type -> platform.v1.GetBootstrapResponse
+	57,  // 142: platform.v1.PlatformService.CreateWork:output_type -> platform.v1.CreateWorkResponse
+	59,  // 143: platform.v1.PlatformService.ProposeAction:output_type -> platform.v1.ProposeActionResponse
+	61,  // 144: platform.v1.PlatformService.CreateArtifact:output_type -> platform.v1.CreateArtifactResponse
+	63,  // 145: platform.v1.PlatformService.RecordEvidence:output_type -> platform.v1.RecordEvidenceResponse
+	65,  // 146: platform.v1.PlatformService.RecordScore:output_type -> platform.v1.RecordScoreResponse
+	67,  // 147: platform.v1.PlatformService.ApplyRecommendation:output_type -> platform.v1.ApplyRecommendationResponse
+	141, // [141:148] is the sub-list for method output_type
+	134, // [134:141] is the sub-list for method input_type
+	134, // [134:134] is the sub-list for extension type_name
+	134, // [134:134] is the sub-list for extension extendee
+	0,   // [0:134] is the sub-list for field type_name
 }
 
 func init() { file_platform_v1_platform_proto_init() }
@@ -5607,8 +6220,8 @@ func file_platform_v1_platform_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_platform_v1_platform_proto_rawDesc), len(file_platform_v1_platform_proto_rawDesc)),
-			NumEnums:      19,
-			NumMessages:   43,
+			NumEnums:      21,
+			NumMessages:   47,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
