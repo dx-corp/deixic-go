@@ -2585,8 +2585,10 @@ type WorkRemediationPostcondition struct {
 	ExpectedStateDigest  string                              `protobuf:"bytes,4,opt,name=expected_state_digest,json=expectedStateDigest,proto3" json:"expected_state_digest,omitempty"`
 	MaxAgeSeconds        uint32                              `protobuf:"varint,5,opt,name=max_age_seconds,json=maxAgeSeconds,proto3" json:"max_age_seconds,omitempty"`
 	RequiredIndependence WorkRemediationEvidenceIndependence `protobuf:"varint,6,opt,name=required_independence,json=requiredIndependence,proto3,enum=platform.v1.WorkRemediationEvidenceIndependence" json:"required_independence,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	// Pins the read contract used to independently verify this condition.
+	ObserverCatalogDigest string `protobuf:"bytes,7,opt,name=observer_catalog_digest,json=observerCatalogDigest,proto3" json:"observer_catalog_digest,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *WorkRemediationPostcondition) Reset() {
@@ -2659,6 +2661,13 @@ func (x *WorkRemediationPostcondition) GetRequiredIndependence() WorkRemediation
 		return x.RequiredIndependence
 	}
 	return WorkRemediationEvidenceIndependence_WORK_REMEDIATION_EVIDENCE_INDEPENDENCE_UNSPECIFIED
+}
+
+func (x *WorkRemediationPostcondition) GetObserverCatalogDigest() string {
+	if x != nil {
+		return x.ObserverCatalogDigest
+	}
+	return ""
 }
 
 // A typed extension of Platform Work, not a separate execution or approval
@@ -5491,7 +5500,7 @@ const file_platform_v1_platform_proto_rawDesc = "" +
 	"\x0fidempotency_key\x18\b \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0eidempotencyKey\x12+\n" +
 	"\x11postcondition_ids\x18\t \x03(\tR\x10postconditionIds\x12N\n" +
 	"\x12input_artifact_ref\x18\n" +
-	" \x01(\v2\x18.platform.v1.ResourceRefB\x06\xbaH\x03\xc8\x01\x01R\x10inputArtifactRef\"\xb0\x03\n" +
+	" \x01(\v2\x18.platform.v1.ResourceRefB\x06\xbaH\x03\xc8\x01\x01R\x10inputArtifactRef\"\xf1\x03\n" +
 	"\x1cWorkRemediationPostcondition\x122\n" +
 	"\x10postcondition_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0fpostconditionId\x12D\n" +
 	"\x06target\x18\x02 \x01(\v2$.platform.v1.WorkRemediationResourceB\x06\xbaH\x03\xc8\x01\x01R\x06target\x125\n" +
@@ -5499,7 +5508,8 @@ const file_platform_v1_platform_proto_rawDesc = "" +
 	"\x15expected_state_digest\x18\x04 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x13expectedStateDigest\x12/\n" +
 	"\x0fmax_age_seconds\x18\x05 \x01(\rB\a\xbaH\x04*\x02 \x00R\rmaxAgeSeconds\x12q\n" +
 	"\x15required_independence\x18\x06 \x01(\x0e20.platform.v1.WorkRemediationEvidenceIndependenceB\n" +
-	"\xbaH\a\x82\x01\x04\x10\x01 \x00R\x14requiredIndependence\"\xf1\x05\n" +
+	"\xbaH\a\x82\x01\x04\x10\x01 \x00R\x14requiredIndependence\x12?\n" +
+	"\x17observer_catalog_digest\x18\a \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x15observerCatalogDigest\"\xf1\x05\n" +
 	"\x13WorkRemediationPlan\x12.\n" +
 	"\x0eschema_version\x18\x01 \x01(\rB\a\xbaH\x04*\x02 \x00R\rschemaVersion\x12(\n" +
 	"\vplan_digest\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\n" +
