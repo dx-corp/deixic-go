@@ -73,7 +73,7 @@ jobs:
           assert receipt["publicationEligible"] is True
           PY
 
-          for required in go.mod go.sum common/v1/analytics.pb.go deixic/v1/deixicv1connect/deixic.connect.go deixic/v1/deixicv1connect/projection_test.go; do
+          for required in go.mod go.sum deixicpublic/v1/sdk.pb.go deixicpublic/v1/deixicpublicv1connect/sdk.connect.go deixicpublic/v1/deixicpublicv1connect/projection_test.go; do
             test -f "$required" || { echo "Missing projected input: $required" >&2; exit 1; }
           done
           echo "present=true" >> "$GITHUB_OUTPUT"
@@ -92,6 +92,9 @@ jobs:
           set -euo pipefail
           python3 .github/tests/test-module-boundary.py
           python3 .github/scripts/check-module-boundary.py . github.com/dx-corp/deixic-go
+          descriptor_sources="$(find . -name '*.pb.go' -not -path './.git/*' | sort)"
+          test "$descriptor_sources" = './deixicpublic/v1/sdk.pb.go'
+          go run ./.github/scripts/audit-descriptors.go
 
       - name: Test and vet module
         if: steps.source.outputs.present == 'true'
@@ -126,11 +129,11 @@ jobs:
 
           import (
             "net/http"
-            "github.com/dx-corp/deixic-go/deixic/v1/deixicv1connect"
+            "github.com/dx-corp/deixic-go/deixicpublic/v1/deixicpublicv1connect"
           )
 
           func main() {
-            _ = deixicv1connect.NewDeixicServiceClient(http.DefaultClient, "https://api.example.invalid")
+            _ = deixicpublicv1connect.NewDeixicPublicServiceClient(http.DefaultClient, "https://api.example.invalid")
           }
           EOF
           cd "$consumer"
