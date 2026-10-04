@@ -54,6 +54,12 @@ const (
 	// DeixicPublicServiceSubmitTaskProcedure is the fully-qualified name of the DeixicPublicService's
 	// SubmitTask RPC.
 	DeixicPublicServiceSubmitTaskProcedure = "/deixicpublic.v1.DeixicPublicService/SubmitTask"
+	// DeixicPublicServiceSubmitVoicedTaskProcedure is the fully-qualified name of the
+	// DeixicPublicService's SubmitVoicedTask RPC.
+	DeixicPublicServiceSubmitVoicedTaskProcedure = "/deixicpublic.v1.DeixicPublicService/SubmitVoicedTask"
+	// DeixicPublicServiceGetVoiceCatalogProcedure is the fully-qualified name of the
+	// DeixicPublicService's GetVoiceCatalog RPC.
+	DeixicPublicServiceGetVoiceCatalogProcedure = "/deixicpublic.v1.DeixicPublicService/GetVoiceCatalog"
 	// DeixicPublicServiceInterruptTaskProcedure is the fully-qualified name of the
 	// DeixicPublicService's InterruptTask RPC.
 	DeixicPublicServiceInterruptTaskProcedure = "/deixicpublic.v1.DeixicPublicService/InterruptTask"
@@ -98,6 +104,9 @@ type DeixicPublicServiceClient interface {
 	ListEvents(context.Context, *connect.Request[v1.ListEventsRequest]) (*connect.Response[v1.ListEventsResponse], error)
 	WatchEvents(context.Context, *connect.Request[v1.WatchEventsRequest]) (*connect.ServerStreamForClient[v1.WatchEventsResponse], error)
 	SubmitTask(context.Context, *connect.Request[v1.SubmitTaskRequest]) (*connect.Response[v1.SubmitTaskResponse], error)
+	// Explicit voice requests use a distinct method so older servers refuse them.
+	SubmitVoicedTask(context.Context, *connect.Request[v1.SubmitVoicedTaskRequest]) (*connect.Response[v1.SubmitVoicedTaskResponse], error)
+	GetVoiceCatalog(context.Context, *connect.Request[v1.GetVoiceCatalogRequest]) (*connect.Response[v1.GetVoiceCatalogResponse], error)
 	InterruptTask(context.Context, *connect.Request[v1.InterruptTaskRequest]) (*connect.Response[v1.InterruptTaskResponse], error)
 	RespondToRequest(context.Context, *connect.Request[v1.RespondToRequestRequest]) (*connect.Response[v1.RespondToRequestResponse], error)
 	GetReceipt(context.Context, *connect.Request[v1.GetReceiptRequest]) (*connect.Response[v1.GetReceiptResponse], error)
@@ -162,6 +171,18 @@ func NewDeixicPublicServiceClient(httpClient connect.HTTPClient, baseURL string,
 			httpClient,
 			baseURL+DeixicPublicServiceSubmitTaskProcedure,
 			connect.WithSchema(deixicPublicServiceMethods.ByName("SubmitTask")),
+			connect.WithClientOptions(opts...),
+		),
+		submitVoicedTask: connect.NewClient[v1.SubmitVoicedTaskRequest, v1.SubmitVoicedTaskResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceSubmitVoicedTaskProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("SubmitVoicedTask")),
+			connect.WithClientOptions(opts...),
+		),
+		getVoiceCatalog: connect.NewClient[v1.GetVoiceCatalogRequest, v1.GetVoiceCatalogResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceGetVoiceCatalogProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("GetVoiceCatalog")),
 			connect.WithClientOptions(opts...),
 		),
 		interruptTask: connect.NewClient[v1.InterruptTaskRequest, v1.InterruptTaskResponse](
@@ -242,6 +263,8 @@ type deixicPublicServiceClient struct {
 	listEvents           *connect.Client[v1.ListEventsRequest, v1.ListEventsResponse]
 	watchEvents          *connect.Client[v1.WatchEventsRequest, v1.WatchEventsResponse]
 	submitTask           *connect.Client[v1.SubmitTaskRequest, v1.SubmitTaskResponse]
+	submitVoicedTask     *connect.Client[v1.SubmitVoicedTaskRequest, v1.SubmitVoicedTaskResponse]
+	getVoiceCatalog      *connect.Client[v1.GetVoiceCatalogRequest, v1.GetVoiceCatalogResponse]
 	interruptTask        *connect.Client[v1.InterruptTaskRequest, v1.InterruptTaskResponse]
 	respondToRequest     *connect.Client[v1.RespondToRequestRequest, v1.RespondToRequestResponse]
 	getReceipt           *connect.Client[v1.GetReceiptRequest, v1.GetReceiptResponse]
@@ -288,6 +311,16 @@ func (c *deixicPublicServiceClient) WatchEvents(ctx context.Context, req *connec
 // SubmitTask calls deixicpublic.v1.DeixicPublicService.SubmitTask.
 func (c *deixicPublicServiceClient) SubmitTask(ctx context.Context, req *connect.Request[v1.SubmitTaskRequest]) (*connect.Response[v1.SubmitTaskResponse], error) {
 	return c.submitTask.CallUnary(ctx, req)
+}
+
+// SubmitVoicedTask calls deixicpublic.v1.DeixicPublicService.SubmitVoicedTask.
+func (c *deixicPublicServiceClient) SubmitVoicedTask(ctx context.Context, req *connect.Request[v1.SubmitVoicedTaskRequest]) (*connect.Response[v1.SubmitVoicedTaskResponse], error) {
+	return c.submitVoicedTask.CallUnary(ctx, req)
+}
+
+// GetVoiceCatalog calls deixicpublic.v1.DeixicPublicService.GetVoiceCatalog.
+func (c *deixicPublicServiceClient) GetVoiceCatalog(ctx context.Context, req *connect.Request[v1.GetVoiceCatalogRequest]) (*connect.Response[v1.GetVoiceCatalogResponse], error) {
+	return c.getVoiceCatalog.CallUnary(ctx, req)
 }
 
 // InterruptTask calls deixicpublic.v1.DeixicPublicService.InterruptTask.
@@ -355,6 +388,9 @@ type DeixicPublicServiceHandler interface {
 	ListEvents(context.Context, *connect.Request[v1.ListEventsRequest]) (*connect.Response[v1.ListEventsResponse], error)
 	WatchEvents(context.Context, *connect.Request[v1.WatchEventsRequest], *connect.ServerStream[v1.WatchEventsResponse]) error
 	SubmitTask(context.Context, *connect.Request[v1.SubmitTaskRequest]) (*connect.Response[v1.SubmitTaskResponse], error)
+	// Explicit voice requests use a distinct method so older servers refuse them.
+	SubmitVoicedTask(context.Context, *connect.Request[v1.SubmitVoicedTaskRequest]) (*connect.Response[v1.SubmitVoicedTaskResponse], error)
+	GetVoiceCatalog(context.Context, *connect.Request[v1.GetVoiceCatalogRequest]) (*connect.Response[v1.GetVoiceCatalogResponse], error)
 	InterruptTask(context.Context, *connect.Request[v1.InterruptTaskRequest]) (*connect.Response[v1.InterruptTaskResponse], error)
 	RespondToRequest(context.Context, *connect.Request[v1.RespondToRequestRequest]) (*connect.Response[v1.RespondToRequestResponse], error)
 	GetReceipt(context.Context, *connect.Request[v1.GetReceiptRequest]) (*connect.Response[v1.GetReceiptResponse], error)
@@ -415,6 +451,18 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 		DeixicPublicServiceSubmitTaskProcedure,
 		svc.SubmitTask,
 		connect.WithSchema(deixicPublicServiceMethods.ByName("SubmitTask")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceSubmitVoicedTaskHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceSubmitVoicedTaskProcedure,
+		svc.SubmitVoicedTask,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("SubmitVoicedTask")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceGetVoiceCatalogHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceGetVoiceCatalogProcedure,
+		svc.GetVoiceCatalog,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("GetVoiceCatalog")),
 		connect.WithHandlerOptions(opts...),
 	)
 	deixicPublicServiceInterruptTaskHandler := connect.NewUnaryHandler(
@@ -499,6 +547,10 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 			deixicPublicServiceWatchEventsHandler.ServeHTTP(w, r)
 		case DeixicPublicServiceSubmitTaskProcedure:
 			deixicPublicServiceSubmitTaskHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceSubmitVoicedTaskProcedure:
+			deixicPublicServiceSubmitVoicedTaskHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceGetVoiceCatalogProcedure:
+			deixicPublicServiceGetVoiceCatalogHandler.ServeHTTP(w, r)
 		case DeixicPublicServiceInterruptTaskProcedure:
 			deixicPublicServiceInterruptTaskHandler.ServeHTTP(w, r)
 		case DeixicPublicServiceRespondToRequestProcedure:
@@ -556,6 +608,14 @@ func (UnimplementedDeixicPublicServiceHandler) WatchEvents(context.Context, *con
 
 func (UnimplementedDeixicPublicServiceHandler) SubmitTask(context.Context, *connect.Request[v1.SubmitTaskRequest]) (*connect.Response[v1.SubmitTaskResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.SubmitTask is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) SubmitVoicedTask(context.Context, *connect.Request[v1.SubmitVoicedTaskRequest]) (*connect.Response[v1.SubmitVoicedTaskResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.SubmitVoicedTask is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) GetVoiceCatalog(context.Context, *connect.Request[v1.GetVoiceCatalogRequest]) (*connect.Response[v1.GetVoiceCatalogResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.GetVoiceCatalog is not implemented"))
 }
 
 func (UnimplementedDeixicPublicServiceHandler) InterruptTask(context.Context, *connect.Request[v1.InterruptTaskRequest]) (*connect.Response[v1.InterruptTaskResponse], error) {
