@@ -93,6 +93,39 @@ const (
 	// DeixicPublicServiceDeleteBusinessObjectProcedure is the fully-qualified name of the
 	// DeixicPublicService's DeleteBusinessObject RPC.
 	DeixicPublicServiceDeleteBusinessObjectProcedure = "/deixicpublic.v1.DeixicPublicService/DeleteBusinessObject"
+	// DeixicPublicServiceListBusinessObjectsProcedure is the fully-qualified name of the
+	// DeixicPublicService's ListBusinessObjects RPC.
+	DeixicPublicServiceListBusinessObjectsProcedure = "/deixicpublic.v1.DeixicPublicService/ListBusinessObjects"
+	// DeixicPublicServiceListBusinessObjectTypesProcedure is the fully-qualified name of the
+	// DeixicPublicService's ListBusinessObjectTypes RPC.
+	DeixicPublicServiceListBusinessObjectTypesProcedure = "/deixicpublic.v1.DeixicPublicService/ListBusinessObjectTypes"
+	// DeixicPublicServiceListBusinessBlueprintsProcedure is the fully-qualified name of the
+	// DeixicPublicService's ListBusinessBlueprints RPC.
+	DeixicPublicServiceListBusinessBlueprintsProcedure = "/deixicpublic.v1.DeixicPublicService/ListBusinessBlueprints"
+	// DeixicPublicServiceBindBusinessObjectSourceProcedure is the fully-qualified name of the
+	// DeixicPublicService's BindBusinessObjectSource RPC.
+	DeixicPublicServiceBindBusinessObjectSourceProcedure = "/deixicpublic.v1.DeixicPublicService/BindBusinessObjectSource"
+	// DeixicPublicServiceListBusinessObjectRelationshipsProcedure is the fully-qualified name of the
+	// DeixicPublicService's ListBusinessObjectRelationships RPC.
+	DeixicPublicServiceListBusinessObjectRelationshipsProcedure = "/deixicpublic.v1.DeixicPublicService/ListBusinessObjectRelationships"
+	// DeixicPublicServiceCreateBusinessObjectRelationshipProcedure is the fully-qualified name of the
+	// DeixicPublicService's CreateBusinessObjectRelationship RPC.
+	DeixicPublicServiceCreateBusinessObjectRelationshipProcedure = "/deixicpublic.v1.DeixicPublicService/CreateBusinessObjectRelationship"
+	// DeixicPublicServiceDeleteBusinessObjectRelationshipProcedure is the fully-qualified name of the
+	// DeixicPublicService's DeleteBusinessObjectRelationship RPC.
+	DeixicPublicServiceDeleteBusinessObjectRelationshipProcedure = "/deixicpublic.v1.DeixicPublicService/DeleteBusinessObjectRelationship"
+	// DeixicPublicServiceGetProgramProcedure is the fully-qualified name of the DeixicPublicService's
+	// GetProgram RPC.
+	DeixicPublicServiceGetProgramProcedure = "/deixicpublic.v1.DeixicPublicService/GetProgram"
+	// DeixicPublicServiceCreateProgramProcedure is the fully-qualified name of the
+	// DeixicPublicService's CreateProgram RPC.
+	DeixicPublicServiceCreateProgramProcedure = "/deixicpublic.v1.DeixicPublicService/CreateProgram"
+	// DeixicPublicServiceUpdateProgramProcedure is the fully-qualified name of the
+	// DeixicPublicService's UpdateProgram RPC.
+	DeixicPublicServiceUpdateProgramProcedure = "/deixicpublic.v1.DeixicPublicService/UpdateProgram"
+	// DeixicPublicServiceReconcileComplianceLibraryProcedure is the fully-qualified name of the
+	// DeixicPublicService's ReconcileComplianceLibrary RPC.
+	DeixicPublicServiceReconcileComplianceLibraryProcedure = "/deixicpublic.v1.DeixicPublicService/ReconcileComplianceLibrary"
 )
 
 // DeixicPublicServiceClient is a client for the deixicpublic.v1.DeixicPublicService service.
@@ -118,6 +151,17 @@ type DeixicPublicServiceClient interface {
 	GetBusinessObject(context.Context, *connect.Request[v1.GetBusinessObjectRequest]) (*connect.Response[v1.GetBusinessObjectResponse], error)
 	UpdateBusinessObject(context.Context, *connect.Request[v1.UpdateBusinessObjectRequest]) (*connect.Response[v1.UpdateBusinessObjectResponse], error)
 	DeleteBusinessObject(context.Context, *connect.Request[v1.DeleteBusinessObjectRequest]) (*connect.Response[v1.DeleteBusinessObjectResponse], error)
+	ListBusinessObjects(context.Context, *connect.Request[v1.ListBusinessObjectsRequest]) (*connect.Response[v1.ListBusinessObjectsResponse], error)
+	ListBusinessObjectTypes(context.Context, *connect.Request[v1.ListBusinessObjectTypesRequest]) (*connect.Response[v1.ListBusinessObjectTypesResponse], error)
+	ListBusinessBlueprints(context.Context, *connect.Request[v1.ListBusinessBlueprintsRequest]) (*connect.Response[v1.ListBusinessBlueprintsResponse], error)
+	BindBusinessObjectSource(context.Context, *connect.Request[v1.BindBusinessObjectSourceRequest]) (*connect.Response[v1.BindBusinessObjectSourceResponse], error)
+	ListBusinessObjectRelationships(context.Context, *connect.Request[v1.ListBusinessObjectRelationshipsRequest]) (*connect.Response[v1.ListBusinessObjectRelationshipsResponse], error)
+	CreateBusinessObjectRelationship(context.Context, *connect.Request[v1.CreateBusinessObjectRelationshipRequest]) (*connect.Response[v1.CreateBusinessObjectRelationshipResponse], error)
+	DeleteBusinessObjectRelationship(context.Context, *connect.Request[v1.DeleteBusinessObjectRelationshipRequest]) (*connect.Response[v1.DeleteBusinessObjectRelationshipResponse], error)
+	GetProgram(context.Context, *connect.Request[v1.GetProgramRequest]) (*connect.Response[v1.GetProgramResponse], error)
+	CreateProgram(context.Context, *connect.Request[v1.CreateProgramRequest]) (*connect.Response[v1.CreateProgramResponse], error)
+	UpdateProgram(context.Context, *connect.Request[v1.UpdateProgramRequest]) (*connect.Response[v1.UpdateProgramResponse], error)
+	ReconcileComplianceLibrary(context.Context, *connect.Request[v1.ReconcileComplianceLibraryRequest]) (*connect.Response[v1.ReconcileComplianceLibraryResponse], error)
 }
 
 // NewDeixicPublicServiceClient constructs a client for the deixicpublic.v1.DeixicPublicService
@@ -251,31 +295,108 @@ func NewDeixicPublicServiceClient(httpClient connect.HTTPClient, baseURL string,
 			connect.WithSchema(deixicPublicServiceMethods.ByName("DeleteBusinessObject")),
 			connect.WithClientOptions(opts...),
 		),
+		listBusinessObjects: connect.NewClient[v1.ListBusinessObjectsRequest, v1.ListBusinessObjectsResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceListBusinessObjectsProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ListBusinessObjects")),
+			connect.WithClientOptions(opts...),
+		),
+		listBusinessObjectTypes: connect.NewClient[v1.ListBusinessObjectTypesRequest, v1.ListBusinessObjectTypesResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceListBusinessObjectTypesProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ListBusinessObjectTypes")),
+			connect.WithClientOptions(opts...),
+		),
+		listBusinessBlueprints: connect.NewClient[v1.ListBusinessBlueprintsRequest, v1.ListBusinessBlueprintsResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceListBusinessBlueprintsProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ListBusinessBlueprints")),
+			connect.WithClientOptions(opts...),
+		),
+		bindBusinessObjectSource: connect.NewClient[v1.BindBusinessObjectSourceRequest, v1.BindBusinessObjectSourceResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceBindBusinessObjectSourceProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("BindBusinessObjectSource")),
+			connect.WithClientOptions(opts...),
+		),
+		listBusinessObjectRelationships: connect.NewClient[v1.ListBusinessObjectRelationshipsRequest, v1.ListBusinessObjectRelationshipsResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceListBusinessObjectRelationshipsProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ListBusinessObjectRelationships")),
+			connect.WithClientOptions(opts...),
+		),
+		createBusinessObjectRelationship: connect.NewClient[v1.CreateBusinessObjectRelationshipRequest, v1.CreateBusinessObjectRelationshipResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceCreateBusinessObjectRelationshipProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("CreateBusinessObjectRelationship")),
+			connect.WithClientOptions(opts...),
+		),
+		deleteBusinessObjectRelationship: connect.NewClient[v1.DeleteBusinessObjectRelationshipRequest, v1.DeleteBusinessObjectRelationshipResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceDeleteBusinessObjectRelationshipProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("DeleteBusinessObjectRelationship")),
+			connect.WithClientOptions(opts...),
+		),
+		getProgram: connect.NewClient[v1.GetProgramRequest, v1.GetProgramResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceGetProgramProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("GetProgram")),
+			connect.WithClientOptions(opts...),
+		),
+		createProgram: connect.NewClient[v1.CreateProgramRequest, v1.CreateProgramResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceCreateProgramProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("CreateProgram")),
+			connect.WithClientOptions(opts...),
+		),
+		updateProgram: connect.NewClient[v1.UpdateProgramRequest, v1.UpdateProgramResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceUpdateProgramProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("UpdateProgram")),
+			connect.WithClientOptions(opts...),
+		),
+		reconcileComplianceLibrary: connect.NewClient[v1.ReconcileComplianceLibraryRequest, v1.ReconcileComplianceLibraryResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceReconcileComplianceLibraryProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ReconcileComplianceLibrary")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // deixicPublicServiceClient implements DeixicPublicServiceClient.
 type deixicPublicServiceClient struct {
-	getThread            *connect.Client[v1.GetThreadRequest, v1.GetThreadResponse]
-	listThreads          *connect.Client[v1.ListThreadsRequest, v1.ListThreadsResponse]
-	renameThread         *connect.Client[v1.RenameThreadRequest, v1.RenameThreadResponse]
-	archiveThread        *connect.Client[v1.ArchiveThreadRequest, v1.ArchiveThreadResponse]
-	listEvents           *connect.Client[v1.ListEventsRequest, v1.ListEventsResponse]
-	watchEvents          *connect.Client[v1.WatchEventsRequest, v1.WatchEventsResponse]
-	submitTask           *connect.Client[v1.SubmitTaskRequest, v1.SubmitTaskResponse]
-	submitVoicedTask     *connect.Client[v1.SubmitVoicedTaskRequest, v1.SubmitVoicedTaskResponse]
-	getVoiceCatalog      *connect.Client[v1.GetVoiceCatalogRequest, v1.GetVoiceCatalogResponse]
-	interruptTask        *connect.Client[v1.InterruptTaskRequest, v1.InterruptTaskResponse]
-	respondToRequest     *connect.Client[v1.RespondToRequestRequest, v1.RespondToRequestResponse]
-	getReceipt           *connect.Client[v1.GetReceiptRequest, v1.GetReceiptResponse]
-	resolveReceiptAction *connect.Client[v1.ResolveReceiptActionRequest, v1.ResolveReceiptActionResponse]
-	getModelReadiness    *connect.Client[v1.GetModelReadinessRequest, v1.GetModelReadinessResponse]
-	getClientSetup       *connect.Client[v1.GetClientSetupRequest, v1.GetClientSetupResponse]
-	submitIssueReport    *connect.Client[v1.SubmitIssueReportRequest, v1.SubmitIssueReportResponse]
-	createBusinessObject *connect.Client[v1.CreateBusinessObjectRequest, v1.CreateBusinessObjectResponse]
-	getBusinessObject    *connect.Client[v1.GetBusinessObjectRequest, v1.GetBusinessObjectResponse]
-	updateBusinessObject *connect.Client[v1.UpdateBusinessObjectRequest, v1.UpdateBusinessObjectResponse]
-	deleteBusinessObject *connect.Client[v1.DeleteBusinessObjectRequest, v1.DeleteBusinessObjectResponse]
+	getThread                        *connect.Client[v1.GetThreadRequest, v1.GetThreadResponse]
+	listThreads                      *connect.Client[v1.ListThreadsRequest, v1.ListThreadsResponse]
+	renameThread                     *connect.Client[v1.RenameThreadRequest, v1.RenameThreadResponse]
+	archiveThread                    *connect.Client[v1.ArchiveThreadRequest, v1.ArchiveThreadResponse]
+	listEvents                       *connect.Client[v1.ListEventsRequest, v1.ListEventsResponse]
+	watchEvents                      *connect.Client[v1.WatchEventsRequest, v1.WatchEventsResponse]
+	submitTask                       *connect.Client[v1.SubmitTaskRequest, v1.SubmitTaskResponse]
+	submitVoicedTask                 *connect.Client[v1.SubmitVoicedTaskRequest, v1.SubmitVoicedTaskResponse]
+	getVoiceCatalog                  *connect.Client[v1.GetVoiceCatalogRequest, v1.GetVoiceCatalogResponse]
+	interruptTask                    *connect.Client[v1.InterruptTaskRequest, v1.InterruptTaskResponse]
+	respondToRequest                 *connect.Client[v1.RespondToRequestRequest, v1.RespondToRequestResponse]
+	getReceipt                       *connect.Client[v1.GetReceiptRequest, v1.GetReceiptResponse]
+	resolveReceiptAction             *connect.Client[v1.ResolveReceiptActionRequest, v1.ResolveReceiptActionResponse]
+	getModelReadiness                *connect.Client[v1.GetModelReadinessRequest, v1.GetModelReadinessResponse]
+	getClientSetup                   *connect.Client[v1.GetClientSetupRequest, v1.GetClientSetupResponse]
+	submitIssueReport                *connect.Client[v1.SubmitIssueReportRequest, v1.SubmitIssueReportResponse]
+	createBusinessObject             *connect.Client[v1.CreateBusinessObjectRequest, v1.CreateBusinessObjectResponse]
+	getBusinessObject                *connect.Client[v1.GetBusinessObjectRequest, v1.GetBusinessObjectResponse]
+	updateBusinessObject             *connect.Client[v1.UpdateBusinessObjectRequest, v1.UpdateBusinessObjectResponse]
+	deleteBusinessObject             *connect.Client[v1.DeleteBusinessObjectRequest, v1.DeleteBusinessObjectResponse]
+	listBusinessObjects              *connect.Client[v1.ListBusinessObjectsRequest, v1.ListBusinessObjectsResponse]
+	listBusinessObjectTypes          *connect.Client[v1.ListBusinessObjectTypesRequest, v1.ListBusinessObjectTypesResponse]
+	listBusinessBlueprints           *connect.Client[v1.ListBusinessBlueprintsRequest, v1.ListBusinessBlueprintsResponse]
+	bindBusinessObjectSource         *connect.Client[v1.BindBusinessObjectSourceRequest, v1.BindBusinessObjectSourceResponse]
+	listBusinessObjectRelationships  *connect.Client[v1.ListBusinessObjectRelationshipsRequest, v1.ListBusinessObjectRelationshipsResponse]
+	createBusinessObjectRelationship *connect.Client[v1.CreateBusinessObjectRelationshipRequest, v1.CreateBusinessObjectRelationshipResponse]
+	deleteBusinessObjectRelationship *connect.Client[v1.DeleteBusinessObjectRelationshipRequest, v1.DeleteBusinessObjectRelationshipResponse]
+	getProgram                       *connect.Client[v1.GetProgramRequest, v1.GetProgramResponse]
+	createProgram                    *connect.Client[v1.CreateProgramRequest, v1.CreateProgramResponse]
+	updateProgram                    *connect.Client[v1.UpdateProgramRequest, v1.UpdateProgramResponse]
+	reconcileComplianceLibrary       *connect.Client[v1.ReconcileComplianceLibraryRequest, v1.ReconcileComplianceLibraryResponse]
 }
 
 // GetThread calls deixicpublic.v1.DeixicPublicService.GetThread.
@@ -378,6 +499,64 @@ func (c *deixicPublicServiceClient) DeleteBusinessObject(ctx context.Context, re
 	return c.deleteBusinessObject.CallUnary(ctx, req)
 }
 
+// ListBusinessObjects calls deixicpublic.v1.DeixicPublicService.ListBusinessObjects.
+func (c *deixicPublicServiceClient) ListBusinessObjects(ctx context.Context, req *connect.Request[v1.ListBusinessObjectsRequest]) (*connect.Response[v1.ListBusinessObjectsResponse], error) {
+	return c.listBusinessObjects.CallUnary(ctx, req)
+}
+
+// ListBusinessObjectTypes calls deixicpublic.v1.DeixicPublicService.ListBusinessObjectTypes.
+func (c *deixicPublicServiceClient) ListBusinessObjectTypes(ctx context.Context, req *connect.Request[v1.ListBusinessObjectTypesRequest]) (*connect.Response[v1.ListBusinessObjectTypesResponse], error) {
+	return c.listBusinessObjectTypes.CallUnary(ctx, req)
+}
+
+// ListBusinessBlueprints calls deixicpublic.v1.DeixicPublicService.ListBusinessBlueprints.
+func (c *deixicPublicServiceClient) ListBusinessBlueprints(ctx context.Context, req *connect.Request[v1.ListBusinessBlueprintsRequest]) (*connect.Response[v1.ListBusinessBlueprintsResponse], error) {
+	return c.listBusinessBlueprints.CallUnary(ctx, req)
+}
+
+// BindBusinessObjectSource calls deixicpublic.v1.DeixicPublicService.BindBusinessObjectSource.
+func (c *deixicPublicServiceClient) BindBusinessObjectSource(ctx context.Context, req *connect.Request[v1.BindBusinessObjectSourceRequest]) (*connect.Response[v1.BindBusinessObjectSourceResponse], error) {
+	return c.bindBusinessObjectSource.CallUnary(ctx, req)
+}
+
+// ListBusinessObjectRelationships calls
+// deixicpublic.v1.DeixicPublicService.ListBusinessObjectRelationships.
+func (c *deixicPublicServiceClient) ListBusinessObjectRelationships(ctx context.Context, req *connect.Request[v1.ListBusinessObjectRelationshipsRequest]) (*connect.Response[v1.ListBusinessObjectRelationshipsResponse], error) {
+	return c.listBusinessObjectRelationships.CallUnary(ctx, req)
+}
+
+// CreateBusinessObjectRelationship calls
+// deixicpublic.v1.DeixicPublicService.CreateBusinessObjectRelationship.
+func (c *deixicPublicServiceClient) CreateBusinessObjectRelationship(ctx context.Context, req *connect.Request[v1.CreateBusinessObjectRelationshipRequest]) (*connect.Response[v1.CreateBusinessObjectRelationshipResponse], error) {
+	return c.createBusinessObjectRelationship.CallUnary(ctx, req)
+}
+
+// DeleteBusinessObjectRelationship calls
+// deixicpublic.v1.DeixicPublicService.DeleteBusinessObjectRelationship.
+func (c *deixicPublicServiceClient) DeleteBusinessObjectRelationship(ctx context.Context, req *connect.Request[v1.DeleteBusinessObjectRelationshipRequest]) (*connect.Response[v1.DeleteBusinessObjectRelationshipResponse], error) {
+	return c.deleteBusinessObjectRelationship.CallUnary(ctx, req)
+}
+
+// GetProgram calls deixicpublic.v1.DeixicPublicService.GetProgram.
+func (c *deixicPublicServiceClient) GetProgram(ctx context.Context, req *connect.Request[v1.GetProgramRequest]) (*connect.Response[v1.GetProgramResponse], error) {
+	return c.getProgram.CallUnary(ctx, req)
+}
+
+// CreateProgram calls deixicpublic.v1.DeixicPublicService.CreateProgram.
+func (c *deixicPublicServiceClient) CreateProgram(ctx context.Context, req *connect.Request[v1.CreateProgramRequest]) (*connect.Response[v1.CreateProgramResponse], error) {
+	return c.createProgram.CallUnary(ctx, req)
+}
+
+// UpdateProgram calls deixicpublic.v1.DeixicPublicService.UpdateProgram.
+func (c *deixicPublicServiceClient) UpdateProgram(ctx context.Context, req *connect.Request[v1.UpdateProgramRequest]) (*connect.Response[v1.UpdateProgramResponse], error) {
+	return c.updateProgram.CallUnary(ctx, req)
+}
+
+// ReconcileComplianceLibrary calls deixicpublic.v1.DeixicPublicService.ReconcileComplianceLibrary.
+func (c *deixicPublicServiceClient) ReconcileComplianceLibrary(ctx context.Context, req *connect.Request[v1.ReconcileComplianceLibraryRequest]) (*connect.Response[v1.ReconcileComplianceLibraryResponse], error) {
+	return c.reconcileComplianceLibrary.CallUnary(ctx, req)
+}
+
 // DeixicPublicServiceHandler is an implementation of the deixicpublic.v1.DeixicPublicService
 // service.
 type DeixicPublicServiceHandler interface {
@@ -402,6 +581,17 @@ type DeixicPublicServiceHandler interface {
 	GetBusinessObject(context.Context, *connect.Request[v1.GetBusinessObjectRequest]) (*connect.Response[v1.GetBusinessObjectResponse], error)
 	UpdateBusinessObject(context.Context, *connect.Request[v1.UpdateBusinessObjectRequest]) (*connect.Response[v1.UpdateBusinessObjectResponse], error)
 	DeleteBusinessObject(context.Context, *connect.Request[v1.DeleteBusinessObjectRequest]) (*connect.Response[v1.DeleteBusinessObjectResponse], error)
+	ListBusinessObjects(context.Context, *connect.Request[v1.ListBusinessObjectsRequest]) (*connect.Response[v1.ListBusinessObjectsResponse], error)
+	ListBusinessObjectTypes(context.Context, *connect.Request[v1.ListBusinessObjectTypesRequest]) (*connect.Response[v1.ListBusinessObjectTypesResponse], error)
+	ListBusinessBlueprints(context.Context, *connect.Request[v1.ListBusinessBlueprintsRequest]) (*connect.Response[v1.ListBusinessBlueprintsResponse], error)
+	BindBusinessObjectSource(context.Context, *connect.Request[v1.BindBusinessObjectSourceRequest]) (*connect.Response[v1.BindBusinessObjectSourceResponse], error)
+	ListBusinessObjectRelationships(context.Context, *connect.Request[v1.ListBusinessObjectRelationshipsRequest]) (*connect.Response[v1.ListBusinessObjectRelationshipsResponse], error)
+	CreateBusinessObjectRelationship(context.Context, *connect.Request[v1.CreateBusinessObjectRelationshipRequest]) (*connect.Response[v1.CreateBusinessObjectRelationshipResponse], error)
+	DeleteBusinessObjectRelationship(context.Context, *connect.Request[v1.DeleteBusinessObjectRelationshipRequest]) (*connect.Response[v1.DeleteBusinessObjectRelationshipResponse], error)
+	GetProgram(context.Context, *connect.Request[v1.GetProgramRequest]) (*connect.Response[v1.GetProgramResponse], error)
+	CreateProgram(context.Context, *connect.Request[v1.CreateProgramRequest]) (*connect.Response[v1.CreateProgramResponse], error)
+	UpdateProgram(context.Context, *connect.Request[v1.UpdateProgramRequest]) (*connect.Response[v1.UpdateProgramResponse], error)
+	ReconcileComplianceLibrary(context.Context, *connect.Request[v1.ReconcileComplianceLibraryRequest]) (*connect.Response[v1.ReconcileComplianceLibraryResponse], error)
 }
 
 // NewDeixicPublicServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -531,6 +721,72 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 		connect.WithSchema(deixicPublicServiceMethods.ByName("DeleteBusinessObject")),
 		connect.WithHandlerOptions(opts...),
 	)
+	deixicPublicServiceListBusinessObjectsHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceListBusinessObjectsProcedure,
+		svc.ListBusinessObjects,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ListBusinessObjects")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceListBusinessObjectTypesHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceListBusinessObjectTypesProcedure,
+		svc.ListBusinessObjectTypes,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ListBusinessObjectTypes")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceListBusinessBlueprintsHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceListBusinessBlueprintsProcedure,
+		svc.ListBusinessBlueprints,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ListBusinessBlueprints")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceBindBusinessObjectSourceHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceBindBusinessObjectSourceProcedure,
+		svc.BindBusinessObjectSource,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("BindBusinessObjectSource")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceListBusinessObjectRelationshipsHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceListBusinessObjectRelationshipsProcedure,
+		svc.ListBusinessObjectRelationships,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ListBusinessObjectRelationships")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceCreateBusinessObjectRelationshipHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceCreateBusinessObjectRelationshipProcedure,
+		svc.CreateBusinessObjectRelationship,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("CreateBusinessObjectRelationship")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceDeleteBusinessObjectRelationshipHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceDeleteBusinessObjectRelationshipProcedure,
+		svc.DeleteBusinessObjectRelationship,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("DeleteBusinessObjectRelationship")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceGetProgramHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceGetProgramProcedure,
+		svc.GetProgram,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("GetProgram")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceCreateProgramHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceCreateProgramProcedure,
+		svc.CreateProgram,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("CreateProgram")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceUpdateProgramHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceUpdateProgramProcedure,
+		svc.UpdateProgram,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("UpdateProgram")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceReconcileComplianceLibraryHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceReconcileComplianceLibraryProcedure,
+		svc.ReconcileComplianceLibrary,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ReconcileComplianceLibrary")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/deixicpublic.v1.DeixicPublicService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case DeixicPublicServiceGetThreadProcedure:
@@ -573,6 +829,28 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 			deixicPublicServiceUpdateBusinessObjectHandler.ServeHTTP(w, r)
 		case DeixicPublicServiceDeleteBusinessObjectProcedure:
 			deixicPublicServiceDeleteBusinessObjectHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceListBusinessObjectsProcedure:
+			deixicPublicServiceListBusinessObjectsHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceListBusinessObjectTypesProcedure:
+			deixicPublicServiceListBusinessObjectTypesHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceListBusinessBlueprintsProcedure:
+			deixicPublicServiceListBusinessBlueprintsHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceBindBusinessObjectSourceProcedure:
+			deixicPublicServiceBindBusinessObjectSourceHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceListBusinessObjectRelationshipsProcedure:
+			deixicPublicServiceListBusinessObjectRelationshipsHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceCreateBusinessObjectRelationshipProcedure:
+			deixicPublicServiceCreateBusinessObjectRelationshipHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceDeleteBusinessObjectRelationshipProcedure:
+			deixicPublicServiceDeleteBusinessObjectRelationshipHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceGetProgramProcedure:
+			deixicPublicServiceGetProgramHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceCreateProgramProcedure:
+			deixicPublicServiceCreateProgramHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceUpdateProgramProcedure:
+			deixicPublicServiceUpdateProgramHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceReconcileComplianceLibraryProcedure:
+			deixicPublicServiceReconcileComplianceLibraryHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -660,4 +938,48 @@ func (UnimplementedDeixicPublicServiceHandler) UpdateBusinessObject(context.Cont
 
 func (UnimplementedDeixicPublicServiceHandler) DeleteBusinessObject(context.Context, *connect.Request[v1.DeleteBusinessObjectRequest]) (*connect.Response[v1.DeleteBusinessObjectResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.DeleteBusinessObject is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ListBusinessObjects(context.Context, *connect.Request[v1.ListBusinessObjectsRequest]) (*connect.Response[v1.ListBusinessObjectsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListBusinessObjects is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ListBusinessObjectTypes(context.Context, *connect.Request[v1.ListBusinessObjectTypesRequest]) (*connect.Response[v1.ListBusinessObjectTypesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListBusinessObjectTypes is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ListBusinessBlueprints(context.Context, *connect.Request[v1.ListBusinessBlueprintsRequest]) (*connect.Response[v1.ListBusinessBlueprintsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListBusinessBlueprints is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) BindBusinessObjectSource(context.Context, *connect.Request[v1.BindBusinessObjectSourceRequest]) (*connect.Response[v1.BindBusinessObjectSourceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.BindBusinessObjectSource is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ListBusinessObjectRelationships(context.Context, *connect.Request[v1.ListBusinessObjectRelationshipsRequest]) (*connect.Response[v1.ListBusinessObjectRelationshipsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListBusinessObjectRelationships is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) CreateBusinessObjectRelationship(context.Context, *connect.Request[v1.CreateBusinessObjectRelationshipRequest]) (*connect.Response[v1.CreateBusinessObjectRelationshipResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.CreateBusinessObjectRelationship is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) DeleteBusinessObjectRelationship(context.Context, *connect.Request[v1.DeleteBusinessObjectRelationshipRequest]) (*connect.Response[v1.DeleteBusinessObjectRelationshipResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.DeleteBusinessObjectRelationship is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) GetProgram(context.Context, *connect.Request[v1.GetProgramRequest]) (*connect.Response[v1.GetProgramResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.GetProgram is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) CreateProgram(context.Context, *connect.Request[v1.CreateProgramRequest]) (*connect.Response[v1.CreateProgramResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.CreateProgram is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) UpdateProgram(context.Context, *connect.Request[v1.UpdateProgramRequest]) (*connect.Response[v1.UpdateProgramResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.UpdateProgram is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ReconcileComplianceLibrary(context.Context, *connect.Request[v1.ReconcileComplianceLibraryRequest]) (*connect.Response[v1.ReconcileComplianceLibraryResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ReconcileComplianceLibrary is not implemented"))
 }
