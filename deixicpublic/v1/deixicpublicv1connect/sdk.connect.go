@@ -147,6 +147,24 @@ const (
 	// DeixicPublicServiceGetEvidenceContentProcedure is the fully-qualified name of the
 	// DeixicPublicService's GetEvidenceContent RPC.
 	DeixicPublicServiceGetEvidenceContentProcedure = "/deixicpublic.v1.DeixicPublicService/GetEvidenceContent"
+	// DeixicPublicServiceListAssetsProcedure is the fully-qualified name of the DeixicPublicService's
+	// ListAssets RPC.
+	DeixicPublicServiceListAssetsProcedure = "/deixicpublic.v1.DeixicPublicService/ListAssets"
+	// DeixicPublicServiceGetAssetProcedure is the fully-qualified name of the DeixicPublicService's
+	// GetAsset RPC.
+	DeixicPublicServiceGetAssetProcedure = "/deixicpublic.v1.DeixicPublicService/GetAsset"
+	// DeixicPublicServiceListAuditsProcedure is the fully-qualified name of the DeixicPublicService's
+	// ListAudits RPC.
+	DeixicPublicServiceListAuditsProcedure = "/deixicpublic.v1.DeixicPublicService/ListAudits"
+	// DeixicPublicServiceGetAuditProcedure is the fully-qualified name of the DeixicPublicService's
+	// GetAudit RPC.
+	DeixicPublicServiceGetAuditProcedure = "/deixicpublic.v1.DeixicPublicService/GetAudit"
+	// DeixicPublicServiceListAuditRequestsProcedure is the fully-qualified name of the
+	// DeixicPublicService's ListAuditRequests RPC.
+	DeixicPublicServiceListAuditRequestsProcedure = "/deixicpublic.v1.DeixicPublicService/ListAuditRequests"
+	// DeixicPublicServiceGetAuditRequestItemProcedure is the fully-qualified name of the
+	// DeixicPublicService's GetAuditRequestItem RPC.
+	DeixicPublicServiceGetAuditRequestItemProcedure = "/deixicpublic.v1.DeixicPublicService/GetAuditRequestItem"
 )
 
 // DeixicPublicServiceClient is a client for the deixicpublic.v1.DeixicPublicService service.
@@ -196,6 +214,15 @@ type DeixicPublicServiceClient interface {
 	ListEvidence(context.Context, *connect.Request[v1.ListEvidenceRequest]) (*connect.Response[v1.ListEvidenceResponse], error)
 	ListEvidenceVersions(context.Context, *connect.Request[v1.ListEvidenceVersionsRequest]) (*connect.Response[v1.ListEvidenceVersionsResponse], error)
 	GetEvidenceContent(context.Context, *connect.Request[v1.GetEvidenceContentRequest]) (*connect.Response[v1.GetEvidenceContentResponse], error)
+	// Read-only asset inventory (public API v1): one page of the workspace's
+	// assets and one asset.
+	ListAssets(context.Context, *connect.Request[v1.ListAssetsRequest]) (*connect.Response[v1.ListAssetsResponse], error)
+	GetAsset(context.Context, *connect.Request[v1.GetAssetRequest]) (*connect.Response[v1.GetAssetResponse], error)
+	// Read-only audits and their request lists (public API v1).
+	ListAudits(context.Context, *connect.Request[v1.ListAuditsRequest]) (*connect.Response[v1.ListAuditsResponse], error)
+	GetAudit(context.Context, *connect.Request[v1.GetAuditRequest]) (*connect.Response[v1.GetAuditResponse], error)
+	ListAuditRequests(context.Context, *connect.Request[v1.ListAuditRequestsRequest]) (*connect.Response[v1.ListAuditRequestsResponse], error)
+	GetAuditRequestItem(context.Context, *connect.Request[v1.GetAuditRequestItemRequest]) (*connect.Response[v1.GetAuditRequestItemResponse], error)
 }
 
 // NewDeixicPublicServiceClient constructs a client for the deixicpublic.v1.DeixicPublicService
@@ -437,6 +464,42 @@ func NewDeixicPublicServiceClient(httpClient connect.HTTPClient, baseURL string,
 			connect.WithSchema(deixicPublicServiceMethods.ByName("GetEvidenceContent")),
 			connect.WithClientOptions(opts...),
 		),
+		listAssets: connect.NewClient[v1.ListAssetsRequest, v1.ListAssetsResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceListAssetsProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ListAssets")),
+			connect.WithClientOptions(opts...),
+		),
+		getAsset: connect.NewClient[v1.GetAssetRequest, v1.GetAssetResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceGetAssetProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("GetAsset")),
+			connect.WithClientOptions(opts...),
+		),
+		listAudits: connect.NewClient[v1.ListAuditsRequest, v1.ListAuditsResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceListAuditsProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ListAudits")),
+			connect.WithClientOptions(opts...),
+		),
+		getAudit: connect.NewClient[v1.GetAuditRequest, v1.GetAuditResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceGetAuditProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("GetAudit")),
+			connect.WithClientOptions(opts...),
+		),
+		listAuditRequests: connect.NewClient[v1.ListAuditRequestsRequest, v1.ListAuditRequestsResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceListAuditRequestsProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ListAuditRequests")),
+			connect.WithClientOptions(opts...),
+		),
+		getAuditRequestItem: connect.NewClient[v1.GetAuditRequestItemRequest, v1.GetAuditRequestItemResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceGetAuditRequestItemProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("GetAuditRequestItem")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -480,6 +543,12 @@ type deixicPublicServiceClient struct {
 	listEvidence                     *connect.Client[v1.ListEvidenceRequest, v1.ListEvidenceResponse]
 	listEvidenceVersions             *connect.Client[v1.ListEvidenceVersionsRequest, v1.ListEvidenceVersionsResponse]
 	getEvidenceContent               *connect.Client[v1.GetEvidenceContentRequest, v1.GetEvidenceContentResponse]
+	listAssets                       *connect.Client[v1.ListAssetsRequest, v1.ListAssetsResponse]
+	getAsset                         *connect.Client[v1.GetAssetRequest, v1.GetAssetResponse]
+	listAudits                       *connect.Client[v1.ListAuditsRequest, v1.ListAuditsResponse]
+	getAudit                         *connect.Client[v1.GetAuditRequest, v1.GetAuditResponse]
+	listAuditRequests                *connect.Client[v1.ListAuditRequestsRequest, v1.ListAuditRequestsResponse]
+	getAuditRequestItem              *connect.Client[v1.GetAuditRequestItemRequest, v1.GetAuditRequestItemResponse]
 }
 
 // GetThread calls deixicpublic.v1.DeixicPublicService.GetThread.
@@ -675,6 +744,36 @@ func (c *deixicPublicServiceClient) GetEvidenceContent(ctx context.Context, req 
 	return c.getEvidenceContent.CallUnary(ctx, req)
 }
 
+// ListAssets calls deixicpublic.v1.DeixicPublicService.ListAssets.
+func (c *deixicPublicServiceClient) ListAssets(ctx context.Context, req *connect.Request[v1.ListAssetsRequest]) (*connect.Response[v1.ListAssetsResponse], error) {
+	return c.listAssets.CallUnary(ctx, req)
+}
+
+// GetAsset calls deixicpublic.v1.DeixicPublicService.GetAsset.
+func (c *deixicPublicServiceClient) GetAsset(ctx context.Context, req *connect.Request[v1.GetAssetRequest]) (*connect.Response[v1.GetAssetResponse], error) {
+	return c.getAsset.CallUnary(ctx, req)
+}
+
+// ListAudits calls deixicpublic.v1.DeixicPublicService.ListAudits.
+func (c *deixicPublicServiceClient) ListAudits(ctx context.Context, req *connect.Request[v1.ListAuditsRequest]) (*connect.Response[v1.ListAuditsResponse], error) {
+	return c.listAudits.CallUnary(ctx, req)
+}
+
+// GetAudit calls deixicpublic.v1.DeixicPublicService.GetAudit.
+func (c *deixicPublicServiceClient) GetAudit(ctx context.Context, req *connect.Request[v1.GetAuditRequest]) (*connect.Response[v1.GetAuditResponse], error) {
+	return c.getAudit.CallUnary(ctx, req)
+}
+
+// ListAuditRequests calls deixicpublic.v1.DeixicPublicService.ListAuditRequests.
+func (c *deixicPublicServiceClient) ListAuditRequests(ctx context.Context, req *connect.Request[v1.ListAuditRequestsRequest]) (*connect.Response[v1.ListAuditRequestsResponse], error) {
+	return c.listAuditRequests.CallUnary(ctx, req)
+}
+
+// GetAuditRequestItem calls deixicpublic.v1.DeixicPublicService.GetAuditRequestItem.
+func (c *deixicPublicServiceClient) GetAuditRequestItem(ctx context.Context, req *connect.Request[v1.GetAuditRequestItemRequest]) (*connect.Response[v1.GetAuditRequestItemResponse], error) {
+	return c.getAuditRequestItem.CallUnary(ctx, req)
+}
+
 // DeixicPublicServiceHandler is an implementation of the deixicpublic.v1.DeixicPublicService
 // service.
 type DeixicPublicServiceHandler interface {
@@ -723,6 +822,15 @@ type DeixicPublicServiceHandler interface {
 	ListEvidence(context.Context, *connect.Request[v1.ListEvidenceRequest]) (*connect.Response[v1.ListEvidenceResponse], error)
 	ListEvidenceVersions(context.Context, *connect.Request[v1.ListEvidenceVersionsRequest]) (*connect.Response[v1.ListEvidenceVersionsResponse], error)
 	GetEvidenceContent(context.Context, *connect.Request[v1.GetEvidenceContentRequest]) (*connect.Response[v1.GetEvidenceContentResponse], error)
+	// Read-only asset inventory (public API v1): one page of the workspace's
+	// assets and one asset.
+	ListAssets(context.Context, *connect.Request[v1.ListAssetsRequest]) (*connect.Response[v1.ListAssetsResponse], error)
+	GetAsset(context.Context, *connect.Request[v1.GetAssetRequest]) (*connect.Response[v1.GetAssetResponse], error)
+	// Read-only audits and their request lists (public API v1).
+	ListAudits(context.Context, *connect.Request[v1.ListAuditsRequest]) (*connect.Response[v1.ListAuditsResponse], error)
+	GetAudit(context.Context, *connect.Request[v1.GetAuditRequest]) (*connect.Response[v1.GetAuditResponse], error)
+	ListAuditRequests(context.Context, *connect.Request[v1.ListAuditRequestsRequest]) (*connect.Response[v1.ListAuditRequestsResponse], error)
+	GetAuditRequestItem(context.Context, *connect.Request[v1.GetAuditRequestItemRequest]) (*connect.Response[v1.GetAuditRequestItemResponse], error)
 }
 
 // NewDeixicPublicServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -960,6 +1068,42 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 		connect.WithSchema(deixicPublicServiceMethods.ByName("GetEvidenceContent")),
 		connect.WithHandlerOptions(opts...),
 	)
+	deixicPublicServiceListAssetsHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceListAssetsProcedure,
+		svc.ListAssets,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ListAssets")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceGetAssetHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceGetAssetProcedure,
+		svc.GetAsset,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("GetAsset")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceListAuditsHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceListAuditsProcedure,
+		svc.ListAudits,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ListAudits")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceGetAuditHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceGetAuditProcedure,
+		svc.GetAudit,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("GetAudit")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceListAuditRequestsHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceListAuditRequestsProcedure,
+		svc.ListAuditRequests,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ListAuditRequests")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceGetAuditRequestItemHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceGetAuditRequestItemProcedure,
+		svc.GetAuditRequestItem,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("GetAuditRequestItem")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/deixicpublic.v1.DeixicPublicService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case DeixicPublicServiceGetThreadProcedure:
@@ -1038,6 +1182,18 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 			deixicPublicServiceListEvidenceVersionsHandler.ServeHTTP(w, r)
 		case DeixicPublicServiceGetEvidenceContentProcedure:
 			deixicPublicServiceGetEvidenceContentHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceListAssetsProcedure:
+			deixicPublicServiceListAssetsHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceGetAssetProcedure:
+			deixicPublicServiceGetAssetHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceListAuditsProcedure:
+			deixicPublicServiceListAuditsHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceGetAuditProcedure:
+			deixicPublicServiceGetAuditHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceListAuditRequestsProcedure:
+			deixicPublicServiceListAuditRequestsHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceGetAuditRequestItemProcedure:
+			deixicPublicServiceGetAuditRequestItemHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1197,4 +1353,28 @@ func (UnimplementedDeixicPublicServiceHandler) ListEvidenceVersions(context.Cont
 
 func (UnimplementedDeixicPublicServiceHandler) GetEvidenceContent(context.Context, *connect.Request[v1.GetEvidenceContentRequest]) (*connect.Response[v1.GetEvidenceContentResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.GetEvidenceContent is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ListAssets(context.Context, *connect.Request[v1.ListAssetsRequest]) (*connect.Response[v1.ListAssetsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListAssets is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) GetAsset(context.Context, *connect.Request[v1.GetAssetRequest]) (*connect.Response[v1.GetAssetResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.GetAsset is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ListAudits(context.Context, *connect.Request[v1.ListAuditsRequest]) (*connect.Response[v1.ListAuditsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListAudits is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) GetAudit(context.Context, *connect.Request[v1.GetAuditRequest]) (*connect.Response[v1.GetAuditResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.GetAudit is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ListAuditRequests(context.Context, *connect.Request[v1.ListAuditRequestsRequest]) (*connect.Response[v1.ListAuditRequestsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListAuditRequests is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) GetAuditRequestItem(context.Context, *connect.Request[v1.GetAuditRequestItemRequest]) (*connect.Response[v1.GetAuditRequestItemResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.GetAuditRequestItem is not implemented"))
 }
