@@ -138,6 +138,15 @@ const (
 	// DeixicPublicServiceGetTestProcedure is the fully-qualified name of the DeixicPublicService's
 	// GetTest RPC.
 	DeixicPublicServiceGetTestProcedure = "/deixicpublic.v1.DeixicPublicService/GetTest"
+	// DeixicPublicServiceListEvidenceProcedure is the fully-qualified name of the DeixicPublicService's
+	// ListEvidence RPC.
+	DeixicPublicServiceListEvidenceProcedure = "/deixicpublic.v1.DeixicPublicService/ListEvidence"
+	// DeixicPublicServiceListEvidenceVersionsProcedure is the fully-qualified name of the
+	// DeixicPublicService's ListEvidenceVersions RPC.
+	DeixicPublicServiceListEvidenceVersionsProcedure = "/deixicpublic.v1.DeixicPublicService/ListEvidenceVersions"
+	// DeixicPublicServiceGetEvidenceContentProcedure is the fully-qualified name of the
+	// DeixicPublicService's GetEvidenceContent RPC.
+	DeixicPublicServiceGetEvidenceContentProcedure = "/deixicpublic.v1.DeixicPublicService/GetEvidenceContent"
 )
 
 // DeixicPublicServiceClient is a client for the deixicpublic.v1.DeixicPublicService service.
@@ -182,6 +191,11 @@ type DeixicPublicServiceClient interface {
 	// tests with their current result, and one test's per-resource results.
 	ListTests(context.Context, *connect.Request[v1.ListTestsRequest]) (*connect.Response[v1.ListTestsResponse], error)
 	GetTest(context.Context, *connect.Request[v1.GetTestRequest]) (*connect.Response[v1.GetTestResponse], error)
+	// Read-only evidence (public API v1): one page of the workspace's evidence,
+	// one evidence record's retained versions, and one version's file.
+	ListEvidence(context.Context, *connect.Request[v1.ListEvidenceRequest]) (*connect.Response[v1.ListEvidenceResponse], error)
+	ListEvidenceVersions(context.Context, *connect.Request[v1.ListEvidenceVersionsRequest]) (*connect.Response[v1.ListEvidenceVersionsResponse], error)
+	GetEvidenceContent(context.Context, *connect.Request[v1.GetEvidenceContentRequest]) (*connect.Response[v1.GetEvidenceContentResponse], error)
 }
 
 // NewDeixicPublicServiceClient constructs a client for the deixicpublic.v1.DeixicPublicService
@@ -405,6 +419,24 @@ func NewDeixicPublicServiceClient(httpClient connect.HTTPClient, baseURL string,
 			connect.WithSchema(deixicPublicServiceMethods.ByName("GetTest")),
 			connect.WithClientOptions(opts...),
 		),
+		listEvidence: connect.NewClient[v1.ListEvidenceRequest, v1.ListEvidenceResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceListEvidenceProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ListEvidence")),
+			connect.WithClientOptions(opts...),
+		),
+		listEvidenceVersions: connect.NewClient[v1.ListEvidenceVersionsRequest, v1.ListEvidenceVersionsResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceListEvidenceVersionsProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ListEvidenceVersions")),
+			connect.WithClientOptions(opts...),
+		),
+		getEvidenceContent: connect.NewClient[v1.GetEvidenceContentRequest, v1.GetEvidenceContentResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceGetEvidenceContentProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("GetEvidenceContent")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -445,6 +477,9 @@ type deixicPublicServiceClient struct {
 	getControl                       *connect.Client[v1.GetControlRequest, v1.GetControlResponse]
 	listTests                        *connect.Client[v1.ListTestsRequest, v1.ListTestsResponse]
 	getTest                          *connect.Client[v1.GetTestRequest, v1.GetTestResponse]
+	listEvidence                     *connect.Client[v1.ListEvidenceRequest, v1.ListEvidenceResponse]
+	listEvidenceVersions             *connect.Client[v1.ListEvidenceVersionsRequest, v1.ListEvidenceVersionsResponse]
+	getEvidenceContent               *connect.Client[v1.GetEvidenceContentRequest, v1.GetEvidenceContentResponse]
 }
 
 // GetThread calls deixicpublic.v1.DeixicPublicService.GetThread.
@@ -625,6 +660,21 @@ func (c *deixicPublicServiceClient) GetTest(ctx context.Context, req *connect.Re
 	return c.getTest.CallUnary(ctx, req)
 }
 
+// ListEvidence calls deixicpublic.v1.DeixicPublicService.ListEvidence.
+func (c *deixicPublicServiceClient) ListEvidence(ctx context.Context, req *connect.Request[v1.ListEvidenceRequest]) (*connect.Response[v1.ListEvidenceResponse], error) {
+	return c.listEvidence.CallUnary(ctx, req)
+}
+
+// ListEvidenceVersions calls deixicpublic.v1.DeixicPublicService.ListEvidenceVersions.
+func (c *deixicPublicServiceClient) ListEvidenceVersions(ctx context.Context, req *connect.Request[v1.ListEvidenceVersionsRequest]) (*connect.Response[v1.ListEvidenceVersionsResponse], error) {
+	return c.listEvidenceVersions.CallUnary(ctx, req)
+}
+
+// GetEvidenceContent calls deixicpublic.v1.DeixicPublicService.GetEvidenceContent.
+func (c *deixicPublicServiceClient) GetEvidenceContent(ctx context.Context, req *connect.Request[v1.GetEvidenceContentRequest]) (*connect.Response[v1.GetEvidenceContentResponse], error) {
+	return c.getEvidenceContent.CallUnary(ctx, req)
+}
+
 // DeixicPublicServiceHandler is an implementation of the deixicpublic.v1.DeixicPublicService
 // service.
 type DeixicPublicServiceHandler interface {
@@ -668,6 +718,11 @@ type DeixicPublicServiceHandler interface {
 	// tests with their current result, and one test's per-resource results.
 	ListTests(context.Context, *connect.Request[v1.ListTestsRequest]) (*connect.Response[v1.ListTestsResponse], error)
 	GetTest(context.Context, *connect.Request[v1.GetTestRequest]) (*connect.Response[v1.GetTestResponse], error)
+	// Read-only evidence (public API v1): one page of the workspace's evidence,
+	// one evidence record's retained versions, and one version's file.
+	ListEvidence(context.Context, *connect.Request[v1.ListEvidenceRequest]) (*connect.Response[v1.ListEvidenceResponse], error)
+	ListEvidenceVersions(context.Context, *connect.Request[v1.ListEvidenceVersionsRequest]) (*connect.Response[v1.ListEvidenceVersionsResponse], error)
+	GetEvidenceContent(context.Context, *connect.Request[v1.GetEvidenceContentRequest]) (*connect.Response[v1.GetEvidenceContentResponse], error)
 }
 
 // NewDeixicPublicServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -887,6 +942,24 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 		connect.WithSchema(deixicPublicServiceMethods.ByName("GetTest")),
 		connect.WithHandlerOptions(opts...),
 	)
+	deixicPublicServiceListEvidenceHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceListEvidenceProcedure,
+		svc.ListEvidence,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ListEvidence")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceListEvidenceVersionsHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceListEvidenceVersionsProcedure,
+		svc.ListEvidenceVersions,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ListEvidenceVersions")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceGetEvidenceContentHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceGetEvidenceContentProcedure,
+		svc.GetEvidenceContent,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("GetEvidenceContent")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/deixicpublic.v1.DeixicPublicService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case DeixicPublicServiceGetThreadProcedure:
@@ -959,6 +1032,12 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 			deixicPublicServiceListTestsHandler.ServeHTTP(w, r)
 		case DeixicPublicServiceGetTestProcedure:
 			deixicPublicServiceGetTestHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceListEvidenceProcedure:
+			deixicPublicServiceListEvidenceHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceListEvidenceVersionsProcedure:
+			deixicPublicServiceListEvidenceVersionsHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceGetEvidenceContentProcedure:
+			deixicPublicServiceGetEvidenceContentHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1106,4 +1185,16 @@ func (UnimplementedDeixicPublicServiceHandler) ListTests(context.Context, *conne
 
 func (UnimplementedDeixicPublicServiceHandler) GetTest(context.Context, *connect.Request[v1.GetTestRequest]) (*connect.Response[v1.GetTestResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.GetTest is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ListEvidence(context.Context, *connect.Request[v1.ListEvidenceRequest]) (*connect.Response[v1.ListEvidenceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListEvidence is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ListEvidenceVersions(context.Context, *connect.Request[v1.ListEvidenceVersionsRequest]) (*connect.Response[v1.ListEvidenceVersionsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListEvidenceVersions is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) GetEvidenceContent(context.Context, *connect.Request[v1.GetEvidenceContentRequest]) (*connect.Response[v1.GetEvidenceContentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.GetEvidenceContent is not implemented"))
 }
