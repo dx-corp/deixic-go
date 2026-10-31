@@ -126,6 +126,18 @@ const (
 	// DeixicPublicServiceReconcileComplianceLibraryProcedure is the fully-qualified name of the
 	// DeixicPublicService's ReconcileComplianceLibrary RPC.
 	DeixicPublicServiceReconcileComplianceLibraryProcedure = "/deixicpublic.v1.DeixicPublicService/ReconcileComplianceLibrary"
+	// DeixicPublicServiceListControlsProcedure is the fully-qualified name of the DeixicPublicService's
+	// ListControls RPC.
+	DeixicPublicServiceListControlsProcedure = "/deixicpublic.v1.DeixicPublicService/ListControls"
+	// DeixicPublicServiceGetControlProcedure is the fully-qualified name of the DeixicPublicService's
+	// GetControl RPC.
+	DeixicPublicServiceGetControlProcedure = "/deixicpublic.v1.DeixicPublicService/GetControl"
+	// DeixicPublicServiceListTestsProcedure is the fully-qualified name of the DeixicPublicService's
+	// ListTests RPC.
+	DeixicPublicServiceListTestsProcedure = "/deixicpublic.v1.DeixicPublicService/ListTests"
+	// DeixicPublicServiceGetTestProcedure is the fully-qualified name of the DeixicPublicService's
+	// GetTest RPC.
+	DeixicPublicServiceGetTestProcedure = "/deixicpublic.v1.DeixicPublicService/GetTest"
 )
 
 // DeixicPublicServiceClient is a client for the deixicpublic.v1.DeixicPublicService service.
@@ -162,6 +174,14 @@ type DeixicPublicServiceClient interface {
 	CreateProgram(context.Context, *connect.Request[v1.CreateProgramRequest]) (*connect.Response[v1.CreateProgramResponse], error)
 	UpdateProgram(context.Context, *connect.Request[v1.UpdateProgramRequest]) (*connect.Response[v1.UpdateProgramResponse], error)
 	ReconcileComplianceLibrary(context.Context, *connect.Request[v1.ReconcileComplianceLibraryRequest]) (*connect.Response[v1.ReconcileComplianceLibraryResponse], error)
+	// Read-only compliance controls (public API v1): one page of the workspace's
+	// controls with their current verification state, and one control's detail.
+	ListControls(context.Context, *connect.Request[v1.ListControlsRequest]) (*connect.Response[v1.ListControlsResponse], error)
+	GetControl(context.Context, *connect.Request[v1.GetControlRequest]) (*connect.Response[v1.GetControlResponse], error)
+	// Read-only compliance tests (public API v1): one page of the workspace's
+	// tests with their current result, and one test's per-resource results.
+	ListTests(context.Context, *connect.Request[v1.ListTestsRequest]) (*connect.Response[v1.ListTestsResponse], error)
+	GetTest(context.Context, *connect.Request[v1.GetTestRequest]) (*connect.Response[v1.GetTestResponse], error)
 }
 
 // NewDeixicPublicServiceClient constructs a client for the deixicpublic.v1.DeixicPublicService
@@ -361,6 +381,30 @@ func NewDeixicPublicServiceClient(httpClient connect.HTTPClient, baseURL string,
 			connect.WithSchema(deixicPublicServiceMethods.ByName("ReconcileComplianceLibrary")),
 			connect.WithClientOptions(opts...),
 		),
+		listControls: connect.NewClient[v1.ListControlsRequest, v1.ListControlsResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceListControlsProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ListControls")),
+			connect.WithClientOptions(opts...),
+		),
+		getControl: connect.NewClient[v1.GetControlRequest, v1.GetControlResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceGetControlProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("GetControl")),
+			connect.WithClientOptions(opts...),
+		),
+		listTests: connect.NewClient[v1.ListTestsRequest, v1.ListTestsResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceListTestsProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("ListTests")),
+			connect.WithClientOptions(opts...),
+		),
+		getTest: connect.NewClient[v1.GetTestRequest, v1.GetTestResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceGetTestProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("GetTest")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -397,6 +441,10 @@ type deixicPublicServiceClient struct {
 	createProgram                    *connect.Client[v1.CreateProgramRequest, v1.CreateProgramResponse]
 	updateProgram                    *connect.Client[v1.UpdateProgramRequest, v1.UpdateProgramResponse]
 	reconcileComplianceLibrary       *connect.Client[v1.ReconcileComplianceLibraryRequest, v1.ReconcileComplianceLibraryResponse]
+	listControls                     *connect.Client[v1.ListControlsRequest, v1.ListControlsResponse]
+	getControl                       *connect.Client[v1.GetControlRequest, v1.GetControlResponse]
+	listTests                        *connect.Client[v1.ListTestsRequest, v1.ListTestsResponse]
+	getTest                          *connect.Client[v1.GetTestRequest, v1.GetTestResponse]
 }
 
 // GetThread calls deixicpublic.v1.DeixicPublicService.GetThread.
@@ -557,6 +605,26 @@ func (c *deixicPublicServiceClient) ReconcileComplianceLibrary(ctx context.Conte
 	return c.reconcileComplianceLibrary.CallUnary(ctx, req)
 }
 
+// ListControls calls deixicpublic.v1.DeixicPublicService.ListControls.
+func (c *deixicPublicServiceClient) ListControls(ctx context.Context, req *connect.Request[v1.ListControlsRequest]) (*connect.Response[v1.ListControlsResponse], error) {
+	return c.listControls.CallUnary(ctx, req)
+}
+
+// GetControl calls deixicpublic.v1.DeixicPublicService.GetControl.
+func (c *deixicPublicServiceClient) GetControl(ctx context.Context, req *connect.Request[v1.GetControlRequest]) (*connect.Response[v1.GetControlResponse], error) {
+	return c.getControl.CallUnary(ctx, req)
+}
+
+// ListTests calls deixicpublic.v1.DeixicPublicService.ListTests.
+func (c *deixicPublicServiceClient) ListTests(ctx context.Context, req *connect.Request[v1.ListTestsRequest]) (*connect.Response[v1.ListTestsResponse], error) {
+	return c.listTests.CallUnary(ctx, req)
+}
+
+// GetTest calls deixicpublic.v1.DeixicPublicService.GetTest.
+func (c *deixicPublicServiceClient) GetTest(ctx context.Context, req *connect.Request[v1.GetTestRequest]) (*connect.Response[v1.GetTestResponse], error) {
+	return c.getTest.CallUnary(ctx, req)
+}
+
 // DeixicPublicServiceHandler is an implementation of the deixicpublic.v1.DeixicPublicService
 // service.
 type DeixicPublicServiceHandler interface {
@@ -592,6 +660,14 @@ type DeixicPublicServiceHandler interface {
 	CreateProgram(context.Context, *connect.Request[v1.CreateProgramRequest]) (*connect.Response[v1.CreateProgramResponse], error)
 	UpdateProgram(context.Context, *connect.Request[v1.UpdateProgramRequest]) (*connect.Response[v1.UpdateProgramResponse], error)
 	ReconcileComplianceLibrary(context.Context, *connect.Request[v1.ReconcileComplianceLibraryRequest]) (*connect.Response[v1.ReconcileComplianceLibraryResponse], error)
+	// Read-only compliance controls (public API v1): one page of the workspace's
+	// controls with their current verification state, and one control's detail.
+	ListControls(context.Context, *connect.Request[v1.ListControlsRequest]) (*connect.Response[v1.ListControlsResponse], error)
+	GetControl(context.Context, *connect.Request[v1.GetControlRequest]) (*connect.Response[v1.GetControlResponse], error)
+	// Read-only compliance tests (public API v1): one page of the workspace's
+	// tests with their current result, and one test's per-resource results.
+	ListTests(context.Context, *connect.Request[v1.ListTestsRequest]) (*connect.Response[v1.ListTestsResponse], error)
+	GetTest(context.Context, *connect.Request[v1.GetTestRequest]) (*connect.Response[v1.GetTestResponse], error)
 }
 
 // NewDeixicPublicServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -787,6 +863,30 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 		connect.WithSchema(deixicPublicServiceMethods.ByName("ReconcileComplianceLibrary")),
 		connect.WithHandlerOptions(opts...),
 	)
+	deixicPublicServiceListControlsHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceListControlsProcedure,
+		svc.ListControls,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ListControls")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceGetControlHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceGetControlProcedure,
+		svc.GetControl,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("GetControl")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceListTestsHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceListTestsProcedure,
+		svc.ListTests,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("ListTests")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceGetTestHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceGetTestProcedure,
+		svc.GetTest,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("GetTest")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/deixicpublic.v1.DeixicPublicService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case DeixicPublicServiceGetThreadProcedure:
@@ -851,6 +951,14 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 			deixicPublicServiceUpdateProgramHandler.ServeHTTP(w, r)
 		case DeixicPublicServiceReconcileComplianceLibraryProcedure:
 			deixicPublicServiceReconcileComplianceLibraryHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceListControlsProcedure:
+			deixicPublicServiceListControlsHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceGetControlProcedure:
+			deixicPublicServiceGetControlHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceListTestsProcedure:
+			deixicPublicServiceListTestsHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceGetTestProcedure:
+			deixicPublicServiceGetTestHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -982,4 +1090,20 @@ func (UnimplementedDeixicPublicServiceHandler) UpdateProgram(context.Context, *c
 
 func (UnimplementedDeixicPublicServiceHandler) ReconcileComplianceLibrary(context.Context, *connect.Request[v1.ReconcileComplianceLibraryRequest]) (*connect.Response[v1.ReconcileComplianceLibraryResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ReconcileComplianceLibrary is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ListControls(context.Context, *connect.Request[v1.ListControlsRequest]) (*connect.Response[v1.ListControlsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListControls is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) GetControl(context.Context, *connect.Request[v1.GetControlRequest]) (*connect.Response[v1.GetControlResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.GetControl is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) ListTests(context.Context, *connect.Request[v1.ListTestsRequest]) (*connect.Response[v1.ListTestsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListTests is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) GetTest(context.Context, *connect.Request[v1.GetTestRequest]) (*connect.Response[v1.GetTestResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.GetTest is not implemented"))
 }
