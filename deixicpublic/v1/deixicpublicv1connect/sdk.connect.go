@@ -99,6 +99,15 @@ const (
 	// DeixicPublicServiceListBusinessObjectTypesProcedure is the fully-qualified name of the
 	// DeixicPublicService's ListBusinessObjectTypes RPC.
 	DeixicPublicServiceListBusinessObjectTypesProcedure = "/deixicpublic.v1.DeixicPublicService/ListBusinessObjectTypes"
+	// DeixicPublicServiceDefineBusinessObjectTypeProcedure is the fully-qualified name of the
+	// DeixicPublicService's DefineBusinessObjectType RPC.
+	DeixicPublicServiceDefineBusinessObjectTypeProcedure = "/deixicpublic.v1.DeixicPublicService/DefineBusinessObjectType"
+	// DeixicPublicServiceGetBusinessObjectTypeProcedure is the fully-qualified name of the
+	// DeixicPublicService's GetBusinessObjectType RPC.
+	DeixicPublicServiceGetBusinessObjectTypeProcedure = "/deixicpublic.v1.DeixicPublicService/GetBusinessObjectType"
+	// DeixicPublicServiceUpsertBusinessObjectProcedure is the fully-qualified name of the
+	// DeixicPublicService's UpsertBusinessObject RPC.
+	DeixicPublicServiceUpsertBusinessObjectProcedure = "/deixicpublic.v1.DeixicPublicService/UpsertBusinessObject"
 	// DeixicPublicServiceListBusinessBlueprintsProcedure is the fully-qualified name of the
 	// DeixicPublicService's ListBusinessBlueprints RPC.
 	DeixicPublicServiceListBusinessBlueprintsProcedure = "/deixicpublic.v1.DeixicPublicService/ListBusinessBlueprints"
@@ -192,6 +201,13 @@ type DeixicPublicServiceClient interface {
 	DeleteBusinessObject(context.Context, *connect.Request[v1.DeleteBusinessObjectRequest]) (*connect.Response[v1.DeleteBusinessObjectResponse], error)
 	ListBusinessObjects(context.Context, *connect.Request[v1.ListBusinessObjectsRequest]) (*connect.Response[v1.ListBusinessObjectsResponse], error)
 	ListBusinessObjectTypes(context.Context, *connect.Request[v1.ListBusinessObjectTypesRequest]) (*connect.Response[v1.ListBusinessObjectTypesResponse], error)
+	// Publishes a workspace type revision; expected_revision 0 creates the type.
+	DefineBusinessObjectType(context.Context, *connect.Request[v1.DefineBusinessObjectTypeRequest]) (*connect.Response[v1.DefineBusinessObjectTypeResponse], error)
+	// Reads one immutable published revision of a type.
+	GetBusinessObjectType(context.Context, *connect.Request[v1.GetBusinessObjectTypeRequest]) (*connect.Response[v1.GetBusinessObjectTypeResponse], error)
+	// Creates the record whose declared unique field holds the given value, or
+	// updates the one that already does, atomically on the server.
+	UpsertBusinessObject(context.Context, *connect.Request[v1.UpsertBusinessObjectRequest]) (*connect.Response[v1.UpsertBusinessObjectResponse], error)
 	ListBusinessBlueprints(context.Context, *connect.Request[v1.ListBusinessBlueprintsRequest]) (*connect.Response[v1.ListBusinessBlueprintsResponse], error)
 	BindBusinessObjectSource(context.Context, *connect.Request[v1.BindBusinessObjectSourceRequest]) (*connect.Response[v1.BindBusinessObjectSourceResponse], error)
 	ListBusinessObjectRelationships(context.Context, *connect.Request[v1.ListBusinessObjectRelationshipsRequest]) (*connect.Response[v1.ListBusinessObjectRelationshipsResponse], error)
@@ -368,6 +384,24 @@ func NewDeixicPublicServiceClient(httpClient connect.HTTPClient, baseURL string,
 			connect.WithSchema(deixicPublicServiceMethods.ByName("ListBusinessObjectTypes")),
 			connect.WithClientOptions(opts...),
 		),
+		defineBusinessObjectType: connect.NewClient[v1.DefineBusinessObjectTypeRequest, v1.DefineBusinessObjectTypeResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceDefineBusinessObjectTypeProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("DefineBusinessObjectType")),
+			connect.WithClientOptions(opts...),
+		),
+		getBusinessObjectType: connect.NewClient[v1.GetBusinessObjectTypeRequest, v1.GetBusinessObjectTypeResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceGetBusinessObjectTypeProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("GetBusinessObjectType")),
+			connect.WithClientOptions(opts...),
+		),
+		upsertBusinessObject: connect.NewClient[v1.UpsertBusinessObjectRequest, v1.UpsertBusinessObjectResponse](
+			httpClient,
+			baseURL+DeixicPublicServiceUpsertBusinessObjectProcedure,
+			connect.WithSchema(deixicPublicServiceMethods.ByName("UpsertBusinessObject")),
+			connect.WithClientOptions(opts...),
+		),
 		listBusinessBlueprints: connect.NewClient[v1.ListBusinessBlueprintsRequest, v1.ListBusinessBlueprintsResponse](
 			httpClient,
 			baseURL+DeixicPublicServiceListBusinessBlueprintsProcedure,
@@ -527,6 +561,9 @@ type deixicPublicServiceClient struct {
 	deleteBusinessObject             *connect.Client[v1.DeleteBusinessObjectRequest, v1.DeleteBusinessObjectResponse]
 	listBusinessObjects              *connect.Client[v1.ListBusinessObjectsRequest, v1.ListBusinessObjectsResponse]
 	listBusinessObjectTypes          *connect.Client[v1.ListBusinessObjectTypesRequest, v1.ListBusinessObjectTypesResponse]
+	defineBusinessObjectType         *connect.Client[v1.DefineBusinessObjectTypeRequest, v1.DefineBusinessObjectTypeResponse]
+	getBusinessObjectType            *connect.Client[v1.GetBusinessObjectTypeRequest, v1.GetBusinessObjectTypeResponse]
+	upsertBusinessObject             *connect.Client[v1.UpsertBusinessObjectRequest, v1.UpsertBusinessObjectResponse]
 	listBusinessBlueprints           *connect.Client[v1.ListBusinessBlueprintsRequest, v1.ListBusinessBlueprintsResponse]
 	bindBusinessObjectSource         *connect.Client[v1.BindBusinessObjectSourceRequest, v1.BindBusinessObjectSourceResponse]
 	listBusinessObjectRelationships  *connect.Client[v1.ListBusinessObjectRelationshipsRequest, v1.ListBusinessObjectRelationshipsResponse]
@@ -659,6 +696,21 @@ func (c *deixicPublicServiceClient) ListBusinessObjects(ctx context.Context, req
 // ListBusinessObjectTypes calls deixicpublic.v1.DeixicPublicService.ListBusinessObjectTypes.
 func (c *deixicPublicServiceClient) ListBusinessObjectTypes(ctx context.Context, req *connect.Request[v1.ListBusinessObjectTypesRequest]) (*connect.Response[v1.ListBusinessObjectTypesResponse], error) {
 	return c.listBusinessObjectTypes.CallUnary(ctx, req)
+}
+
+// DefineBusinessObjectType calls deixicpublic.v1.DeixicPublicService.DefineBusinessObjectType.
+func (c *deixicPublicServiceClient) DefineBusinessObjectType(ctx context.Context, req *connect.Request[v1.DefineBusinessObjectTypeRequest]) (*connect.Response[v1.DefineBusinessObjectTypeResponse], error) {
+	return c.defineBusinessObjectType.CallUnary(ctx, req)
+}
+
+// GetBusinessObjectType calls deixicpublic.v1.DeixicPublicService.GetBusinessObjectType.
+func (c *deixicPublicServiceClient) GetBusinessObjectType(ctx context.Context, req *connect.Request[v1.GetBusinessObjectTypeRequest]) (*connect.Response[v1.GetBusinessObjectTypeResponse], error) {
+	return c.getBusinessObjectType.CallUnary(ctx, req)
+}
+
+// UpsertBusinessObject calls deixicpublic.v1.DeixicPublicService.UpsertBusinessObject.
+func (c *deixicPublicServiceClient) UpsertBusinessObject(ctx context.Context, req *connect.Request[v1.UpsertBusinessObjectRequest]) (*connect.Response[v1.UpsertBusinessObjectResponse], error) {
+	return c.upsertBusinessObject.CallUnary(ctx, req)
 }
 
 // ListBusinessBlueprints calls deixicpublic.v1.DeixicPublicService.ListBusinessBlueprints.
@@ -800,6 +852,13 @@ type DeixicPublicServiceHandler interface {
 	DeleteBusinessObject(context.Context, *connect.Request[v1.DeleteBusinessObjectRequest]) (*connect.Response[v1.DeleteBusinessObjectResponse], error)
 	ListBusinessObjects(context.Context, *connect.Request[v1.ListBusinessObjectsRequest]) (*connect.Response[v1.ListBusinessObjectsResponse], error)
 	ListBusinessObjectTypes(context.Context, *connect.Request[v1.ListBusinessObjectTypesRequest]) (*connect.Response[v1.ListBusinessObjectTypesResponse], error)
+	// Publishes a workspace type revision; expected_revision 0 creates the type.
+	DefineBusinessObjectType(context.Context, *connect.Request[v1.DefineBusinessObjectTypeRequest]) (*connect.Response[v1.DefineBusinessObjectTypeResponse], error)
+	// Reads one immutable published revision of a type.
+	GetBusinessObjectType(context.Context, *connect.Request[v1.GetBusinessObjectTypeRequest]) (*connect.Response[v1.GetBusinessObjectTypeResponse], error)
+	// Creates the record whose declared unique field holds the given value, or
+	// updates the one that already does, atomically on the server.
+	UpsertBusinessObject(context.Context, *connect.Request[v1.UpsertBusinessObjectRequest]) (*connect.Response[v1.UpsertBusinessObjectResponse], error)
 	ListBusinessBlueprints(context.Context, *connect.Request[v1.ListBusinessBlueprintsRequest]) (*connect.Response[v1.ListBusinessBlueprintsResponse], error)
 	BindBusinessObjectSource(context.Context, *connect.Request[v1.BindBusinessObjectSourceRequest]) (*connect.Response[v1.BindBusinessObjectSourceResponse], error)
 	ListBusinessObjectRelationships(context.Context, *connect.Request[v1.ListBusinessObjectRelationshipsRequest]) (*connect.Response[v1.ListBusinessObjectRelationshipsResponse], error)
@@ -970,6 +1029,24 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 		DeixicPublicServiceListBusinessObjectTypesProcedure,
 		svc.ListBusinessObjectTypes,
 		connect.WithSchema(deixicPublicServiceMethods.ByName("ListBusinessObjectTypes")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceDefineBusinessObjectTypeHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceDefineBusinessObjectTypeProcedure,
+		svc.DefineBusinessObjectType,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("DefineBusinessObjectType")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceGetBusinessObjectTypeHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceGetBusinessObjectTypeProcedure,
+		svc.GetBusinessObjectType,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("GetBusinessObjectType")),
+		connect.WithHandlerOptions(opts...),
+	)
+	deixicPublicServiceUpsertBusinessObjectHandler := connect.NewUnaryHandler(
+		DeixicPublicServiceUpsertBusinessObjectProcedure,
+		svc.UpsertBusinessObject,
+		connect.WithSchema(deixicPublicServiceMethods.ByName("UpsertBusinessObject")),
 		connect.WithHandlerOptions(opts...),
 	)
 	deixicPublicServiceListBusinessBlueprintsHandler := connect.NewUnaryHandler(
@@ -1150,6 +1227,12 @@ func NewDeixicPublicServiceHandler(svc DeixicPublicServiceHandler, opts ...conne
 			deixicPublicServiceListBusinessObjectsHandler.ServeHTTP(w, r)
 		case DeixicPublicServiceListBusinessObjectTypesProcedure:
 			deixicPublicServiceListBusinessObjectTypesHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceDefineBusinessObjectTypeProcedure:
+			deixicPublicServiceDefineBusinessObjectTypeHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceGetBusinessObjectTypeProcedure:
+			deixicPublicServiceGetBusinessObjectTypeHandler.ServeHTTP(w, r)
+		case DeixicPublicServiceUpsertBusinessObjectProcedure:
+			deixicPublicServiceUpsertBusinessObjectHandler.ServeHTTP(w, r)
 		case DeixicPublicServiceListBusinessBlueprintsProcedure:
 			deixicPublicServiceListBusinessBlueprintsHandler.ServeHTTP(w, r)
 		case DeixicPublicServiceBindBusinessObjectSourceProcedure:
@@ -1289,6 +1372,18 @@ func (UnimplementedDeixicPublicServiceHandler) ListBusinessObjects(context.Conte
 
 func (UnimplementedDeixicPublicServiceHandler) ListBusinessObjectTypes(context.Context, *connect.Request[v1.ListBusinessObjectTypesRequest]) (*connect.Response[v1.ListBusinessObjectTypesResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.ListBusinessObjectTypes is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) DefineBusinessObjectType(context.Context, *connect.Request[v1.DefineBusinessObjectTypeRequest]) (*connect.Response[v1.DefineBusinessObjectTypeResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.DefineBusinessObjectType is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) GetBusinessObjectType(context.Context, *connect.Request[v1.GetBusinessObjectTypeRequest]) (*connect.Response[v1.GetBusinessObjectTypeResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.GetBusinessObjectType is not implemented"))
+}
+
+func (UnimplementedDeixicPublicServiceHandler) UpsertBusinessObject(context.Context, *connect.Request[v1.UpsertBusinessObjectRequest]) (*connect.Response[v1.UpsertBusinessObjectResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("deixicpublic.v1.DeixicPublicService.UpsertBusinessObject is not implemented"))
 }
 
 func (UnimplementedDeixicPublicServiceHandler) ListBusinessBlueprints(context.Context, *connect.Request[v1.ListBusinessBlueprintsRequest]) (*connect.Response[v1.ListBusinessBlueprintsResponse], error) {
