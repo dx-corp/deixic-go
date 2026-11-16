@@ -40,3 +40,12 @@ idempotency values.
 Do not edit generated files in the standalone repository. Contract changes are
 made in Mono's `proto/deixicpublic/v1/` tree and regenerated there. The
 projection contains only this reviewed public schema and its client.
+
+## Working in Mono
+
+`sdk/deixic/go` contains the module metadata and public client test template.
+The generated implementation lives in `gen/go/deixicpublic/v1`.
+`scripts/projections/sdk-assembly.mjs` assembles these inputs into the public
+repository and rewrites the module imports; `scripts/projections/sdk-validation.mjs`
+runs Go tests in that assembled tree. Run `go test ./...` from the public
+projection, where those generated packages are present.
